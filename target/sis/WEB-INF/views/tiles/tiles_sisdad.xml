@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+
+    <definition name="sisdad/resum_datos" extends="base-definition">  
+       <put-attribute name="title" value="SISDAD RESUMEN DE DATOS" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/resum_datos.jsp" />  
+   </definition> 
+   
+   <definition name="sisdad/datos"  extends="ajax-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/datos.jsp" />  
+   </definition> 
+   
+   <definition name="sisdad/popup_editar_estacion"  extends="popup-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/popup_editar_estacion.jsp" />  
+   </definition> 
+   
+   <definition name="sisdad/popup_editar_estacion2"  extends="popup-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/popup_editar_estacion2.jsp" />  
+   </definition> 
+   
+   <definition name="sisdad/tbl_datos"  extends="ajax-form-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/tbl_datos.jsp" />  
+   </definition>
+   
+   <definition name="sisdad/registrar_rawdata"  extends="ajax-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/registrar_rawdata.jsp" />  
+   </definition>  
+   
+   <definition name="sisdad/act_estado_reg"  extends="ajax-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/act_estado_reg.jsp" />  
+   </definition>  
+   
+   <definition name="sisdad/mant_esta_goes"  extends="base-definition">  
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_esta_goes.jsp" />  
+   </definition>  
+   
+   <definition name="sisdad/mant_esta_goes_tbl"  extends="ajax-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_esta_goes_tbl.jsp" />  
+   </definition> 
+ 
+</tiles-definitions>

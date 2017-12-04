@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+
+    <definition name="sisper/index" extends="base-definition">  
+       <put-attribute name="title" value="sisper index" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisper/index.jsp" />  
+   </definition> 
+   
+   <definition name="sisper/reporteasistencia.jsp" extends="base-definition">  
+       <put-attribute name="title" value="sisper reporte de asistencia" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisper/reporteasistencia.jsp" />  
+   </definition> 
+   
+ 
+</tiles-definitions>

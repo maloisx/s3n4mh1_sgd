@@ -1,0 +1,12 @@
+com\senamhi\sis\controller\AppController.class
+com\senamhi\sis\controller\SisbienController.class
+com\senamhi\sis\controller\LoginController.class
+com\senamhi\sis\controller\SisperController.class
+com\senamhi\sis\connection\ConeccionDB.class
+com\senamhi\sis\test\test_function_Util.class
+com\senamhi\sis\controller\SisdadController.class
+com\senamhi\sis\configuration\AppConfig.class
+com\senamhi\sis\configuration\AppInitializer.class
+com\senamhi\sis\controller\SgdController.class
+com\senamhi\sis\test\prueba_psotgres.class
+com\senamhi\sis\functions\Util.class

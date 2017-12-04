@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+ 
+   <!-- Base Definition -->
+   <definition name="base-definition" 
+       template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">  
+       <put-attribute name="path" value="" /> 
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />  
+       <put-attribute name="menu" value="/WEB-INF/views/tiles/template/defaultMenu.jsp" />  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_cab.jsp" /> 
+       <put-attribute name="footer" value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />       
+       <put-attribute name="javascript_final_general" value="/WEB-INF/views/tiles/template/javascript_final_general.jsp" />   
+   </definition>  
+  
+    
+   <!-- popup Definition -->
+   <definition name="popup-definition" template="/WEB-INF/views/tiles/layouts/defaultLayout_popup.jsp">  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="javascript_final_general" value="/WEB-INF/views/tiles/template/javascript_final_general.jsp" />   
+   </definition> 
+   <definition name="ajax-definition" template="/WEB-INF/views/tiles/layouts/defaultLayout_ajax.jsp">  
+       <put-attribute name="body" value="" />           
+   </definition> 
+   <definition name="ajax-form-definition" template="/WEB-INF/views/tiles/layouts/defaultLayout_ajax_form.jsp">  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="javascript_final_general" value="/WEB-INF/views/tiles/template/javascript_final_general.jsp" />   
+   </definition>
+   <definition name="mant-definition" template="/WEB-INF/views/tiles/layouts/defaultLayout_mant.jsp">  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="javascript_final_general" value="/WEB-INF/views/tiles/template/javascript_final_general.jsp" />   
+   </definition> 
+   
+   
+   
+   <definition name="home" extends="base-definition">  
+       <put-attribute name="title" value="home" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/home.jsp" />  
+   </definition> 
+   
+   <definition name="sgd_monitor" extends="login-definition">  
+       <put-attribute name="title" value="sgd monitor" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sgd_monitor.jsp" />  
+   </definition> 
+      <definition name="sgd_monitor_ayax" extends="ajax-definition">  
+       <put-attribute name="title" value="sgd monitor" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sgd_monitor_ayax.jsp" />  
+   </definition> 
+ 
+</tiles-definitions>

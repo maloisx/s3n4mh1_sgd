@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>xx</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/menu_default.css" />
+		<link rel="stylesheet" type="text/css" href="css/menu_component.css" />
+		<script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+	
+		<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+			<h3>CCARPERU</h3>
+			<a href="#">Celery seakale</a>
+			<a href="#">Dulse daikon</a>
+			<a href="#">Zucchini garlic</a>
+			<a href="#">Catsear azuki bean</a>
+			<a href="#">Dandelion bunya</a>
+			<a href="#">Rutabaga</a>
+		</nav>
+	
+		
+		<div class="container">		
+			
+				<button id="btn_menu_slider">
+					<div id="div_menu" align="left"> 
+						<img src="img/menu_icon.jpg" width="36px" height="36px">
+					</div>
+				</button>		
+			
+		</div>
+		<script src="js/classie.js"></script>
+		<script>
+			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),					
+				showLeftPush = document.getElementById( 'btn_menu_slider' ),				
+				body = document.body;
+
+			showLeftPush.onclick = function() {
+				classie.toggle( this, 'active' );
+				classie.toggle( body, 'cbp-spmenu-push-toright' );
+				classie.toggle( menuLeft, 'cbp-spmenu-open' );
+			};
+		</script>
+	</body>
+</html>

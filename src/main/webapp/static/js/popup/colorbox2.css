@@ -1,0 +1,58 @@
+/*
+    Colorbox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#colorbox2, #cbox2Overlay, #cbox2Wrapper{position:absolute; top:0; left:0; z-index:9998; overflow:hidden; -webkit-transform: translate3d(0,0,0);}
+#cbox2Wrapper {max-width:none;}
+#cbox2Overlay{position:fixed; width:100%; height:100%;}
+#cbox2MiddleLeft, #cbox2BottomLeft{clear:left;}
+#cbox2Content{position:relative;}
+#cbox2LoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cbox2Title{margin:0;}
+#cbox2LoadingOverlay, #cbox2LoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cbox2Previous, #cbox2Next, #cbox2Close, #cbox2Slideshow{cursor:pointer;}
+.cbox2Photo{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cbox2Iframe{width:100%; height:100%; display:block; border:0; padding:0; margin:0;}
+#colorbox2, #cbox2Content, #cbox2LoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+
+/* 
+    User Style:
+    Change the following styles to modify the appearance of Colorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cbox2Overlay{background:#000; opacity: 0.9; filter: alpha(opacity = 90);}
+#colorbox2{outline:0;}
+    #cbox2TopLeft{width:14px; height:14px; background:url(images/controls.png) no-repeat 0 0;}
+    #cbox2TopCenter{height:14px; background:url(images/border.png) repeat-x top left;}
+    #cbox2TopRight{width:14px; height:14px; background:url(images/controls.png) no-repeat -36px 0;}
+    #cbox2BottomLeft{width:14px; height:43px; background:url(images/controls.png) no-repeat 0 -32px;}
+    #cbox2BottomCenter{height:43px; background:url(images/border.png) repeat-x bottom left;}
+    #cbox2BottomRight{width:14px; height:43px; background:url(images/controls.png) no-repeat -36px -32px;}
+    #cbox2MiddleLeft{width:14px; background:url(images/controls.png) repeat-y -175px 0;}
+    #cbox2MiddleRight{width:14px; background:url(images/controls.png) repeat-y -211px 0;}
+    #cbox2Content{background:#fff; overflow:visible;}
+        .cbox2Iframe{background:#fff;}
+        #cbox2Error{padding:50px; border:1px solid #ccc;}
+        #cbox2LoadedContent{margin-bottom:5px;}
+        #cbox2LoadingOverlay{background:url(images/loading_background.png) no-repeat center center;}
+        #cbox2LoadingGraphic{background:url(images/loading.gif) no-repeat center center;}
+        #cbox2Title{position:absolute; bottom:-25px; left:0; text-align:center; width:100%; font-weight:bold; color:#7C7C7C;}
+        #cbox2Current{position:absolute; bottom:-25px; left:58px; font-weight:bold; color:#7C7C7C;}
+
+        /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+        #cbox2Previous, #cbox2Next, #cbox2Slideshow, #cbox2Close {border:0; padding:0; margin:0; overflow:visible;  position:absolute; bottom:-29px; background:url(images/controls.png) no-repeat 0px 0px; width:23px; height:23px; text-indent:-9999px;}
+        
+        /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+        #cbox2Previous:active, #cbox2Next:active, #cbox2Slideshow:active, #cbox2Close:active {outline:0;}
+
+        #cbox2Previous{left:0px; background-position: -51px -25px;}
+        #cbox2Previous:hover{background-position:-51px 0px;}
+        #cbox2Next{left:27px; background-position:-75px -25px;}
+        #cbox2Next:hover{background-position:-75px 0px;}
+        #cbox2Close{right:0; background-position:-100px -25px;}
+        #cbox2Close:hover{background-position:-100px 0px;}
+
+        .cbox2Slideshow_on #cbox2Slideshow{background-position:-125px 0px; right:27px;}
+        .cbox2Slideshow_on #cbox2Slideshow:hover{background-position:-150px 0px;}
+        .cbox2Slideshow_off #cbox2Slideshow{background-position:-150px -25px; right:27px;}
+        .cbox2Slideshow_off #cbox2Slideshow:hover{background-position:-125px 0px;}

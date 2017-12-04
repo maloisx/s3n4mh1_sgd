@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+
+    <definition name="index" extends="base-definition">  
+        <put-attribute name="title" value="index" />  
+        <put-attribute name="body" value="/WEB-INF/views/pages/index.jsp" />  
+    </definition> 
+   
+    <definition name="index" extends="base-definition">  
+        <put-attribute name="title" value="index" />  
+        <put-attribute name="body" value="/WEB-INF/views/pages/index.jsp" />  
+    </definition>
+   
+    <definition name="sgd/mant_tramite"  extends="base-definition">  
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tramite.jsp" />  
+    </definition>  
+
+    <definition name="sgd/mant_tramite_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tramite_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_tramite_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tramite_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tramite_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tramite_guardar.jsp" />  
+    </definition> 
+    
+
+    <definition name="sgd/mant_procedimiento"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_procedimiento.jsp" />  
+    </definition> 
+
+    <definition name="sgd/mant_procedimiento_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_procedimiento_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_procedimiento_cargar_cbo"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_procedimiento_cargar_cbo.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_procedimiento_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_procedimiento_popup.jsp" />  
+    </definition> 
+   
+    <definition name="sgd/mant_procedimiento_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_procedimiento_guardar.jsp" />  
+    </definition> 
+   
+     
+    <definition name="sgd/mant_origen"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_origen.jsp" />  
+    </definition> 
+          
+    <definition name="sgd/mant_origen_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_origen_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_origen_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_origen_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_origen_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_origen_guardar.jsp" />  
+    </definition>
+    
+    
+    <definition name="sgd/mant_tema"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tema.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tema_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tema_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_tema_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tema_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tema_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tema_guardar.jsp" />  
+    </definition>
+    
+    
+    <definition name="sgd/mant_alcance"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_alcance.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_alcance_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_alcance_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_alcance_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_alcance_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_alcance_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_alcance_guardar.jsp" />  
+    </definition>
+    
+    
+    <definition name="sgd/mant_condicion"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_condicion.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_condicion_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_condicion_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_condicion_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_condicion_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_condicion_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_condicion_guardar.jsp" />  
+    </definition>
+    
+    <!-- TIPO DE FLUJO -->
+    <definition name="sgd/mant_tipflujo"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipflujo.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tipflujo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipflujo_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_tipflujo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipflujo_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tipflujo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipflujo_guardar.jsp" />  
+    </definition>
+    
+    <!-- ACCION -->
+    <definition name="sgd/mant_accion"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_accion.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_accion_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_accion_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_accion_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_accion_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_accion_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_accion_guardar.jsp" />  
+    </definition>    
+        
+        
+    <!-- TIPO DE ESTADO DEL FLUJO -->
+    <definition name="sgd/mant_tipestadoflujo"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipestadoflujo.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tipestadoflujo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipestadoflujo_tbl.jsp" />  
+    </definition>    
+      
+    <definition name="sgd/mant_tipestadoflujo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipestadoflujo_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tipestadoflujo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipestadoflujo_guardar.jsp" />  
+    </definition>       
+          
+    
+    <!-- PRIORIDAD -->
+    <definition name="sgd/mant_prioridad"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_prioridad.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_prioridad_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_prioridad_tbl.jsp" />  
+    </definition>            
+              
+    <definition name="sgd/mant_prioridad_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_prioridad_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_prioridad_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_prioridad_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_prioridad_cargar_txt"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_prioridad_cargar_txt.jsp" />  
+    </definition>  
+    
+  
+    <!-- ESTANTE -->
+    <definition name="sgd/mant_estante"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_estante.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_estante_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_estante_tbl.jsp" />  
+    </definition>            
+               
+    <definition name="sgd/mant_estante_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_estante_popup.jsp" />  
+    </definition>     
+     
+    <definition name="sgd/mant_estante_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_estante_guardar.jsp" />  
+    </definition>           
+  
+    <!-- ESTANTE -->
+    <definition name="sgd/mant_cuerpo"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuerpo.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_cuerpo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuerpo_tbl.jsp" />  
+    </definition>            
+  
+    <definition name="sgd/mant_cuerpo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuerpo_popup.jsp" />  
+    </definition>      
+  
+    <definition name="sgd/mant_cuerpo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuerpo_guardar.jsp" />  
+    </definition>       
+    
+    <!-- BALDA -->
+    <definition name="sgd/mant_balda"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_balda.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_balda_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_balda_tbl.jsp" />  
+    </definition>    
+    
+    <definition name="sgd/mant_balda_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_balda_popup.jsp" />  
+    </definition>       
+    
+    <definition name="sgd/mant_balda_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_balda_guardar.jsp" />  
+    </definition>      
+
+    <!-- TIPO DE UNIDAD DE CONSERVACIÓN -->
+    <definition name="sgd/mant_tipunidcons"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipunidcons.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tipunidcons_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipunidcons_tbl.jsp" />  
+    </definition>       
+        
+    <definition name="sgd/mant_tipunidcons_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipunidcons_popup.jsp" />  
+    </definition>               
+
+    <definition name="sgd/mant_tipunidcons_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipunidcons_guardar.jsp" />  
+    </definition>
+    
+    <!-- UNIDAD DE CONSERVACIÓN -->
+    <definition name="sgd/mant_unidcons"  extends="base-definition">
+        <!--<put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />--> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidcons.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_unidcons_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidcons_tbl.jsp" />  
+    </definition>             
+   
+    <definition name="sgd/mant_unidcons_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidcons_popup.jsp" />  
+    </definition>      
+    
+    <definition name="sgd/mant_unidcons_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidcons_guardar.jsp" />  
+    </definition>              
+            
+    <!-- SERIE DOCUMENTAL -->
+    <definition name="sgd/mant_seriedoc"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_seriedoc.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_seriedoc_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_seriedoc_tbl.jsp" />  
+    </definition>       
+    
+    <definition name="sgd/mant_seriedoc_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_seriedoc_popup.jsp" />  
+    </definition>        
+             
+    <definition name="sgd/mant_seriedoc_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_seriedoc_guardar.jsp" />  
+    </definition>   
+             
+    <!-- CLSIFICACIÓN DOCUMENTAL -->
+    <definition name="sgd/mant_clasifdoc"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_clasifdoc.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_clasifdoc_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_clasifdoc_tbl.jsp" />  
+    </definition>     
+    
+    <definition name="sgd/mant_clasifdoc_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_clasifdoc_popup.jsp" />  
+    </definition>    
+        
+    <definition name="sgd/mant_clasifdoc_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_clasifdoc_guardar.jsp" />  
+    </definition>       
+  
+    <!-- UNIDAD ORGÁNICA -->
+    <definition name="sgd/mant_unidorg"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidorg.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_unidorg_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidorg_tbl.jsp" />  
+    </definition>
+    
+    <!-- BANDEJA -->
+    <definition name="sgd/bandeja"  extends="base-definition">
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/bandeja.jsp" />  
+    </definition>
+    
+    <definition name="sgd/bandeja_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/bandeja_tbl.jsp" />  
+    </definition>
+    
+    <!-- EXPEDIENTE -->
+    <definition name="sgd/mant_expediente_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_popup.jsp" />  
+    </definition> 
+      
+    <definition name="sgd/mant_expediente_añadirdoc_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_añadirdoc_popup.jsp" />  
+    </definition> 
+      
+    <definition name="sgd/mant_expediente_consulta_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_consulta_popup.jsp" />  
+    </definition> 
+      
+    <definition name="sgd/mant_expediente_nuevo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_nuevo_popup.jsp" />  
+    </definition>  
+     
+    <definition name="sgd/mant_expediente_modifica_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_modifica_popup.jsp" />  
+    </definition>   
+    
+    <!--//*****************************************************************************************************-->    
+    <definition name="sgd/mant_expediente_popup_copia"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_popup_copia.jsp" />  
+    </definition>   
+    <!--//*****************************************************************************************************-->    
+    
+    <definition name="sgd/mant_expediente_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_expediente_deriva_cut_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_deriva_cut_popup.jsp" />  
+    </definition>           
+        
+    <definition name="sgd/mant_expediente_deriva_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_deriva_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_deriva_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_deriva_guardar.jsp" />  
+    </definition>       
+    
+    <!-- UPLOAD -->
+    <definition name="sgd/uploadfile"  extends="ajax-definition">
+        <!--<put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />--> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/uploadfile.jsp" />  
+    </definition>    
+    
+    <definition name="sgd/mant_doc_detalle"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_doc_detalle.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_adjunto_cargar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_adjunto_cargar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_docadj_elim"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_docadj_elim.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_destino_cargar_txt"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_destino_cargar_txt.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_documento_elim"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_documento_elim.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_fisico_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_fisico_popup.jsp" />  
+    </definition>       
+    
+    <definition name="sgd/mant_fisico_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_fisico_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_archiva_flujo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archiva_flujo_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_archiva_flujo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archiva_flujo_guardar.jsp" />  
+    </definition>    
+    
+    <definition name="sgd/mant_expediente_deriva_accion_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_deriva_accion_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_archiva_desarch_flujo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archiva_desarch_flujo_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_exp_archivados_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_exp_archivados_consulta.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_exp_desarchiva_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_exp_desarchiva_guardar.jsp" />  
+    </definition> 
+   
+    <definition name="sgd/mant_rechaza_flujo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rechaza_flujo_popup.jsp" />  
+    </definition> 
+   
+    <definition name="sgd/mant_exp_rechaza_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_exp_rechaza_guardar.jsp" />  
+    </definition> 
+   
+    <!--ENVIO AL ARCHIVO CENTRAL-->
+    <definition name="sgd/mant_archcentral"  extends="base-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archcentral.jsp" />  
+    </definition>  
+
+    <definition name="sgd/mant_archcentral_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archcentral_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="sgd/mant_archcentral_envia_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archcentral_envia_popup.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_archcentral_envia_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_archcentral_envia_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_ubicaciontopo"  extends="base-definition">  
+        <!--<put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />--> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ubicaciontopo.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_ubicaciontopo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ubicaciontopo_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_ubicaciontopo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ubicaciontopo_popup.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_ubicaciontopo_treeview"  extends="base-definition">  
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ubicaciontopo_treeview.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_ubicaciontopo_treeview_data"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ubicaciontopo_treeview_data.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_estante_cargar_cbo"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_estante_cargar_cbo.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_cuerpo_cargar_cbo"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuerpo_cargar_cbo.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_balda_cargar_cbo"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_balda_cargar_cbo.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_unidcons_cargar_cbo"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidcons_cargar_cbo.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_ubicaciontopo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ubicaciontopo_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_mov_unidcons"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_mov_unidcons.jsp" />  
+    </definition>
+    
+    
+    <definition name="sgd/mant_mov_unidcons_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_mov_unidcons_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_mov_unidcons_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_mov_unidcons_popup.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_unidcons_lista"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unidcons_lista.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_lista_docs_cargar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_lista_docs_cargar.jsp" />  
+    </definition>
+     
+    <definition name="sgd/mant_lista_docs_cargar_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_lista_docs_cargar_consulta.jsp" />  
+    </definition>
+     
+    <definition name="sgd/mant_lista_deriva_cargar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_lista_deriva_cargar.jsp" />  
+    </definition>
+     
+    <definition name="sgd/mant_mov_unidcons_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_mov_unidcons_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/bandeja_entrada"  extends="base-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/bandeja_entrada.jsp" />  
+    </definition>  
+
+    <definition name="sgd/bandeja_perfil_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/bandeja_perfil_tbl.jsp" />  
+    </definition> 
+    
+    <!--agrupar expedientes-->
+    <definition name="sgd/mant_agrupa_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_agrupa_popup.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_agrupa_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_agrupa_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_lista_agrupa_cargar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_lista_agrupa_cargar.jsp" />  
+    </definition>    
+    
+    <definition name="sgd/mant_desagrupa_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_desagrupa_guardar.jsp" />  
+    </definition> 
+    
+    <!--buscar expediente-->    
+    <definition name="sgd/mant_buscarexp"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscarexp.jsp" />  
+    </definition>
+        
+    <definition name="sgd/mant_buscarexp_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscarexp_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_expediente_buscar_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_buscar_popup.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscarexp_prof"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscarexp_prof.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscarexp_prof_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscarexp_prof_tbl.jsp" />  
+    </definition>
+       
+    <definition name="sgd/mant_buscar_altdir"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_altdir.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_altdir_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_altdir_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_administrado"  extends="base-definition"> 
+        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_administrado.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_administrado_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_administrado_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_administrado_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_administrado_popup.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_administrado_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_administrado_guardar.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_derivado"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_derivado_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_recibido"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_recibido.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_recibido_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_recibido_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_derivado_dir"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado_dir.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_derivado_dir_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado_dir_tbl.jsp" />  
+    </definition>        
+    
+    <definition name="sgd/mant_buscar_recibido_dir"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_recibido_dir.jsp" />  
+    </definition> 
+ 
+    <definition name="sgd/mant_buscar_recibido_dir_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado_dir_tbl.jsp" />  
+    </definition>        
+             
+    <definition name="sgd/mant_buscar_derivado_prof"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado_prof.jsp" />  
+    </definition>              
+              
+    <definition name="sgd/mant_buscar_derivado_prof_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_derivado_prof_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_recibido_prof"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_recibido_prof.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_recibido_prof_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_recibido_prof_tbl.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_buscar_creado_dir"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_creado_dir.jsp" />  
+    </definition>    
+
+    <definition name="sgd/mant_buscar_creado_dir_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_creado_dir_tbl.jsp" />  
+    </definition>
+
+    <definition name="sgd/mant_buscar_creado_prof"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_creado_prof.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_creado_prof_tbl"  extends="ajax-definition">          
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_creado_dir_tbl.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_creado"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_creado.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_buscar_creado_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_creado_tbl.jsp" />
+    </definition>
+
+    <definition name="sgd/mant_acuse_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_acuse_guardar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rep_uo_pendiente"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_pendiente.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rep_uo_pendiente_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_pendiente_tbl.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_cuenta_pendiente"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuenta_pendiente.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_cuenta_consultado"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuenta_consultado.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_cuenta_noconsultado"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cuenta_noconsultado.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rep_uo_periodo"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_periodo.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rep_uo_periodo_grf"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_periodo_grf.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rep_uo_prof"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_prof.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rep_uo_prof_grf"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_prof_grf.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_buscar_exp_utf"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_exp_utf.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_buscar_exp_utf_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_exp_utf_tbl.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_cargo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cargo_popup.jsp" />  
+    </definition>
+    
+        
+    
+    
+    
+</tiles-definitions>
