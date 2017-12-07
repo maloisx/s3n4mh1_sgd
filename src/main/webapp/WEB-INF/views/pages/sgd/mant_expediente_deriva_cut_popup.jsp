@@ -49,7 +49,7 @@
                 <lable for="cb_cd_ini" class="active">Seleccione Unidad Orgánica:</lable> 
                 <!--data-always-open="true"-->
                 <!--data-size="4"-->
-                <select class="form-control selectpicker" data-always-open="true" name="cb_cd_ini" id="cb_cd_ini" multiple data-live-search="true" multiple data-actions-box="true" onchange="charge_list_boostrap_select('cb_cd_ini','cb_cd_fin')">${requestScope['cb_uo']}</select>
+                <select class="form-control selectpicker" data-size="6" name="cb_cd_ini" id="cb_cd_ini" multiple data-live-search="true" multiple data-actions-box="true" onchange="charge_list_boostrap_select('cb_cd_ini','cb_cd_fin')">${requestScope['cb_uo']}</select>
             </div>
             <div class="col-xs-5">   
                 <lable for="cb_cd_fin" class="active">Unidad Orgánica Seleccionada:</lable>

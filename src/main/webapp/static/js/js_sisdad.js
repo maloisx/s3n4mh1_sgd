@@ -420,9 +420,9 @@ function registrar_rawdata_all(){
 }
 
 function cambiar_estado_reg(codesta,fecha,param,estado){
-    console.log(codesta+"->"+fecha+"->"+param+"->"+estado);
+    //console.log(codesta+"->"+fecha+"->"+param+"->"+estado);
     var id= codesta+"_"+fecha.replace(/[/]/g,"").replace(":","").replace(" ","")+"_"+param;
-    console.log(id +"->"+estado);
+    //console.log(id +"->"+estado);
     $.ajax({
             dataType: "html",
             type:     "GET",
@@ -436,7 +436,38 @@ function cambiar_estado_reg(codesta,fecha,param,estado){
                 //console.log(requestData);
                                 
                 if(requestData == 1){
-                    $('#div_reg_'+id).html("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-alert'></span></li></ul></div>");
+                    $('#div_reg_'+id).html("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-check'></span></li></ul></div>");
+                    //$('#div_reg_'+id).parent().removeClass("ui-state-error").addClass("ui-state-highlight");
+                }
+                else{
+                    console.log(requestData);
+                    $('#div_reg_'+id).html(requestData);
+                }
+            },		
+            error: function(requestData, strError, strTipoError){											
+                $('#div_reg_'+id).html("Error " + strTipoError +": " + strError);
+            }
+    });
+}
+
+function cambiar_factor_reg(codesta,fecha,param,fact){
+    console.log(codesta+"->"+fecha+"->"+param+"->"+fact);
+    var id= codesta+"_"+fecha.replace(/[/]/g,"").replace(":","").replace(" ","")+"_"+param;
+    //console.log(id +"->"+estado);
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sisdad/act_factconver_reg/", 
+            data:     "codesta="+codesta+"&fecha="+fecha+"&param="+param+"&fact="+fact,	 	 
+            beforeSend: function(data){ 
+                $('#div_reg_'+id).show();
+                $('#div_reg_'+id).html("Cargando...");
+            },
+            success: function(requestData){
+                //console.log(requestData);
+                                
+                if(requestData == 1){
+                    $('#div_reg_'+id).html("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all'><span class='ui-icon ui-icon-check'></span></li></ul></div>");
                     //$('#div_reg_'+id).parent().removeClass("ui-state-error").addClass("ui-state-highlight");
                 }
                 else{
@@ -468,6 +499,117 @@ function mostrar_mant_esta_goes_tbl(){
                 $('#div_mant_esta_goes_tbl').html("Error " + strTipoError +": " + strError);
         }
     });
+}
+
+
+function sisdad_change_cb_selected(btn,codvar){
+    
+    var check = $(btn).attr('cb_checked');
+    if(check == 0){
+        $(".cb_var_"+codvar).prop('checked', true);
+        $(btn).attr('cb_checked','1');
+    }else{
+        $(".cb_var_"+codvar).prop('checked', false);
+        $(btn).attr('cb_checked','0');
+    }
+}
+
+function sisdad_confirm_cambio_estado_masivo(){    
+            $.confirm({
+            title: '',
+            content: 'CAMBIO DE ESTADO MASIVO',
+            theme: 'supervan',
+            buttons: {                
+                    buttonBuenos: {
+                        text: 'TODOS LOS DATOS BUENOS',
+                        action: function () {
+                            cambio_estado_masivo('');
+                        }
+                    },
+                    buttonDudosos: {
+                        text: 'TODOS LOS DATOS DUDOSOS',
+                        action: function () {
+                            cambio_estado_masivo('D');
+                        }
+                    },buttonMalos: {
+                        text: 'TODOS LOS DATOS MALOS',
+                        action: function () {
+                            cambio_estado_masivo('M');
+                        }
+                    },
+                    buttonCancelar: {
+                        text: 'CANCELAR'
+                        //$.alert('Canceled!');
+                    }
+            }
+        });    
+}
+
+function cambio_estado_masivo(estado){
+    $( ".cb_var" ).each(function( index ) {
+            var check = $(this).prop('checked');
+            if(check){
+                var idesta = $(this).attr('idesta');
+                var fecha = $(this).attr('fecha');
+                var codvar = $(this).attr('codvar');
+                //console.log(idesta + "->" +fecha + "->" +codvar + '->' + estado );
+                cambiar_estado_reg(idesta ,fecha ,+codvar , estado);
+            }
+        });
+}
+
+function sisdad_confirm_cambio_factor_masivo(){    
+    $.confirm({
+    title: 'Prompt!',
+    content: '' +
+    '<form action="" class="formFactor">' +
+    '<div class="form-group">' +
+    '<label>Ingrese el factor de conversion para ser aplicado:</label>' +
+    '<input type="number" step="0.1" value="1" placeholder="Factor de conversion" class="factor form-control" required />' +
+    '</div>' +
+    '</form>',
+    buttons: {
+        formSubmit: {
+            text: 'Aplicar Factor',
+            btnClass: 'btn-blue',
+            action: function () {
+                var factor = this.$content.find('.factor').val();
+                if(!factor){
+                    $.alert('ingresar un factor valido');
+                    return false;
+                }
+                cambio_factor_masivo(factor);
+                //$.alert('Your name is ' + factor);
+            }
+        },
+        cancel: function () {
+            //close
+        },
+    },
+    onContentReady: function () {
+        // bind to events
+        var jc = this;
+        this.$content.find('form').on('submit', function (e) {
+            // if the user submits the form by pressing enter in the field.
+            e.preventDefault();
+            jc.$$formSubmit.trigger('click'); // reference the button and click it
+        });
+    }
+});
+}
+
+
+function cambio_factor_masivo(factor){
+    $( ".cb_var" ).each(function( index ) {
+            var check = $(this).prop('checked');
+            if(check){
+                var idesta = $(this).attr('idesta');
+                var fecha = $(this).attr('fecha');
+                var codvar = $(this).attr('codvar');
+                //console.log(idesta + "->" +fecha + "->" +codvar + '->' + factor );
+                cambiar_factor_reg(idesta ,fecha ,+codvar , factor);
+            }
+        });
 }
 
 function sisdad_popup_mant_nueva_estacion(){

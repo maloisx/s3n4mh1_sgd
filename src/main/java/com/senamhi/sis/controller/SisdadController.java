@@ -174,7 +174,8 @@ public class SisdadController {
             for(int i=0;i<v_param.size();i++){
                     Vector vx = (Vector) v_param.get(i);                    
 //                    col_tbl += "{\"sTitle\":\""+vx.get(0)+"\",\"sWidth\":\"140px\" } , ";
-                    col_tbl    += "{\"sTitle\":\""+vx.get(0)+"\"} , ";                    
+//                    col_tbl    += "{\"sTitle\":\""+vx.get(0)+"<input type='checkbox' class='cb_data' id='cb_"+vx.get(0)+"' /><label for='id_"+vx.get(0)+"'></label>"+"\" , \"orderable\": false  } , ";                    
+                    col_tbl    += "{\"sTitle\":\""+vx.get(0)+"<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all' cb_checked='0' onclick='sisdad_change_cb_selected(this,\\\""+vx.get(1)+"\\\")'><span class='ui-icon ui-icon-check'></span></li></ul></div>"+"\" , \"orderable\": false  } , ";                    
                     col_center += (i+1)+",";
                     
                     cb_param +="<option value='"+(i+1)+"'>"+vx.get(0)+"</option>";
@@ -212,25 +213,27 @@ public class SisdadController {
                                   if(n.matches("[-+]?\\d*\\.?\\d+")){
                                     n =  String.format("%.3f",Double.parseDouble(n)).replace(",", "."); 
 //                                    vx_t.add(n);
-                                    btn_flag =  "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-error ui-corner-all title='DATO MALO' onclick=\\\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','M')\\\"><img style='width:14px' src='/sis/static/img/E.png'></li></ul>"
-                                              + "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-highlight ui-corner-all title='DATO DUDOSO' onclick=\\\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','D')\\\"><img style='width:14px' src='/sis/static/img/D.png'></li></ul>";
+                                    btn_flag =  "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-error ui-corner-all' title='DATO MALO' onclick=\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','M')\"><img style='width:14px' src='/sis/static/img/E.png'></li></ul>"
+                                              + "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-highlight ui-corner-all' title='DATO DUDOSO' onclick=\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','D')\"><img style='width:14px' src='/sis/static/img/D.png'></li></ul>";
                                   }else {
                                      e = n.substring(n.length()-1, n.length());
                                      if(e.equalsIgnoreCase("D")){
                                          //e = "ui-state-highlight";
-                                         btn_flag = "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-error ui-corner-all title='DATO MALO' onclick=\\\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','M')\\\"><img style='width:14px' src='/sis/static/img/E.png'></li></ul>"
-                                                    + "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-default ui-corner-all title='DATO BUENO' onclick=\\\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','')\\\"><img style='width:14px' src='/sis/static/img/B.png'></li></ul>" ;
+                                         btn_flag = "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-error ui-corner-all' title='DATO MALO' onclick=\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','M')\"><img style='width:14px' src='/sis/static/img/E.png'></li></ul>"
+                                                    + "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-default ui-corner-all' title='DATO BUENO' onclick=\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','')\"><img style='width:14px' src='/sis/static/img/B.png'></li></ul>" ;
                                      }if(e.equalsIgnoreCase("M")){
                                          //e = "ui-state-error";
-                                         btn_flag = "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-highlight ui-corner-all title='DATO DUDOSO' onclick=\\\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','D')\\\"><img style='width:14px' src='/sis/static/img/D.png'></li></ul>"
-                                                    + "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-default ui-corner-all title='DATO BUENO' onclick=\\\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','')\\\"><img style='width:14px' src='/sis/static/img/B.png'></li></ul>" ;
+                                         btn_flag = "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-highlight ui-corner-all' title='DATO DUDOSO' onclick=\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','D')\"><img style='width:14px' src='/sis/static/img/D.png'></li></ul>"
+                                                    + "<ul class='flg' style='float:right;display: none;cursor:pointer'><li style='width:18px' class='ui-state-default ui-corner-all' title='DATO BUENO' onclick=\"cambiar_estado_reg('"+cod_esta+"','"+fecha_trama+"','"+nom_param+"','')\"><img style='width:14px' src='/sis/static/img/B.png'></li></ul>" ;
                                      }       
-                                  }
+                                  }                                
+                                  
+                                  String id_tmp = cod_esta+"_"+fecha_trama.replace("/","").replace(":","").replace(" ","")+"_"+nom_param;
 //                                  String divdato =  "<div align='center' style='width: 100% ;height: 100%' d_codesta='"+cod_esta+"' d_fectrama='"+fecha_trama+"' d_var='"+nom_param+"' class='"+e+"' onmouseover=\\\"$(this).children(\\'ul\\').show()\\\"  onmouseout=\\\"$(this).children(\\'ul\\').hide()\\\">" 
                                   String divdato =  //"<div align='center' style='width: 100% ;height: 100%' d_codesta='"+cod_esta+"' d_fectrama='"+fecha_trama+"' d_var='"+nom_param+"' class='"+e+"'>" 
                                                     //+ 
-                                                      "<span>"+ n + "</span>"
-                                                    + "<div style='display: none' id='div_reg_"+cod_esta+"_"+fecha_trama.replace("/","").replace(":","").replace(" ","")+"_"+nom_param+"'></div> "
+                                                      "<span>"+ "<input type='checkbox' class='cb_var cb_var_"+nom_param+"' id='"+id_tmp+"' value='"+id_tmp+"'  idesta='"+cod_esta+"' fecha='"+fecha_trama+"' codvar='"+nom_param+"'  /><label for='"+id_tmp+"'></label>" + n + "</span>"
+                                                    + "<div style='display: none' id='div_reg_"+id_tmp+"'></div> "
                                                     //+"<br>"+btn_flag;
                                                     + (p.equalsIgnoreCase("ADMIN")?"<br>"+btn_flag:"") ;
                                                   //+ "</div>";
@@ -256,8 +259,8 @@ public class SisdadController {
                                 if(fec_rawdata.equalsIgnoreCase(fecha_trama)){
                                     //System.out.println(fec_rawdata +" -> " +fecha_trama + " ok");                                    
                                     String id_div = fecha_trama.replace(" ","").replace("/","").replace(":","");
-                                    btn_bajartrama   = "<div align='center' style='float:left' id='div_fecha_"+id_div+"'><ul><li style='width:18px' class='ui-state-default ui-corner-all btn_reg_rawdata btn_reg_rawdata_"+exist+"' title='Descargar datos "+fecha_trama+"' onclick='registrar_rawdata(\\\""+id_div+"\\\",\\\""+t_rawdata+"\\\")'><span class='ui-icon ui-icon-circle-arrow-s'></span></li></ul></div>";
-                                    btn_mostrartrama = "<div align='center' style='float:right'><ul><li style='width:18px' class='ui-state-default ui-corner-all title='mostrar rawdata "+fecha_trama+"' onclick='$.dialog({title: \\\"RAWDATA del "+fecha_trama+"\\\" , content:\\\""+t_rawdata+"\\\"})'><span class='ui-icon ui-icon-info'></span></li></ul></div>";
+                                    btn_bajartrama   = "<div align='center' style='float:left' id='div_fecha_"+id_div+"'><ul><li style='width:18px' class='ui-state-default ui-corner-all btn_reg_rawdata btn_reg_rawdata_"+exist+"' title='Descargar datos "+fecha_trama+"' onclick='registrar_rawdata(\""+id_div+"\",\""+t_rawdata+"\")'><span class='ui-icon ui-icon-circle-arrow-s'></span></li></ul></div>";
+                                    btn_mostrartrama = "<div align='center' style='float:right'><ul><li style='width:18px' class='ui-state-default ui-corner-all title='mostrar rawdata "+fecha_trama+"' onclick='$.dialog({title: \"RAWDATA del "+fecha_trama+"\" , content:\""+t_rawdata+"\"})'><span class='ui-icon ui-icon-info'></span></li></ul></div>";
                                     break;
                                 }
                             }
@@ -285,7 +288,7 @@ public class SisdadController {
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("oTableTools");sv.add("{\"aButtons\": [{\"sExtends\": \"collection\",\"sButtonText\": \"Guardar\",\"aButtons\":[ \"xls\"]}]}");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm'},{text:'CAMBIO DE ESTADO MASIVO',action:function( e, dt, node, config ) {sisdad_confirm_cambio_estado_masivo()},className:'btn btn-info btn-sm'},{text:'CAMBIO DE FACTOR MASIVO',action:function( e, dt, node, config ) {sisdad_confirm_cambio_factor_masivo()},className:'btn btn-info btn-sm'}]");vc_tbl.add(sv);sv =  new Vector();
             //////////////////////////////////////////////////////////
             
             sv.add("aoColumns");sv.add("["
@@ -294,7 +297,7 @@ public class SisdadController {
                                     + "{\"sTitle\":\""+"<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all' title='Descargar todos los datos' onclick='registrar_rawdata_all()'><span class='ui-icon ui-icon-circle-arrow-s'></span></li></ul></div>"+"\",\"sWidth\":\"40px\" }, " //boton masivo para descargar todos los datos
                                     + "{\"sTitle\":\"-\",\"sWidth\":\"40px\" } "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(new Util().vector2json(datos_tmp));vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aaData");sv.add(new Util().vector2json_tbl(datos_tmp));vc_tbl.add(sv);sv =  new Vector();
             sv.add("aoColumnDefs");sv.add("[{\"sClass\":\"center\",\"aTargets\":["+col_center+"]},{\"aTargets\":["+ult_col+"],\"bVisible\": false,\"bSearchable\": false}]");vc_tbl.add(sv);sv =  new Vector();
             ///////////////////////////////////////////////////////
            
@@ -318,7 +321,8 @@ public class SisdadController {
                                 + "   $('td:eq('+i+')', nRow).children('span').html( v ); "
                                 + "   $('td:eq('+i+')', nRow).addClass('ui-state-error' ); "
                                 + " }"
-                              ///////+ " console.log($('td:eq("+"0"+")', nRow).html());  " 
+                              ///////+ " console.log($('td:eq("+"0"+")', nRow).html());  "
+                    
                                 //mostrar botones de malo y dudoso
                                 + " $('td:eq('+i+')', nRow).mouseover(function() {" 
                                 +  "  $(this).children('ul').show(); " 
@@ -382,7 +386,33 @@ public class SisdadController {
             
             request.setAttribute("response", rpta);
 
-            return "sisdad/registrar_rawdata";
+            return "sisdad/act_estado_reg";
+	}
+        
+        @RequestMapping(value = { "/sisdad/act_factconver_reg"}, method = RequestMethod.GET)
+	public String SisdadActFactConverReg(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+                        
+            String codesta = request.getParameter("codesta");
+            String fecha = request.getParameter("fecha");
+            String param = request.getParameter("param");
+            String fact = request.getParameter("fact");
+            String array[] = new String[4];
+            array[0] = codesta;
+            array[1] = fecha;
+            array[2] = param;
+            array[3] = fact;
+            Vector v_datos = new ConeccionDB().EjecutarProcedureOracle("pkg_decode.sp_act_factconver", array);
+
+            Vector sv = (Vector) v_datos.get(0);
+            
+//            String json = new Util().vector2json(v_datos);
+//            request.setAttribute("response", json);        
+            String rpta = (String) sv.get(0);
+//            String fecha = (String) sv.get(1);            
+            
+            request.setAttribute("response", rpta);
+
+            return "sisdad/act_factconver_reg";
 	}
         
         

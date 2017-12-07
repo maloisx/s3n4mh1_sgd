@@ -32,6 +32,10 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/act_estado_reg.jsp" />  
    </definition>  
    
+     <definition name="sisdad/act_factconver_reg"  extends="ajax-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/act_factconver_reg.jsp" />  
+   </definition>  
+   
    <definition name="sisdad/mant_esta_goes"  extends="base-definition">  
        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_esta_goes.jsp" />  

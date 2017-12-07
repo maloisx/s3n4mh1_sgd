@@ -13,7 +13,7 @@
     
     FECHA DE FIN: <input id="fecha_fin" value="${requestScope['fecha_fin']}" />
     
-    <button id="btn_show_tbldatos"  class="ui-button ui-widget ui-corner-all" id="btn_mostrar_tbl_datos" onclick="mostrar_tbl_datos()">Mostrar datos</button>
+    <button id="btn_show_tbldatos"  class="ui-button ui-widget ui-corner-all btn btn-info btn-sm" id="btn_mostrar_tbl_datos" onclick="mostrar_tbl_datos()">Mostrar datos</button>
     
 </div> 
 <br>
