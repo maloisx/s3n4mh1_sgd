@@ -108,19 +108,19 @@
             <!--<link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.bootstrap.css" rel="stylesheet">-->
             <link href="<c:url value='/static/datatables/ext/buttons.bootstrap.css'/>" rel="stylesheet">
                 
-            <link href="<c:url value='/static/kendo/css/kendo.common.min.css'/>" rel="stylesheet">
+<!--            <link href="<c:url value='/static/kendo/css/kendo.common.min.css'/>" rel="stylesheet">
 	    <link href="<c:url value='/static/kendo/css/kendo.default.min.css'/>" rel="stylesheet">
 	    <link href="<c:url value='/static/kendo/css/kendo.dataviz.min.css'/>" rel="stylesheet">
 	    <link href="<c:url value='/static/kendo/css/kendo.bootstrap.min.css'/>" rel="stylesheet">
 	    <link href="<c:url value='/static/kendo/css/examples.css'/>" rel="stylesheet">   
-	    <script src="<c:url value='/static/kendo/js/kendo.all.js'/>"></script> 
+	    <script src="<c:url value='/static/kendo/js/kendo.all.js'/>"></script> -->
 	    
-	    <script src="<c:url value='/static/kendo/js/console.js'/>"></script>
-	    <script src="<c:url value='/static/kendo/js/prettify.js'/>"></script>
+<!--	    <script src="<c:url value='/static/kendo/js/console.js'/>"></script>
+	    <script src="<c:url value='/static/kendo/js/prettify.js'/>"></script>-->
 	        
-            <script src="<c:url value='/static/kendo/js/kendo.culture.es-PE.js'/>"></script>
+<!--            <script src="<c:url value='/static/kendo/js/kendo.culture.es-PE.js'/>"></script>
             <script>kendo.culture('es-PE');</script>	
-            <script src="<c:url value='/static/kendo/js/kendo_fn.js'/>"></script>
+            <script src="<c:url value='/static/kendo/js/kendo_fn.js'/>"></script>-->
             
 <!--            <script src="https://code.highcharts.com/highcharts.js"></script>
             <script src="https://code.highcharts.com/highcharts-more.js"></script>

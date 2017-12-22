@@ -63,7 +63,7 @@
                                                 </div>
                                                 <hr>
                                                 <div style="text-align: right;padding-right: 10px;">
-                                                    <a class="btn-flat waves-effect waves-teal" id="btn_reset_pass">¿Perdio su clave?</a>
+                                                    <a class="btn-flat waves-effect waves-teal" id="btn_reset_pass">SOLICITAR NUEVA CONTRASEÑA</a>
                                                 </div>
                                                 <br>
                                             </div>
@@ -127,7 +127,7 @@ body{
     });
 
     $('#btn_reset_pass').confirm({
-        title: '¿Perdio su Clave?',
+        title: 'SOLICITE UNA NUEVA CONTRASEÑA',
         content: '' +
                 '<form action="" class="formName">' +
                 '<div class="form-group">' +
@@ -135,6 +135,8 @@ body{
                 '<input type="text" placeholder="correo electronico" class="mail form-control" required />' +
                 '</div>' +
                 '</form>',
+        boxWidth: '500px',
+        useBootstrap: false,
         buttons: {
             formSubmit: {
                 text: 'Enviar',

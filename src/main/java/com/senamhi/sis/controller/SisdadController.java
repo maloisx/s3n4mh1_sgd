@@ -2,9 +2,11 @@ package com.senamhi.sis.controller;
 
 import com.senamhi.sis.connection.ConeccionDB;
 import com.senamhi.sis.functions.Util;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -283,7 +285,9 @@ public class SisdadController {
             sv.add("bPaginate");sv.add("false");vc_tbl.add(sv);sv =  new Vector();
             sv.add("iDisplayLength");sv.add(datos_tmp.size());vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("bJQueryUI");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+            
+            sv.add("fixedHeader");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
             
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
@@ -323,13 +327,13 @@ public class SisdadController {
                                 + " }"
                               ///////+ " console.log($('td:eq("+"0"+")', nRow).html());  "
                     
-                                //mostrar botones de malo y dudoso
-                                + " $('td:eq('+i+')', nRow).mouseover(function() {" 
-                                +  "  $(this).children('ul').show(); " 
-                                +  " }); "
-                                + " $('td:eq('+i+')', nRow).mouseout(function() { " 
-                                +  "  $(this).children('ul').hide(); " 
-                                +  " }); "
+//                                    //mostrar botones de malo y dudoso
+//                                    + " $('td:eq('+i+')', nRow).mouseover(function() {" 
+//                                    +  "  $(this).children('ul').show(); " 
+//                                    +  " }); "
+//                                    + " $('td:eq('+i+')', nRow).mouseout(function() { " 
+//                                    +  "  $(this).children('ul').hide(); " 
+//                                    +  " }); "
                               + " } "
                               + " }"
                           + "}";
@@ -471,5 +475,37 @@ public class SisdadController {
             
             return "sisdad/mant_esta_goes_tbl";
 	}
+        
+        
+    @RequestMapping(value = { "/sisdad/mant_nueva_estacion"}, method = RequestMethod.GET)
+    public String SisdadNuevaEstacion(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        request.setAttribute("title_pag","REGISTRAR NUEVA ESTACION GOES");
+        
+        return "sisdad/mant_nueva_estacion";
+    } 
+    
+    
+    @RequestMapping(value = { "/sisdad/mant_ptoobs_subirfile"}, method = RequestMethod.GET)
+    public String SisdadPtoObsSubirFile(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        request.setAttribute("title_pag","Subir File");
+        
+        return "sisdad/mant_ptoobs_subirfile";
+    }
+    
+     @RequestMapping(value = { "/sisdad/mant_ptoobs_reporte"}, method = RequestMethod.GET)
+    public String SisdadPtoObsReporte(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        request.setAttribute("title_pag","Reporte");
+        
+        return "sisdad/mant_ptoobs_reporte";
+    } 
+    
+    
+        
         
 }

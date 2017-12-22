@@ -19,7 +19,7 @@
 
             <link href="<c:url value='/static/css/content.css'/>" rel="stylesheet" type="text/css">
             <link href="<c:url value='/static/css/fg.menu.css'/>" rel="stylesheet" type="text/css">
-            <link href="<c:url value='/static/css/index.css'/>" rel="stylesheet" type="text/css">
+            <!--<link href="<c:url value='/static/css/index.css'/>" rel="stylesheet" type="text/css">-->
             <link href="<c:url value='/static/css/jquery.jqplot.css'/>" rel="stylesheet" type="text/css">
             <link href="<c:url value='/static/css/menu_lateral.css'/>" rel="stylesheet" type="text/css">
             <!--<link href="<c:url value='/static/css/ui.jqgrid.css'/>" rel="stylesheet" type="text/css">-->
@@ -70,8 +70,8 @@
 			});
 		</script>
 
-            <link href="<c:url value='/static/datatables/css/demo_page.css'/>" rel="stylesheet">
-            <link href="<c:url value='/static/datatables/css/demo_table.css'/>" rel="stylesheet">
+            <!--<link href="<c:url value='/static/datatables/css/demo_page.css'/>" rel="stylesheet">-->
+            <!--<link href="<c:url value='/static/datatables/css/demo_table.css'/>" rel="stylesheet">-->
             <link href="<c:url value='/static/datatables/css/TableTools.css'/>" rel="stylesheet">
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/jquery.dataTables.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/ZeroClipboard.js'/>"></script>

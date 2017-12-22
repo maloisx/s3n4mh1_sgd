@@ -8,7 +8,8 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/resum_datos.jsp" />  
    </definition> 
    
-   <definition name="sisdad/datos"  extends="ajax-definition">  
+   <!--ajax-definition-->
+   <definition name="sisdad/datos"  extends="ajax-definition">   
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/datos.jsp" />  
    </definition> 
    
@@ -44,5 +45,17 @@
    <definition name="sisdad/mant_esta_goes_tbl"  extends="ajax-definition">  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_esta_goes_tbl.jsp" />  
    </definition> 
+      
+   <definition name="sisdad/mant_nueva_estacion"  extends="popup-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_nueva_estacion.jsp" />  
+   </definition> 
+ 
+       <definition name="sisdad/mant_ptoobs_subirfile"  extends="base-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_ptoobs_subirfile.jsp" />  
+   </definition> 
+   
+    <definition name="sisdad/mant_ptoobs_reporte"  extends="base-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_ptoobs_reporte.jsp" />  
+   </definition>   
  
 </tiles-definitions>

@@ -8,7 +8,7 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisper/index.jsp" />  
    </definition> 
    
-   <definition name="sisper/reporteasistencia.jsp" extends="base-definition">  
+   <definition name="sisper/reporteasistencia" extends="base-definition">  
        <put-attribute name="title" value="sisper reporte de asistencia" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisper/reporteasistencia.jsp" />  
    </definition> 
