@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+
+    <definition name="pad/mant_expedientes_pad" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad.jsp" />  
+    </definition> 
+    
+    <definition name="pad/mant_expedientes_pad_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_expedientes_pad_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_popup.jsp" />  
+    </definition> 
+       
+    <definition name="pad/mant_expedientes_pad_modifica_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_modifica_popup.jsp" />  
+    </definition> 
+    
+    <definition name="pad/mant_expedientes_pad_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="pad/uploadfile"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/uploadfile.jsp" />  
+    </definition>   
+       
+    <definition name="pad/mant_adjunto_cargar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_adjunto_cargar.jsp" />  
+    </definition>   
+       
+    <definition name="pad/mant_doc_detalle"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_doc_detalle.jsp" />  
+    </definition>
+       
+    <definition name="pad/mant_expedientes_pad_docs_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_docs_tbl.jsp" />  
+    </definition>       
+    
+    <definition name="pad/mant_expedientes_pad_consulta_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_consulta_popup.jsp" />  
+    </definition>     
+       
+    <definition name="pad/mant_investigado_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_investigado_popup.jsp" />  
+    </definition>     
+    
+    <definition name="pad/mant_investigado_consulta_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_investigado_consulta_popup.jsp" />  
+    </definition>    
+    
+    <definition name="pad/mant_investigados_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_investigados_tbl.jsp" />  
+    </definition>  
+       
+    <definition name="pad/mant_investigado_detalle"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_investigado_detalle.jsp" />  
+    </definition>
+          
+    <definition name="pad/mant_falta_investigado_cargar_cbo"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta_investigado_cargar_cbo.jsp" />  
+    </definition>
+          
+    <definition name="pad/mant_medida_caut" extends="base-definition">  
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_medida_caut.jsp" />  
+    </definition>      
+   
+    <definition name="pad/mant_medida_caut_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_medida_caut_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_falta_cargar_cbo"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta_cargar_cbo.jsp" />  
+    </definition>  
+                
+    <definition name="pad/mant_investigado_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_investigado_guardar.jsp" />  
+    </definition>  
+                
+    <definition name="pad/mant_investigado_modificar_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_investigado_modificar_guardar.jsp" />  
+    </definition>  
+                
+    <definition name="pad/mant_asigna_abogado_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_asigna_abogado_popup.jsp" />  
+    </definition>
+    
+    <definition name="pad/mant_asigna_abogado_modificar_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_asigna_abogado_modificar_guardar.jsp" />  
+    </definition> 
+    
+    <definition name="pad/mant_buscar" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_buscar.jsp" />  
+    </definition>
+    
+    <definition name="pad/mant_buscar_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_buscar_tbl.jsp" />  
+    </definition>    
+    
+    <definition name="pad/mant_reporte1" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte1.jsp" />  
+    </definition> 
+          
+       
+                
+</tiles-definitions>

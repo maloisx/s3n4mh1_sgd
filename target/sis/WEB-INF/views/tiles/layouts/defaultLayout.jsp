@@ -64,8 +64,8 @@
                 
 		<script type="text/javascript">
 			var path="${pageContext.request.contextPath}/";
-//                        var path_ws="http://sgd.senamhi.gob.pe/ws/rest/global";
-                        var path_ws="http://localhost:8085/ws/rest/global";
+                        var path_ws="http://sgd.senamhi.gob.pe/ws/rest/global";
+//                        var path_ws="http://localhost:8085/ws/rest/global";
 			$(function(){
 				$("input:submit, input:button, input:reset, button").button();
 			});
@@ -191,6 +191,7 @@
             <script src="<c:url value='/static/js/js_sisdad.js'/>"></script>
             <script src="<c:url value='/static/js/js_sgd.js'/>"></script>
             <script src="<c:url value='/static/js/js_sisbien.js'/>"></script>
+            <script src="<c:url value='/static/js/js_pad.js'/>"></script>
 </head>
  
 <body>    

@@ -39,9 +39,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
- *
  * @author Kori
- */
+**/
 @Controller
 @RequestMapping("/")
 public class SgdController {
@@ -4481,8 +4480,7 @@ public class SgdController {
             String prof = "4";
             String vent = "5";          
             
-//            if (perfil.equals(altdir) || perfil.equals(vent)){
-            if (perfil.equals(altdir) || perfil.equals(vent) || id_uo.equals("90000003") || id_uo.equals("90000044") || id_uo.equals("90000048")){    
+            if (perfil.equals(altdir) || perfil.equals(vent) || id_uo.equals("90000003") || id_uo.equals("90000044") || id_uo.equals("90000048") || id_uo.equals("90000052")){    
 //                String np = "senamhi.fn_uo_flujo_consulta";
                 String np = "senamhi.fn_altdir_destino_consulta";
                 String array_acc[] = new String[1];
@@ -8980,7 +8978,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     }   
 //FIN PROCEDIMIENTO MANTENIMIENTO POPUP
 //
-//HOLA NO ME ASUSTEN POR FA
+//
     
 }
 
