@@ -261,7 +261,7 @@ public class PadController {
         String sancionador = request.getParameter("sancionador");  
         String fecnotif_iniPAD = request.getParameter("fecnotif_iniPAD");  
         String fecpres_PAD = request.getParameter("fecpres_PAD");  
-        
+//        
         String var_request = "";
 
         try {                    
