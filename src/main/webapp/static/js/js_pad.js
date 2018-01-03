@@ -86,9 +86,24 @@ function pad_mant_expedientes_pad_guardar(){
     var input = document.querySelector('input[type="file"]');
     var iddoc = $('#hd_iddoc').val(); 
     var instructor = $('#cb_instructor').val();   
+    if(instructor == undefined){
+        instructor = '';
+    }
+    
     var sancionador = $('#cb_sancionador').val();   
+    if(sancionador == undefined){
+        sancionador = '';
+    }
+    
     var fecnotif_iniPAD = $('#txt_fecnotif_iniPAD').val(); 
-    var fecpres_PAD = $('#txt_fecpres_PAD').val();   
+    if(fecnotif_iniPAD == undefined){
+        fecnotif_iniPAD = '';
+    }
+    
+    var fecpres_PAD = $('#txt_fecpres_PAD').val(); 
+    if(fecpres_PAD == undefined){
+        fecpres_PAD = '';
+    }
    
 //    Mensaje ingreso información 
      var msj_error = "";
@@ -141,13 +156,16 @@ function pad_mant_expedientes_pad_guardar(){
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");
             },
-            success: function(requestData){                
+            success: function(requestData){  
+                console.log('-----------------------<>>>>>>'+requestData);
                 arrayobj = jQuery.parseJSON(requestData);
+                
                 var id  = arrayobj[0][0];
+//                console.log('------------------------<<<<<<<>>>>>>>>'+id);
                 var msj = arrayobj[0][1];
                 var id_doc = arrayobj[0][2];
-                var fec_presc_ipad = arrayobj[0][3];
-                var ndoc = arrayobj[0][4];
+                var ndoc = arrayobj[0][3];
+                var fec_presc_ipad = arrayobj[0][4];
                 
                 $('#txt_nroexp').val(id);
                 $('#div_mensaje_ajax').html(msj);
