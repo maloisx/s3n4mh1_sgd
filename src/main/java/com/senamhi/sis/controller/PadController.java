@@ -53,7 +53,7 @@ public class PadController {
             request.setAttribute("title_pag","EXPEDIENTES DEL PAD");
             return "pad/mant_expedientes_pad";
 	}
-//FIN LISTA DE EXPEDIENTE DEL PAD BASE
+//FIN LISTA DE EXPEDIENTE DEL PAD BASE xxxxxx
 //
 //INICIO LISTA DE EXPEDIENTE DEL PAD TABLA        
     @RequestMapping(value = {"/pad/mant_expedientes_pad_tbl"}, method = RequestMethod.GET)
