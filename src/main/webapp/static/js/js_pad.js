@@ -156,12 +156,10 @@ function pad_mant_expedientes_pad_guardar(){
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");
             },
-            success: function(requestData){  
-                console.log('-----------------------<>>>>>>'+requestData);
+            success: function(requestData){ 
                 arrayobj = jQuery.parseJSON(requestData);
                 
                 var id  = arrayobj[0][0];
-//                console.log('------------------------<<<<<<<>>>>>>>>'+id);
                 var msj = arrayobj[0][1];
                 var id_doc = arrayobj[0][2];
                 var ndoc = arrayobj[0][3];
@@ -211,6 +209,159 @@ function pad_mant_expedientes_pad_guardar(){
     } 
 }
 //FIN EXPEDIENTE PAD GUARDAR
+//
+//INICIO EXPEDIENTE PAD NUEVO GUARDAR
+function pad_mant_expedientes_pad_nuevo_guardar(){
+    var id = $('#txt_nroexp').val();
+    var fecharecep = $('#txt_fecharecep').val();
+    var fecpresc_iniPAD = $('#txt_fecpresc_iniPAD').val();
+    var etapa = $('#cb_etapa').val();
+    var denunciante = $('#cb_denunciante').val();
+    var dependencia = $('#cb_dependencia').val();
+    var abogado = $('#cb_abogado').val();
+    var documento = $('#cb_documento').val();
+    var nrodoc = $('#txt_nrodoc').val();    
+    var fechadoc = $('#txt_fechadoc').val();    
+    var folio = $('#txt_folio').val();    
+    var plazo = $('#txt_plazo').val();    
+    var remite = $('#cb_remite').val();    
+    var destino = $('#cb_destino').val();    
+    var asunto = $('#txt_asunto').val(); 
+    asunto = asunto.replace("–","");
+    asunto = asunto.replace("\“","'");
+    asunto = asunto.replace("\”","'"); 
+    var observacion = $('#txt_observacion').val();  
+    observacion = observacion.replace("–","");
+    observacion = observacion.replace("\“","'");
+    observacion = observacion.replace("\”","'"); 
+    var input = document.querySelector('input[type="file"]');
+    var iddoc = $('#hd_iddoc').val(); 
+    var anio = $('#cb_anio').val(); 
+    var instructor = $('#cb_instructor').val();   
+    if(instructor == undefined){
+        instructor = '';
+    }
+    
+    var sancionador = $('#cb_sancionador').val();   
+    if(sancionador == undefined){
+        sancionador = '';
+    }
+    
+    var fecnotif_iniPAD = $('#txt_fecnotif_iniPAD').val(); 
+    if(fecnotif_iniPAD == undefined){
+        fecnotif_iniPAD = '';
+    }
+    
+    var fecpres_PAD = $('#txt_fecpres_PAD').val(); 
+    if(fecpres_PAD == undefined){
+        fecpres_PAD = '';
+    }
+   
+//    Mensaje ingreso información 
+     var msj_error = "";
+     
+    if ($('#cb_denunciante').val() == ''){
+        msj_error += " Denunciante.";
+    }if ($('#cb_dependencia').val() == ''){
+        msj_error += " Dependencia.";
+    }if ($('#cb_abogado').val() == ''){
+        msj_error += " Abogado.";
+    }if ($('#cb_documento').val() == ''){
+        msj_error += " Tipo de documento.";
+    }if ($('#txt_nrodoc').val().length == 0){
+        msj_error += " N° de documento.";
+    }if ($('#txt_folio').val().length == 0){
+        msj_error += " N° de folios.";
+    }if ($('#cb_remite').val() == ''){
+        msj_error += " Remitente.";
+    }if ($('#cb_destino').val() == ''){
+        msj_error += " Destinatario.";
+    }if ($('#txt_asunto').val().length == 0){
+        msj_error += " Asunto.";
+    }
+    
+    if(msj_error == ""){   
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_expedientes_pad_nuevo_guardar/", 
+            data:     "id="+id+
+                      "&abogado="+abogado+
+                      "&fecharecep="+fecharecep+
+                      "&fecpresc_iniPAD="+fecpresc_iniPAD+
+                      "&etapa="+etapa+"&denunciante="+denunciante+
+                      "&dependencia="+dependencia+
+                      "&documento="+documento+
+                      "&nrodoc="+nrodoc+
+                      "&fechadoc="+fechadoc+
+                      "&folio="+folio+ 
+                      "&plazo="+plazo+ 
+                      "&remite="+remite+ 
+                      "&destino="+destino+
+                      "&asunto="+asunto+
+                      "&observacion="+observacion+
+                      "&iddoc="+iddoc+
+                      "&instructor="+instructor+ 
+                      "&sancionador="+sancionador+
+                      "&fecnotif_iniPAD="+fecnotif_iniPAD+ 
+                      "&fecpres_PAD="+fecpres_PAD+
+                      "&anio="+anio, 
+            beforeSend: function(data){ 	 	
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){ 
+                arrayobj = jQuery.parseJSON(requestData);
+                
+                var id  = arrayobj[0][0];
+                var msj = arrayobj[0][1];
+                var id_doc = arrayobj[0][2];
+                var ndoc = arrayobj[0][3];
+                var fec_presc_ipad = arrayobj[0][4];
+                
+                $('#txt_nroexp').val(id);
+                $('#div_mensaje_ajax').html(msj);
+                $('#hd_iddoc').val(id_doc);
+                $('#txt_fecpresc_iniPAD').val(fec_presc_ipad);
+                $('#txt_nrodoc').val(ndoc);
+                
+                /*inicio subir archivos */
+                var exp = id.split('-')[0];
+                var per = id.split('-')[1];
+//                
+                var fdata = new FormData();
+                var file;
+                fdata.append("anio",per);
+                fdata.append("exp",exp);
+                fdata.append("id_doc",id_doc);
+                for (var i = 0 ; i < input.files.length ; i++) {
+                    file = input.files[i];
+                    fdata.append(per+"|"+exp+"|"+id_doc+"|"+i, file);
+                }    
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST",path + "pad/uploadfile/", true);
+                xhr.addEventListener("load", function (e) {
+                    pad_mant_adjuntos_cargar(id_doc);//Carga lista de adjuntos                      
+                });
+                xhr.send(fdata);
+                if (input.files.length > 0){
+                    $('#div_mant_adjunto_tbl').show();
+                    $('#file-pad').fileinput('clear');
+                }
+                /*fin subir archivos */ 
+               
+               pad_mant_expedientes_pad_tbl();
+               mant_expedientes_pad_docs_tbl(id);
+               $.alert('<h6>' + msj + '</h6>');
+            },			
+            error: function(requestData, strError, strTipoError){											
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        }); 
+    }else{
+         $.alert('<h6>Ingrese: '+ msj_error + '</h6>');
+    } 
+}
+//FIN EXPEDIENTE PAD NUEVO GUARDAR
 //
 //INICIO LISTA ADJUNTOS
 function pad_mant_adjuntos_cargar(id_doc){ 
