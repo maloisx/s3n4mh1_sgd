@@ -8,7 +8,13 @@
             </div>
             <div class="input-field text-right col-sm-1">
                 <input type="text" name="txt_nroexp" id="txt_nroexp" value="${requestScope['nroexp']}" style="text-align: center; color: red; font-size:120%; font-weight:bold;" />                   
-                <label for="txt_nroexp" class="active">N° Exp:</label> 
+                <label for="txt_nroexp" class="active ">N° Exp:</label> 
+            </div>
+            <div class="input-field text-right col-sm-1">
+                <select name="cb_anio" id="cb_anio" class="form-control selectpicker" data-size="3">${requestScope['anio']}</select>                    
+                <label for="cb_anio" class="active">Año:</label>  
+            </div>
+            <div class="input-field text-right col-sm-1">
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecharecep" id="txt_fecharecep" type="text" class="datepicker" value="${requestScope['fecharecep']}" style="text-align: center; font-size:120%; font-weight:bold;" />
@@ -18,7 +24,7 @@
                 <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
                 <label for="txt_fecpresc_iniPAD" class="active">Fecha Prescr. Inicio PAD:</label>
             </div>
-            <div class="input-field col-sm-3">
+            <div class="input-field col-sm-1">
             </div>
             <div class="input-field text-right col-sm-4">
                 <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4" disabled>${requestScope['etapa']}</select>                    
@@ -67,7 +73,7 @@
                 <label for="cb_documento" class="active">Tipo Documento:</label> 
             </div>
             <div class="input-field text-right col-sm-2">
-                <input name="txt_nrodoc" id="txt_nrodoc" type="number" min="0" value="${requestScope['nrodoc']}" />                   
+                <input name="txt_nrodoc" id="txt_nrodoc" type="text" min="0" value="${requestScope['nrodoc']}" />                   
                 <label for="txt_nrodoc" class="active">N° Doc:</label> 
             </div>
             <div class="input-field col-sm-1">
@@ -153,7 +159,7 @@
                     </script>
                 </div>                        
                 <div class="row col-sm-12" id="div_mant_adjunto_tbl">
-                    <button onclick="pad_mant_expedientes_pad_guardar()" class="btn btn-info btn-sm">Guardar</button>
+                    <button onclick="pad_mant_expedientes_pad_nuevo_guardar()" class="btn btn-info btn-sm">Guardar</button>
                 </div>                        
             </div>             
             <div class="input-field col-sm-1">

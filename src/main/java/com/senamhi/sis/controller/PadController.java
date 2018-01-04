@@ -178,9 +178,15 @@ public class PadController {
             ConeccionDB cn = new ConeccionDB(); 
             Util util =  new Util();
 
-            request.setAttribute("anio", anio);
+//          información para el combo periodo (año)
+            String ne = "pad.fn_anio_consulta";
+            String array_cbo_anio[] = new String[1];
+            array_cbo_anio[0] = "";
+            Vector datos_cbo_anio = cn.EjecutarProcedurePostgres(ne, array_cbo_anio);            
+            String cb_anio = util.contenido_combo(datos_cbo_anio, anio);
+            request.setAttribute("anio", cb_anio);  
+            
             request.setAttribute("fecharecep", fecharecep);
-//            request.setAttribute("fecpresc_iniPAD", fecpresc_iniPAD);
             request.setAttribute("fecdoc", fec_doc);
             
 //          información para el combo Etapa
@@ -220,9 +226,8 @@ public class PadController {
             String array_cbo_tdoc[] = new String[1];
             array_cbo_tdoc[0] = "90000048";
             Vector datos_cbo_tdoc = cn.EjecutarProcedurePostgres(ntdoc, array_cbo_tdoc);
-            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "110");
-            request.setAttribute("clsfdoc", cb_desc_clsfdoc);
-            request.setAttribute("nrodoc", "00");
+            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "118");
+            request.setAttribute("clsfdoc", cb_desc_clsfdoc);            
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -302,6 +307,81 @@ public class PadController {
         return "pad/mant_expedientes_pad_guardar";
     }
 //FIN MANTENIMIENTO EXPEDIENTE GUARDAR     
+//
+//    
+//INICIO MANTENIMIENTO EXPEDIENTE NUEVO GUARDAR    
+@RequestMapping(value = {"/pad/mant_expedientes_pad_nuevo_guardar"}, method = RequestMethod.GET)
+    public String MantExpedientePadNuevoGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String codUser = (String) session.getAttribute("codUser");//id del usuario
+
+        String id = request.getParameter("id");
+        String fecharecep = request.getParameter("fecharecep");
+        String fecpresc_iniPAD = request.getParameter("fecpresc_iniPAD");
+        String etapa = request.getParameter("etapa");
+        String denunciante = request.getParameter("denunciante");
+        String dependencia = request.getParameter("dependencia");
+        String abogado = request.getParameter("abogado");
+        String documento = request.getParameter("documento");
+        String nrodoc = request.getParameter("nrodoc");        
+        String fechadoc = request.getParameter("fechadoc");        
+        String folio = request.getParameter("folio");        
+        String plazo = request.getParameter("plazo");        
+        String remite = request.getParameter("remite");        
+        String destino = request.getParameter("destino");        
+        String asunto =  request.getParameter("asunto").trim();
+        asunto = asunto.replace("\"","'");
+        asunto = asunto.replace("\n", "");
+        String observacion =  request.getParameter("observacion").trim();      
+        String iddoc = request.getParameter("iddoc");  
+        String instructor = request.getParameter("instructor");  
+        String sancionador = request.getParameter("sancionador");  
+        String fecnotif_iniPAD = request.getParameter("fecnotif_iniPAD");  
+        String fecpres_PAD = request.getParameter("fecpres_PAD");  
+        String anio = request.getParameter("anio");  
+//        
+        String var_request = "";
+
+        try {                    
+            ConeccionDB cdb = new ConeccionDB(); 
+            String np = "pad.fn_expediente_pad_mant_nuevo";
+            String array[] = new String[23];
+            array[0] = id;
+            array[1] = fecharecep;
+            array[2] = fecpresc_iniPAD;
+            array[3] = etapa;
+            array[4] = denunciante;
+            array[5] = dependencia;
+            array[6] = abogado;
+            array[7] = codUser;
+            array[8] = documento;
+            array[9] = nrodoc;
+            array[10] = fechadoc;
+            array[11] = folio;
+            array[12] = plazo;
+            array[13] = remite;
+            array[14] = destino;
+            array[15] = asunto;
+            array[16] = observacion;
+            array[17] = iddoc;
+            array[18] = instructor;
+            array[19] = sancionador;
+            array[20] = fecnotif_iniPAD;
+            array[21] = fecpres_PAD;
+            array[22] = anio;
+            
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+
+            var_request = new Util().vector2json(datos);
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_expedientes_pad_nuevo_guardar";
+    }
+//FIN MANTENIMIENTO EXPEDIENTE NUEVO GUARDAR     
 //
 //INICIO SUBIR DOCUMENTOS
 @RequestMapping(value = {"/pad/uploadfile"}, method = RequestMethod.POST)
@@ -1402,7 +1482,7 @@ public class PadController {
                 String documento = vss.get(17).toString();
                 String ndoc = vss.get(18).toString();
                  
-                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_medida_caut_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
                 
                 Vector vv = new Vector();
                 vv.add(i);
@@ -1493,7 +1573,7 @@ public class PadController {
 //FIN LISTA DE EXPEDIENTE DEL PAD BASE
 //
 //INICIO BUSCAR TABLA        
-    @RequestMapping(value = {"/pad/pad_mant_rep1_tbl"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/pad/mant_rep1_tbl"}, method = RequestMethod.GET)
 	public String AjaxQueryRep1Tbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
             String etapa = request.getParameter("etapa");    
@@ -1523,9 +1603,9 @@ public class PadController {
                 String fecharecep = vss.get(1).toString();
                 String v_etapa = vss.get(2).toString();
                 String v_estado = vss.get(4).toString();
-                String v_abogado = vss.get(17).toString();
+                String v_abogado = vss.get(5).toString();
                  
-                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_medida_caut_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
                 
                 Vector vv = new Vector();
                 vv.add(i);
@@ -1569,9 +1649,49 @@ public class PadController {
             String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
-            return "pad/pad_mant_rep1_tbl";
+            return "pad/mant_rep1_tbl";
 	}
 //FIN BUSCAR TABLA
+// 
+//INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
+    @RequestMapping(value = {"/pad/mant_reporte_graf1"}, method = RequestMethod.GET)
+	public String MantReporteGraf1(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","REPORTE DE EXPEDIENTES POR");
+        
+            try {
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+            
+//          información para el combo Etapa
+            String etapa = "pad.fn_etapa_consulta";
+            String array_cbo[] = new String[1];
+            array_cbo[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(etapa, array_cbo);
+            String cb_etapa = util.contenido_combo(datos_cbo, "");
+            request.setAttribute("etapa", cb_etapa);
+            
+//          información para el combo Estado
+            String estado = "pad.fn_estado_consulta";
+            String array_estado[] = new String[1];
+            array_estado[0] = "";
+            Vector datos_estado = cn.EjecutarProcedurePostgres(estado, array_estado);
+            String cb_estado = util.contenido_combo(datos_estado, "");
+            request.setAttribute("estado", cb_estado);
+            
+//          información para el combo Abogado
+            String abogado = "pad.fn_abogado_consulta";
+            String array_cbo_abogado[] = new String[1];
+            array_cbo_abogado[0] = "";
+            Vector datos_cbo_abogado = cn.EjecutarProcedurePostgres(abogado, array_cbo_abogado);
+            String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
+            request.setAttribute("abogado", cb_abogado);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            return "pad/mant_reporte_graf1";
+	}
+//FIN LISTA DE EXPEDIENTE DEL PAD BASE
 //     
 }
 

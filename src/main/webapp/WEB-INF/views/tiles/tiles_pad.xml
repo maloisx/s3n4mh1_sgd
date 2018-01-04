@@ -23,6 +23,10 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_guardar.jsp" />  
     </definition> 
     
+    <definition name="pad/mant_expedientes_pad_nuevo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_expedientes_pad_nuevo_guardar.jsp" />  
+    </definition> 
+    
     <definition name="pad/uploadfile"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/uploadfile.jsp" />  
     </definition>   
@@ -98,12 +102,20 @@
     
     <definition name="pad/mant_buscar_tbl"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_buscar_tbl.jsp" />  
-    </definition>    
+    </definition>
     
     <definition name="pad/mant_reporte1" extends="base-definition">   
        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte1.jsp" />  
-    </definition> 
+    </definition>
           
-       
-                
+    <definition name="pad/mant_rep1_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_rep1_tbl.jsp" />  
+    </definition>
+    
+    <definition name="pad/mant_reporte_graf1" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_graf1.jsp" />  
+    </definition>
+    
+    
+    
 </tiles-definitions>
