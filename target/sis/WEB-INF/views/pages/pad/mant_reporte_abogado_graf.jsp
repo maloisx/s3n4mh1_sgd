@@ -23,7 +23,7 @@
                     <label for="dt_fec_fin" class="active bmd-label-floating">Fecha Final:</label>
                 </div>
                 <div class="input-field col-sm-2">
-                    <button id="btn_busca" onclick="pad_mant_rep_grf1($('#dt_fec_ini').val(),$('#dt_fec_fin').val())" class="btn btn-info btn-sm" >
+                    <button id="btn_busca" onclick="pad_mant_rep_abogado_grf($('#dt_fec_ini').val(),$('#dt_fec_fin').val())" class="btn btn-info btn-sm" >
                         GENERAR
                     </button>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="input-field col-sm-1">
                     </div>
-                    <div class="col-sm-10" id="div_rep_grf" >
+                    <div class="col-sm-10" id="div_rep_abogado_grf" >
                     </div>
                     <div class="input-field col-sm-1">
                     </div>
@@ -54,7 +54,3 @@
 <style>  
     #reporte {height: 50%;}
 </style>
-
-<script>
-    
-</script>

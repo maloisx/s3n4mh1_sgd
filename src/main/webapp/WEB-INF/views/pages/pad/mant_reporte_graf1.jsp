@@ -24,7 +24,7 @@
                 </div>
                 <div class="input-field col-sm-2">
                     <button id="btn_busca" onclick="pad_mant_rep_grf1($('#dt_fec_ini').val(),$('#dt_fec_fin').val())" class="btn btn-info btn-sm" >
-                        BUSCAR
+                        GENERAR
                     </button>
                 </div>
                     
