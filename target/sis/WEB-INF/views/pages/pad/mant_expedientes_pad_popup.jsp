@@ -102,13 +102,13 @@
             <div class="input-field col-sm-1">
             </div>            
             <div class="input-field text-right col-sm-5">
-                <select name="cb_remite" id="cb_remite" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['persona']}</select>                    
+                <select name="cb_remite" id="cb_remite" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['remite']}</select>                    
                 <label for="cb_remite" class="active">Remite:</label> 
             </div>
             <div class="input-field col-sm-1">
             </div>
             <div class="input-field text-right col-sm-4">
-                <select name="cb_destino" id="cb_destino" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['persona']}</select>                    
+                <select name="cb_destino" id="cb_destino" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['destino']}</select>                    
                 <label for="cb_destino" class="active">Destino:</label> 
             </div>
             <div class="input-field col-sm-1">

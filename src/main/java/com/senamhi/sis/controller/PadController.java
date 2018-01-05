@@ -214,12 +214,20 @@ public class PadController {
             request.setAttribute("dependencia", cb_dependencia);
             
 //            información combos: denunciante, remite y destino
+            String cons_remite_uo = "senamhi.fn_destino_consulta";//consulta combo destino                  
+            String array_remite_uo[] = new String[1];
+            array_remite_uo[0] = "";
+            Vector datos_cbo_uo_remite = cn.EjecutarProcedurePostgres(cons_remite_uo, array_remite_uo); 
+            String cb_uo_rmte = util.contenido_combo(datos_cbo_uo_remite, "");
+            request.setAttribute("remite", cb_uo_rmte); 
+            
+//            información combos: denunciante, remite y destino
             String cons_destino_uo = "senamhi.fn_destino_consulta";//consulta combo destino                  
             String array_destino_uo[] = new String[1];
             array_destino_uo[0] = "";
             Vector datos_cbo_uo_destino = cn.EjecutarProcedurePostgres(cons_destino_uo, array_destino_uo); 
-            String cb_uo_dest = util.contenido_combo(datos_cbo_uo_destino, "");
-            request.setAttribute("persona", cb_uo_dest); 
+            String cb_uo_dest = util.contenido_combo(datos_cbo_uo_destino, "00122760");//UFS por defecto
+            request.setAttribute("destino", cb_uo_dest); 
             
 //            información tipo de documento
             String ntdoc = "sgd.fn_clasifdoc_seriedoc_consulta";//combo Tipo de Documentos por Unidad Orgánica
@@ -1656,35 +1664,9 @@ public class PadController {
 //INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
     @RequestMapping(value = {"/pad/mant_reporte_graf1"}, method = RequestMethod.GET)
 	public String MantReporteGraf1(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
-            request.setAttribute("title_pag","REPORTE DE EXPEDIENTES POR");
+            request.setAttribute("title_pag","REPORTE GRAFICO DE EXPEDIENTES POR ETAPA");
         
-            try {
-            ConeccionDB cn = new ConeccionDB();               
-            Util util =  new Util();
-            
-//          información para el combo Etapa
-            String etapa = "pad.fn_etapa_consulta";
-            String array_cbo[] = new String[1];
-            array_cbo[0] = "";
-            Vector datos_cbo = cn.EjecutarProcedurePostgres(etapa, array_cbo);
-            String cb_etapa = util.contenido_combo(datos_cbo, "");
-            request.setAttribute("etapa", cb_etapa);
-            
-//          información para el combo Estado
-            String estado = "pad.fn_estado_consulta";
-            String array_estado[] = new String[1];
-            array_estado[0] = "";
-            Vector datos_estado = cn.EjecutarProcedurePostgres(estado, array_estado);
-            String cb_estado = util.contenido_combo(datos_estado, "");
-            request.setAttribute("estado", cb_estado);
-            
-//          información para el combo Abogado
-            String abogado = "pad.fn_abogado_consulta";
-            String array_cbo_abogado[] = new String[1];
-            array_cbo_abogado[0] = "";
-            Vector datos_cbo_abogado = cn.EjecutarProcedurePostgres(abogado, array_cbo_abogado);
-            String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
-            request.setAttribute("abogado", cb_abogado);
+        try {
             
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1692,6 +1674,32 @@ public class PadController {
             return "pad/mant_reporte_graf1";
 	}
 //FIN LISTA DE EXPEDIENTE DEL PAD BASE
-//     
+//  
+//INICIO REPORTE POR PERIODO GRÁFICO
+@RequestMapping(value = {"/pad/mant_reporte_grafico1"}, method = RequestMethod.GET)
+    public String MantReporteGrafico1(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {   
+          
+        String f_ini = request.getParameter("f_ini");   
+        String f_fin = request.getParameter("f_fin");   
+        String var_request = "";
+        try {
+            ConeccionDB cn = new ConeccionDB();
+            String np = "pad.fn_rep_graf1_consulta";
+            String array[] = new String[2];
+            array[0] = f_ini;
+            array[1] = f_fin;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);                        
+            var_request = new Util().vector2json(datos); 
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        request.setAttribute("response", var_request);
+        
+        return "pad/mant_reporte_grafico1";
+    }
+//FIN REPORTE POR PERIODO GRÁFICO
+//        
 }
 

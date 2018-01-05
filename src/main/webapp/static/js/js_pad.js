@@ -808,7 +808,7 @@ function pad_mant_buscar_tbl(nroexp, anio, clsdoc, nrodoc, fecini, fecfin, fecin
 }
 //FIN BUSCAR EXPEDIENTE TABLA  
 //
-//INICIO BUSCAR EXPEDIENTE TABLA   
+//INICIO REPORTE EXPEDIENTE TABLA   
 function pad_mant_rep1_tbl(etapa, estado, abogado, fecini, fecfin, fecinipad, fecfinpad){   
         
     $.ajax({
@@ -833,5 +833,68 @@ function pad_mant_rep1_tbl(etapa, estado, abogado, fecini, fecfin, fecinipad, fe
         }
     });
 }
-//FIN BUSCAR EXPEDIENTE TABLA  
-// 
+//FIN REPORTE EXPEDIENTE TABLA  
+//
+//INICIO REPORTE GRÁFICO POR PERIODO
+function pad_mant_rep_grf1(){
+    var f_ini = $('#dt_fec_ini').val();
+    var f_fin = $('#dt_fec_fin').val();
+    
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_reporte_grafico1/",
+            data:     "f_ini="+f_ini+"&f_fin="+f_fin,
+            beforeSend: function(data){
+//                $('#div_rep_uo_periodo').html("Cargando...");
+            },
+            success: function(requestData){
+                console.log('-----------------------------------<>>>>>>>>'+requestData);
+                var arrayobj = jQuery.parseJSON(requestData);
+                arrayobj.reverse();
+                           
+                var id_etapa_exp = "";
+                var etapa_exp = "";
+                var valor = "";
+                var dat_cat =new Array();
+                var dat_ser =new Array();
+                 for(i=0; i<arrayobj.length; i++){
+                    id_etapa_exp = arrayobj[i][0];
+                    etapa_exp = arrayobj[i][1];
+                    valor = arrayobj[i][2];
+                    dat_cat.push(etapa_exp);
+                    dat_ser.push(parseFloat(valor));
+                 }
+                
+                Highcharts.chart('div_rep_grf', {
+                chart: {                    
+                    type: 'bar'
+                },
+                title: {
+                    text: "GRAFICO DEL "+ f_ini + ' AL '+ f_fin
+                },
+                xAxis: {
+                    categories: dat_cat
+                },
+                legend: {
+                    enabled: false
+                },
+                series: [{
+                    type: 'bar',
+                    name: 'Cantidad: ',
+                    data: dat_ser
+                }]
+            });
+                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_rep_grf').html("Error " + strTipoError +": " + strError);
+            }
+        }); 
+}
+//FIN REPORTE GRÁFICO POR PERIODO
+//
+
+
+
+
