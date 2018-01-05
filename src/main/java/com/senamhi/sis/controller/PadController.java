@@ -1723,19 +1723,55 @@ public class PadController {
             request.setAttribute("title_pag","REPORTE GRAFICO DE EXPEDIENTES POR ABOGADO");
         
         try {
-            Date date = new Date();//Fecha actual
-            DateFormat fechoy = new SimpleDateFormat("dd/mm/aaaa");
-            String hoy = fechoy.format(date);
+            Calendar c = Calendar.getInstance();//Anio actual para el registro del expediente
+            
+            Date date = new Date();//Fecha de registro del documento (por referencia)
+            DateFormat formatofec = new SimpleDateFormat("dd/MM/yyyy");
+            String hoy = formatofec.format(date);
             
             request.setAttribute("hoy", hoy);
             
-
+//Fecha de un mes antes
+            Date nuevaFecha = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, -30);
+            nuevaFecha = cal.getTime();
+            String fec_mes = formatofec.format(nuevaFecha); 
+            
+            request.setAttribute("fec_mes", fec_mes);
+            
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
         }            
             return "pad/mant_reporte_abogado_graf";
 	}
 //FIN LISTA DE EXPEDIENTE DEL PAD BASE
-//      
+// 
+//INICIO REPORTE POR ABOGADO GRÁFICO
+@RequestMapping(value = {"/pad/mant_reporte_abogado_grafico"}, method = RequestMethod.GET)
+    public String MantReporteAbogadoGrafico(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {   
+          
+        String f_ini = request.getParameter("f_ini");   
+        String f_fin = request.getParameter("f_fin");   
+        String var_request = "";
+        try {
+            ConeccionDB cn = new ConeccionDB();
+            String np = "pad.fn_rep_abogado_graf_consulta";
+            String array[] = new String[2];
+            array[0] = f_ini;
+            array[1] = f_fin;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);                        
+            var_request = new Util().vector2json(datos); 
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        request.setAttribute("response", var_request);
+        
+        return "pad/mant_reporte_abogado_grafico";
+    }
+//FIN REPORTE POR ABOGADO GRÁFICO 
+//         
 }
 

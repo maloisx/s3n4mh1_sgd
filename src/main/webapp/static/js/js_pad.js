@@ -116,9 +116,11 @@ function pad_mant_expedientes_pad_guardar(){
         msj_error += " Abogado.";
     }if ($('#cb_documento').val() == ''){
         msj_error += " Tipo de documento.";
-    }if ($('#txt_nrodoc').val().length == 0){
-        msj_error += " N° de documento.";
-    }if ($('#txt_folio').val().length == 0){
+    }
+//    if ($('#txt_nrodoc').val().length == 0){
+//        msj_error += " N° de documento.";
+//    }
+    if ($('#txt_folio').val().length == 0){
         msj_error += " N° de folios.";
     }if ($('#cb_remite').val() == ''){
         msj_error += " Remitente.";
@@ -220,7 +222,6 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
     var dependencia = $('#cb_dependencia').val();
     var abogado = $('#cb_abogado').val();
     var documento = $('#cb_documento').val();
-    console.log('---------------------<>>>>>>>>>'+documento)
     var nrodoc = $('#txt_nrodoc').val();    
     var fechadoc = $('#txt_fechadoc').val();    
     var folio = $('#txt_folio').val();    
@@ -269,14 +270,14 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
         msj_error += " Abogado.";
     }if ($('#cb_documento').val() == ''){
         msj_error += " Tipo de documento.";
-    }
+    }    
     
-    if ($('#cb_documento').val() != '110'){
+//  se valida y solicita N° documento si es un reporte
+    if ($('#cb_documento').val() == '118'){
         if ($('#txt_nrodoc').val().length == 0){
             msj_error += " N° de documento.";
         }
-    }
-    
+    }    
     if ($('#txt_folio').val().length == 0){
         msj_error += " N° de folios.";
     }if ($('#cb_remite').val() == ''){
@@ -843,14 +844,14 @@ function pad_mant_rep1_tbl(etapa, estado, abogado, fecini, fecfin, fecinipad, fe
 }
 //FIN REPORTE EXPEDIENTE TABLA  
 //
-//INICIO REPORTE GRÁFICO POR PERIODO
+//INICIO REPORTE GRÁFICO POR ETAPA
 function pad_mant_rep_grf1(){
     var f_ini = $('#dt_fec_ini').val();
     var f_ini_formato = f_ini.split('/');
-    console.log('--------------------------->>>>>>>>>'+f_ini_formato[0]);
+    f_ini_formato = f_ini_formato[2]+'-'+f_ini_formato[1]+'-'+f_ini_formato[0];
     var f_fin = $('#dt_fec_fin').val();
-     var f_fin_formato = f_fin.split('-').reverse().join('/');
-    
+    var f_fin_formato = f_fin.split('/');
+    f_fin_formato = f_fin_formato[2]+'-'+f_fin_formato[1]+'-'+f_fin_formato[0];
     $.ajax({
             dataType: "html",
             type:     "GET",
@@ -902,9 +903,69 @@ function pad_mant_rep_grf1(){
             }
         }); 
 }
-//FIN REPORTE GRÁFICO POR PERIODO
+//FIN REPORTE GRÁFICO POR ETAPA
 //
-
+//INICIO REPORTE GRÁFICO POR ABOGADO
+function pad_mant_rep_abogado_grf(){
+    var f_ini = $('#dt_fec_ini').val();
+    var f_ini_formato = f_ini.split('/');
+    f_ini_formato = f_ini_formato[2]+'-'+f_ini_formato[1]+'-'+f_ini_formato[0];
+    var f_fin = $('#dt_fec_fin').val();
+    var f_fin_formato = f_fin.split('/');
+    f_fin_formato = f_fin_formato[2]+'-'+f_fin_formato[1]+'-'+f_fin_formato[0];
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_reporte_abogado_grafico/",
+            data:     "f_ini="+f_ini_formato+"&f_fin="+f_fin_formato,
+            beforeSend: function(data){
+//                $('#div_rep_uo_periodo').html("Cargando...");
+            },
+            success: function(requestData){
+                var arrayobj = jQuery.parseJSON(requestData);
+                arrayobj.reverse();
+                           
+                var id_etapa_exp = "";
+                var etapa_exp = "";
+                var valor = "";
+                var dat_cat =new Array();
+                var dat_ser =new Array();
+                 for(i=0; i<arrayobj.length; i++){
+                    id_etapa_exp = arrayobj[i][0];
+                    etapa_exp = arrayobj[i][1];
+                    valor = arrayobj[i][2];
+                    dat_cat.push(etapa_exp);
+                    dat_ser.push(parseFloat(valor));
+                 }
+                
+                Highcharts.chart('div_rep_abogado_grf', {
+                chart: {                    
+                    type: 'bar'
+                },
+                title: {
+                    text: "GRAFICO DEL "+ f_ini + ' AL '+ f_fin
+                },
+                xAxis: {
+                    categories: dat_cat
+                },
+                legend: {
+                    enabled: false
+                },
+                series: [{
+                    type: 'bar',
+                    name: 'Cantidad: ',
+                    data: dat_ser
+                }]
+            });
+                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_rep_abogado_grf').html("Error " + strTipoError +": " + strError);
+            }
+        }); 
+}
+//FIN REPORTE GRÁFICO POR ABOGADO
+//
 
 
 

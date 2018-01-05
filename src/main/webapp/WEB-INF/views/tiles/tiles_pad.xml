@@ -114,11 +114,17 @@
     
     <definition name="pad/mant_reporte_graf1" extends="base-definition">   
        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_graf1.jsp" />  
-    </definition>
+    </definition>    
     
     <definition name="pad/mant_reporte_grafico1"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_grafico1.jsp" />  
     </definition>
     
+    <definition name="pad/mant_reporte_abogado_graf" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_abogado_graf.jsp" />  
+    </definition>
     
+    <definition name="pad/mant_reporte_abogado_grafico"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_abogado_grafico.jsp" />  
+    </definition>
 </tiles-definitions>
