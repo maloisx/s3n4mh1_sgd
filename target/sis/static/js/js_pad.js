@@ -220,6 +220,7 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
     var dependencia = $('#cb_dependencia').val();
     var abogado = $('#cb_abogado').val();
     var documento = $('#cb_documento').val();
+    console.log('---------------------<>>>>>>>>>'+documento)
     var nrodoc = $('#txt_nrodoc').val();    
     var fechadoc = $('#txt_fechadoc').val();    
     var folio = $('#txt_folio').val();    
@@ -268,15 +269,22 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
         msj_error += " Abogado.";
     }if ($('#cb_documento').val() == ''){
         msj_error += " Tipo de documento.";
-    }if ($('#txt_nrodoc').val().length == 0){
-        msj_error += " N° de documento.";
-    }if ($('#txt_folio').val().length == 0){
+    }
+    
+    if ($('#cb_documento').val() != '110'){
+        if ($('#txt_nrodoc').val().length == 0){
+            msj_error += " N° de documento.";
+        }
+    }
+    
+    if ($('#txt_folio').val().length == 0){
         msj_error += " N° de folios.";
     }if ($('#cb_remite').val() == ''){
         msj_error += " Remitente.";
     }if ($('#cb_destino').val() == ''){
         msj_error += " Destinatario.";
-    }if ($('#txt_asunto').val().length == 0){
+    }
+    if ($('#txt_asunto').val().length == 0){
         msj_error += " Asunto.";
     }
     
@@ -838,18 +846,20 @@ function pad_mant_rep1_tbl(etapa, estado, abogado, fecini, fecfin, fecinipad, fe
 //INICIO REPORTE GRÁFICO POR PERIODO
 function pad_mant_rep_grf1(){
     var f_ini = $('#dt_fec_ini').val();
+    var f_ini_formato = f_ini.split('/');
+    console.log('--------------------------->>>>>>>>>'+f_ini_formato[0]);
     var f_fin = $('#dt_fec_fin').val();
+     var f_fin_formato = f_fin.split('-').reverse().join('/');
     
     $.ajax({
             dataType: "html",
             type:     "GET",
             url:      path + "pad/mant_reporte_grafico1/",
-            data:     "f_ini="+f_ini+"&f_fin="+f_fin,
+            data:     "f_ini="+f_ini_formato+"&f_fin="+f_fin_formato,
             beforeSend: function(data){
 //                $('#div_rep_uo_periodo').html("Cargando...");
             },
             success: function(requestData){
-                console.log('-----------------------------------<>>>>>>>>'+requestData);
                 var arrayobj = jQuery.parseJSON(requestData);
                 arrayobj.reverse();
                            

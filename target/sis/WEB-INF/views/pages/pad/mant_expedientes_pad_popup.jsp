@@ -8,7 +8,7 @@
             </div>
             <div class="input-field text-right col-sm-1">
                 <input type="text" name="txt_nroexp" id="txt_nroexp" value="${requestScope['nroexp']}" style="text-align: center; color: red; font-size:120%; font-weight:bold;" />                   
-                <label for="txt_nroexp" class="active ">N° Exp:</label> 
+                <label for="txt_nroexp" class="active bmd-label-floating">N° Exp:</label> 
             </div>
             <div class="input-field text-right col-sm-1">
                 <select name="cb_anio" id="cb_anio" class="form-control selectpicker" data-size="3">${requestScope['anio']}</select>                    
@@ -42,7 +42,7 @@
             <div class="input-field col-md-1">
             </div>
             <div class="input-field text-right col-sm-3">
-                <select name="cb_denunciante" id="cb_denunciante" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['persona']}</select>                    
+                <select name="cb_denunciante" id="cb_denunciante" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['remite']}</select>                    
                 <label for="cb_denunciante" class="active">Denunciante:</label> 
             </div> 
             <div class="input-field text-right col-sm-2">
@@ -73,8 +73,8 @@
                 <label for="cb_documento" class="active">Tipo Documento:</label> 
             </div>
             <div class="input-field text-right col-sm-2">
-                <input name="txt_nrodoc" id="txt_nrodoc" type="text" min="0" value="${requestScope['nrodoc']}" />                   
-                <label for="txt_nrodoc" class="active">N° Doc:</label> 
+                <input name="txt_nrodoc" id="txt_nrodoc" type="text" min="0" value="${requestScope['nrodoc']}" style="text-align: center; color: red; font-weight:bold;"/>                   
+                <label for="txt_nrodoc" class="active bmd-label-floating">N° Doc:</label> 
             </div>
             <div class="input-field col-sm-1">
             </div>

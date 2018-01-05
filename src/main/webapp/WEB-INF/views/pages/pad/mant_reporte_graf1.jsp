@@ -15,12 +15,12 @@
                 <div class="input-field col-sm-1">
                 </div>
                 <div class="input-field col-sm-1">
-                    <input type="date" name="dt_fec_ini" id="dt_fec_ini" value=""/>
-                    <label for="dt_fec_ini" class="active">Fecha Inicial:</label>
+                    <input name="dt_fec_ini" id="dt_fec_ini" type="text" class="datepicker" value="${requestScope['fec_mes']}" style="text-align: center; font-size:120%; font-weight:bold;" />
+                    <label for="dt_fec_ini" class="active bmd-label-floating">Fecha Inicial:</label>
                 </div>
                 <div class="input-field col-sm-1">
-                    <input type="date" name="dt_fec_fin" id="dt_fec_fin" value=""/>
-                    <label for="dt_fec_fin" class="active">Fecha Final:</label>
+                    <input name="dt_fec_fin" id="dt_fec_fin" type="text" class="datepicker" value="${requestScope['hoy']}" style="text-align: center; font-size:120%; font-weight:bold;" />
+                    <label for="dt_fec_fin" class="active bmd-label-floating">Fecha Final:</label>
                 </div>
                 <div class="input-field col-sm-2">
                     <button id="btn_busca" onclick="pad_mant_rep_grf1($('#dt_fec_ini').val(),$('#dt_fec_fin').val())" class="btn btn-info btn-sm" >
@@ -54,3 +54,7 @@
 <style>  
     #reporte {height: 50%;}
 </style>
+
+<script>
+    
+</script>

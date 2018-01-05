@@ -1667,6 +1667,22 @@ public class PadController {
             request.setAttribute("title_pag","REPORTE GRAFICO DE EXPEDIENTES POR ETAPA");
         
         try {
+            Calendar c = Calendar.getInstance();//Anio actual para el registro del expediente
+            
+            Date date = new Date();//Fecha de registro del documento (por referencia)
+            DateFormat formatofec = new SimpleDateFormat("dd/MM/yyyy");
+            String hoy = formatofec.format(date);
+            
+            request.setAttribute("hoy", hoy);
+            
+//Fecha de un mes antes
+            Date nuevaFecha = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, -30);
+            nuevaFecha = cal.getTime();
+            String fec_mes = formatofec.format(nuevaFecha); 
+            
+            request.setAttribute("fec_mes", fec_mes);
             
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1699,7 +1715,27 @@ public class PadController {
         
         return "pad/mant_reporte_grafico1";
     }
-//FIN REPORTE POR PERIODO GRÁFICO
-//        
+//FIN REPORTE POR PERIODO GRÁFICO 
+// 
+//INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
+    @RequestMapping(value = {"/pad/mant_reporte_abogado_graf"}, method = RequestMethod.GET)
+	public String MantReporteAbogadoGraf(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","REPORTE GRAFICO DE EXPEDIENTES POR ABOGADO");
+        
+        try {
+            Date date = new Date();//Fecha actual
+            DateFormat fechoy = new SimpleDateFormat("dd/mm/aaaa");
+            String hoy = fechoy.format(date);
+            
+            request.setAttribute("hoy", hoy);
+            
+
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            return "pad/mant_reporte_abogado_graf";
+	}
+//FIN LISTA DE EXPEDIENTE DEL PAD BASE
+//      
 }
 
