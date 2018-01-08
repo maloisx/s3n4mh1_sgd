@@ -97,7 +97,7 @@
                 <label for="cb_documento" class="active">Tipo Documento:</label> 
             </div>
             <div class="input-field text-right col-sm-1">
-                <input name="txt_nrodoc" id="txt_nrodoc" type="number" min="1" value="${requestScope['nrodoc']}" />                   
+                <input name="txt_nrodoc" id="txt_nrodoc" type="text" class="text-uppercase" value="${requestScope['nrodoc']}" />                   
                 <label for="txt_nrodoc" class="active">N° Doc:</label> 
             </div>
             <div class="input-field col-sm-1">

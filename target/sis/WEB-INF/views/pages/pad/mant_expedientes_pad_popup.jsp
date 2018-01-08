@@ -22,7 +22,7 @@
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
-                <label for="txt_fecpresc_iniPAD" class="active">Fecha Prescr. Inicio PAD:</label>
+                <label for="txt_fecpresc_iniPAD" class="active bmd-label-floating">Fecha Prescr. Inicio PAD:</label>
             </div>
             <div class="input-field col-sm-1">
             </div>
@@ -73,7 +73,7 @@
                 <label for="cb_documento" class="active">Tipo Documento:</label> 
             </div>
             <div class="input-field text-right col-sm-2">
-                <input name="txt_nrodoc" id="txt_nrodoc" type="text" min="0" value="${requestScope['nrodoc']}" style="text-align: center; color: red; font-weight:bold;"/>                   
+                <input name="txt_nrodoc" id="txt_nrodoc" type="text" value="${requestScope['nrodoc']}" class="text-uppercase" style="text-align: center; color: red; font-weight:bold;"/>                   
                 <label for="txt_nrodoc" class="active bmd-label-floating">N° Doc:</label> 
             </div>
             <div class="input-field col-sm-1">

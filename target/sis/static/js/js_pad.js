@@ -396,27 +396,6 @@ function pad_mant_adjuntos_cargar(id_doc){
 }
 //FIN LISTA ADJUNTOS DE UN EXPEDIENTE
 //
-//INICIO LISTA MEDIDA CAUTELAR TABLA
-function pad_mant_medida_caut_tbl(){
-        
-    $.ajax({
-        dataType: "html",
-        type:     "GET",
-        url:      path + "pad/mant_medida_caut_tbl/", 
-        data:     "" ,
-        beforeSend: function(data){
-                $('#div_mant_medida_caut_tbl').html("Cargando...");
-        },
-        success: function(requestData){
-                $('#div_mant_medida_caut_tbl').html(requestData);
-        },
-        error: function(requestData, strError, strTipoError){											
-                $('#div_mant_medida_caut_tbl').html("Error " + strTipoError +": " + strError);
-        }
-    });
-}
-//FIN LISTA MEDIDA CAUTELAR TABLA
-
 //INICIO LISTA DOCUMENTOS POR EXPEDIENTE TABLA   
 function mant_expedientes_pad_docs_tbl(nroexp){   
         
@@ -761,7 +740,7 @@ function pad_lista_exp_asigna_abogado_tmp(chbx){
 }
 //LISTA EXPEDIENTES PARA ASIGNAR ABOGADO POPUP
 //
-//INICIO MODIFICAR ASIGNAR ABOGADO
+//INICIO MODIFICAR ASIGNAR ABOGADO GUARDAR
 function pad_mant_asigna_abogado_modificar_guardar(){
     var cad_id_exp = $('#hd_cad_id_exp').val();
     var abogado = $('#cb_abogado').val();
@@ -787,7 +766,7 @@ function pad_mant_asigna_abogado_modificar_guardar(){
             }
         });
 }
-//FIN MODIFICAR ASIGNAR ABOGADO
+//FIN MODIFICAR ASIGNAR ABOGADO GUARDAR
 //
 //INICIO BUSCAR EXPEDIENTE TABLA   
 function pad_mant_buscar_tbl(nroexp, anio, clsdoc, nrodoc, fecini, fecfin, fecinipad, fecfinpad){   
@@ -965,6 +944,71 @@ function pad_mant_rep_abogado_grf(){
         }); 
 }
 //FIN REPORTE GRÁFICO POR ABOGADO
+//
+//INICIO LISTA MEDIDA CAUTELAR TABLA
+function pad_mant_medida_caut_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_medida_caut_tbl/", 
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_medida_caut_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_medida_caut_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_medida_caut_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN LISTA MEDIDA CAUTELAR TABLA
+//
+//INICIO MEDIDA CAUTELAR POPUP
+function pad_mant_medida_caut_popup(id){
+    
+    var url = encodeURI(path + "pad/mant_medida_caut_popup/?id="+id);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 600
+       ,"height" : 400 
+    });
+}
+//FIN MEDIDA CAUTELAR POPUP
+//
+//INICIO MODIFICAR ASIGNAR ABOGADO GUARDAR
+function pad_mant_medida_caut_guardar(){
+    var id = $('#hd_id').val();
+    var descripcion = $('#txt_des').val();
+    var estado = $('#cb_estado').val();
+       
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_medida_caut_guardar/",
+            data:     "id="+id+
+                      "&descripcion="+descripcion+	 	 
+                      "&estado="+estado,	 	 
+            beforeSend: function(data){
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                console.log('--------------------------->>>>>>>><<<<<<<'+requestData);
+                arrayobj = jQuery.parseJSON(requestData);
+                var msj  = arrayobj[0][1];
+                
+                pad_mant_medida_caut_tbl();
+                $.alert('<h6>' + msj + '</h6>');                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN MODIFICAR ASIGNAR ABOGADO GUARDAR
 //
 
 
