@@ -18,7 +18,7 @@
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecharecep" id="txt_fecharecep" type="text" class="datepicker" value="${requestScope['fecharecep']}" style="text-align: center; font-size:120%; font-weight:bold;" />
-                <label for="txt_fecharecep" class="active">Fecha Recepción:</label>
+                <label for="txt_fecharecep" class="active">Fecha Recep.ORH:</label>
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
@@ -87,7 +87,7 @@
                 <label for="txt_folio" class="active">Folios:</label> 
             </div>
             <div class="input-field col-sm-1">
-                <input name="txt_plazo" id="txt_plazo" type="number" min="1" value="${requestScope['plazo']}" placeholder="Días"/>                   
+                <input name="txt_plazo" id="txt_plazo" type="number" min="0" value="${requestScope['plazo']}" placeholder="Días"/>                   
                 <label for="txt_plazo" class="active">Plazo Rpta:</label> 
             </div>     
             <div class="input-field col-sm-1">

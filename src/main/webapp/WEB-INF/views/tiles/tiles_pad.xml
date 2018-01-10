@@ -135,7 +135,27 @@
     <definition name="pad/mant_medida_caut_guardar"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_medida_caut_guardar.jsp" />  
     </definition>
+        
+    <definition name="pad/mant_falta" extends="base-definition">  
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta.jsp" />  
+    </definition> 
     
+    <definition name="pad/mant_falta_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta_tbl.jsp" />  
+    </definition>      
     
+    <definition name="pad/mant_falta_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta_popup.jsp" />  
+    </definition>
+    
+    <definition name="pad/mant_falta_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta_guardar.jsp" />  
+    </definition>
+        
+    <definition name="pad/mant_filtro_abogado_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_filtro_abogado_tbl.jsp" />  
+    </definition>
+        
    
 </tiles-definitions>

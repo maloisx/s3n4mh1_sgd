@@ -100,6 +100,8 @@
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/vfs_fonts.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/buttons.html5.min.js'/>"></script>
                
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/buttons.print.js'/>"></script>
+            
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/dataTables.responsive.min.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/responsive.bootstrap.min.js'/>"></script>
             
