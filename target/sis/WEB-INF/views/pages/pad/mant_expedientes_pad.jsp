@@ -1,9 +1,16 @@
 <input type="hidden" name="hd_tmp_exp" id="hd_tmp_exp" value="" />  
 <div class="row">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-11" align="left">
-        <button onclick="pad_mant_expedientes_pad_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file"></span> Nuevo Expediente</button>
-        <button onclick="pad_mant_asigna_abogado_popup($('#hd_tmp_exp').val())" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-folder-open" ></span> Asignar Abogado</button>
+    
+    <div class="col-xs-11">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-3" align="left">
+            <button onclick="pad_mant_expedientes_pad_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file"></span> Nuevo Expediente</button>
+            <button onclick="pad_mant_asigna_abogado_popup($('#hd_tmp_exp').val())" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-folder-open" ></span> Asignar Abogado</button>
+        </div>
+        <div class="input-field text-right col-md-2">                    
+            <select name="cb_abogado_lista" id="cb_abogado_lista" class="form-control selectpicker" onchange="pad_mant_expedientes_pad_tbl(this.value)">${requestScope['abogado']}</select>
+            <label for="cb_abogado_lista" class="active">Filtro por abogado:</label>      
+        </div> 
     </div>
 </div>
 

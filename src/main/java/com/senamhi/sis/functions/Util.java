@@ -302,7 +302,7 @@ public class Util {
 //                         " </div> ";
             
                String  tbl = " <div class='form-group pull-right col-md-1' style='float: right!important;' > ";      
-                      tbl +=      " <label for=\"maxRows_"+n+"\" class=\"form-group active\">Ver </label>" +
+                      tbl +=      " <label for=\"maxRows_"+n+"\" class=\"form-group active\"> </label>" +
                       " <select class=\"form-control selectpicker\" id=\"maxRows_"+n+"\" onchange=\"pagination_tbl_"+n+"()\">\n" +
                             "    <option value=\"99999\">TODO</option>" +
                             "    <option value=\"5\" >5</option>" +

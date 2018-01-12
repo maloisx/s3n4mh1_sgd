@@ -12,7 +12,7 @@
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecharecep" id="txt_fecharecep" type="text" class="datepicker" value="${requestScope['fecharecep']}" style="text-align: center; font-size:120%; font-weight:bold;" />
-                <label for="txt_fecharecep" class="active">Fecha Recepción:</label>
+                <label for="txt_fecharecep" class="active">Fecha Recep.ORH:</label>
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="${requestScope['fecpresc_iniPAD']}" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
@@ -92,12 +92,12 @@
         <div class="row">
             <div class="input-field col-sm-1">
             </div>
-            <div class="input-field text-right col-sm-4">
+            <div class="input-field text-right col-sm-3">
                 <select name="cb_documento" id="cb_documento" class="form-control selectpicker " data-size="4">${requestScope['clsfdoc']}</select>                    
                 <label for="cb_documento" class="active">Tipo Documento:</label> 
             </div>
-            <div class="input-field text-right col-sm-1">
-                <input name="txt_nrodoc" id="txt_nrodoc" type="number" min="1" value="${requestScope['nrodoc']}" />                   
+            <div class="input-field text-right col-sm-2">
+                <input name="txt_nrodoc" id="txt_nrodoc" type="text" class="text-uppercase" value="${requestScope['nrodoc']}" />                   
                 <label for="txt_nrodoc" class="active">N° Doc:</label> 
             </div>
             <div class="input-field col-sm-1">
@@ -111,7 +111,7 @@
                 <label for="txt_fechadoc" class="active">Fec.Doc</label>
             </div>
             <div class="input-field text-right col-sm-1">
-                <input name="txt_plazo" id="txt_plazo" type="number" min="1" value="${requestScope['plazo']}" placeholder="Días"/>                   
+                <input name="txt_plazo" id="txt_plazo" type="number" min="0" value="${requestScope['plazo']}" placeholder="Días"/>                   
                 <label for="txt_plazo" class="active">Plazo Rpta:</label> 
             </div>     
             <div class="input-field col-sm-1">

@@ -4839,8 +4839,8 @@ public class SgdController {
         return "sgd/mant_deriva_guardar";    
     }
 //FIN DE DERIVACIÓN GUARDAR    
-    
-////INICIO SUBIR DOCUMENTOS ----------------------------------------------------------------------------------------------------------------
+//
+//INICIO SUBIR DOCUMENTOS ----------------------------------------------------------------------------------------------------------------
     @RequestMapping(value = {"/sgd/uploadfile"}, method = RequestMethod.POST)
     public String uploadfile(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
         
@@ -5017,6 +5017,7 @@ public class SgdController {
             Vector v_tbl_cab_adj =  new Vector();
 //            v_tbl_cab_adj.add("ID");
             v_tbl_cab_adj.add("Adjuntos");
+            v_tbl_cab_adj.add("_");
 //            v_tbl_cab_adj.add("Eliminar");
             v_tbl_cab_adj.add("");
             
@@ -5031,6 +5032,7 @@ public class SgdController {
                 String nom_doc = datos_v.get(1).toString();
                 String dir = datos_v.get(2).toString();
                 String anio = datos_v.get(4).toString();    
+                String cargo = datos_v.get(7).toString();    
 //                String btn_elim = "<div class='form-group dropdown'>"
 //                                    + "<button type='button' class='btn btn-info' id='elim' onclick='sgd_mant_adjuntos_elim('"+id_doc+"','"+nom_doc+"')'>"
 //                                    + "<span class='glyphicon glyphicon-remove'>"
@@ -5046,7 +5048,12 @@ public class SgdController {
                                     + "</div>";
                 
                 Vector v_adj = new Vector();
-                v_adj.add("Doc_"+ d);
+                    v_adj.add("Doc_"+ d);
+                if (cargo.equals("1")){
+                    v_adj.add("Cargo");
+                }else{
+                    v_adj.add("");
+                }                
 //                v_adj.add(nom_doc);
 //                v_adj.add(btn_elim);
                 v_adj.add(btn_ver);
@@ -8865,9 +8872,10 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String id_doc = vss.get(12).toString();
         String origen = vss.get(13).toString();
         String destino = vss.get(14).toString();
+        String ruta = vss.get(15).toString();
 
         String btn = "<div class='text-center'>"
-                + "<button type='button' class='btn btn-info' onclick='sgd_mant_cargo_popup(\""+cut_exp+"\",\""+id_doc+"\",\""+documento+"\")'>"
+                + "<button type='button' class='btn btn-info' onclick='sgd_mant_cargo_popup(\""+cut_exp+"\",\""+id_doc+"\",\""+documento+"\",\""+ruta+"\",\""+per_exp+"\")'>"
                 + "<span class='glyphicon glyphicon-search'></span>"
                 + "</button>"
                 + "</div>";
@@ -8936,39 +8944,17 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             throws ServletException, IOException {
             request.setAttribute("title_pag","REGISTRO DE CARGOS"); 
         try {
+            String anio = request.getParameter("anio");          
             String cut_exp = request.getParameter("cut_exp");          
             String id_doc = request.getParameter("id_doc");          
             String documento = request.getParameter("documento");          
-            
-            ConeccionDB cn = new ConeccionDB();   
-            
-            String np = "sgd.fn_cargo_docs_consulta";
-            String array[] = new String[1];
-            array[0] = id_doc;
-            Vector datos = cn.EjecutarProcedurePostgres(np, array);
-            
-            Util util =  new Util();
-            String obj_active_form = "";
-            
-            String i_id_proc = "";
-            String c_des_proc = "";
-            String i_id_trami = "";
-            String c_est_reg = "";
-            
-            for(int i = 0 ; i<datos.size() ; i++){
-                obj_active_form = "active";
-                
-                Vector datos_v =  (Vector) datos.get(i);
-                i_id_proc = datos_v.get(0).toString();
-                c_des_proc = datos_v.get(1).toString();
-                i_id_trami = datos_v.get(2).toString();
-                c_est_reg = datos_v.get(4).toString();
-            }
-            request.setAttribute("obj_active_form", obj_active_form);
-            
+            String ruta = request.getParameter("ruta");          
+                        
+            request.setAttribute("anio", anio);
             request.setAttribute("cut_exp", cut_exp);
             request.setAttribute("id_doc", id_doc);
             request.setAttribute("documento", documento);
+            request.setAttribute("ruta", ruta);
             
    
         } catch (Exception ex) {
@@ -8978,7 +8964,108 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     }   
 //FIN PROCEDIMIENTO MANTENIMIENTO POPUP
 //
+//INICIO CARGO GUARDA
+    @RequestMapping(value = {"/sgd/mant_cargo_consulta"}, method = RequestMethod.GET)
+    public String MantCargoGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+
+        String id_doc = request.getParameter("id_doc");
+        String var_request = "";
+
+        try {        
+        ConeccionDB cdb = new ConeccionDB(); 
+            String np = "sgd.fn_docadjunto_consulta";
+            String array[] = new String[1];
+            array[0] = id_doc;
+
+        Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+
+        var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        return "sgd/mant_cargo_consulta";
+    }
+//FIN CARGO GUARDAR 
 //
+//INICIO SUBIR CARGOS 
+    @RequestMapping(value = {"/sgd/uploadfile_cargo"}, method = RequestMethod.POST)
+    public String uploadfileCargo(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+        
+//        String anio = request.getParameter("anio");
+//        String id_doc = request.getParameter("id_doc");
+        String ruta = request.getParameter("ruta");        
+        
+        ConeccionDB cdb = new ConeccionDB();
+        
+//        String UPLOAD_DIRECTORY = "/opt/glassfish4/glassfish/domains/domain1/applications/files/sgd"; 
+        String UPLOAD_DIRECTORY = "/home/glassfish/glassfish4/glassfish/domains/domain1/applications/files/sgd"; 
+        String msj = "";
+                
+                boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+                
+                if (isMultipart) {
+                    // Create a factory for disk-based file items
+                    FileItemFactory factory = new DiskFileItemFactory();
+                    
+                    // Create a new file upload handler
+                    ServletFileUpload upload = new ServletFileUpload(factory);
+                    
+                    try {
+                        // Parse the request                        
+                        List items = upload.parseRequest(request);
+                        Iterator iterator = items.iterator();
+                        while (iterator.hasNext()) {
+                            FileItem item = (FileItem) iterator.next();
+                            if (!item.isFormField()) {
+                                String fileName = item.getName();  
+                                String field = item.getFieldName();
+                                    StringTokenizer str =  new StringTokenizer(field,"|");
+                                    String anio = str.nextToken();
+                                    String nrocut = str.nextToken();
+                                    String iddoc = str.nextToken();
+                                    String idn = str.nextToken();
+                                    String dir = ""+anio+"_"+nrocut+"_"+iddoc+"";
+                                    dir = DigestUtils.md5Hex(dir);                               
+                                
+                                fileName = DigestUtils.md5Hex(fileName);
+                                File path = new File(UPLOAD_DIRECTORY+"/"+anio+"/"+"/"+ruta);
+                                if (!path.exists()) {
+                                    boolean status = path.mkdirs();
+                                }
+                                
+                                File uploadedFile = new File(path +"/"+ fileName+".pdf"); 
+                                msj += uploadedFile.getAbsolutePath()+"";
+                                item.write(uploadedFile);
+                                
+                                String np = "sgd.fn_docadjunto_cargo_mant_insert";            
+                                String array[] = new String[3];
+                                array[0] = iddoc;
+                                array[1] = fileName+".pdf";
+                                array[2] = ruta;
+                                
+                                Vector datos = cdb.EjecutarProcedurePostgres(np, array); 
+                            }
+                        }
+                        msj += "File Uploaded Successfully";
+                        request.setAttribute("request", msj);
+                        
+                    } catch (FileUploadException e) {
+                        request.setAttribute("request", "x1 File Upload Failed due to " + e.getMessage());
+                    } catch (Exception e) {
+                        request.setAttribute("request", "x2 File Upload Failed due to " + e.getMessage());
+                    }
+                }
+//        request.setAttribute("request",msj);
+
+        return "sgd/uploadfile_cargo";
+    }       
+//FIN SUBIR CARGOS 
+//        
     
+//            
 }
 

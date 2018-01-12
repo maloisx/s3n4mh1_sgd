@@ -51,19 +51,37 @@ public class PadController {
     @RequestMapping(value = {"/pad/mant_expedientes_pad"}, method = RequestMethod.GET)
 	public String MantExpedientesPad(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
             request.setAttribute("title_pag","EXPEDIENTES DEL PAD");
+            
+            ConeccionDB cn =  new ConeccionDB();   
+            Util util = new Util();
+//          información para el combo Abogado
+            String abogado = "pad.fn_abogado_consulta";
+            String array_cbo_abogado[] = new String[1];
+            array_cbo_abogado[0] = "";
+            Vector datos_cbo_abogado = cn.EjecutarProcedurePostgres(abogado, array_cbo_abogado);
+            String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
+            request.setAttribute("abogado", cb_abogado);
+                        
+            
             return "pad/mant_expedientes_pad";
 	}
-//FIN LISTA DE EXPEDIENTE DEL PAD BASE 123456
+//FIN LISTA DE EXPEDIENTE DEL PAD BASE
 //
 //INICIO LISTA DE EXPEDIENTE DEL PAD TABLA        
     @RequestMapping(value = {"/pad/mant_expedientes_pad_tbl"}, method = RequestMethod.GET)
 	public String AjaxQueryExpedientePadTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
+            String abogado = request.getParameter("abogado");  
+            
+            if (abogado.equals("undefined")){
+                abogado = "";
+            }
+            
             ConeccionDB cn =  new ConeccionDB();            
 
             String np = "pad.fn_expediente_pad_consulta";
             String array[] = new String[1];
-            array[0] = "";
+            array[0] = abogado;
             Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
 
             Vector v_temp = new Vector();
@@ -82,7 +100,7 @@ public class PadController {
                             + "<label for='cb_exp_"+v_id_exp+"'></label>"
                             + "</div>";
                 
-                String boton = "<div class='form-group dropdown text-center'>"
+                String boton = "<div class='form-group dropdown'>"
                             + "<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown' id='herramientas'>"
                             + "<span class='glyphicon glyphicon-wrench'>"
                             + "</span>"
@@ -129,19 +147,25 @@ public class PadController {
                                     + "{'sTitle':'HERRAMIENTAS'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+            //sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1]},{'aTargets':[ 2 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("columns");sv.add("[{ name:'EXPEDIENTE',name:'FECHA RECEP.ORH' }]");
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' },"
+                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4',download: 'open' },"
+                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
             ////Pintar de rojo el registro si no t.iene datos
 //            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
 //                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
 //                          "}";
 //            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_medida_caut'></table>";
-            String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
+            String tbl_html = "<table border='1' class='table table-striped table-bordered table-responsive-sm text-center' id='c_tbl_exp_pad'></table>";
+            String tbl = util.datatable("c_tbl_exp_pad",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
             return "pad/mant_expedientes_pad_tbl";
@@ -882,7 +906,7 @@ public class PadController {
             Vector v_tbl_data_docs = cdb.EjecutarProcedurePostgres(np, array_docs);
 
             Vector v_tbl_cab =  new Vector();
-            v_tbl_cab.add("ITEM");
+            v_tbl_cab.add("N");
             v_tbl_cab.add("DOCUMENTO");
             v_tbl_cab.add("FECHA DOC.");
             v_tbl_cab.add("ASUNTO");
@@ -954,76 +978,6 @@ public class PadController {
         return "pad/mant_doc_detalle";
     }     
 //FIN DOCUMENTOS DETALLE
-//      
-//INICIO LISTA MEDIDA CAUTELAR BASE        
-    @RequestMapping(value = {"/pad/mant_medida_caut"}, method = RequestMethod.GET)
-	public String MantMedidaCaut(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
-            request.setAttribute("title_pag","MEDIDA CAUTELAR");             
-            request.setAttribute("btn_nuevo_reg","");
-            request.setAttribute("tit_btn","NUEVO REGISTRO");
-            return "pad/mant_medida_caut";
-	}
-//FIN LISTA MEDIDA CAUTELAR BASE
-//
-//INICIO LISTA MEDIDA CAUTELAR TABLA        
-    @RequestMapping(value = {"/pad/mant_medida_caut_tbl"}, method = RequestMethod.GET)
-	public String AjaxQueryMedidaCautTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-            
-            ConeccionDB cn =  new ConeccionDB();            
-
-            String np = "pad.fn_medida_caut_consulta";
-            String array[] = new String[1];
-            array[0] = "";
-            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
-
-            Vector v_temp = new Vector();
-            for(int i = 0 ; i<v_datos.size() ; i++){
-                Vector vss =  (Vector) v_datos.get(i);
-                String i_id_medida_caut = vss.get(0).toString();
-                String c_des_medida_caut = vss.get(1).toString();
-                String c_est_reg = vss.get(2).toString();
-                 
-                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_medida_caut_popup(\\\""+i_id_medida_caut+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
-                
-                Vector vv = new Vector();
-                vv.add(i_id_medida_caut);
-                vv.add(c_des_medida_caut);
-                vv.add(c_est_reg);
-                vv.add(btn);
-                v_temp.add(vv);                
-            }     
-            
-            Util util = new Util();
-            String json = util.vector2json(v_temp);   
-            Vector vc_tbl = new Vector();
-            Vector sv =  new Vector();
-            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aoColumns");sv.add("["                                    
-                                    + "{'sTitle':'CÓDIGO'} , "
-                                    + "{'sTitle':'MEDIDA CAUTELAR'} , "
-                                    + "{'sTitle':'ESTADO'} , "
-                                    + "{'sTitle':'-'}  "
-                                    + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-            //boton de excel
-            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
-            ////Pintar de rojo el registro si no t.iene datos
-//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
-//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
-//                          "}";
-//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
-
-            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_medida_caut'></table>";
-            String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
-            request.setAttribute("response", tbl_html + tbl);
-
-            return "pad/mant_medida_caut_tbl";
-	}
-//FIN LISTA MEDIDA CAUTELAR TABLA
 //
 //INICIO MANTENIMIENTO NUEVO INVESTIGADO POPUP            
     @RequestMapping(value = {"/pad/mant_investigado_popup"}, method = RequestMethod.GET)
@@ -1397,7 +1351,7 @@ public class PadController {
     }   
 //FIN ASIGNA ABOGADO POPUP
 //  
-//INICIO NUEVO INVESTIGADO GUARDAR    
+//INICIO ASIGNA ABOGADO GUARDAR    
 @RequestMapping(value = {"/pad/mant_asigna_abogado_modificar_guardar"}, method = RequestMethod.GET)
     public String MantAsignaAbogadoModificaGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {        
@@ -1422,12 +1376,12 @@ public class PadController {
         request.setAttribute("request", var_request);
         return "pad/mant_asigna_abogado_modificar_guardar";
     }
-//FIN NUEVO INVESTIGADO GUARDAR     
+//FIN ASIGNA ABOGADO GUARDAR     
 // 
 //INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
     @RequestMapping(value = {"/pad/mant_buscar"}, method = RequestMethod.GET)
 	public String MantBuscar(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
-            request.setAttribute("title_pag","BUSCAR EXPEDIENTES / DOCUMENTOS");
+            request.setAttribute("title_pag","BUSCAR EXPEDIENTES");
         
             try {
             ConeccionDB cn = new ConeccionDB();               
@@ -1460,8 +1414,6 @@ public class PadController {
             
             String nroexp = request.getParameter("nroexp");    
             String anio = request.getParameter("anio");    
-            String clsdoc = request.getParameter("clsdoc");    
-            String nrodoc = request.getParameter("nrodoc");    
             String fecini = request.getParameter("fecini");    
             String fecfin = request.getParameter("fecfin");    
             String fecinipad = request.getParameter("fecinipad");    
@@ -1469,15 +1421,13 @@ public class PadController {
             
             ConeccionDB cn =  new ConeccionDB();  
             String np = "pad.fn_buscar_consulta";
-            String array[] = new String[8];
+            String array[] = new String[6];
             array[0] = nroexp;
             array[1] = anio;
-            array[2] = clsdoc;
-            array[3] = nrodoc;
-            array[4] = fecini;
-            array[5] = fecfin;
-            array[6] = fecinipad;
-            array[7] = fecfinpad;
+            array[2] = fecini;
+            array[3] = fecfin;
+            array[4] = fecinipad;
+            array[5] = fecfinpad;
             Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
 
             Vector v_temp = new Vector();
@@ -1487,8 +1437,6 @@ public class PadController {
                 String fecharecep = vss.get(1).toString();
                 String etapa = vss.get(2).toString();
                 String estado = vss.get(4).toString();
-                String documento = vss.get(17).toString();
-                String ndoc = vss.get(18).toString();
                  
                 String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
                 
@@ -1498,8 +1446,6 @@ public class PadController {
                 vv.add(fecharecep);
                 vv.add(etapa);
                 vv.add(estado);
-                vv.add(documento);
-                vv.add(ndoc);
                 vv.add(btn);
                 v_temp.add(vv);
             }
@@ -1516,8 +1462,6 @@ public class PadController {
                                     + "{'sTitle':'FECHA RECEP. ORH'} , "
                                     + "{'sTitle':'ETAPA'} , "
                                     + "{'sTitle':'ESTADO'} , "
-                                    + "{'sTitle':'DOCUMENTO'} , "
-                                    + "{'sTitle':'N° DOC.'} , "
                                     + "{'sTitle':'-'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
@@ -1525,14 +1469,18 @@ public class PadController {
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm ' },"
+                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4',download: 'open' },"
+                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
+                                    + " ]");
+            vc_tbl.add(sv);sv =  new Vector();
             ////Pintar de rojo el registro si no t.iene datos
 //            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
 //                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
 //                          "}";
 //            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_medida_caut'></table>";
+            String tbl_html = "<table border='1' class='table table-striped table-bordered  text-center' id='c_tbl_medida_caut'></table>";
             String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
@@ -1580,7 +1528,7 @@ public class PadController {
 	}
 //FIN LISTA DE EXPEDIENTE DEL PAD BASE
 //
-//INICIO BUSCAR TABLA        
+//INICIO REPORTE POR TABLA        
     @RequestMapping(value = {"/pad/mant_rep1_tbl"}, method = RequestMethod.GET)
 	public String AjaxQueryRep1Tbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
@@ -1653,13 +1601,13 @@ public class PadController {
 //                          "}";
 //            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_medida_caut'></table>";
+            String tbl_html = "<table border='1' class='table table-striped table-bordered  text-center' id='c_tbl_medida_caut'></table>";
             String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
             return "pad/mant_rep1_tbl";
 	}
-//FIN BUSCAR TABLA
+//FIN REPORTE POR TABLA
 // 
 //INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
     @RequestMapping(value = {"/pad/mant_reporte_graf1"}, method = RequestMethod.GET)
@@ -1772,6 +1720,302 @@ public class PadController {
         return "pad/mant_reporte_abogado_grafico";
     }
 //FIN REPORTE POR ABOGADO GRÁFICO 
+//      
+//INICIO LISTA MEDIDA CAUTELAR BASE        
+    @RequestMapping(value = {"/pad/mant_medida_caut"}, method = RequestMethod.GET)
+	public String MantMedidaCaut(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE MEDIDAS CAUTELARES");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_medida_caut_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_medida_caut";
+	}
+//FIN LISTA MEDIDA CAUTELAR BASE
+//
+//INICIO LISTA MEDIDA CAUTELAR TABLA        
+    @RequestMapping(value = {"/pad/mant_medida_caut_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryMedidaCautTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            ConeccionDB cn =  new ConeccionDB();            
+
+            String np = "pad.fn_medida_caut_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String i_id_medida_caut = vss.get(0).toString();
+                String c_des_medida_caut = vss.get(1).toString();
+                String c_est_reg = vss.get(2).toString();
+                 
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_medida_caut_popup(\\\""+i_id_medida_caut+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i_id_medida_caut);
+                vv.add(c_des_medida_caut);
+                vv.add(c_est_reg);
+                vv.add(btn);
+                v_temp.add(vv);                
+            }     
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'CÓDIGO'} , "
+                                    + "{'sTitle':'MEDIDA CAUTELAR'} , "
+                                    + "{'sTitle':'ESTADO'} , "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+            //boton de excel
+            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_medida_caut'></table>";
+            String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_medida_caut_tbl";
+	}
+//FIN LISTA MEDIDA CAUTELAR TABLA
+//    
+//INICIO MEDIDA CAUTELAR POPUP            
+    @RequestMapping(value = {"/pad/mant_medida_caut_popup"}, method = RequestMethod.GET)
+    public String MantMedidaCautPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","GESTIÓN DE MEDIDA CAUTELAR");
+        String id = request.getParameter("id");
+           
+        try {            
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String np = "pad.fn_medida_caut_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            
+            Util util =  new Util();
+            
+            String i_id_med = "";
+            String c_des_med = "";
+            String c_est_reg = "";            
+            
+            for(int i = 0 ; i<datos.size() ; i++){
+                Vector datos_v =  (Vector) datos.get(i);
+                i_id_med = datos_v.get(0).toString();
+                c_des_med = datos_v.get(1).toString();
+                c_est_reg = datos_v.get(3).toString();
+            }            
+            request.setAttribute("id", i_id_med);  
+            request.setAttribute("descripcion", c_des_med);  
+            
+//          información para el combo Estado
+            String nt = "sgd.fn_estado_consulta";
+            String array_cbo[] = new String[1];
+            array_cbo[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
+            String cb_desc_estado = util.contenido_combo(datos_cbo, c_est_reg);
+            request.setAttribute("cb_estado", cb_desc_estado);
+            
+          
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_medida_caut_popup";
+    }   
+//FIN MEDIDA CAUTELAR POPUP
+// 
+//INICIO ASIGNA ABOGADO GUARDAR    
+@RequestMapping(value = {"/pad/mant_medida_caut_guardar"}, method = RequestMethod.GET)
+    public String MantMedidaCautGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {        
+
+        String id = request.getParameter("id");        
+        String descripcion = request.getParameter("descripcion");   
+        String estado = request.getParameter("estado");   
+        String var_request = "";
+
+        try {
+            ConeccionDB cdb = new ConeccionDB();                
+            String np = "pad.fn_medida_caut_mant";
+            String array[] = new String[3];
+            array[0] = id;
+            array[1] = descripcion; 
+            array[2] = estado; 
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_medida_caut_guardar";
+    }
+//FIN ASIGNA ABOGADO GUARDAR     
+//      
+//INICIO LISTA FALTAS BASE        
+    @RequestMapping(value = {"/pad/mant_falta"}, method = RequestMethod.GET)
+	public String MantFalta(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE FALTAS");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_falta_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_falta";
+	}
+//FIN LISTA FALTAS BASE
 //         
+//INICIO LISTA FALTAS TABLA        
+    @RequestMapping(value = {"/pad/mant_falta_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryMedidaFaltaTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            ConeccionDB cn =  new ConeccionDB();            
+
+            String np = "pad.fn_falta_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String i_id_medida_caut = vss.get(0).toString();
+                String c_des_medida_caut = vss.get(1).toString();
+                String c_est_reg = vss.get(2).toString();
+                 
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_falta_popup(\\\""+i_id_medida_caut+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i_id_medida_caut);
+                vv.add(c_des_medida_caut);
+                vv.add(c_est_reg);
+                vv.add(btn);
+                v_temp.add(vv);                
+            }     
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'CÓDIGO'} , "
+                                    + "{'sTitle':'FALTA'} , "
+                                    + "{'sTitle':'ESTADO'} , "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+            //boton de excel
+            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_falta'></table>";
+            String tbl = util.datatable("c_tbl_falta",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_falta_tbl";
+	}
+//FIN LISTA FALTAS TABLA
+//    
+//INICIO FALTAS POPUP            
+    @RequestMapping(value = {"/pad/mant_falta_popup"}, method = RequestMethod.GET)
+    public String MantFaltaPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","GESTIÓN DE FALTAS");
+        String id = request.getParameter("id");
+           
+        try {            
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String np = "pad.fn_falta_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            
+            Util util =  new Util();
+            
+            String i_id_falta = "";
+            String c_des_falta = "";
+            String c_est_reg = "";            
+            
+            for(int i = 0 ; i<datos.size() ; i++){
+                Vector datos_v =  (Vector) datos.get(i);
+                i_id_falta = datos_v.get(0).toString();
+                c_des_falta = datos_v.get(1).toString();
+                c_est_reg = datos_v.get(3).toString();
+            }            
+            request.setAttribute("id", i_id_falta);  
+            request.setAttribute("descripcion", c_des_falta);  
+            
+            String cb_desc_estado = "";
+//          información para el combo Estado
+            
+                String nt = "sgd.fn_estado_consulta";
+                String array_cbo[] = new String[1];
+                array_cbo[0] = "";
+                Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
+                if (i_id_falta.length() != 0){
+                    cb_desc_estado = util.contenido_combo(datos_cbo, c_est_reg);
+                }else{
+                    cb_desc_estado = util.contenido_combo(datos_cbo, "1");    
+                }  
+                request.setAttribute("cb_estado", cb_desc_estado);                               
+          
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_falta_popup";
+    }   
+//FIN FALTAS POPUP
+// 
+//INICIO FALTA GUARDAR    
+@RequestMapping(value = {"/pad/mant_falta_guardar"}, method = RequestMethod.GET)
+    public String MantFaltaGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {        
+
+        String id = request.getParameter("id");        
+        String descripcion = request.getParameter("descripcion");   
+        String estado = request.getParameter("estado");   
+        String var_request = "";
+
+        try {
+            ConeccionDB cdb = new ConeccionDB();                
+            String np = "pad.fn_falta_mant";
+            String array[] = new String[3];
+            array[0] = id;
+            array[1] = descripcion; 
+            array[2] = estado; 
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_falta_guardar";
+    }
+//FIN FALTA GUARDAR     
+         
+//              
 }
 
