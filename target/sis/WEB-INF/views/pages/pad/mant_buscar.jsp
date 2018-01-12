@@ -53,7 +53,7 @@
                     <label for="dt_fec_finpad" class="active">Fecha Final:</label>
                 </div>
                 <div class="input-field col-sm-2">
-                    <button id="btn_busca" onclick="pad_mant_buscar_tbl($('#txt_exp').val(),$('#cb_anio').val(),$('#cb_clsdoc').val(),$('#txt_nro').val(),$('#dt_fec_ini').val(),$('#dt_fec_fin').val(),$('#dt_fec_inipad').val(),$('#dt_fec_finpad').val())" class="btn btn-info btn-sm" >
+                    <button id="btn_busca" onclick="pad_mant_buscar_tbl($('#txt_exp').val(),$('#cb_anio').val(),$('#dt_fec_ini').val(),$('#dt_fec_fin').val(),$('#dt_fec_inipad').val(),$('#dt_fec_finpad').val())" class="btn btn-info btn-sm" >
                         BUSCAR
                     </button>
                 </div>
