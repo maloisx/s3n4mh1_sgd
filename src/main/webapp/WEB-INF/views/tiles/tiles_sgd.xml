@@ -744,6 +744,13 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cargo_popup.jsp" />  
     </definition>
     
+    <definition name="sgd/mant_cargo_consulta"  extends="ajax-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cargo_consulta.jsp" />  
+    </definition>    
+        
+    <definition name="sgd/uploadfile_cargo"  extends="ajax-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/uploadfile_cargo.jsp" />  
+    </definition>    
         
     
     

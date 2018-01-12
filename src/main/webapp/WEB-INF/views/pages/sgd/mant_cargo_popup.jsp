@@ -1,5 +1,7 @@
 <div id="div_mensaje_ajax" class="text-success"></div>    
 <input type="hidden" name="hd_id" id="hd_id" value="${requestScope['id_doc']}" />
+<input type="hidden" name="hd_ruta" id="hd_ruta" value="${requestScope['ruta']}" />
+<input type="hidden" name="hd_anio" id="hd_anio" value="${requestScope['anio']}" />
 <br>
 
 <div class="row">
@@ -44,7 +46,7 @@
             <div class="input-field col-md-1">        
             </div>        
             <div class="input-field text-right col-md-10">
-                <button onclick="sgd_mant_accion_guardar()" class="btn btn-info btn-sm">Guardar</button>            
+                <button onclick="sgd_mant_cargo_guardar()" class="btn btn-info btn-sm">Guardar</button>            
             </div>
             <div class="input-field col-md-1">        
             </div>  

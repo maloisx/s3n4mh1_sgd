@@ -8,8 +8,8 @@
             <button onclick="pad_mant_asigna_abogado_popup($('#hd_tmp_exp').val())" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-folder-open" ></span> Asignar Abogado</button>
         </div>
         <div class="input-field text-right col-md-2">                    
-            <select name="cb_abogado" id="cb_abogado" class="form-control selectpicker" onchange="pad_mant_expedientes_pad_tbl(this.value)">${requestScope['abogado']}</select>
-            <label for="cb_abogado" class="active">Filtro por abogado:</label>      
+            <select name="cb_abogado_lista" id="cb_abogado_lista" class="form-control selectpicker" onchange="pad_mant_expedientes_pad_tbl(this.value)">${requestScope['abogado']}</select>
+            <label for="cb_abogado_lista" class="active">Filtro por abogado:</label>      
         </div> 
     </div>
 </div>
@@ -28,9 +28,6 @@
                 
 <script>
     pad_mant_expedientes_pad_tbl();
-    
-    
-    
 </script>
 
 <style>  

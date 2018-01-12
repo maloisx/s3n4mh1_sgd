@@ -151,7 +151,13 @@ public class PadController {
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' },{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("columns");sv.add("[{ name:'EXPEDIENTE',name:'FECHA RECEP.ORH' }]");
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' },"
+                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions: {columns: ':visible'} },'colvis'"
+//                                    + "{ extend:'colvis',text:'Seleccione columnas',postfixButtons: [ 'colvisRestore' ],className:'btn btn-info btn-sm'}]");
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
             ////Pintar de rojo el registro si no t.iene datos
 //            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
 //                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     

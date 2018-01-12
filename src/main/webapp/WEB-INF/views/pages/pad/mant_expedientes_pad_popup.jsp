@@ -22,7 +22,7 @@
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
-                <label for="txt_fecpresc_iniPAD" class="active bmd-label-floating">Fecha Prescr. Inicio PAD:</label>
+                <label for="txt_fecpresc_iniPAD" class="active bmd-label-floating">Fecha Prescr. Inicio PADdd:</label>
             </div>
             <div class="input-field col-sm-1">
             </div>
@@ -54,12 +54,12 @@
             <div class="input-field text-right col-sm-4">
                 <select name="cb_abogado" id="cb_abogado" class="form-control selectpicker " data-size="4">${requestScope['abogado']}</select>
                 <label for="cb_abogado" class="active">Abogado:</label>
-            </div>      
+            </div>
             <div class="input-field col-sm-1">
             </div>
         </div>
     </div>
-</div>              
+</div>
 <br>
 <hr  style="width:100%"/>                
 <br>                

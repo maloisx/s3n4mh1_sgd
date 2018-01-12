@@ -3410,8 +3410,9 @@ function sgd_mant_buscar_exp_utf_tbl(cut,anio,asunto,cd,nro,uo){
 //FIN BUSQUEDA DE EXPEDIENTES UTF TABLA    
 //
 //INICIO CARGOS POPUP
-function sgd_mant_cargo_popup(cut_exp,id_doc,documento){
-    var url = encodeURI(path + "sgd/mant_cargo_popup/?cut_exp="+cut_exp+"&id_doc="+id_doc+"&documento="+documento);
+function sgd_mant_cargo_popup(cut_exp,id_doc,documento,ruta,per_exp){
+    
+    var url = encodeURI(path + "sgd/mant_cargo_popup/?cut_exp="+cut_exp+"&id_doc="+id_doc+"&documento="+documento+"&ruta="+ruta+"&anio="+per_exp);
     
     $.colorbox({
         "href" : url
@@ -3420,5 +3421,72 @@ function sgd_mant_cargo_popup(cut_exp,id_doc,documento){
     });
 }
 //FIN CARGOS POPUP
-
+//
+//INICIO CARGO GUARDAR
+function sgd_mant_cargo_guardar(){
+    var id_doc = $('#hd_id').val();
+    var ruta = $('#hd_ruta').val();
+    var anio = $('#hd_anio').val();
+    
+    var msj_error = "";
+    
+    var input = document.querySelector('input[type="file"]');   
+    if (input.files.length == 0){
+        msj_error += "el archivo a subir";
+    }        
+            
+    if(msj_error == ""){   
+        $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_cargo_consulta/", 
+            data:     "id_doc="+id_doc,
+            beforeSend: function(data){ 	 	
+                $('#div_mensaje_ajax').html("Cargando...");                
+            },
+            success: function(requestData){   
+                console.log('--------------------------------*****************'+requestData)
+                arrayobj = jQuery.parseJSON(requestData);
+//                var id_documento = arrayobj[0][0];//id documento
+                var id = arrayobj[0][6];//id documento
+                
+//                var msj = arrayobj[0][5];//mensaje 
+//                
+//                $('#hd_id').val(id); //id del expediente
+                $('#hd_iddoc').val(id_doc); //id del documento
+                
+                /*inicio subir archivos */
+                var fdata = new FormData();
+                var file;
+                fdata.append("anio",anio);
+                fdata.append("nrocut",id);
+                fdata.append("id_doc",id_doc);
+                for (var i = 0 ; i < input.files.length ; i++) {
+                    file = input.files[i];
+//                        console.log(file); 
+//                        fdata.append(file.name, file);
+                    fdata.append(anio+"|"+id+"|"+id_doc+"|"+i, file);
+                }    
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST",path + "sgd/uploadfile_cargo/?ruta="+ruta, true);
+//                    xhr.open("POST",path + "sgd/2017/", true);
+                xhr.addEventListener("load", function (e) {
+//                        console.log(xhr.responseText);      
+                    //sgd_mant_adjuntos_cargar(id_doc);//Carga lista de adjuntos                      
+                });
+                xhr.send(fdata);
+                
+                $('#div_mensaje_ajax').html('');               
+//                $.alert('<h6>' + msj + '</h6>');
+            },			
+            error: function(requestData, strError, strTipoError){											
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }                        
+        });         
+    }else{
+         $.alert('<h6>Seleccione: ' + msj_error + '</h6>');
+    }   
+}   
+//INICIO INICIO CARGO GUARDAR
+//  
 
