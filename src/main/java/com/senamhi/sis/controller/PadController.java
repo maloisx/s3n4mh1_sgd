@@ -71,19 +71,24 @@ public class PadController {
     @RequestMapping(value = {"/pad/mant_expedientes_pad_tbl"}, method = RequestMethod.GET)
 	public String AjaxQueryExpedientePadTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
-            String abogado = request.getParameter("abogado");  
+            String abogado = request.getParameter("abogado");
+            
+            ConeccionDB cn =  new ConeccionDB();
+            String np = "";
             
             if (abogado.equals("undefined")){
                 abogado = "";
             }
+            if (!abogado.equals("")){
+                np = "pad.fn_expediente_pad_abogado_consulta";
+            }else{
+                np = "pad.fn_expediente_pad_consulta";
+            }
             
-            ConeccionDB cn =  new ConeccionDB();            
-
-            String np = "pad.fn_expediente_pad_consulta";
             String array[] = new String[1];
             array[0] = abogado;
             Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
-
+            
             Vector v_temp = new Vector();
             for(int i = 0 ; i<v_datos.size() ; i++){
                 Vector vss =  (Vector) v_datos.get(i);
@@ -133,8 +138,14 @@ public class PadController {
             String json = util.vector2json(v_temp);   
             Vector vc_tbl = new Vector();
             Vector sv =  new Vector();
-            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("sScrollY");sv.add("'80%'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'80%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
             sv.add("aoColumns");sv.add("["                                    
                                     + "{'sTitle':'_'} , "
                                     + "{'sTitle':'EXPEDIENTE'} , "
@@ -147,13 +158,14 @@ public class PadController {
                                     + "{'sTitle':'HERRAMIENTAS'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-            //sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1]},{'aTargets':[ 2 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1]},{'aTargets':[ 2 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("aoColumnDefs");sv.add("[{'className':'dt-head-center','aTargets':[2]},{'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("columns");sv.add("[{ name:'EXPEDIENTE',name:'FECHA RECEP.ORH' }]");
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' },"
-                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4',download: 'open' },"
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6,7]} },"
+                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4' },"
                                     + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
                                     + " ]");
             vc_tbl.add(sv);
@@ -217,8 +229,8 @@ public class PadController {
             String etapa = "pad.fn_etapa_consulta";
             String array_cbo[] = new String[1];
             array_cbo[0] = "";
-            Vector datos_cbo = cn.EjecutarProcedurePostgres(etapa, array_cbo);
-            String cb_etapa = util.contenido_combo(datos_cbo, "");
+            Vector datos_cbo_etapa = cn.EjecutarProcedurePostgres(etapa, array_cbo);
+            String cb_etapa = util.contenido_combo(datos_cbo_etapa, "");
             request.setAttribute("etapa", cb_etapa);
             
 //          información para el combo Abogado
@@ -258,8 +270,24 @@ public class PadController {
             String array_cbo_tdoc[] = new String[1];
             array_cbo_tdoc[0] = "90000048";
             Vector datos_cbo_tdoc = cn.EjecutarProcedurePostgres(ntdoc, array_cbo_tdoc);
-            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "118");
+            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "110");
             request.setAttribute("clsfdoc", cb_desc_clsfdoc);            
+          
+//            información investigado
+            String investigado = "pad.fn_organo_consulta";//combo Tipo de Documentos por Unidad Orgánica
+            String array_cbo_invest[] = new String[1];
+            array_cbo_invest[0] = "";
+            Vector datos_cbo_invest = cn.EjecutarProcedurePostgres(investigado, array_cbo_invest);
+            String cb_desc_invest = util.contenido_combo(datos_cbo_invest, "");
+            request.setAttribute("investigado", cb_desc_invest);      
+            
+//          información para el combo Cargo
+            String cargo = "pad.fn_cargo_consulta";
+            String array_cbo_cargo[] = new String[1];
+            array_cbo_cargo[0] = "";
+            Vector datos_cbo_cargo = cn.EjecutarProcedurePostgres(cargo, array_cbo_cargo);
+            String cb_cargo = util.contenido_combo(datos_cbo_cargo, "");
+            request.setAttribute("cargo", cb_cargo);            
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -372,13 +400,16 @@ public class PadController {
         String fecnotif_iniPAD = request.getParameter("fecnotif_iniPAD");  
         String fecpres_PAD = request.getParameter("fecpres_PAD");  
         String anio = request.getParameter("anio");  
-//        
+        String tiempo = request.getParameter("tiempo");  
+        String investigado = request.getParameter("investigado");
+        String cargo = request.getParameter("cargo");
+        
         String var_request = "";
 
-        try {                    
-            ConeccionDB cdb = new ConeccionDB(); 
+        try {
+            ConeccionDB cdb = new ConeccionDB();
             String np = "pad.fn_expediente_pad_mant_nuevo";
-            String array[] = new String[23];
+            String array[] = new String[26];
             array[0] = id;
             array[1] = fecharecep;
             array[2] = fecpresc_iniPAD;
@@ -402,6 +433,9 @@ public class PadController {
             array[20] = fecnotif_iniPAD;
             array[21] = fecpres_PAD;
             array[22] = anio;
+            array[23] = tiempo;
+            array[24] = investigado;
+            array[25] = cargo;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -820,7 +854,30 @@ public class PadController {
             array_rmte[0] = "";
             Vector datos_cbo_rmte = cn.EjecutarProcedurePostgres(cons_rmte, array_rmte); 
             String cb_rmte = util.contenido_combo(datos_cbo_rmte, "");
-            request.setAttribute("persona", cb_rmte);             
+            request.setAttribute("persona", cb_rmte);   
+            
+//            información combo investigado
+//            String cons_inv = "pad.fn_organo_consulta";//consulta investigado(s) del expediente                  
+//            String array_inv[] = new String[1];
+//            array_inv[0] = "";
+//            Vector datos_cbo_inv = cn.EjecutarProcedurePostgres(cons_inv, array_inv); 
+//            String cb_inv = util.contenido_combo(datos_cbo_inv, "");
+            request.setAttribute("investigado", cb_organo_ins);    
+            
+//            String inv = "pad.fn_investigados_exp_array_consulta";
+//                String array_inv[] = new String[1];
+//                array_inv[0] = nroexp;
+//                Vector datos_inv = cn.EjecutarProcedurePostgres(inv, array_inv);
+//
+//                String id_exp = ""; //identificador de expediente
+//                String id_inv_array = ""; //array de investigados
+//
+//                for(int i = 0 ; i<datos_inv.size() ; i++){                 
+//                    Vector datos_v =  (Vector) datos_inv.get(i);
+//                    id_exp = datos_v.get(0).toString();
+//                    id_inv_array = datos_v.get(1).toString();
+//                }  
+//                request.setAttribute("investigado", id_inv_array); 
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -993,18 +1050,18 @@ public class PadController {
             Util util =  new Util();
             
 //          información para el combo Investigado
-            String etapa = "pad.fn_organo_consulta";
+            String inv = "pad.fn_organo_consulta";
             String array_cbo_inv[] = new String[1];
             array_cbo_inv[0] = "";
-            Vector datos_cbo = cn.EjecutarProcedurePostgres(etapa, array_cbo_inv);
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(inv, array_cbo_inv);
             String cb_investigado = util.contenido_combo(datos_cbo, "");
             request.setAttribute("investigado", cb_investigado);
             
 //          información para el combo Cargo
-            String abogado = "pad.fn_cargo_consulta";
+            String cargo = "pad.fn_cargo_consulta";
             String array_cbo_cargo[] = new String[1];
             array_cbo_cargo[0] = "";
-            Vector datos_cbo_cargo = cn.EjecutarProcedurePostgres(abogado, array_cbo_cargo);
+            Vector datos_cbo_cargo = cn.EjecutarProcedurePostgres(cargo, array_cbo_cargo);
             String cb_cargo = util.contenido_combo(datos_cbo_cargo, "");
             request.setAttribute("cargo", cb_cargo);
             
@@ -1056,7 +1113,10 @@ public class PadController {
         String investigado = request.getParameter("investigado");        
         String cargo = request.getParameter("cargo");        
         String observacion = request.getParameter("observacion");        
-        String faltas = request.getParameter("faltas");        
+        String faltas = request.getParameter("faltas");    
+        if (faltas.equals("null")){
+            faltas = "";
+        }
         
         String var_request = "";
         
@@ -1261,20 +1321,31 @@ public class PadController {
         String cargo = request.getParameter("cargo");        
         String observacion = request.getParameter("observacion");        
         String faltas = request.getParameter("faltas");        
-        
+        String sancion = request.getParameter("sancion");         
+        String dias = request.getParameter("dias");        
+        String medcautelar = request.getParameter("medcautelar");                  
+        if (medcautelar.equals("null")){
+            medcautelar = "";
+        }
+        String recurso = request.getParameter("recurso");        
+        if (recurso.equals("null")){
+            recurso = "";
+        }
         String var_request = "";
 
         try {                    
-            ConeccionDB cdb = new ConeccionDB(); 
+            ConeccionDB cdb = new ConeccionDB();
             String np = "pad.fn_investigado_modifica";
-            String array[] = new String[5];
+            String array[] = new String[9];
             array[0] = investigado;
-            array[1] = cargo;            
-            array[2] = id_exp;            
-            array[3] = observacion;            
-            array[4] = faltas;     
-            
-            //Modificacombo cargo y denunciado
+            array[1] = cargo;
+            array[2] = id_exp;
+            array[3] = observacion;
+            array[4] = faltas;
+            array[5] = sancion;
+            array[6] = dias;
+            array[7] = medcautelar;
+            array[8] = recurso;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -1437,13 +1508,17 @@ public class PadController {
                 String fecharecep = vss.get(1).toString();
                 String etapa = vss.get(2).toString();
                 String estado = vss.get(4).toString();
+                String fec_presipad = vss.get(7).toString();
+                String fec_prespad = vss.get(14).toString();
                  
                 String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
                 
                 Vector vv = new Vector();
-                vv.add(i);
+                vv.add(i+1);
                 vv.add(nro_exp);
                 vv.add(fecharecep);
+                vv.add(fec_presipad);
+                vv.add(fec_prespad);
                 vv.add(etapa);
                 vv.add(estado);
                 vv.add(btn);
@@ -1454,34 +1529,41 @@ public class PadController {
             String json = util.vector2json(v_temp);   
             Vector vc_tbl = new Vector();
             Vector sv =  new Vector();
-            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aoColumns");sv.add("["                                    
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'80%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["
                                     + "{'sTitle':'ITEM'} , "
                                     + "{'sTitle':'N° EXPEDIENTE'} , "
                                     + "{'sTitle':'FECHA RECEP. ORH'} , "
+                                    + "{'sTitle':'FECHA PRESCR. INIC.PAD'} , "
+                                    + "{'sTitle':'FECHA PRESCR. PAD'} , "
                                     + "{'sTitle':'ETAPA'} , "
                                     + "{'sTitle':'ESTADO'} , "
                                     + "{'sTitle':'-'}  "
-                                    + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-            //boton de excel
-            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm ' },"
-                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4',download: 'open' },"
-                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4', download:'open' },"
+                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
                                     + " ]");
-            vc_tbl.add(sv);sv =  new Vector();
-            ////Pintar de rojo el registro si no t.iene datos
-//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
-//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
-//                          "}";
-//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
-
-            String tbl_html = "<table border='1' class='table table-striped table-bordered  text-center' id='c_tbl_medida_caut'></table>";
-            String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            String tbl_html = "<table border='1' class='table table-striped table-bordered table-responsive-sm text-center' id='c_tbl_buscar_exp'></table>";
+            String tbl = util.datatable("c_tbl_buscar_exp",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
             return "pad/mant_buscar_tbl";
@@ -1560,13 +1642,17 @@ public class PadController {
                 String v_etapa = vss.get(2).toString();
                 String v_estado = vss.get(4).toString();
                 String v_abogado = vss.get(5).toString();
-                 
+                String fec_presipad = vss.get(7).toString();
+                String fec_prespad = vss.get(14).toString();
+                
                 String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
                 
                 Vector vv = new Vector();
-                vv.add(i);
+                vv.add(i+1);
                 vv.add(nro_exp);
                 vv.add(fecharecep);
+                vv.add(fec_presipad);
+                vv.add(fec_prespad);
                 vv.add(v_etapa);
                 vv.add(v_estado);
                 vv.add(v_abogado);
@@ -1578,31 +1664,49 @@ public class PadController {
             String json = util.vector2json(v_temp);   
             Vector vc_tbl = new Vector();
             Vector sv =  new Vector();
-            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
             sv.add("aoColumns");sv.add("["                                    
                                     + "{'sTitle':'ITEM'} , "
                                     + "{'sTitle':'N° EXPEDIENTE'} , "
                                     + "{'sTitle':'FECHA RECEP. ORH'} , "
+                                    + "{'sTitle':'FECHA PRESCR. INIC.PAD'} , "
+                                    + "{'sTitle':'FECHA PRESCR. PAD'} , "
                                     + "{'sTitle':'ETAPA'} , "
                                     + "{'sTitle':'ESTADO'} , "
                                     + "{'sTitle':'ABOGADO'} , "
                                     + "{'sTitle':'-'}  "
-                                    + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-            //boton de excel
-            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
             ////Pintar de rojo el registro si no t.iene datos
 //            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
 //                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
 //                          "}";
 //            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-            String tbl_html = "<table border='1' class='table table-striped table-bordered  text-center' id='c_tbl_medida_caut'></table>";
-            String tbl = util.datatable("c_tbl_medida_caut",vc_tbl);            
+            String tbl_html = "<table border='1' class='table table-striped table-bordered  text-center' id='c_tbl_reporte_por'></table>";
+            String tbl = util.datatable("c_tbl_reporte_por",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
             return "pad/mant_rep1_tbl";

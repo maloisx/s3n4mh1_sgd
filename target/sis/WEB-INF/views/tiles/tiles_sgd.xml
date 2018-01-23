@@ -594,7 +594,15 @@
     <definition name="sgd/mant_buscarexp_prof_tbl"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscarexp_prof_tbl.jsp" />  
     </definition>
-       
+        
+    <definition name="sgd/mant_expediente_dir"  extends="base-definition"> 
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_dir.jsp" />  
+    </definition>
+    
+    <definition name="sgd/mant_expediente_dir_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_dir_tbl.jsp" />  
+    </definition>  
+         
     <definition name="sgd/mant_buscar_altdir"  extends="base-definition"> 
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_altdir.jsp" />  
     </definition>
@@ -726,7 +734,7 @@
     
     <definition name="sgd/mant_rep_uo_prof"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_prof.jsp" />
-    </definition>
+    </definition>    
     
     <definition name="sgd/mant_rep_uo_prof_grf"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rep_uo_prof_grf.jsp" />
@@ -752,7 +760,12 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/uploadfile_cargo.jsp" />  
     </definition>    
         
-    
-    
+    <definition name="sgd/mant_atencion_ciudadano"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_atencion_ciudadano.jsp" />
+    </definition>
+        
+    <definition name="sgd/mant_atencion_ciudadano_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_atencion_ciudadano_tbl.jsp" />
+    </definition>
     
 </tiles-definitions>

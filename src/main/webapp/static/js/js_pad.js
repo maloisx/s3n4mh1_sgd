@@ -202,7 +202,8 @@ function pad_mant_expedientes_pad_guardar(){
                $.alert('<h6>' + msj + '</h6>');
             },			
             error: function(requestData, strError, strTipoError){											
-                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+//                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+                $.alert('<h6>' + strTipoError +": " + strError + '</h6>');
             }
         }); 
     }else{
@@ -238,7 +239,10 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
     var input = document.querySelector('input[type="file"]');
     var iddoc = $('#hd_iddoc').val(); 
     var anio = $('#cb_anio').val(); 
+    var tiempo = $('#cb_tiempo').val(); 
     var instructor = $('#cb_instructor').val();   
+    var investigado = $('#cb_investigado').val();  
+    var cargo = $('#cb_cargo').val(); 
     if(instructor == undefined){
         instructor = '';
     }
@@ -313,7 +317,10 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
                       "&sancionador="+sancionador+
                       "&fecnotif_iniPAD="+fecnotif_iniPAD+ 
                       "&fecpres_PAD="+fecpres_PAD+
-                      "&anio="+anio, 
+                      "&anio="+anio+
+                      "&tiempo="+tiempo+ 
+                      "&investigado="+investigado+
+                      "&cargo="+cargo, 
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");
             },
@@ -449,6 +456,7 @@ function pad_mant_doc_detalle(id){
                 var destino  = arrayobj[0][8];
                 var asu_doc  = arrayobj[0][9];
                 var obs_doc  = arrayobj[0][10];    
+                var investigado  = arrayobj[0][22];
                 
                 var msj = arrayobj[0][0];
 
@@ -481,7 +489,11 @@ function pad_mant_doc_detalle(id){
                 $('#cb_destino').val(destino);
                 $("#cb_destino").change();
                 $('#txt_asunto').val(asu_doc);
-                $('#txt_observacion').val(obs_doc);  
+                $('#txt_observacion').val(obs_doc); 
+                if (investigado == '') {
+                    investigado = 'No determinado(s)';
+                }
+                $('#txt_investigados').val(investigado); 
                 
 //              DESHABILITA TABS
                 $('#lista_doc').attr('class','tab-pane');
@@ -584,29 +596,45 @@ function pad_mant_investigado_modificar_guardar(){
     var cargo = $('#cb_cargo').val();
     var observacion = $('#txt_observacion').val();
     var faltas = $('#cb_faltasel').val();
+    var sancion = $('#cb_sancion').val();
+    var dias = $('#txt_dias').val();
+    var medcautelar = $('#cb_medida_caut').val();
+    var recurso = $('#cb_recurso').val();
     
-    $.ajax({
-            dataType: "html",
-            type:     "GET",
-            url:      path + "pad/mant_investigado_modificar_guardar/",
-            data:     "idexp="+idexp+
-                      "&investigado="+investigado+
-                      "&cargo="+cargo+
-                      "&observacion="+observacion+
-                      "&faltas="+faltas,	 	 
-            beforeSend: function(data){
-                $('#div_mensaje_ajax').html("Cargando...");
-            },
-            success: function(requestData){
-                arrayobj = jQuery.parseJSON(requestData);
-                var msj  = arrayobj[0][0];
-                
-                $.alert('<h6>' + msj + '</h6>');
-            },
-            error: function(requestData, strError, strTipoError){
-                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
-            }
-        });
+    var msj_error = "";
+    if ($('#cb_sancion').val() == '2' && $('#txt_dias').val() == ''){
+        msj_error = 'Ingrese días.';
+    }
+    if(msj_error == ""){  
+        $.ajax({
+                dataType: "html",
+                type:     "GET",
+                url:      path + "pad/mant_investigado_modificar_guardar/",
+                data:     "idexp="+idexp+
+                          "&investigado="+investigado+
+                          "&cargo="+cargo+
+                          "&observacion="+observacion+
+                          "&faltas="+faltas+	 	 
+                          "&sancion="+sancion+	 	 
+                          "&dias="+dias+	 
+                          "&medcautelar="+medcautelar+	 	 
+                          "&recurso="+recurso,	 	 
+                beforeSend: function(data){
+                    $('#div_mensaje_ajax').html("Cargando...");
+                },
+                success: function(requestData){
+                    arrayobj = jQuery.parseJSON(requestData);
+                    var msj  = arrayobj[0][0];
+
+                    $.alert('<h6>' + msj + '</h6>');
+                },
+                error: function(requestData, strError, strTipoError){
+                    $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+                }
+            });
+    }else{
+         $.alert('<h6>Ingrese: '+ msj_error + '</h6>');
+    } 
 }
 //FIN MODIFICAR INVESTIGADO
 //
@@ -793,8 +821,41 @@ function pad_mant_buscar_tbl(nroexp, anio, fecini, fecfin, fecinipad, fecfinpad)
 //FIN BUSCAR EXPEDIENTE TABLA  
 //
 //INICIO REPORTE EXPEDIENTE TABLA   
-function pad_mant_rep1_tbl(etapa, estado, abogado, fecini, fecfin, fecinipad, fecfinpad){   
-        
+function pad_mant_rep1_tbl(){   
+    var etapa = $('#cb_etapa').val();
+    var estado = $('#cb_estado').val();
+    var abogado = $('#cb_abogado').val();
+    
+    var fecini = $('#dt_fec_ini').val();
+    var fecini_formato = fecini.split('/');
+    fecini_formato = fecini_formato[2]+'-'+fecini_formato[1]+'-'+fecini_formato[0];
+    
+    var fecfin = $('#dt_fec_fin').val();
+    var fecfin_formato = fecfin.split('/');
+    fecfin_formato = fecfin_formato[2]+'-'+fecfin_formato[1]+'-'+fecfin_formato[0];
+          
+    var fec_inipad = $('#dt_fec_inipad').val();
+    var fec_inipad_formato = fec_inipad.split('/');
+    fec_inipad_formato = fec_inipad_formato[2]+'-'+fec_inipad_formato[1]+'-'+fec_inipad_formato[0];
+    
+    var fec_finpad = $('#dt_fec_finpad').val();
+    var fec_finpad_formato = fec_finpad.split('/');
+    fec_finpad_formato = fec_finpad_formato[2]+'-'+fec_finpad_formato[1]+'-'+fec_finpad_formato[0]
+    
+    if (fecini_formato == 'undefined-undefined-'){
+        fecini_formato = '';
+    }
+    if (fecfin_formato == 'undefined-undefined-'){
+        fecfin_formato = '';
+    }
+    if (fec_inipad_formato == 'undefined-undefined-'){
+        fec_inipad_formato = '';
+    }
+    if (fec_finpad_formato == 'undefined-undefined-'){
+        fec_finpad_formato = '';
+    }
+    
+    
     $.ajax({
         dataType: "html",
         type:     "GET",
@@ -802,10 +863,10 @@ function pad_mant_rep1_tbl(etapa, estado, abogado, fecini, fecfin, fecinipad, fe
         data:     "etapa="+etapa+
                   "&estado="+estado+
                   "&abogado="+abogado+
-                  "&fecini="+fecini+
-                  "&fecfin="+fecfin+
-                  "&fecinipad="+fecinipad+
-                  "&fecfinpad="+fecfinpad,
+                  "&fecini="+fecini_formato+
+                  "&fecfin="+fecfin_formato+
+                  "&fecinipad="+fec_inipad_formato+
+                  "&fecfinpad="+fec_finpad_formato,
         beforeSend: function(data){
                 $('#div_mant_rep1_tbl').html("Cargando...");
         },

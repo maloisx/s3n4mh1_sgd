@@ -18,8 +18,8 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10" >
-                <div id="div_mant_expedientes_pad_tbl"></div>
+            <div class="col-md-10">
+                <div class="center-block" id="div_mant_expedientes_pad_tbl"></div>
             </div>
             <div class="col-md-1"></div>
         </div>
@@ -32,4 +32,6 @@
 
 <style>  
   #pad {height: 100%;}
+  
+  th.dt-center, td.dt-center { text-align: center; }
 </style>
