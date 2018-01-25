@@ -3515,27 +3515,3 @@ function sgd_mant_expediente_dir_tbl(cut,anio,asunto,cd,nro,envia,recibe){
 }
 //FIN BUSCAR EXPEDIENTE CREADOS TABLA POR ALTA DIRECCIÓN     
 //
-//INICIO BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO    
-function sgd_mant_atencion_ciudadano_tbl(){
-    var exp = $('#txt_expediente').val();
-    var anio = $('#cb_anio').val();
-    
-    $.ajax({
-            dataType: "html",
-            type:     "GET",
-            url:      path + "sgd/mant_atencion_ciudadano_tbl/",
-            data:     "exp="+exp+
-                      "&anio="+anio,
-            beforeSend: function(data){
-                $('#div_atencion_ciudadano_tbl').html("Cargando...");
-            },
-            success: function(requestData){
-                $('#div_atencion_ciudadano_tbl').html(requestData);
-            },
-            error: function(requestData, strError, strTipoError){
-                $('#div_atencion_ciudadano_tbl').html("Error " + strTipoError +": " + strError);
-            }
-        });
-}
-//FIN BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO    
-//

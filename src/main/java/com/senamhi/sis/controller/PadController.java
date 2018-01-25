@@ -156,15 +156,17 @@ public class PadController {
                                     + "{'sTitle':'DENUNCIADO(S)'} , "
                                     + "{'sTitle':'ABOGADO'} , "
                                     + "{'sTitle':'HERRAMIENTAS'}  "
-                                    + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1]},{'aTargets':[ 2 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("aoColumnDefs");sv.add("[{'className':'dt-head-center','aTargets':[2]},{'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumnDefs");sv.add("[{ sClass:'dt-center','aTargets':[0,1,2,3,4,5,6,7,8]},{'aTargets':[ 3,4 ],'bVisible': true,'bSearchable': true}]");vc_tbl.add(sv);sv =  new Vector();
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("columns");sv.add("[{ name:'EXPEDIENTE',name:'FECHA RECEP.ORH' }]");
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6,7]} },"
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6,7]}  },"
                                     + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4' },"
                                     + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
                                     + " ]");
@@ -176,7 +178,7 @@ public class PadController {
 //                          "}";
 //            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-            String tbl_html = "<table border='1' class='table table-striped table-bordered table-responsive-sm text-center' id='c_tbl_exp_pad'></table>";
+            String tbl_html = "<table border='2' class='table table-striped table-hover table-bordered table-responsive-sm' id='c_tbl_exp_pad'></table>";
             String tbl = util.datatable("c_tbl_exp_pad",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 

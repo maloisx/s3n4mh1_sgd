@@ -760,12 +760,16 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/uploadfile_cargo.jsp" />  
     </definition>    
         
-    <definition name="sgd/mant_atencion_ciudadano"  extends="base-definition">
-        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_atencion_ciudadano.jsp" />
+    <definition name="mant_atencion_ciudadano"  extends="login-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/mant_atencion_ciudadano.jsp" />
     </definition>
         
-    <definition name="sgd/mant_atencion_ciudadano_tbl"  extends="ajax-definition">
-        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_atencion_ciudadano_tbl.jsp" />
+    <definition name="mant_atencion_ciudadano_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/mant_atencion_ciudadano_tbl.jsp" />
+    </definition>
+    
+    <definition name="mant_atencion_ciudadano_doc"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/mant_atencion_ciudadano_doc.jsp" />
     </definition>
     
 </tiles-definitions>

@@ -230,7 +230,15 @@
     
 </script>
 
+<style>
+    table.center-all td,th{
+    text-align :center;
+}
+    thead th:nth-child(2) {
+  width: 40%;
+}
 
+</style>
 
 
 <!--<div class="row">

@@ -9312,7 +9312,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 //FIN BUSCAR EXPEDIENTE POR DIRECCIÓN    
 //    
 //INICIO BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
-@RequestMapping(value = {"/sgd/mant_atencion_ciudadano"}, method = RequestMethod.GET)
+@RequestMapping(value = {"/mant_atencion_ciudadano"}, method = RequestMethod.GET)
     public String MantAtencionCiudadano(HttpServletRequest request, HttpServletResponse response,ModelMap model) {        
         request.setAttribute("title_pag","ATENCIÓN AL CIUDADANO");
                     
@@ -9326,12 +9326,12 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String cb_periodo = util.contenido_combo(datos_cbo_per, "");
             request.setAttribute("cb_periodo", cb_periodo);   
                                                 
-        return "sgd/mant_atencion_ciudadano";
+        return "mant_atencion_ciudadano";
     }
 //FIN BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
 //       
 //INICIO BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO TABLA
-@RequestMapping(value = {"/sgd/mant_atencion_ciudadano_tbl"}, method = RequestMethod.GET)
+@RequestMapping(value = {"/mant_atencion_ciudadano_tbl"}, method = RequestMethod.GET)
     public String AjaxQueryExpedienteAtencionCiudadanoTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
          
     String exp = request.getParameter("exp");
@@ -9379,32 +9379,54 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                                     + "{'sTitle':'OF.RECIBE'} , "
                                     + "{'sTitle':'ESTADO'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1]},{'aTargets':[ 2 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("aoColumnDefs");sv.add("[{'className':'dt-head-center','aTargets':[2]},{'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-            //boton de excel
-            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("columns");sv.add("[{ name:'EXPEDIENTE',name:'FECHA RECEP.ORH' }]");
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5]} },"
-//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4' },"
-//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
-                                    + " ]");
-            vc_tbl.add(sv);
-            sv =  new Vector();
-            ////Pintar de rojo si está como pendiente
-            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
-                            " if (rtrim(aData[4]) == 'PENDIENTE'){$('td', nRow).addClass('ui-state-error' );} " +                     
-                          "}";
-            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+    sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+//      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+    //boton de excel
+    //    sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+    ////Pintar de rojo el registro si no t.iene datos
+    String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+                    " if (rtrim(aData[4]) == 'PENDIENTE'){$('td', nRow).addClass('ui-state-highnuevo' );} " +                     
+                  "}";
+    sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-            String tbl_html = "<table border='1' class='table table-striped table-bordered table-responsive-sm' id='c_tbl_atencion_ciudadano'></table>";
+    String tbl_html = "<table border='1' class='table table-striped table-bordered dt-responsive' id='c_tbl_atencion_ciudadano'></table>";
     String tbl = util.datatable("c_tbl_atencion_ciudadano",vc_tbl);            
     request.setAttribute("response", tbl_html + tbl);
 
-    return "sgd/mant_atencion_ciudadano_tbl";
+    return "mant_atencion_ciudadano_tbl";
     }    
 //FIN BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO TABLA
-//               
+//
+//INICIO BUSCAR PRIMER DOCUMENTO
+    @RequestMapping(value = {"/mant_atencion_ciudadano_doc"}, method = RequestMethod.GET)
+    public String AjaxQueryExpedienteAtencionCiudadanoDoc(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        String var_request = "";    
+        String exp = request.getParameter("exp");
+        String anio = request.getParameter("anio");
+
+        try {        
+        ConeccionDB cdb = new ConeccionDB(); 
+            String np = "sgd.fn_atencion_ciudadano_doc_consulta";
+            String array[] = new String[2];
+            array[0] = exp;
+            array[1] = anio;
+
+        Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+
+        var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        return "mant_atencion_ciudadano_doc";
+    }
+//FIN BUSCAR PRIMER DOCUMENTO
+//    
 }
 
