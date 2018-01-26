@@ -66,7 +66,7 @@
                         <label for="cb_falta" class="active">Seleccione Falta:</label> 
                     </div>
                     <div class="input-field col-md-5">
-                        <select name="cb_faltasel" id="cb_faltasel" class="form-control selectpicker" data-size="3" multiple multipledata-live-search="true" onchange="delete_cascade_list_boostrap_select('cb_faltasel','cb_falta')"></select>    
+                        <select name="cb_faltasel" id="cb_faltasel" class="form-control selectpicker" data-size="3" multiple data-live-search="true" onchange="delete_cascade_list_boostrap_select('cb_faltasel','cb_falta')"></select>    
                         <label for="cb_faltasel" class="active">Faltas seleccionadas:</label>
                     </div>
                 </div>
@@ -76,15 +76,19 @@
                         <select name="cb_sancion" id="cb_sancion" class="form-control selectpicker" data-size="3">${requestScope['sancion']}</select>                    
                         <label for="cb_sancion" class="active">Sanción:</label> 
                     </div>
-                    <div class="input-field col-md-5">
-                        <select name="cb_medida_caut" id="cb_medida_caut" class="form-control selectpicker" data-size="3" multiple>${requestScope['medcaut']}</select>    
-                        <label for="cb_medida_caut" class="active">Medida Cautelar:</label>
+                    <div class="input-field col-sm-5">
+                        <input name="txt_dias" id="txt_dias" type="text" />                 
+                        <label for="txt_dias" class="active">Dias de sanción:</label> 
                     </div>
                 </div>
                 <br><br> 
-                <div class="row">                    
+                <div class="row">
                     <div class="input-field col-md-5">
-                        <select name="cb_recurso" id="cb_recurso" class="form-control selectpicker" data-size="3" multiple>${requestScope['recurso']}</select>    
+                        <select name="cb_medida_caut" id="cb_medida_caut" class="form-control selectpicker" data-size="3">${requestScope['medcaut']}</select>    
+                        <label for="cb_medida_caut" class="active">Medida Cautelar:</label>
+                    </div>                    
+                    <div class="input-field col-md-5">
+                        <select name="cb_recurso" id="cb_recurso" class="form-control selectpicker" data-size="3">${requestScope['recurso']}</select>    
                         <label for="cb_recurso" class="active">Recurso:</label>
                     </div>
                 </div>
@@ -130,7 +134,7 @@
         $('#expediente').attr('class',''); 
     });
 
-charge_list_boostrap_select('cb_falta','cb_faltasel')
+charge_list_boostrap_select('cb_falta','cb_faltasel');
 </script>
 
 

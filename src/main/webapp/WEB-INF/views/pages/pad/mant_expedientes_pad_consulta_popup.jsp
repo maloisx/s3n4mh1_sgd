@@ -88,6 +88,19 @@
                     <div class="input-field col-sm-1">
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">                         
+                            <div class="input-field col-sm-5">
+                                <textarea name="txt_investigados" id="txt_investigados" readonly class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="500" minlength="1"></textarea>
+                                <label for="txt_investigados" class="active">Investigado(s):</label>
+                            </div>
+                            <div class="input-field col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <br> 
                 <div class="row">
                     <div class="input-field text-right col-sm-5">
@@ -214,13 +227,18 @@
                
     });
 
-//<!-- // $('#div_mant_adjunto_tbl').toggle();-->
     
-    
-   
 </script>
 
+<style>
+    table.center-all td,th{
+    text-align :center;
+}
+    thead th:nth-child(2) {
+  width: 40%;
+}
 
+</style>
 
 
 <!--<div class="row">

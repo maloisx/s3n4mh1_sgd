@@ -3489,4 +3489,29 @@ function sgd_mant_cargo_guardar(){
 }   
 //INICIO INICIO CARGO GUARDAR
 //  
-
+//INICIO BUSCAR EXPEDIENTE CREADOS TABLA POR ALTA DIRECCIÓN    
+function sgd_mant_expediente_dir_tbl(cut,anio,asunto,cd,nro,envia,recibe){
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_expediente_dir_tbl/",
+            data:     "cut="+cut+
+                      "&anio="+anio+
+                      "&asunto="+asunto+
+                      "&cd="+cd+
+                      "&nro="+nro+
+                      "&envia="+envia+
+                      "&recibe="+recibe,
+            beforeSend: function(data){
+                $('#div_expediente_dir_tbl').html("Cargando...");
+            },
+            success: function(requestData){
+                $('#div_expediente_dir_tbl').html(requestData);
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_expediente_dir_tbl').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN BUSCAR EXPEDIENTE CREADOS TABLA POR ALTA DIRECCIÓN     
+//

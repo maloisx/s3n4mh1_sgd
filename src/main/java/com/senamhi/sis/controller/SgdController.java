@@ -3283,7 +3283,6 @@ public class SgdController {
     } 
 //FIN BANDEJA ENTRADA POR PERFIL  
 //        
-//
 //INICIO EXPEDIENTE AÑADIR DOCUMENTO POPUP            
     @RequestMapping(value = {"/sgd/mant_expediente_añadirdoc_popup"}, method = RequestMethod.GET)
     public String MantExpedienteAñadirdocPopup_1(HttpServletRequest request, HttpServletResponse response, ModelMap model)
@@ -6451,19 +6450,126 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         request.setAttribute("title_pag","BUSCAR EXPEDIENTE");
         HttpSession session = request.getSession();
         String codUser = (String) session.getAttribute("codUser");  
-        request.setAttribute("codUser", codUser); 
-        
-        
+        request.setAttribute("codUser", codUser);               
         return "sgd/mant_buscarexp";
     }  
 //FIN BUSCAR EXPEDIENTE POR DIRECCIÓN           
 //
 //INICIO BUSCAR EXPEDIENTE POR DIRECCIÓN TABLA
+//@RequestMapping(value = {"/sgd/mant_buscarexp_tbl"}, method = RequestMethod.GET)
+//    public String AjaxQueryBuscarexpTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+//
+//    String codUser = request.getParameter("codUser");  
+//
+//    ConeccionDB cn =  new ConeccionDB();        
+//    String np = "sgd.fn_expedientegeneral_consulta";
+//    String array[] = new String[1];
+//    array[0] = codUser;
+//    Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+//    Vector v_temp = new Vector();
+//    for(int i = 0 ; i<v_datos.size() ; i++){            
+//        Vector vss =  (Vector) v_datos.get(i);
+//        String i_id = vss.get(0).toString();//id expediente
+//        String cut_exp = vss.get(1).toString();
+//        String per_exp = vss.get(2).toString();
+//        String fec_reg = vss.get(3).toString();
+//        String des_origen = vss.get(4).toString();
+//        String des_tema = vss.get(5).toString();
+//        String des_proc = vss.get(6).toString();
+//        String des_uo = vss.get(7).toString();
+//        String documento = vss.get(8).toString();
+//        String exp_agrupados = vss.get(9).toString();
+//        String matriz = vss.get(10).toString();
+//        String asunto = vss.get(12).toString();
+//        String des_alcance = vss.get(14).toString();
+//        String id_doc = vss.get(15).toString();
+////        String remite = vss.get(16).toString();
+////        String destino = vss.get(17).toString();
+//        String f_envio = vss.get(17).toString();
+//        String cut_per = cut_exp +'-'+ per_exp;
+//
+//        String btn = "<div class='text-center'>"
+//                + "<button type='button' class='btn btn-info' onclick='sgd_expediente_buscar_popup(\""+i_id+"\",\""+id_doc+"\",\""+codUser+"\")'>"
+//                + "<span class='glyphicon glyphicon-search'></span>"
+//                + "</button>"
+//                + "</div>";
+//        Vector vv = new Vector();
+//            vv.add(btn);
+//            vv.add(cut_exp);
+//            vv.add(per_exp);
+//            vv.add(des_alcance);
+//            vv.add(fec_reg);
+//            vv.add(documento);
+//            vv.add(asunto);
+//            vv.add(des_origen);
+//            vv.add(des_tema);
+//            vv.add(des_proc);
+//            vv.add(des_uo);
+//            vv.add(matriz);
+//            vv.add(exp_agrupados);
+////            vv.add(remite);
+//////            vv.add(destino);
+//            vv.add(f_envio);            
+//            v_temp.add(vv); 
+//    }
+//    Util util = new Util();
+//    String json = util.vector2json_tbl(v_temp);   
+//    Vector vc_tbl = new Vector();
+//    Vector sv =  new Vector();
+//    sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("aoColumns");sv.add("["     
+//                            + "{'sTitle':'-'} , "
+//                            + "{'sTitle':'N CUT'} , "
+//                            + "{'sTitle':'PERIODO'} , "
+//                            + "{'sTitle':'ALCANCE'} , "
+//                            + "{'sTitle':'FECHA REG.'} , "
+//                            + "{'sTitle':'DOCUMENTO'} , "
+//                            + "{'sTitle':'ASUNTO'} , "
+//                            + "{'sTitle':'ORIGEN'} , "
+//                            + "{'sTitle':'TEMA'} , "
+//                            + "{'sTitle':'PROCEDIMIENTO'} , "
+//                            + "{'sTitle':'UNIDAD ORGÁNICA CREA'} , "
+//                            + "{'sTitle':'EXP. MATRIZ'} , "
+//                            + "{'sTitle':'EXP. AGRUPADOS'},  "
+////                            + "{'sTitle':'REMITE'},  "
+////                            + "{'sTitle':'DESTINO'},  "
+//                            + "{'sTitle':'FEC.ENVIO'}  "                          
+//                            + "]");
+//    vc_tbl.add(sv);
+//    sv =  new Vector();
+//    sv.add("aaData");
+//    sv.add(json);
+//    vc_tbl.add(sv);
+//    sv =  new Vector();
+//    sv.add("dom");
+//    sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");
+//    vc_tbl.add(sv);
+//    sv =  new Vector();
+//    sv.add("buttons");
+//    sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");
+//    vc_tbl.add(sv);
+//    sv =  new Vector();
+//    String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                    " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                  "}";
+//    sv.add("fnRowCallback");
+//    sv.add(fnc);
+//    vc_tbl.add(sv);
+//    sv =  new Vector();
+//    String tbl_html = "<table border='1' class='table table-striped table-bordered dt-responsive' id='c_tbl_buscar_expediente'></table>";
+//    String tbl = util.datatable("c_tbl_buscar_expediente",vc_tbl);            
+//    request.setAttribute("response", tbl_html + tbl);
+//
+//    return "sgd/mant_buscarexp_tbl";
+//    }   
+        
 @RequestMapping(value = {"/sgd/mant_buscarexp_tbl"}, method = RequestMethod.GET)
-    public String AjaxQueryBuscarexpTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+    public String AjaxQueryBuscarExpTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 
-    String codUser = request.getParameter("codUser");  
-
+    HttpSession session = request.getSession();
+    String codUser = (String) session.getAttribute("codUser");    
+           
     ConeccionDB cn =  new ConeccionDB();        
     String np = "sgd.fn_expedientegeneral_consulta";
     String array[] = new String[1];
@@ -6478,20 +6584,18 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String fec_reg = vss.get(3).toString();
         String des_origen = vss.get(4).toString();
         String des_tema = vss.get(5).toString();
-        String des_proc = vss.get(6).toString();
-        String des_uo = vss.get(7).toString();
-        String documento = vss.get(8).toString();
-        String exp_agrupados = vss.get(9).toString();
-        String matriz = vss.get(10).toString();
-        String user_agrupa = vss.get(11).toString();
-        String asunto = vss.get(12).toString();
-        String id_alcance = vss.get(13).toString();
-        String des_alcance = vss.get(14).toString();
-        String id_doc = vss.get(15).toString();
-        String cut_per = cut_exp +'-'+ per_exp;
+        String des_proc = vss.get(6).toString();        
+        String documento = vss.get(7).toString();
+        String exp_agrupados = vss.get(8).toString();
+        String asunto = vss.get(9).toString();
+        String id_alcance = vss.get(10).toString();
+        String des_alcance = vss.get(11).toString();
+        String id_doc = vss.get(12).toString();
+        String origen = vss.get(13).toString();
+        String destino = vss.get(14).toString();
 
         String btn = "<div class='text-center'>"
-                + "<button type='button' class='btn btn-info' onclick='sgd_expediente_buscar_popup(\""+i_id+"\",\""+id_doc+"\",\""+codUser+"\")'>"
+                + "<button type='button' class='btn btn-info' onclick='sgd_expediente_buscar_popup(\""+i_id+"\",\""+id_doc+"\")'>"
                 + "<span class='glyphicon glyphicon-search'></span>"
                 + "</button>"
                 + "</div>";
@@ -6506,28 +6610,20 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             vv.add(des_origen);
             vv.add(des_tema);
             vv.add(des_proc);
-            vv.add(des_uo);
-            vv.add(matriz);
+            vv.add(origen);
+            vv.add(destino);
             vv.add(exp_agrupados);
-            
             v_temp.add(vv); 
     }
     Util util = new Util();
     String json = util.vector2json_tbl(v_temp);   
     Vector vc_tbl = new Vector();
     Vector sv =  new Vector();
-//            sv.add("language");sv.add("{'url':'"+request.getContextPath()+"/static/datatables/Spanish.json'}");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("bFilter");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("bLengthChange");sv.add("false");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("bInfo");sv.add("false");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("bPaginate");sv.add("false");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("iDisplayLength");sv.add(v_temp.size());vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("bJQueryUI");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
     sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
     sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
-    sv.add("aoColumns");sv.add("["     
+    sv.add("aoColumns");sv.add("[" 
                             + "{'sTitle':'-'} , "
-                            + "{'sTitle':'N CUT'} , "
+                            + "{'sTitle':'N° CUT'} , "
                             + "{'sTitle':'PERIODO'} , "
                             + "{'sTitle':'ALCANCE'} , "
                             + "{'sTitle':'FECHA REG.'} , "
@@ -6536,8 +6632,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                             + "{'sTitle':'ORIGEN'} , "
                             + "{'sTitle':'TEMA'} , "
                             + "{'sTitle':'PROCEDIMIENTO'} , "
-                            + "{'sTitle':'UNIDAD ORGÁNICA'} , "
-                            + "{'sTitle':'EXP. MATRIZ'} , "
+                            + "{'sTitle':'REMITE'} , "
+                            + "{'sTitle':'DESTINO'} , "
                             + "{'sTitle':'EXP. AGRUPADOS'}  "
                             
                             + "]");vc_tbl.add(sv);sv =  new Vector();
@@ -6560,7 +6656,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     request.setAttribute("response", tbl_html + tbl);
 
     return "sgd/mant_buscarexp_tbl";
-    }    
+    }        
+    
 //FIN BUSCAR EXPEDIENTE POR DIRECCIÓN TABLA
 //        
 //INICIO BUSCAR EXPEDIENTES POPUP    
@@ -6882,11 +6979,10 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     request.setAttribute("response", tbl_html + tbl);
 
     return "sgd/mant_buscarexp_prof_tbl";
-    }    
-//FIN BUSCAR EXPEDIENTE PROFESIONAL TABLA  
-//                
-        
-       
+    }
+//FIN BUSCAR EXPEDIENTE PROFESIONAL TABLA
+//
+//INICIO BUSCAR EXPEDIENTE ALTA DIRECCION TABLA
 @RequestMapping(value = {"/sgd/mant_buscar_altdir"}, method = RequestMethod.GET)
     public String MantBuscareAltdir(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
         request.setAttribute("title_pag","BUSQUEDA GLOBAL DE EXPEDIENTES");
@@ -6918,7 +7014,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             
         return "sgd/mant_buscar_altdir";
     }          
-//
+//FIN BUSCAR EXPEDIENTE ALTA DIRECCION TABLA
+//    
 //INICIO BUSCAR EXPEDIENTE ALTA DIRECCION TABLA
 @RequestMapping(value = {"/sgd/mant_buscar_altdir_tbl"}, method = RequestMethod.GET)
     public String AjaxQueryBuscarAltdirTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
@@ -7226,7 +7323,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     public String MantBuscareDerivado(HttpServletRequest request, HttpServletResponse response,ModelMap model) {  
         HttpSession session = request.getSession();
         String sglUO = (String) session.getAttribute("sglUO");
-        request.setAttribute("title_pag","BUSQUEDA DE EXPEDIENTES DERIVADOS POR PREJ");
+        request.setAttribute("title_pag","BUSQUEDA DE EXPEDIENTES DERIVADOS POR "+ sglUO);
                     
             ConeccionDB cn = new ConeccionDB();               
             Util util =  new Util();
@@ -9065,7 +9162,271 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     }       
 //FIN SUBIR CARGOS 
 //        
+//INICIO BUSQUEDA DE EXPEDIENTE POR DIRECCIÓN 
+@RequestMapping(value = {"/sgd/mant_expediente_dir"}, method = RequestMethod.GET)
+    public String MantExpedienteDir(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+        HttpSession session = request.getSession();
+        String sglUO = (String) session.getAttribute("sglUO");
+        request.setAttribute("title_pag","EXPEDIENTES POR DIRECCIÓN: " + sglUO);
+                    
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+//          información para el combo periodo (año)
+            String ne = "sgd.fn_exp_anio_consulta";
+            String array_cbo_est[] = new String[1];
+            array_cbo_est[0] = "";
+            Vector datos_cbo_per = cn.EjecutarProcedurePostgres(ne, array_cbo_est);            
+            String cb_periodo = util.contenido_combo(datos_cbo_per, "");
+            request.setAttribute("cb_periodo", cb_periodo);   
+            
+            String clsdoc = "sgd.fn_clasifdoc_consulta";
+            String array_cbo_clsdoc[] = new String[1];
+            array_cbo_clsdoc[0] = "";
+            Vector datos_cbo_clsdoc = cn.EjecutarProcedurePostgres(clsdoc, array_cbo_clsdoc);            
+            String cb_clsdoc = util.contenido_combo(datos_cbo_clsdoc, "");
+            request.setAttribute("cb_clsdoc", cb_clsdoc);   
+            
+//            información combo envia (el que realiza la derivación)
+            String pers = "senamhi.fn_personal_consulta";//PERSONAL CONSULTADO ID_USER, NOMBRE DEL EMPLEADO
+            String array_cbo_personal[] = new String[1];
+            array_cbo_personal[0] = "";
+            Vector datos_cbo_personal = cn.EjecutarProcedurePostgres(pers, array_cbo_personal);            
+            String cb_personal = util.contenido_combo(datos_cbo_personal, "");
+            request.setAttribute("cb_personal", cb_personal);   
+                        
+        return "sgd/mant_expediente_dir";
+    }              
+//FIN BUSQUEDA DE EXPEDIENTE POR DIRECCIÓN
+//
+//INICIO BUSCAR EXPEDIENTE POR DIRECCIÓN
+@RequestMapping(value = {"/sgd/mant_expediente_dir_tbl"}, method = RequestMethod.GET)
+    public String AjaxQueryExpedienteDirTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+        
+    HttpSession session = request.getSession();
+    String codUO = (String) session.getAttribute("codUO");
     
-//            
+    String cut = request.getParameter("cut");
+    String anio = request.getParameter("anio");
+    String asun = request.getParameter("asunto");
+    String cd = request.getParameter("cd");
+    String nro = request.getParameter("nro");
+    String envia = request.getParameter("envia");
+    String recibe = request.getParameter("recibe");
+        
+    ConeccionDB cn =  new ConeccionDB();        
+    String np = "sgd.fn_expedientegeneral_dir_consulta";
+    String array[] = new String[8];
+    array[0] = cut;
+    array[1] = anio;
+    array[2] = asun;
+    array[3] = cd;
+    array[4] = nro;
+    array[5] = codUO;
+    array[6] = envia;
+    array[7] = recibe;
+    Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+    Vector v_temp = new Vector();
+    for(int i = 0 ; i<v_datos.size() ; i++){            
+        Vector vss =  (Vector) v_datos.get(i);
+        String i_id = vss.get(0).toString();//id expediente
+        String cut_exp = vss.get(1).toString();
+        String per_exp = vss.get(2).toString();
+        String fec_reg = vss.get(3).toString();
+        String des_origen = vss.get(4).toString();
+        String des_tema = vss.get(5).toString();
+        String des_proc = vss.get(6).toString();        
+        String documento = vss.get(7).toString();
+        String exp_agrupados = vss.get(8).toString();
+        String asunto = vss.get(9).toString();
+        String id_alcance = vss.get(10).toString();
+        String des_alcance = vss.get(11).toString();
+        String id_doc = vss.get(12).toString();
+        String origen = vss.get(13).toString();
+        String destino = vss.get(14).toString();
+        String fec_envio = vss.get(15).toString();
+
+        String btn = "<div class='text-center'>"
+                + "<button type='button' class='btn btn-info' onclick='sgd_expediente_buscar_popup(\""+i_id+"\",\""+id_doc+"\")'>"
+                + "<span class='glyphicon glyphicon-search'></span>"
+                + "</button>"
+                + "</div>";
+        Vector vv = new Vector();
+            vv.add(btn);
+            vv.add(cut_exp);
+            vv.add(per_exp);
+            vv.add(des_alcance);
+            vv.add(fec_reg);
+            vv.add(documento);
+            vv.add(asunto);
+            vv.add(des_origen);
+            vv.add(des_tema);
+            vv.add(des_proc);
+            vv.add(origen);
+            vv.add(destino);
+            vv.add(exp_agrupados);
+            vv.add(fec_envio);
+            v_temp.add(vv); 
+    }
+    Util util = new Util();
+    String json = util.vector2json_tbl(v_temp);   
+    Vector vc_tbl = new Vector();
+    Vector sv =  new Vector();
+    sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("aoColumns");sv.add("[" 
+                            + "{'sTitle':'-'} , "
+                            + "{'sTitle':'N° CUT'} , "
+                            + "{'sTitle':'PERIODO'} , "
+                            + "{'sTitle':'ALCANCE'} , "
+                            + "{'sTitle':'FECHA REG.'} , "
+                            + "{'sTitle':'DOCUMENTO'} , "
+                            + "{'sTitle':'ASUNTO'} , "
+                            + "{'sTitle':'ORIGEN'} , "
+                            + "{'sTitle':'TEMA'} , "
+                            + "{'sTitle':'PROCEDIMIENTO'} , "
+                            + "{'sTitle':'ENVÍA'} , "
+                            + "{'sTitle':'RECIBE'} , "
+                            + "{'sTitle':'EXP. AGRUPADOS'},  "
+                            + "{'sTitle':'FEC.ENVIO'}  "
+                            
+                            + "]");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+//      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+    //boton de excel
+    //    sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+    ////Pintar de rojo el registro si no t.iene datos
+    String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+                    " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+                  "}";
+    sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+    String tbl_html = "<table border='1' class='table table-striped table-bordered dt-responsive' id='c_tbl_buscar_expediente'></table>";
+    String tbl = util.datatable("c_tbl_buscar_expediente",vc_tbl);            
+    request.setAttribute("response", tbl_html + tbl);
+
+    return "sgd/mant_expediente_dir_tbl";
+    }    
+//FIN BUSCAR EXPEDIENTE POR DIRECCIÓN    
+//    
+//INICIO BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
+@RequestMapping(value = {"/mant_atencion_ciudadano"}, method = RequestMethod.GET)
+    public String MantAtencionCiudadano(HttpServletRequest request, HttpServletResponse response,ModelMap model) {        
+        request.setAttribute("title_pag","ATENCIÓN AL CIUDADANO");
+                    
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+//          información para el combo periodo (año)
+            String ne = "sgd.fn_exp_anio_consulta";
+            String array_cbo_est[] = new String[1];
+            array_cbo_est[0] = "";
+            Vector datos_cbo_per = cn.EjecutarProcedurePostgres(ne, array_cbo_est);            
+            String cb_periodo = util.contenido_combo(datos_cbo_per, "");
+            request.setAttribute("cb_periodo", cb_periodo);   
+                                                
+        return "mant_atencion_ciudadano";
+    }
+//FIN BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
+//       
+//INICIO BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO TABLA
+@RequestMapping(value = {"/mant_atencion_ciudadano_tbl"}, method = RequestMethod.GET)
+    public String AjaxQueryExpedienteAtencionCiudadanoTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+         
+    String exp = request.getParameter("exp");
+    String anio = request.getParameter("anio");
+    
+    ConeccionDB cn =  new ConeccionDB();        
+    String np = "sgd.fn_atencion_ciudadano_consulta";
+    String array[] = new String[2];
+    array[0] = exp;
+    array[1] = anio;
+    Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+    Vector v_temp = new Vector();
+    for(int i = 0 ; i<v_datos.size() ; i++){            
+        Vector vss =  (Vector) v_datos.get(i); 
+        String origen = vss.get(0).toString();  
+        String fec_envio = vss.get(1).toString(); 
+        String observaciones = vss.get(2).toString();     
+        String destino = vss.get(3).toString();
+        String estado = vss.get(4).toString();
+        
+        Vector vv = new Vector();
+            vv.add(fec_envio);
+            vv.add(origen);
+            vv.add(observaciones);
+            vv.add(destino);
+            vv.add(estado);
+            v_temp.add(vv); 
+    }
+     Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'80%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'FECHA ENVÍO'} , "
+                                    + "{'sTitle':'OF.ENVÍA'} , "
+                                    + "{'sTitle':'OBSERVACIONES'} , "
+                                    + "{'sTitle':'OF.RECIBE'} , "
+                                    + "{'sTitle':'ESTADO'}  "
+                                    + "]");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+//      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+    //boton de excel
+    //    sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+    ////Pintar de rojo el registro si no t.iene datos
+    String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+                    " if (rtrim(aData[4]) == 'PENDIENTE'){$('td', nRow).addClass('ui-state-highnuevo' );} " +                     
+                  "}";
+    sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+    String tbl_html = "<table border='1' class='table table-striped table-bordered dt-responsive' id='c_tbl_atencion_ciudadano'></table>";
+    String tbl = util.datatable("c_tbl_atencion_ciudadano",vc_tbl);            
+    request.setAttribute("response", tbl_html + tbl);
+
+    return "mant_atencion_ciudadano_tbl";
+    }    
+//FIN BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO TABLA
+//
+//INICIO BUSCAR PRIMER DOCUMENTO
+    @RequestMapping(value = {"/mant_atencion_ciudadano_doc"}, method = RequestMethod.GET)
+    public String AjaxQueryExpedienteAtencionCiudadanoDoc(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        String var_request = "";    
+        String exp = request.getParameter("exp");
+        String anio = request.getParameter("anio");
+
+        try {        
+        ConeccionDB cdb = new ConeccionDB(); 
+            String np = "sgd.fn_atencion_ciudadano_doc_consulta";
+            String array[] = new String[2];
+            array[0] = exp;
+            array[1] = anio;
+
+        Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+
+        var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        return "mant_atencion_ciudadano_doc";
+    }
+//FIN BUSCAR PRIMER DOCUMENTO
+//    
 }
 

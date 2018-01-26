@@ -1,4 +1,4 @@
-<div id="div_mensaje_ajax" class="text-success"></div>    
+<!--<div id="div_mensaje_ajax" class="text-success"></div>-->    
 <input type="hidden" name="hd_iddoc" id="hd_iddoc" value="${requestScope['doc']}" />
 <br>
 <div class="row">

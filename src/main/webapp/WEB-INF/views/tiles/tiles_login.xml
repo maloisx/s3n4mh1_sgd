@@ -36,9 +36,9 @@
        <put-attribute name="title" value="LOGIN" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/login/reset_pass.jsp" />  
     </definition> 
-   <definition name="login/reset_pass_confirm" extends="ajax-definition">  
+    <definition name="login/reset_pass_confirm" extends="ajax-definition">  
        <!--<put-attribute name="title" value="solicitud_reset_pass" />-->  
        <put-attribute name="body" value="/WEB-INF/views/pages/login/reset_pass_confirm.jsp" />  
-   </definition>
+    </definition>
    
 </tiles-definitions>

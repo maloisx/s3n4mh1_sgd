@@ -2719,24 +2719,7 @@ function sgd_bandeja_perfil_tbl(cod_perfil){
     });    
 }
 //FIN BANDEJA ENTRADA PERFIL
-//
-//INICIO BUSCAR EXPEDIENTE POPUP
-//function sgd_mant_buscar_exp_popup(){       
-//    var codUser = $('#hd_codUser').val();
-//    
-//    var url = encodeURI(path + "sgd/mant_buscar_exp_popup/?codUser="+codUser);
-//   
-//    $.colorbox({
-//        "href" : url
-//       ,"width" : 700
-//       ,"height" : 600 
-//    });
-//    
-//}
-//FIN BUSCAR EXPEDIENTE POPUP
-//
-//
-//INICIO BUSCAR EXPEDIENTE TABLA
+
 function sgd_buscarexp_tbl(){
     var codUser = $('#hd_codUser').val();    
     
@@ -2757,6 +2740,27 @@ function sgd_buscarexp_tbl(){
         });
 }
 //FIN BUSCAR EXPEDIENTE TABLA
+//
+//INICIO BUSCAR EXPEDIENTE POR DIRECCION TABLA
+function sgd_mant_buscar_dir_tbl(){       
+    
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_buscarexp_dir_tbl/",
+            data:     "",
+            beforeSend: function(data){
+                $('#div_buscarexp_tbl').html("Cargando...");
+            },
+            success: function(requestData){
+                $('#div_buscarexp_tbl').html(requestData);
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_buscarexp_tbl').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN BUSCAR EXPEDIENTE POR DIRECCION TABLA
 //
 //INICIO BUSCAR EXPEDIENTE PROFESIONAL TABLA
 function sgd_buscarexp_prof_tbl(){

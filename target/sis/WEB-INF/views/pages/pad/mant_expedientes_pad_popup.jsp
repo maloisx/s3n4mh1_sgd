@@ -1,4 +1,4 @@
-<!--<div id="div_mensaje_ajax" class="text-success"></div>-->    
+<div id="div_mensaje_ajax" class="text-success"></div>    
 <input type="hidden" name="hd_iddoc" id="hd_iddoc" value="${requestScope['doc']}" />
 <br>
 <div class="row">
@@ -8,27 +8,32 @@
             </div>
             <div class="input-field text-right col-sm-1">
                 <input type="text" name="txt_nroexp" id="txt_nroexp" value="${requestScope['nroexp']}" style="text-align: center; color: red; font-size:120%; font-weight:bold;" />                   
-                <label for="txt_nroexp" class="active bmd-label-floating">N° Exp:</label> 
+                <label for="txt_nroexp" class="active bmd-label-floating">N° Exp</label> 
             </div>
             <div class="input-field text-right col-sm-1">
                 <select name="cb_anio" id="cb_anio" class="form-control selectpicker" data-size="3">${requestScope['anio']}</select>                    
-                <label for="cb_anio" class="active">Año:</label>  
-            </div>
-            <div class="input-field text-right col-sm-1">
+                <label for="cb_anio" class="active">Año</label>  
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecharecep" id="txt_fecharecep" type="text" class="datepicker" value="${requestScope['fecharecep']}" style="text-align: center; font-size:120%; font-weight:bold;" />
-                <label for="txt_fecharecep" class="active">Fecha Recep.ORH:</label>
+                <label for="txt_fecharecep" class="active">Fecha Recep.ORH</label>
+            </div>
+            <div class="input-field text-right col-sm-1">
+                <select name="cb_tiempo" id="cb_tiempo" class="form-control selectpicker" data-size="3">
+                    <option value="1">1 año</option>
+                    <option value="3">3 años</option>
+                </select>                    
+                <label for="cb_tiempo" class="active">Tiempo Prescr.</label>  
             </div>
             <div class="input-field col-sm-1">
                 <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
-                <label for="txt_fecpresc_iniPAD" class="active bmd-label-floating">Fecha Prescr. Inicio PADdd:</label>
+                <label for="txt_fecpresc_iniPAD" class="active bmd-label-floating">Fecha Prescr. Inicio PAD</label>
             </div>
             <div class="input-field col-sm-1">
             </div>
             <div class="input-field text-right col-sm-4">
                 <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4" disabled>${requestScope['etapa']}</select>                    
-                <label for="cb_etapa" class="active">Etapa:</label> 
+                <label for="cb_etapa" class="active">Etapa</label> 
             </div>    
             <div class="input-field col-md-1">
             </div>
@@ -55,6 +60,25 @@
                 <select name="cb_abogado" id="cb_abogado" class="form-control selectpicker " data-size="4">${requestScope['abogado']}</select>
                 <label for="cb_abogado" class="active">Abogado:</label>
             </div>
+            <div class="input-field col-sm-1">
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="input-field col-md-1">
+            </div>
+            <div class="input-field text-right col-sm-3">
+                <select name="cb_investigado" id="cb_investigado" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['investigado']}</select>                    
+                <label for="cb_investigado" class="active">Investigado:</label> 
+            </div>             
+            <div class="input-field text-right col-sm-2">
+                <select name="cb_cargo" id="cb_cargo" class="form-control selectpicker" data-live-search="true" data-size="5">${requestScope['cargo']}</select>                    
+                <label for="cb_cargo" class="active">Cargo:</label> 
+            </div>             
             <div class="input-field col-sm-1">
             </div>
         </div>
@@ -192,6 +216,7 @@
         rtl: true
     });    
     
+    $('#cb_tiempo option:first-child').attr('selected', 'selected');
     $('#cb_etapa option:first-child').attr('selected', 'selected');
     $('#div_mant_adjunto_tbl').toggle();
 </script>            

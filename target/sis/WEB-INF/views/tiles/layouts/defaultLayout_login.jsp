@@ -69,24 +69,43 @@
 				$("input:submit, input:button, input:reset, button").button();
 			});
 		</script>
-
+            
             <!--<link href="<c:url value='/static/datatables/css/demo_page.css'/>" rel="stylesheet">-->
-            <!--<link href="<c:url value='/static/datatables/css/demo_table.css'/>" rel="stylesheet">-->
+            <!--<link href="<c:url value='/static/datatables/css/demo_table.css'/>" rel="stylesheet">-->    
             <link href="<c:url value='/static/datatables/css/TableTools.css'/>" rel="stylesheet">
+            <link href="<c:url value='/static/datatables/css/dataTables.bootstrap.css'/>" rel="stylesheet">  
+            
+            <link href="<c:url value='/static/datatables/ext/responsive.bootstrap.min.css'/>" rel="stylesheet">
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/jquery.dataTables.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.bootstrap.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/ZeroClipboard.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/TableTools.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/FixedColumns.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/FixedHeader.js'/>"></script>
+            
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.buttons.js'/>"></script>
+            
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/jszip.min.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/pdfmake.min.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/vfs_fonts.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/buttons.html5.min.js'/>"></script>
+               
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/buttons.print.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/buttons.colVis.js'/>"></script>
+            
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/dataTables.responsive.min.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/responsive.bootstrap.min.js'/>"></script>
+            <link href="<c:url value='/static/datatables/ext/buttons.bootstrap.css'/>" rel="stylesheet">
+            
 
-            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<!--            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.buttons.js'/>"></script>
             <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
             <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
             <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
-            <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+            <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>-->
             <!--<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">-->
-            <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet">
+            <!--<link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet">-->
             
             <link href="<c:url value='/static/kendo/css/kendo.common.min.css'/>" rel="stylesheet">
 	    <link href="<c:url value='/static/kendo/css/kendo.default.min.css'/>" rel="stylesheet">
@@ -156,6 +175,7 @@
             
             <script src="<c:url value='/static/js/js_generales.js'/>"></script>
             <script src="<c:url value='/static/js/js_login.js'/>"></script>
+            <script src="<c:url value='/static/js/js_sgd_ac.js'/>"></script>
             
 </head>
  
