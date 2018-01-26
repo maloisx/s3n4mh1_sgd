@@ -698,7 +698,28 @@ function sisdad_popup_mant_esta_goes(codesta) {
     console.log(codesta);
 }
 
-//var ptoobs_bd_tmp = new Array();
+
+function sisdad_js_mant_ptoobs_subirfile_btn(){
+    $.confirm({
+        title: '',
+        content: '<h3>Subir Archivo?</h3>',
+        theme: 'supervan',
+        buttons: {
+            buttonBuenos: {
+                text: 'CONTINUAR',
+                action: function () {
+                    sisdad_js_mant_ptoobs_subirfile_btn_procesar();
+                }
+            },
+            buttonCancelar: {
+                text: 'CANCELAR'
+                        //$.alert('Canceled!');
+            }
+        }
+    });
+}
+
+
 function sisdad_js_mant_ptoobs_subirfile_btn_procesar() {
 
     var x = document.getElementById("ptoobs_file");
@@ -707,9 +728,11 @@ function sisdad_js_mant_ptoobs_subirfile_btn_procesar() {
     var cant_error = 0;
     var error_log = "";
     if ('files' in x) {
+        
         if (x.files.length == 0) {
             txt = "Seleccione uno o mas archivos.<br>";
         } else {
+            console.log('x1');
             for (var i = 0; i < x.files.length; i++) {
                 txt += (i + 1) + ". ";
                 var file = x.files[i];
