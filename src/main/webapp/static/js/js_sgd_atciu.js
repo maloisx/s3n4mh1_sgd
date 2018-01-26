@@ -1,3 +1,5 @@
+//ATENCIÓN AL CIUDADANO
+
 //INICIO BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO    
 function sgd_mant_atencion_ciudadano_tbl(){
     var exp = $('#txt_expediente').val();
@@ -6,7 +8,7 @@ function sgd_mant_atencion_ciudadano_tbl(){
     $.ajax({
             dataType: "html",
             type:     "GET",
-            url:      path + "mant_atencion_ciudadano_tbl/",
+            url:      path + "sgd/mant_atencion_ciudadano_tbl/",
             data:     "exp="+exp+
                       "&anio="+anio,
             beforeSend: function(data){
@@ -30,7 +32,7 @@ function sgd_mant_atencion_ciudadano_doc(){
     $.ajax({
             dataType: "html",
             type:     "GET",
-            url:      path + "mant_atencion_ciudadano_doc/",
+            url:      path + "sgd/mant_atencion_ciudadano_doc/",
             data:     "exp="+exp+
                       "&anio="+anio,
             beforeSend: function(data){

@@ -9312,7 +9312,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 //FIN BUSCAR EXPEDIENTE POR DIRECCIÓN    
 //    
 //INICIO BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
-@RequestMapping(value = {"/mant_atencion_ciudadano"}, method = RequestMethod.GET)
+@RequestMapping(value = {"/sgd/mant_atencion_ciudadano"}, method = RequestMethod.GET)
     public String MantAtencionCiudadano(HttpServletRequest request, HttpServletResponse response,ModelMap model) {        
         request.setAttribute("title_pag","ATENCIÓN AL CIUDADANO");
                     
@@ -9326,12 +9326,12 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String cb_periodo = util.contenido_combo(datos_cbo_per, "");
             request.setAttribute("cb_periodo", cb_periodo);   
                                                 
-        return "mant_atencion_ciudadano";
+        return "sgd/mant_atencion_ciudadano";
     }
 //FIN BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
 //       
 //INICIO BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO TABLA
-@RequestMapping(value = {"/mant_atencion_ciudadano_tbl"}, method = RequestMethod.GET)
+@RequestMapping(value = {"/sgd/mant_atencion_ciudadano_tbl"}, method = RequestMethod.GET)
     public String AjaxQueryExpedienteAtencionCiudadanoTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
          
     String exp = request.getParameter("exp");
@@ -9396,12 +9396,12 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     String tbl = util.datatable("c_tbl_atencion_ciudadano",vc_tbl);            
     request.setAttribute("response", tbl_html + tbl);
 
-    return "mant_atencion_ciudadano_tbl";
+    return "sgd/mant_atencion_ciudadano_tbl";
     }    
 //FIN BUSCAR EXPEDIENTE ATENCIÓN AL CIUDADANO TABLA
 //
 //INICIO BUSCAR PRIMER DOCUMENTO
-    @RequestMapping(value = {"/mant_atencion_ciudadano_doc"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/sgd/mant_atencion_ciudadano_doc"}, method = RequestMethod.GET)
     public String AjaxQueryExpedienteAtencionCiudadanoDoc(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
         String var_request = "";    
@@ -9424,7 +9424,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("response", var_request);
-        return "mant_atencion_ciudadano_doc";
+        return "sgd/mant_atencion_ciudadano_doc";
     }
 //FIN BUSCAR PRIMER DOCUMENTO
 //    
