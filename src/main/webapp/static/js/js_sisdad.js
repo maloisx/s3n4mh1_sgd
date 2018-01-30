@@ -945,3 +945,63 @@ function sisdad_js_mant_ptoobs_reporte_procesar(){
      
     }
 }
+
+
+function sisdad_js_mant_ptoobs_reporte_resum_procesar(){
+    
+    var error_log = '';
+    var ptoobs = $("#cb_ptoobs").val();    
+    var fecha_ini = $('#txt_fec_ini').val();
+    var fecha_fin = $('#txt_fec_fin').val();
+    
+    if(ptoobs == null){
+        error_log += 'Seleccionar almenos un punto de Observacion.<br>';
+    }if(fecha_ini == ''){
+        error_log += 'Seleccionar Fecha de inicio.<br>';
+    }if(fecha_fin == ''){
+        error_log += 'Seleccionar Fecha de fin.<br>';
+    }
+    
+    if(error_log != ''){
+        $.alert(error_log,"ERROR");
+    }else{
+     var cad_ptoobs = ptoobs.toString();     
+     console.log(cad_ptoobs);
+     
+     var obj_data = ws('sisdad', 'pkg_ws.sp_obt_ptoobs_reportedata_r', '["'+cad_ptoobs+'","'+fecha_ini+'","'+fecha_fin+'"]');
+     
+      var tbl_cab = [
+                {'sTitle': 'ID PTOOBS', 'sClass':'text-center'}, 
+                {'sTitle': 'SERIE', 'sClass':'text-center'},
+                {'sTitle': 'FECHA', 'sClass':'text-center'},
+//                {'sTitle': 'TM', 'sClass':'text-center'},
+//                {'sTitle': 'RH', 'sClass':'text-center'},
+//                {'sTitle': 'PR', 'sClass':'text-center'},
+                {'sTitle': 'TM MAX', 'sClass':'text-center'},
+                {'sTitle': 'TM MIN', 'sClass':'text-center'},
+                {'sTitle': 'RH MAX', 'sClass':'text-center'},
+                {'sTitle': 'RH MIN', 'sClass':'text-center'},
+                {'sTitle': 'PR MAX', 'sClass':'text-center'},
+                {'sTitle': 'PR MIN', 'sClass':'text-center'}
+            ];       
+//            for(var i= 0 ; i<obj_data.data.length ; i++){
+//                obj_data.data[i].UNIDAD = obj_items.data[i].UNIDAD + 'xxxxx';
+//                obj_data.data[i].btn1 = tbl_ext_btn('glyphicon-edit',"$.alert('"+obj_items.data[i].NOMBRE_ITEM+"')") ;
+//                obj_data.data[i].btn2 = tbl_ext_btn('glyphicon-trash',"$.alert('"+obj_items.data[i].PREC_UNIT+"')");
+//                obj_data.data[i].btn3 = tbl_ext_btn('glyphicon-print');
+//            }
+            //console.log(obj_items.data);
+            
+            var opciones = {
+                responsive: false
+                , bLengthChange: true
+                , bInfo: true
+                , bPaginate: true
+                , buttons: [{extend: 'excel', text: 'Exportar a Excel', className: 'btn btn-info btn-sm'},{extend: 'csv', text: 'Exportar a CSV', className: 'btn btn-info btn-sm'}]
+            };
+            
+            ws_datatable("sisdad_js_mant_ptoobs_reporte_tbl", obj_data.data, tbl_cab, opciones);   
+            
+     
+    }
+}

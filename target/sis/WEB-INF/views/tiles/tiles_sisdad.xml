@@ -58,4 +58,8 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_ptoobs_reporte.jsp" />  
    </definition>   
  
+  <definition name="sisdad/mant_ptoobs_reporte_resum"  extends="base-definition">  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/mant_ptoobs_reporte_resum.jsp" />  
+   </definition>   
+ 
 </tiles-definitions>
