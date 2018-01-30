@@ -26,7 +26,7 @@
 <div class="row">
     <div class="input-field col-sm-1"></div> 
     <div class="input-field col-sm-10 text-center">   
-        <button id="btn_procesar" onclick="sisdad_js_mant_ptoobs_reporte_procesar();" class="btn btn-info btn-sm" >PROCESAR</button> 
+        <button id="btn_procesar" onclick="sisdad_js_mant_ptoobs_reporte_resum_procesar();" class="btn btn-info btn-sm" >PROCESAR</button> 
     </div>
 </div>
 <br>

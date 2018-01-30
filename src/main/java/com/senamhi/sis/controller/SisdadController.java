@@ -506,6 +506,16 @@ public class SisdadController {
     } 
     
     
+         @RequestMapping(value = { "/sisdad/mant_ptoobs_reporte_resum"}, method = RequestMethod.GET)
+    public String SisdadPtoObsReporteResum(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        request.setAttribute("title_pag","Reporte Resumen Diario");
+        
+        return "sisdad/mant_ptoobs_reporte_resum";
+    } 
+    
+    
         
         
 }
