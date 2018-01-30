@@ -110,9 +110,9 @@
                 <input name="txt_folio" id="txt_folio" type="number" min="1" value="${requestScope['folio']}" />                   
                 <label for="txt_folio" class="active">Folios:</label> 
             </div>
-            <div class="input-field col-sm-1">
+            <div class="input-field col-sm-2">
                 <input name="txt_plazo" id="txt_plazo" type="number" min="0" value="${requestScope['plazo']}" placeholder="Días"/>                   
-                <label for="txt_plazo" class="active">Plazo Rpta:</label> 
+                <label for="txt_plazo" class="active">Plazo Rpta/Apliación:</label> 
             </div>     
             <div class="input-field col-sm-1">
             </div>

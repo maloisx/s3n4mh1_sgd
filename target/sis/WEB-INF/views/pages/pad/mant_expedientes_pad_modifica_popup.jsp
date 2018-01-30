@@ -1,5 +1,6 @@
 <!--<div id="div_mensaje_ajax" class="text-success"></div>-->    
 <input type="hidden" name="hd_iddoc" id="hd_iddoc" value="${requestScope['doc']}" />
+<input type="hidden" name="hd_estado" id="hd_estado" value="${requestScope['estado']}" />
 <br>
 <div class="row">
     <div class="col-sm-12">
@@ -29,7 +30,7 @@
             <div class="input-field col-sm-1">
             </div>
             <div class="input-field text-right col-sm-4">
-                <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4">${requestScope['etapa']}</select>                    
+                <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4" disabled>${requestScope['etapa']}</select>                    
                 <label for="cb_etapa" class="active">Etapa:</label> 
             </div>    
             <div class="input-field col-md-1">
@@ -60,9 +61,30 @@
             <div class="input-field col-sm-1">
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row"> 
+                    <div class="input-field col-sm-1">
+                    </div>
+                    <div class="input-field col-sm-5">
+                        <textarea name="txt_investigados" id="txt_investigados" readonly class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="500" minlength="1">${requestScope['investigado']}</textarea>
+                        <label for="txt_investigados" class="active">Investigado(s):</label>
+                    </div>
+                    <div class="input-field col-sm-1">
+                    </div>                    
+                    <div class="input-field col-sm-4">
+                        <select name="cb_tipo_proced" id="cb_tipo_proced" class="form-control selectpicker " data-size="4">${requestScope['tipo_proced']}</select>
+                        <label for="cb_tipo_proced" class="active">Declarar:</label>
+                    </div>                    
+                    <div class="input-field col-sm-1">
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <br> 
     </div>
-</div>
-<br>                
+</div>              
 <div class="row">
     <div class="col-sm-12">
         <div class="row">
@@ -110,9 +132,9 @@
                 <input name="txt_fechadoc" id="txt_fechadoc" type="text" class="datepicker" value="${requestScope['fecdoc']}"  />
                 <label for="txt_fechadoc" class="active">Fec.Doc</label>
             </div>
-            <div class="input-field text-right col-sm-1">
+            <div class="input-field text-right col-sm-2">
                 <input name="txt_plazo" id="txt_plazo" type="number" min="0" value="${requestScope['plazo']}" placeholder="Días"/>                   
-                <label for="txt_plazo" class="active">Plazo Rpta:</label> 
+                <label for="txt_plazo" class="active">Plazo Rpta/Apliación:</label> 
             </div>     
             <div class="input-field col-sm-1">
             </div>
