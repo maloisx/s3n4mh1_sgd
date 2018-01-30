@@ -64,7 +64,7 @@
                     <div class="input-field col-sm-1">
                     </div>
                     <div class="input-field text-right col-sm-4">
-                        <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4">${requestScope['etapa']}</select>                    
+                        <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4" disabled>${requestScope['etapa']}</select>                    
                         <label for="cb_etapa" class="active">Etapa:</label> 
                     </div>  
                 </div>
@@ -98,6 +98,12 @@
                             </div>
                             <div class="input-field col-sm-1">
                             </div>
+                            <div class="input-field col-sm-4">
+                                <select name="cb_tipo_proced" id="cb_tipo_proced" class="form-control selectpicker " data-size="4" disabled>${requestScope['tipo_proced']}</select>
+                                <label for="cb_tipo_proced" class="active">Declarado:</label>
+                            </div> 
+                            <div class="input-field col-sm-1">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +120,7 @@
                         <label for="cb_sancionador" class="active">Órgano Sancionador:</label>
                     </div>
                 </div>
-                <hr  style="width:95%"/>  
+                <hr  style="width:85%"/>  
                 
                 <div class="row">
                     <div class="input-field col-sm-3">
@@ -135,10 +141,12 @@
                         <input name="txt_folio" id="txt_folio" type="number" min="1" value="${requestScope['folio']}" />                   
                         <label for="txt_folio" class="active">Folios:</label> 
                     </div>                        
-                    <div class="input-field col-sm-1">
+                    <div class="input-field col-sm-2">
                         <input name="txt_plazo" id="txt_plazo" type="number" min="0" value="${requestScope['plazo']}" placeholder="Días"/>                   
                         <label for="txt_plazo" class="active">Plazo Rpta/Apliación:</label> 
-                    </div>     
+                    </div>   
+                    <div class="input-field col-sm-1">
+                    </div>
                 </div>
                 
                 <div class="row">             

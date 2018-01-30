@@ -4479,7 +4479,7 @@ public class SgdController {
             String prof = "4";
             String vent = "5";          
             
-            if (perfil.equals(altdir) || perfil.equals(vent) || id_uo.equals("90000003") || id_uo.equals("90000044") || id_uo.equals("90000048") || id_uo.equals("90000052")){    
+            if (perfil.equals(altdir) || perfil.equals(vent) || id_uo.equals("90000003") || id_uo.equals("90000044") || id_uo.equals("90000048") || id_uo.equals("90000052") || id_uo.equals("90000053")){    
 //                String np = "senamhi.fn_uo_flujo_consulta";
                 String np = "senamhi.fn_altdir_destino_consulta";
                 String array_acc[] = new String[1];
@@ -9162,7 +9162,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     }       
 //FIN SUBIR CARGOS 
 //        
-//INICIO BUSQUEDA DE EXPEDIENTE POR DIRECCIÓN 
+//INICIO BUSQUEDA DE EXPEDIENTE POR DIRECCIÓN (POR DERIVACIÓN)
 @RequestMapping(value = {"/sgd/mant_expediente_dir"}, method = RequestMethod.GET)
     public String MantExpedienteDir(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
         HttpSession session = request.getSession();
@@ -9196,7 +9196,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                         
         return "sgd/mant_expediente_dir";
     }              
-//FIN BUSQUEDA DE EXPEDIENTE POR DIRECCIÓN
+//FIN BUSQUEDA DE EXPEDIENTE POR DIRECCIÓN (POR DERIVACIÓN)
 //
 //INICIO BUSCAR EXPEDIENTE POR DIRECCIÓN
 @RequestMapping(value = {"/sgd/mant_expediente_dir_tbl"}, method = RequestMethod.GET)

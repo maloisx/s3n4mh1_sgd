@@ -167,7 +167,7 @@ public class PadController {
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
             sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6,7]}  },"
-                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4' },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6,7]},orientation:'landscape',pageSize:'A4' },"
                                     + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6,7]} }"
                                     + " ]");
             vc_tbl.add(sv);
@@ -328,13 +328,15 @@ public class PadController {
         String sancionador = request.getParameter("sancionador");  
         String fecnotif_iniPAD = request.getParameter("fecnotif_iniPAD");  
         String fecpres_PAD = request.getParameter("fecpres_PAD");  
+        String tipo_proced = request.getParameter("tipo_proced");  
+        String estado = request.getParameter("estado");  
 //        
         String var_request = "";
 
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "pad.fn_expediente_pad_mant";
-            String array[] = new String[22];
+            String array[] = new String[24];
             array[0] = id;
             array[1] = fecharecep;
             array[2] = fecpresc_iniPAD;
@@ -357,6 +359,8 @@ public class PadController {
             array[19] = sancionador;
             array[20] = fecnotif_iniPAD;
             array[21] = fecpres_PAD;
+            array[22] = tipo_proced;
+            array[23] = estado;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -600,49 +604,7 @@ public class PadController {
             ConeccionDB cn = new ConeccionDB(); 
             Util util =  new Util();
             
-            String id_exp = request.getParameter("id");
-            
-//            String cn_doc = "pad.fn_expediente_doc_pad_consulta";
-//            String cn_doc = "pad.fn_expediente_doc_pad_consulta";
-//                String array_doc[] = new String[1];
-//                array_doc[0] = iddoc;
-//                Vector datos_doc = cn.EjecutarProcedurePostgres(cn_doc, array_doc);
-//                String v_id_exp = "";          
-//                String i_id_doc = "";          
-//                String i_id_clsfdoc = "";          
-//                String v_num_doc = "";    
-//                String i_folio_doc = "";    
-//                String d_fec_doc = "";    
-//                String i_plazo_rpta = "";    
-//                String v_remite_doc = "";    
-//                String v_destino_doc = "";    
-//                String v_asunto_doc = "";    
-//                String v_observacion_doc = "";    
-
-//                for(int i = 0 ; i<datos_doc.size() ; i++){                 
-//                    Vector datos_v =  (Vector) datos_doc.get(i);
-//                    v_id_exp = datos_v.get(0).toString();
-//                    i_id_doc = datos_v.get(0).toString();
-//                    i_id_clsfdoc = datos_v.get(2).toString();
-//                    v_num_doc = datos_v.get(3).toString();
-//                    i_folio_doc = datos_v.get(4).toString();
-//                    d_fec_doc = datos_v.get(5).toString();
-//                    i_plazo_rpta = datos_v.get(6).toString();
-//                    v_remite_doc = datos_v.get(7).toString();
-//                    v_destino_doc = datos_v.get(8).toString();
-//                    v_asunto_doc = datos_v.get(9).toString();                    
-//                    v_observacion_doc = datos_v.get(10).toString();                    
-//                } 
-//            request.setAttribute("doc", i_id_doc);
-//            request.setAttribute("nrodoc", v_num_doc);
-//            request.setAttribute("folio", i_folio_doc);
-//            request.setAttribute("fecdoc", d_fec_doc);
-//            request.setAttribute("plazo", i_plazo_rpta);
-//            request.setAttribute("asunto", v_asunto_doc);
-//            request.setAttribute("observacion", v_observacion_doc);
-            ////////////////////////////////////////////////////////////////////////////////////////            
-            
-//            String id = request.getParameter("id");                                  
+            String id_exp = request.getParameter("id");                         
             
             String np = "pad.fn_expediente_pad_consulta";
                 String array[] = new String[1];
@@ -660,6 +622,8 @@ public class PadController {
                 String v_organo_sanc = "";      
                 String fecnotif_iniPAD = "";      
                 String fecpres_PAD = "";      
+                String investigado = "";      
+                String estado = "";      
 
                 for(int i = 0 ; i<datos.size() ; i++){                 
                     Vector datos_v =  (Vector) datos.get(i);
@@ -674,6 +638,8 @@ public class PadController {
                     v_organo_sanc = datos_v.get(12).toString();
                     fecnotif_iniPAD = datos_v.get(13).toString();
                     fecpres_PAD = datos_v.get(14).toString();
+                    investigado = datos_v.get(15).toString();
+                    estado = datos_v.get(16).toString();
                 }  
             
             request.setAttribute("nroexp", v_id_exp);
@@ -682,6 +648,8 @@ public class PadController {
             request.setAttribute("fecnotif_iniPAD", fecnotif_iniPAD);
             request.setAttribute("fecpres_PAD", fecpres_PAD);
             request.setAttribute("fecdoc", fec_doc);
+            request.setAttribute("estado", estado);
+            request.setAttribute("investigado", investigado);
             
 //          información para el combo Etapa
             String etapa = "pad.fn_etapa_consulta";
@@ -729,9 +697,7 @@ public class PadController {
             array_cbo_organo_san[0] = "";
             Vector datos_cbo_organo_san = cn.EjecutarProcedurePostgres(organo_san, array_cbo_organo_san);
             String cb_organo_san = util.contenido_combo(datos_cbo_organo_san, v_organo_sanc);
-            request.setAttribute("organo_san", cb_organo_san);
-                        
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////            
+            request.setAttribute("organo_san", cb_organo_san);           
             
 //            información tipo de documento
             String ntdoc = "sgd.fn_clasifdoc_seriedoc_consulta";//combo Tipo de Documentos por Unidad Orgánica
@@ -757,6 +723,14 @@ public class PadController {
             String cb_destino = util.contenido_combo(datos_cbo_destino, "");
             request.setAttribute("destino", cb_destino); 
             
+//            información combo: tipo de procedimiento
+            String cons_tipo_proced = "pad.fn_tipo_proced_consulta";//consulta combo destino                  
+            String array_tipo_proced[] = new String[1];
+            array_tipo_proced[0] = "";
+            Vector datos_cbo_tipo_proced = cn.EjecutarProcedurePostgres(cons_tipo_proced, array_tipo_proced); 
+            String cb_datos_tipo_proced = util.contenido_combo(datos_cbo_tipo_proced, "");
+            request.setAttribute("tipo_proced", cb_datos_tipo_proced);             
+                        
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -850,36 +824,29 @@ public class PadController {
             String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "");
             request.setAttribute("clsfdoc", cb_desc_clsfdoc);            
             
-//            información combos: remite
-            String cons_rmte = "senamhi.fn_destino_consulta";//consulta combo destino                  
+//            información combos: remite y destino
+            String cons_rmte = "senamhi.fn_destino_consulta";//consulta combo remite y destino                 
             String array_rmte[] = new String[1];
             array_rmte[0] = "";
             Vector datos_cbo_rmte = cn.EjecutarProcedurePostgres(cons_rmte, array_rmte); 
             String cb_rmte = util.contenido_combo(datos_cbo_rmte, "");
-            request.setAttribute("persona", cb_rmte);   
+            request.setAttribute("persona", cb_rmte);
             
 //            información combo investigado
-//            String cons_inv = "pad.fn_organo_consulta";//consulta investigado(s) del expediente                  
+//            String cons_inv = "pad.fn_organo_consulta";//consulta investigado(s) del expediente
 //            String array_inv[] = new String[1];
 //            array_inv[0] = "";
-//            Vector datos_cbo_inv = cn.EjecutarProcedurePostgres(cons_inv, array_inv); 
+//            Vector datos_cbo_inv = cn.EjecutarProcedurePostgres(cons_inv, array_inv);
 //            String cb_inv = util.contenido_combo(datos_cbo_inv, "");
-            request.setAttribute("investigado", cb_organo_ins);    
-            
-//            String inv = "pad.fn_investigados_exp_array_consulta";
-//                String array_inv[] = new String[1];
-//                array_inv[0] = nroexp;
-//                Vector datos_inv = cn.EjecutarProcedurePostgres(inv, array_inv);
-//
-//                String id_exp = ""; //identificador de expediente
-//                String id_inv_array = ""; //array de investigados
-//
-//                for(int i = 0 ; i<datos_inv.size() ; i++){                 
-//                    Vector datos_v =  (Vector) datos_inv.get(i);
-//                    id_exp = datos_v.get(0).toString();
-//                    id_inv_array = datos_v.get(1).toString();
-//                }  
-//                request.setAttribute("investigado", id_inv_array); 
+//            request.setAttribute("investigado", cb_organo_ins);
+          
+//            información combo: tipo de procedimiento
+            String cons_tipo_proced = "pad.fn_tipo_proced_consulta";//consulta combo destino                  
+            String array_tipo_proced[] = new String[1];
+            array_tipo_proced[0] = "";
+            Vector datos_cbo_tipo_proced = cn.EjecutarProcedurePostgres(cons_tipo_proced, array_tipo_proced); 
+            String cb_datos_tipo_proced = util.contenido_combo(datos_cbo_tipo_proced, "");
+            request.setAttribute("tipo_proced", cb_datos_tipo_proced);       
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -2120,8 +2087,79 @@ public class PadController {
         request.setAttribute("request", var_request);
         return "pad/mant_falta_guardar";
     }
-//FIN FALTA GUARDAR     
-         
+//FIN FALTA GUARDAR    
+//
+//INICIO LISTA FALTAS BASE - LITERAL       
+    @RequestMapping(value = {"/pad/mant_literal"}, method = RequestMethod.GET)
+	public String MantLiteral(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE FALTAS");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_literal_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_literal";
+	}
+//FIN LISTA FALTAS BASE - LITERAL    
+//         
+//INICIO LISTA LITERAL TABLA        
+    @RequestMapping(value = {"/pad/mant_literal_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryLiteralTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            ConeccionDB cn =  new ConeccionDB();            
+
+            String np = "pad.fn_literal_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String i_id_literal = vss.get(0).toString();
+                String c_des_literal = vss.get(1).toString();
+                String c_est_reg = vss.get(2).toString();
+                 
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_falta_popup(\\\""+i_id_literal+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i_id_literal);
+                vv.add(c_des_literal);
+                vv.add(c_est_reg);
+                vv.add(btn);
+                v_temp.add(vv);                
+            }     
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'CÓDIGO'} , "
+                                    + "{'sTitle':'FALTA'} , "
+                                    + "{'sTitle':'ESTADO'} , "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+            //boton de excel
+            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_falta'></table>";
+            String tbl = util.datatable("c_tbl_falta",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_literal_tbl";
+	}
+//FIN LISTA LITERAL TABLA
+//    
+//                  
 //              
 }
 

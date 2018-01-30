@@ -157,5 +157,13 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_filtro_abogado_tbl.jsp" />  
     </definition>
         
-   
+    <definition name="pad/mant_literal" extends="base-definition">  
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_literal.jsp" />  
+    </definition> 
+     
+    <definition name="pad/mant_literal_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_literal_tbl.jsp" />  
+    </definition>      
+    
 </tiles-definitions>
