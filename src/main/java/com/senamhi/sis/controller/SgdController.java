@@ -4487,14 +4487,14 @@ public class SgdController {
                 Vector datos_tmp = cn.EjecutarProcedurePostgres(np, array_acc);
                 Vector datos = new Vector();
                     for(int k=0; k<datos_tmp.size();k++){
-                        Vector vt = (Vector) datos_tmp.get(k);                        
+                        Vector vt = (Vector) datos_tmp.get(k);
                         String c1 = vt.get(0).toString();
                         String c2 = vt.get(1).toString();
                         
                         Vector v = new Vector();
                         v.add(c1);
                         v.add(c2);
-                        datos.add(v);                        
+                        datos.add(v);
                     }                
                 
                 String cb_desc_uo = util.contenido_combo(datos, uo);
