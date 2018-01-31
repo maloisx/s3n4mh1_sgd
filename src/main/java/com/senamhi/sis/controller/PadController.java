@@ -325,18 +325,21 @@ public class PadController {
         String observacion =  request.getParameter("observacion").trim();      
         String iddoc = request.getParameter("iddoc");  
         String instructor = request.getParameter("instructor");  
+        String uo_instructor = request.getParameter("uo_instructor");  
         String sancionador = request.getParameter("sancionador");  
+        String uo_sancionador = request.getParameter("uo_sancionador");  
         String fecnotif_iniPAD = request.getParameter("fecnotif_iniPAD");  
         String fecpres_PAD = request.getParameter("fecpres_PAD");  
         String tipo_proced = request.getParameter("tipo_proced");  
         String estado = request.getParameter("estado");  
+        String uo_remite = request.getParameter("uo_remite");  
 //        
         String var_request = "";
 
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "pad.fn_expediente_pad_mant";
-            String array[] = new String[24];
+            String array[] = new String[27];
             array[0] = id;
             array[1] = fecharecep;
             array[2] = fecpresc_iniPAD;
@@ -361,6 +364,9 @@ public class PadController {
             array[21] = fecpres_PAD;
             array[22] = tipo_proced;
             array[23] = estado;
+            array[24] = uo_instructor;
+            array[25] = uo_sancionador;
+            array[26] = uo_remite;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -624,6 +630,8 @@ public class PadController {
                 String fecpres_PAD = "";      
                 String investigado = "";      
                 String estado = "";      
+                String uo_organo_instr = "";      
+                String uo_organo_sanc = "";      
 
                 for(int i = 0 ; i<datos.size() ; i++){                 
                     Vector datos_v =  (Vector) datos.get(i);
@@ -640,6 +648,8 @@ public class PadController {
                     fecpres_PAD = datos_v.get(14).toString();
                     investigado = datos_v.get(15).toString();
                     estado = datos_v.get(16).toString();
+                    uo_organo_instr = datos_v.get(17).toString();
+                    uo_organo_sanc = datos_v.get(18).toString();
                 }  
             
             request.setAttribute("nroexp", v_id_exp);
@@ -683,20 +693,20 @@ public class PadController {
             String cb_abogado = util.contenido_combo(datos_cbo_abogado, v_id_abogado);
             request.setAttribute("abogado", cb_abogado);
             
-//          información para el combo Órgano instructor / Órgano sancionador
-            String organo_ins = "pad.fn_organo_consulta";
+//          información para el combo Órgano instructor 
+            String organo_ins = "pad.fn_organos_directores_consulta";
             String array_cbo_organo_ins[] = new String[1];
             array_cbo_organo_ins[0] = "";
             Vector datos_cbo_organo_ins = cn.EjecutarProcedurePostgres(organo_ins, array_cbo_organo_ins);
-            String cb_organo_ins = util.contenido_combo(datos_cbo_organo_ins, v_organo_instr);
+            String cb_organo_ins = util.contenido_combo(datos_cbo_organo_ins, v_organo_instr + "_" + uo_organo_instr);
             request.setAttribute("organo_ins", cb_organo_ins);
                         
 //          información para el combo Órgano sancionador
-            String organo_san = "pad.fn_organo_consulta";
+            String organo_san = "pad.fn_organos_directores_consulta";
             String array_cbo_organo_san[] = new String[1];
             array_cbo_organo_san[0] = "";
             Vector datos_cbo_organo_san = cn.EjecutarProcedurePostgres(organo_san, array_cbo_organo_san);
-            String cb_organo_san = util.contenido_combo(datos_cbo_organo_san, v_organo_sanc);
+            String cb_organo_san = util.contenido_combo(datos_cbo_organo_san, v_organo_sanc + "_" + uo_organo_sanc);
             request.setAttribute("organo_san", cb_organo_san);           
             
 //            información tipo de documento
@@ -708,7 +718,7 @@ public class PadController {
             request.setAttribute("clsfdoc", cb_desc_clsfdoc);
           
 //            información combos: remite
-            String cons_rmte = "senamhi.fn_destino_consulta";//consulta combo destino                  
+            String cons_rmte = "pad.fn_destino_consulta";//consulta combo destino                  
             String array_rmte[] = new String[1];
             array_rmte[0] = "";
             Vector datos_cbo_rmte = cn.EjecutarProcedurePostgres(cons_rmte, array_rmte); 
@@ -716,7 +726,7 @@ public class PadController {
             request.setAttribute("remite", cb_rmte); 
             
 //            información combos: destino
-            String cons_destino = "senamhi.fn_destino_consulta";//consulta combo destino                  
+            String cons_destino = "pad.fn_destino_consulta";//consulta combo destino                  
             String array_destino[] = new String[1];
             array_destino[0] = "";
             Vector datos_cbo_destino = cn.EjecutarProcedurePostgres(cons_destino, array_destino); 
@@ -808,8 +818,8 @@ public class PadController {
             String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
             request.setAttribute("abogado", cb_abogado);
                         
-//          información para el combo Órgano instructor / Órgano sancionador
-            String organo_ins = "pad.fn_organo_consulta";
+//          información para el combo Órgano instructor / Órgano sancionador 
+            String organo_ins = "pad.fn_organos_directores_consulta";
             String array_cbo_organo_ins[] = new String[1];
             array_cbo_organo_ins[0] = "";
             Vector datos_cbo_organo_ins = cn.EjecutarProcedurePostgres(organo_ins, array_cbo_organo_ins);

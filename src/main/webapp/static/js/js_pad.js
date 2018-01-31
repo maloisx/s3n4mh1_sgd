@@ -73,8 +73,11 @@ function pad_mant_expedientes_pad_guardar(){
     var fechadoc = $('#txt_fechadoc').val();    
     var folio = $('#txt_folio').val();    
     var plazo = $('#txt_plazo').val();    
-    var remite = $('#cb_remite').val();    
+    var remite = $('#cb_remite').val(); 
+    var uo_remite = remite.split('_')[3];  
+    remite = remite.split('_')[0];
     var destino = $('#cb_destino').val();    
+    destino = destino.split('_')[0];    
     var asunto = $('#txt_asunto').val(); 
     asunto = asunto.replace("–","");
     asunto = asunto.replace("\“","'");
@@ -86,14 +89,23 @@ function pad_mant_expedientes_pad_guardar(){
     var input = document.querySelector('input[type="file"]');
     var iddoc = $('#hd_iddoc').val(); 
     var estado = $('#hd_estado').val(); 
-    var instructor = $('#cb_instructor').val();   
+    var instructor = $('#cb_instructor').val();  
+    var uo_instructor = '';
     if(instructor == undefined){
         instructor = '';
-    }
-    
+        uo_instructor = '';
+    }else{ 
+        uo_instructor = instructor.split('_')[1];
+        instructor = instructor.split('_')[0];        
+    }   
     var sancionador = $('#cb_sancionador').val();   
+    var uo_sancionador = '';
     if(sancionador == undefined){
         sancionador = '';
+        uo_sancionador = '';
+    }else{
+        uo_sancionador = sancionador.split('_')[1];
+        sancionador = sancionador.split('_')[0];
     }
     
     var fecnotif_iniPAD = $('#txt_fecnotif_iniPAD').val(); 
@@ -121,6 +133,9 @@ function pad_mant_expedientes_pad_guardar(){
         msj_error += " N° de folios.";
     }if ($('#cb_remite').val() == ''){
         msj_error += " Remitente.";
+    }if (uo_remite == undefined && $('#txt_nrodoc').val() == ''){//************************* AGREGAR TIPO DE DOCUMENTO DENUNCIA
+        msj_error += " N° documento.";
+        uo_remite = "";
     }if ($('#cb_destino').val() == ''){
         msj_error += " Destinatario.";
     }if ($('#txt_asunto').val().length == 0){
@@ -153,7 +168,10 @@ function pad_mant_expedientes_pad_guardar(){
                       "&fecnotif_iniPAD="+fecnotif_iniPAD+ 
                       "&fecpres_PAD="+fecpres_PAD+
                       "&tipo_proced="+tipo_proced+
-                      "&estado="+estado, 
+                      "&estado="+estado+
+                      "&uo_instructor="+uo_instructor+
+                      "&uo_sancionador="+uo_sancionador+ 
+                      "&uo_remite="+uo_remite, 
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");
             },
@@ -458,7 +476,8 @@ function pad_mant_doc_detalle(id){
                 var obs_doc  = arrayobj[0][10];    
                 var investigado  = arrayobj[0][22];
                 var tipo_procedimiento  = arrayobj[0][23];
-                console.log('***************************************'+tipo_procedimiento);
+                var uo_organo_instr  = arrayobj[0][24];
+                var uo_organo_sanc  = arrayobj[0][25];
                 
                 var msj = arrayobj[0][0];
 
@@ -476,9 +495,9 @@ function pad_mant_doc_detalle(id){
                 $("#cb_dependencia").change();
                 $('#cb_abogado').val(abogado);
                 $("#cb_abogado").change();
-                $('#cb_instructor').val(instructor);
+                $('#cb_instructor').val(instructor+'_'+uo_organo_instr);
                 $("#cb_instructor").change();
-                $('#cb_sancionador').val(sancionador);
+                $('#cb_sancionador').val(sancionador+'_'+uo_organo_sanc);
                 $("#cb_sancionador").change();
                 $('#cb_documento').val(documento);
                 $("#cb_documento").change();
