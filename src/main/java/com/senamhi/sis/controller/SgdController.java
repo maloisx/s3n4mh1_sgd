@@ -9254,13 +9254,13 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             vv.add(btn);
             vv.add(cut_exp);
             vv.add(per_exp);
-            vv.add(des_alcance);
+//            vv.add(des_alcance);
             vv.add(fec_reg);
             vv.add(documento);
             vv.add(asunto);
             vv.add(des_origen);
-            vv.add(des_tema);
-            vv.add(des_proc);
+//            vv.add(des_tema);
+//            vv.add(des_proc);
             vv.add(origen);
             vv.add(destino);
             vv.add(exp_agrupados);
@@ -9277,13 +9277,13 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                             + "{'sTitle':'-'} , "
                             + "{'sTitle':'N° CUT'} , "
                             + "{'sTitle':'PERIODO'} , "
-                            + "{'sTitle':'ALCANCE'} , "
+//                            + "{'sTitle':'ALCANCE'} , "
                             + "{'sTitle':'FECHA REG.'} , "
                             + "{'sTitle':'DOCUMENTO'} , "
                             + "{'sTitle':'ASUNTO'} , "
                             + "{'sTitle':'ORIGEN'} , "
-                            + "{'sTitle':'TEMA'} , "
-                            + "{'sTitle':'PROCEDIMIENTO'} , "
+//                            + "{'sTitle':'TEMA'} , "
+//                            + "{'sTitle':'PROCEDIMIENTO'} , "
                             + "{'sTitle':'ENVÍA'} , "
                             + "{'sTitle':'RECIBE'} , "
                             + "{'sTitle':'EXP. AGRUPADOS'},  "
