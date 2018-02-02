@@ -91,7 +91,7 @@ function pad_mant_expedientes_pad_guardar(){
     var estado = $('#hd_estado').val(); 
     var instructor = $('#cb_instructor').val();  
     var uo_instructor = '';
-    if(instructor == undefined){
+    if(instructor == undefined || instructor == ''){
         instructor = '';
         uo_instructor = '';
     }else{ 
@@ -100,13 +100,15 @@ function pad_mant_expedientes_pad_guardar(){
     }   
     var sancionador = $('#cb_sancionador').val();   
     var uo_sancionador = '';
-    if(sancionador == undefined){
+    if(sancionador == undefined || sancionador == ''){
         sancionador = '';
-        uo_sancionador = '';
+        uo_sancionador = '';       
     }else{
         uo_sancionador = sancionador.split('_')[1];
         sancionador = sancionador.split('_')[0];
     }
+    console.log('****************************************'+sancionador); //vacio
+    
     
     var fecnotif_iniPAD = $('#txt_fecnotif_iniPAD').val(); 
     if(fecnotif_iniPAD == undefined){
@@ -133,7 +135,7 @@ function pad_mant_expedientes_pad_guardar(){
         msj_error += " N° de folios.";
     }if ($('#cb_remite').val() == ''){
         msj_error += " Remitente.";
-    }if (uo_remite == undefined && $('#txt_nrodoc').val() == ''){//************************* AGREGAR TIPO DE DOCUMENTO DENUNCIA
+    }if (uo_remite == undefined && $('#txt_nrodoc').val() == '' && $('#cb_documento').val() != '110'){//** AGREGAR TIPO DE DOCUMENTO DENUNCIA
         msj_error += " N° documento.";
         uo_remite = "";
     }if ($('#cb_destino').val() == ''){

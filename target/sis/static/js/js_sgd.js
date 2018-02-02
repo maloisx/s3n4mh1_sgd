@@ -3489,8 +3489,18 @@ function sgd_mant_cargo_guardar(){
 }   
 //INICIO INICIO CARGO GUARDAR
 //  
-//INICIO BUSCAR EXPEDIENTE CREADOS TABLA POR ALTA DIRECCIÓN    
-function sgd_mant_expediente_dir_tbl(cut,anio,asunto,cd,nro,envia,recibe){
+//INICIO BUSCAR EXPEDIENTE POR DIRECCIÓN (POR DERIVACIÓN)
+function sgd_mant_expediente_dir_tbl(){
+    var cut = $('#txt_cut').val();
+    var anio = $('#cb_periodo').val();
+    var asunto = $('#txt_asun').val();
+    var cd = $('#cb_clsdoc').val();
+    var nro = $('#txt_nro').val();
+    var envia = $('#cb_envia').val();
+    var recibe = $('#cb_recibe').val();
+    var unidfunc_envia = $('#cb_unidfunc_envia').val();
+    var unidfunc_recibe = $('#cb_unidfunc_recibe').val();
+    
     $.ajax({
             dataType: "html",
             type:     "GET",
@@ -3501,7 +3511,9 @@ function sgd_mant_expediente_dir_tbl(cut,anio,asunto,cd,nro,envia,recibe){
                       "&cd="+cd+
                       "&nro="+nro+
                       "&envia="+envia+
-                      "&recibe="+recibe,
+                      "&recibe="+recibe+
+                      "&unidfunc_envia="+unidfunc_envia+
+                      "&unidfunc_recibe="+unidfunc_recibe,
             beforeSend: function(data){
                 $('#div_expediente_dir_tbl').html("Cargando...");
             },
@@ -3513,5 +3525,54 @@ function sgd_mant_expediente_dir_tbl(cut,anio,asunto,cd,nro,envia,recibe){
             }
         });
 }
-//FIN BUSCAR EXPEDIENTE CREADOS TABLA POR ALTA DIRECCIÓN     
+//FIN BUSCAR EXPEDIENTE POR DIRECCIÓN (POR DERIVACIÓN)
 //
+//INICIO BUSCAR PERSONAL POR UNIDAD FUNCIONAL ENVIA
+//function sgd_mant_unid_func(){
+//    var unid_func = $('#cb_unidfunc_envia').val();
+//            
+//    $.ajax({
+//            dataType: "html",
+//            type:     "GET",
+//            url:      path + "sgd/mant_unid_func/", 
+//            data:     "unid_func="+unid_func,	 	 
+//            beforeSend: function(data){ 	 	
+//                $('#cb_envia').html("<option>CARGANDO...</option>");
+//                $('#cb_envia').selectpicker('refresh');
+//            },
+//            success: function(requestData){
+//                $('#cb_envia').html(requestData);
+//                $('#cb_envia').selectpicker('refresh');
+//            },			
+//            error: function(requestData, strError, strTipoError){
+//                $('#cb_envia').html("<option>Error " + strTipoError +": " + strError+"</option>");
+//                $('#cb_envia').selectpicker('refresh');
+//            }
+//        });  
+//}
+//FIN BUSCAR PERSONAL POR UNIDAD FUNCIONAL ENVIA
+//
+//INICIO BUSCAR PERSONAL POR UNIDAD FUNCIONAL RECIBE
+function sgd_mant_unid_func_rec(){
+    var unid_func_recibe = $('#cb_unidfunc_recibe').val();
+            
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_unid_func_recibe/", 
+            data:     "unid_func_recibe="+unid_func_recibe,	 	 
+            beforeSend: function(data){ 	 	
+                $('#cb_recibe').html("<option>CARGANDO...</option>");
+                $('#cb_recibe').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_recibe').html(requestData);
+                $('#cb_recibe').selectpicker('refresh');
+            },			
+            error: function(requestData, strError, strTipoError){
+                $('#cb_recibe').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_recibe').selectpicker('refresh');
+            }
+        });  
+}
+//FIN BUSCAR PERSONAL POR UNIDAD FUNCIONAL RECIBE

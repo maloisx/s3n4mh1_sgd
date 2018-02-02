@@ -17,10 +17,16 @@
                     <label for="txt_asun" class="active">Asunto</label>
                 </div> 
                 <div class="input-field col-sm-1">
-                </div>    
-                <div class="input-field col-sm-3">   
-                    <select name="cb_envia" id="cb_envia" class="form-control selectpicker" data-size="5" data-live-search="true">${requestScope['cb_personal']}</select>
-                    <label for="cb_envia" class="active">Envía</label>
+                </div>
+<!--                <div class="input-field col-sm-2">   
+                    <select name="cb_unidfunc_envia" id="cb_unidfunc_envia" class="form-control selectpicker" data-size="5" onchange="sgd_mant_unid_func()">${requestScope['cb_unidfunc']}</select>
+                    <label for="cb_unidfunc_envia" class="active">Unidad Funcional (Envía)</label>
+                </div>-->
+                <div class="input-field col-sm-2">   
+                    <select name="cb_unidfunc_recibe" id="cb_unidfunc_recibe" class="form-control selectpicker" data-size="5" onchange="sgd_mant_unid_func_rec()">${requestScope['cb_unidfunc']}</select>
+                    <label for="cb_unidfunc_recibe" class="active">Unidad Funcional (Recibe)</label>
+                </div>
+                <div class="input-field col-sm-2"> 
                 </div>
             </div>
         </div>
@@ -39,12 +45,17 @@
                 </div> 
                 <div class="input-field col-sm-2">
                 </div>    
-                <div class="input-field col-sm-3">   
+<!--                <div class="input-field col-sm-2">   
+                    <select name="cb_envia" id="cb_envia" class="form-control selectpicker" data-size="5" data-live-search="true">${requestScope['cb_personal']}</select>
+                    <label for="cb_envia" class="active">Personal (Envía)</label>
+                </div>-->
+                <div class="input-field col-sm-2">   
                     <select name="cb_recibe" id="cb_recibe" class="form-control selectpicker" data-size="5" data-live-search="true">${requestScope['cb_personal']}</select>
-                    <label for="cb_recibe" class="active">Recibe</label>
+                    <label for="cb_recibe" class="active">Personal (Recibe)</label>
                 </div>
                 <div class="input-field col-sm-2">       
-                    <button id="btn_busca" onclick="sgd_mant_expediente_dir_tbl(document.getElementById('txt_cut').value,document.getElementById('cb_periodo').value,document.getElementById('txt_asun').value,document.getElementById('cb_clsdoc').value,document.getElementById('txt_nro').value,document.getElementById('cb_envia').value,document.getElementById('cb_recibe').value)" class="btn btn-info btn-sm" >
+                    <!--<button id="btn_busca" onclick="sgd_mant_expediente_dir_tbl(document.getElementById('txt_cut').value,document.getElementById('cb_periodo').value,document.getElementById('txt_asun').value,document.getElementById('cb_clsdoc').value,document.getElementById('txt_nro').value,document.getElementById('cb_envia').value,document.getElementById('cb_recibe').value)" class="btn btn-info btn-sm" >-->
+                    <button id="btn_busca" onclick="sgd_mant_expediente_dir_tbl()" class="btn btn-info btn-sm" >
                         BUSCAR       
                     </button>
                 </div>    
