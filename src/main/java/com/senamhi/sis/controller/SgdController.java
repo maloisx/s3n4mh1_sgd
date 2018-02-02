@@ -9201,7 +9201,15 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             array_cbo_unidfunc[0] = codUO;
             Vector datos_cbo_unidfunc = cn.EjecutarProcedurePostgres(unidfunc, array_cbo_unidfunc);            
             String cb_unidfunc = util.contenido_combo(datos_cbo_unidfunc, "");
-            request.setAttribute("cb_unidfunc", cb_unidfunc);   
+            request.setAttribute("cb_unidfunc", cb_unidfunc);
+            
+//            información combo estado
+            String estado = "sgd.fn_tipestadoflujo_consulta";
+            String array_cbo_estado[] = new String[1];
+            array_cbo_estado[0] = "";
+            Vector datos_cbo_estado = cn.EjecutarProcedurePostgres(estado, array_cbo_estado);            
+            String cb_estado = util.contenido_combo(datos_cbo_estado, "");
+            request.setAttribute("cb_estado", cb_estado);   
                         
         return "sgd/mant_expediente_dir";
     }              
@@ -9223,10 +9231,11 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     String recibe = request.getParameter("recibe");
 //    String unidfunc_envia = request.getParameter("unidfunc_envia");
     String unidfunc_recibe = request.getParameter("unidfunc_recibe");
+    String estado = request.getParameter("estado");
     
     ConeccionDB cn =  new ConeccionDB();        
     String np = "sgd.fn_expedientegeneral_dir_consulta";
-    String array[] = new String[8];
+    String array[] = new String[9];
     array[0] = cut;
     array[1] = anio;
     array[2] = asun;
@@ -9237,6 +9246,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     array[6] = recibe;
 //    array[8] = unidfunc_envia;
     array[7] = unidfunc_recibe;
+    array[8] = estado;
     Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
     Vector v_temp = new Vector();
     for(int i = 0 ; i<v_datos.size() ; i++){            
@@ -9263,6 +9273,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 + "</div>";
         Vector vv = new Vector();
             vv.add(btn);
+            vv.add(i + 1);
             vv.add(cut_exp);
             vv.add(per_exp);
             vv.add(fec_reg);
@@ -9285,6 +9296,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
     sv.add("aoColumns");sv.add("[" 
                             + "{'sTitle':'-'} , "
+                            + "{'sTitle':'_'} , "
                             + "{'sTitle':'N° CUT'} , "
                             + "{'sTitle':'PERIODO'} , "
                             + "{'sTitle':'FECHA REG.'} , "
@@ -9300,10 +9312,13 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                             
                             + "]");vc_tbl.add(sv);sv =  new Vector();
     sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-//      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("aoColumnDefs");sv.add("[{ sClass:'dt-center','aTargets':[0,1,2,3,4,5,6,7,8]},{'aTargets':[ 3,4 ],'bVisible': true,'bSearchable': true}]");vc_tbl.add(sv);sv =  new Vector();
+
     //boton de excel
-    //    sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
+        sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
 //    sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
     sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
     ////Pintar de rojo el registro si no t.iene datos
@@ -9312,7 +9327,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                   "}";
     sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
 
-    String tbl_html = "<table border='1' class='table table-striped table-bordered dt-responsive' id='c_tbl_buscar_expediente'></table>";
+    String tbl_html = "<table border='1' class='table table-striped table-hover table-bordered table-responsive-sm' id='c_tbl_buscar_expediente'></table>";
     String tbl = util.datatable("c_tbl_buscar_expediente",vc_tbl);            
     request.setAttribute("response", tbl_html + tbl);
 

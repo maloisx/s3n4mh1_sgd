@@ -1044,8 +1044,19 @@ public class PadController {
             String cb_cargo = util.contenido_combo(datos_cbo_cargo, "");
             request.setAttribute("cargo", cb_cargo);
             
+//          información para el combo Norma
+            String norma = "pad.fn_norma_consulta";
+            String array_cbo_norma[] = new String[1];
+            array_cbo_norma[0] = "";
+            Vector datos_cbo_norma = cn.EjecutarProcedurePostgres(norma, array_cbo_norma);
+            String cb_norma = util.contenido_combo(datos_cbo_norma, "");
+            request.setAttribute("norma", cb_norma);
+            
+//            **************************************************************************************************************************************
+            
+            
 //          información para el combo Falta
-            String falta = "pad.fn_falta_consulta";
+            String falta = "pad.fn_literal_investigado_consulta";
             String array_cbo_falta[] = new String[1];
             array_cbo_falta[0] = "";
             Vector datos_cbo_falta = cn.EjecutarProcedurePostgres(falta, array_cbo_falta);
@@ -1060,27 +1071,27 @@ public class PadController {
 //FIN MANTENIMIENTO NUEVO INVESTIGADO POPUP
 // 
 //INICIO CARGAR COMBO FALTAS
-    @RequestMapping(value = {"/pad/mant_falta_cargar_cbo"}, method = RequestMethod.GET)
-    public String MantFaltaCargarCbo(HttpServletRequest request, HttpServletResponse response, ModelMap model)
-            throws ServletException, IOException { 
-        String var_request = "";
-        try {
-            String id_normajur = request.getParameter("id_normajur"); 
-            
-            ConeccionDB cn = new ConeccionDB();   
-            
-            String np = "pad.fn_falta_normajur_consulta";
-            String array[] = new String[1];
-            array[0] = id_normajur;
-            Vector datos = cn.EjecutarProcedurePostgres(np, array);
-            var_request = new Util().contenido_combo(datos,"1");
-            
-        } catch (Exception ex) {
-            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        request.setAttribute("response", var_request);        
-        return "pad/mant_falta_cargar_cbo";
-    } 
+//    @RequestMapping(value = {"/pad/mant_falta_cargar_cbo"}, method = RequestMethod.GET)
+//    public String MantFaltaCargarCbo(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+//            throws ServletException, IOException { 
+//        String var_request = "";
+//        try {
+//            String id_normajur = request.getParameter("id_normajur"); 
+//            
+//            ConeccionDB cn = new ConeccionDB();   
+//            
+//            String np = "pad.fn_falta_normajur_consulta";
+//            String array[] = new String[1];
+//            array[0] = id_normajur;
+//            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+//            var_request = new Util().contenido_combo(datos,"1");
+//            
+//        } catch (Exception ex) {
+//            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+//        }        
+//        request.setAttribute("response", var_request);        
+//        return "pad/mant_falta_cargar_cbo";
+//    } 
 //FIN CARGAR COMBO FALTAS   
 //    
 //INICIO NUEVO INVESTIGADO GUARDAR    
@@ -1097,8 +1108,7 @@ public class PadController {
             faltas = "";
         }
         
-        String var_request = "";
-        
+        String var_request = "";        
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "pad.fn_investigado_mant";
@@ -1169,7 +1179,7 @@ public class PadController {
             request.setAttribute("cargo", cb_cargo);       
             
 //          información para el combo Falta
-            String falta = "pad.fn_falta_consulta";
+            String falta = "pad.fn_literal_investigado_consulta";
             String array_cbo_falta[] = new String[1];
             array_cbo_falta[0] = "";
             Vector datos_cbo_falta = cn.EjecutarProcedurePostgres(falta, array_cbo_falta);

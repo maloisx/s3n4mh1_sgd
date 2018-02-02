@@ -1,4 +1,3 @@
-
 //INICIO LISTA EXPEDIENTES PAD TABLA
 function pad_mant_expedientes_pad_tbl(abogado){
         
@@ -556,28 +555,28 @@ function pad_mant_investigado_popup(id){
 //FIN INVESTIGADO POPUP
 //
 //INICIO NUEVO CARGAR COMBO FALTAS
-function pad_mant_falta_cargar_cbo(){
-    var id_normajur = $('#cb_norma_jur').val();
-            
-    $.ajax({
-            dataType: "html",
-            type:     "GET",
-            url:      path + "pad/mant_falta_cargar_cbo/", 
-            data:     "id_normajur="+id_normajur,	 	 
-            beforeSend: function(data){ 	 	
-                $('#cb_falta').html("<option>CARGANDO...</option>");
-                $('#cb_falta').selectpicker('refresh');
-            },
-            success: function(requestData){
-                $('#cb_falta').html(requestData);
-                $('#cb_falta').selectpicker('refresh');
-            },			
-            error: function(requestData, strError, strTipoError){
-                $('#cb_falta').html("<option>Error " + strTipoError +": " + strError+"</option>");
-                $('#cb_falta').selectpicker('refresh');
-            }
-        });  
-}
+//function pad_mant_falta_cargar_cbo(){
+//    var id_normajur = $('#cb_norma_jur').val();
+//            
+//    $.ajax({
+//            dataType: "html",
+//            type:     "GET",
+//            url:      path + "pad/mant_falta_cargar_cbo/", 
+//            data:     "id_normajur="+id_normajur,	 	 
+//            beforeSend: function(data){ 	 	
+//                $('#cb_falta').html("<option>CARGANDO...</option>");
+//                $('#cb_falta').selectpicker('refresh');
+//            },
+//            success: function(requestData){
+//                $('#cb_falta').html(requestData);
+//                $('#cb_falta').selectpicker('refresh');
+//            },			
+//            error: function(requestData, strError, strTipoError){
+//                $('#cb_falta').html("<option>Error " + strTipoError +": " + strError+"</option>");
+//                $('#cb_falta').selectpicker('refresh');
+//            }
+//        });  
+//}
 //FIN CARGAR COMBO FALTAS
 //
 //INICIO GUARDAR INVESTIGADO
@@ -666,8 +665,7 @@ function pad_mant_investigado_modificar_guardar(){
 //INICIO CONSULTA INVESTIGADO POPUP
 function pad_mant_investigado_consulta_popup(id){
     
-    var url = encodeURI(path + "pad/mant_investigado_consulta_popup/?id="+id);
-    
+    var url = encodeURI(path + "pad/mant_investigado_consulta_popup/?id="+id);    
     $.colorbox({
         "href" : url
        ,"width" : 1100
