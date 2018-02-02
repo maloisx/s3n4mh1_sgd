@@ -602,6 +602,10 @@
     <definition name="sgd/mant_expediente_dir_tbl"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_expediente_dir_tbl.jsp" />  
     </definition>  
+        
+    <definition name="sgd/mant_unid_func_recibe"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_unid_func_recibe.jsp" />  
+    </definition>  
          
     <definition name="sgd/mant_buscar_altdir"  extends="base-definition"> 
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_buscar_altdir.jsp" />  

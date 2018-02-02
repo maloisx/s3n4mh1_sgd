@@ -9166,6 +9166,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 @RequestMapping(value = {"/sgd/mant_expediente_dir"}, method = RequestMethod.GET)
     public String MantExpedienteDir(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
         HttpSession session = request.getSession();
+        String codUO = (String) session.getAttribute("codUO");
         String sglUO = (String) session.getAttribute("sglUO");
         request.setAttribute("title_pag","EXPEDIENTES POR DIRECCIÓN: " + sglUO);
                     
@@ -9187,12 +9188,20 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             request.setAttribute("cb_clsdoc", cb_clsdoc);   
             
 //            información combo envia (el que realiza la derivación)
-            String pers = "senamhi.fn_personal_consulta";//PERSONAL CONSULTADO ID_USER, NOMBRE DEL EMPLEADO
+            String pers = "senamhi.fn_personal_consulta";//PERSONAL CONSULTADO ID_USER, NOMBRE DEL EMPLEADO / personal de la dirección
             String array_cbo_personal[] = new String[1];
-            array_cbo_personal[0] = "";
+            array_cbo_personal[0] = codUO;
             Vector datos_cbo_personal = cn.EjecutarProcedurePostgres(pers, array_cbo_personal);            
             String cb_personal = util.contenido_combo(datos_cbo_personal, "");
             request.setAttribute("cb_personal", cb_personal);   
+            
+//            información combo unidades funcionales
+            String unidfunc = "senamhi.fn_unidad_func_consulta";
+            String array_cbo_unidfunc[] = new String[1];
+            array_cbo_unidfunc[0] = codUO;
+            Vector datos_cbo_unidfunc = cn.EjecutarProcedurePostgres(unidfunc, array_cbo_unidfunc);            
+            String cb_unidfunc = util.contenido_combo(datos_cbo_unidfunc, "");
+            request.setAttribute("cb_unidfunc", cb_unidfunc);   
                         
         return "sgd/mant_expediente_dir";
     }              
@@ -9210,9 +9219,11 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     String asun = request.getParameter("asunto");
     String cd = request.getParameter("cd");
     String nro = request.getParameter("nro");
-    String envia = request.getParameter("envia");
+//    String envia = request.getParameter("envia");
     String recibe = request.getParameter("recibe");
-        
+//    String unidfunc_envia = request.getParameter("unidfunc_envia");
+    String unidfunc_recibe = request.getParameter("unidfunc_recibe");
+    
     ConeccionDB cn =  new ConeccionDB();        
     String np = "sgd.fn_expedientegeneral_dir_consulta";
     String array[] = new String[8];
@@ -9222,8 +9233,10 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     array[3] = cd;
     array[4] = nro;
     array[5] = codUO;
-    array[6] = envia;
-    array[7] = recibe;
+//    array[6] = envia;
+    array[6] = recibe;
+//    array[8] = unidfunc_envia;
+    array[7] = unidfunc_recibe;
     Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
     Vector v_temp = new Vector();
     for(int i = 0 ; i<v_datos.size() ; i++){            
@@ -9232,18 +9245,16 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String cut_exp = vss.get(1).toString();
         String per_exp = vss.get(2).toString();
         String fec_reg = vss.get(3).toString();
-        String des_origen = vss.get(4).toString();
-        String des_tema = vss.get(5).toString();
-        String des_proc = vss.get(6).toString();        
-        String documento = vss.get(7).toString();
-        String exp_agrupados = vss.get(8).toString();
-        String asunto = vss.get(9).toString();
-        String id_alcance = vss.get(10).toString();
-        String des_alcance = vss.get(11).toString();
-        String id_doc = vss.get(12).toString();
-        String origen = vss.get(13).toString();
-        String destino = vss.get(14).toString();
-        String fec_envio = vss.get(15).toString();
+        String des_origen = vss.get(4).toString();     
+        String documento = vss.get(5).toString();
+        String exp_agrupados = vss.get(6).toString();
+        String asunto = vss.get(7).toString();
+        String id_doc = vss.get(8).toString();
+        String origen = vss.get(9).toString();
+        String destino = vss.get(10).toString();
+        String fec_envio = vss.get(11).toString();
+        String obs_envio = vss.get(12).toString();
+        String des_tpestflj = vss.get(13).toString();
 
         String btn = "<div class='text-center'>"
                 + "<button type='button' class='btn btn-info' onclick='sgd_expediente_buscar_popup(\""+i_id+"\",\""+id_doc+"\")'>"
@@ -9254,17 +9265,16 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             vv.add(btn);
             vv.add(cut_exp);
             vv.add(per_exp);
-//            vv.add(des_alcance);
             vv.add(fec_reg);
             vv.add(documento);
             vv.add(asunto);
             vv.add(des_origen);
-//            vv.add(des_tema);
-//            vv.add(des_proc);
             vv.add(origen);
             vv.add(destino);
-            vv.add(exp_agrupados);
             vv.add(fec_envio);
+            vv.add(obs_envio);
+            vv.add(des_tpestflj);
+            vv.add(exp_agrupados);
             v_temp.add(vv); 
     }
     Util util = new Util();
@@ -9277,17 +9287,16 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                             + "{'sTitle':'-'} , "
                             + "{'sTitle':'N° CUT'} , "
                             + "{'sTitle':'PERIODO'} , "
-//                            + "{'sTitle':'ALCANCE'} , "
                             + "{'sTitle':'FECHA REG.'} , "
                             + "{'sTitle':'DOCUMENTO'} , "
                             + "{'sTitle':'ASUNTO'} , "
                             + "{'sTitle':'ORIGEN'} , "
-//                            + "{'sTitle':'TEMA'} , "
-//                            + "{'sTitle':'PROCEDIMIENTO'} , "
                             + "{'sTitle':'ENVÍA'} , "
                             + "{'sTitle':'RECIBE'} , "
-                            + "{'sTitle':'EXP. AGRUPADOS'},  "
-                            + "{'sTitle':'FEC.ENVIO'}  "
+                            + "{'sTitle':'FEC.ENVIO'},  "
+                            + "{'sTitle':'OBS.ENVIO'},  "
+                            + "{'sTitle':'ESTADO'},  "
+                            + "{'sTitle':'EXP. AGRUPADOS'}  "
                             
                             + "]");vc_tbl.add(sv);sv =  new Vector();
     sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
@@ -9310,7 +9319,57 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     return "sgd/mant_expediente_dir_tbl";
     }    
 //FIN BUSCAR EXPEDIENTE POR DIRECCIÓN    
-//    
+//
+//INICIO CARCAR COMBO Personal por dirección
+//    @RequestMapping(value = {"/sgd/mant_unid_func"}, method = RequestMethod.GET)
+//    public String MantUnidFunc(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+//            throws ServletException, IOException { 
+//        String var_request = "";
+//        try {
+//            String unid_func = request.getParameter("unid_func"); 
+//            
+//            ConeccionDB cn = new ConeccionDB();   
+//            
+//            String np = "senamhi.fn_personal_unidfunc_consulta";
+//            String array[] = new String[1];
+//            array[0] = unid_func;
+//            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+//            var_request = new Util().contenido_combo(datos,"");
+//            
+//        } catch (Exception ex) {
+//            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+//        }        
+//        request.setAttribute("response", var_request);
+//        
+//        return "sgd/mant_unid_func";
+//    } 
+//FIN CARCAR COMBO Personal por dirección            
+//
+//INICIO CARCAR COMBO Personal por dirección
+    @RequestMapping(value = {"/sgd/mant_unid_func_recibe"}, method = RequestMethod.GET)
+    public String MantUnidFuncRecibe(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException { 
+        String var_request = "";
+        try {
+            String unid_func_recibe = request.getParameter("unid_func_recibe");
+            
+            ConeccionDB cn = new ConeccionDB();
+            
+            String np = "senamhi.fn_personal_unidfunc_consulta";
+            String array[] = new String[1];
+            array[0] = unid_func_recibe;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().contenido_combo(datos,"");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        
+        return "sgd/mant_unid_func_recibe";
+    } 
+//FIN CARCAR COMBO Personal por dirección            
+//
 //INICIO BUSQUEDA DE EXPEDIENTE ATENCIÓN AL CIUDADANO
 @RequestMapping(value = {"/sgd/mant_atencion_ciudadano"}, method = RequestMethod.GET)
     public String MantAtencionCiudadano(HttpServletRequest request, HttpServletResponse response,ModelMap model) {        
@@ -9427,6 +9486,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         return "sgd/mant_atencion_ciudadano_doc";
     }
 //FIN BUSCAR PRIMER DOCUMENTO
-//    
+//
+
 }
 
