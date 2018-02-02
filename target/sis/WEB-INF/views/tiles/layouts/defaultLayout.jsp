@@ -64,7 +64,7 @@
                 
 		<script type="text/javascript">
 			var path="${pageContext.request.contextPath}/";
-                        //var path_ws="http://sgd.senamhi.gob.pe/ws/rest/global";
+//                        var path_ws="http://sgd.senamhi.gob.pe/ws/rest/global";
                         var path_ws="http://localhost:8085/ws/rest/global";
 			$(function(){
 				$("input:submit, input:button, input:reset, button").button();
