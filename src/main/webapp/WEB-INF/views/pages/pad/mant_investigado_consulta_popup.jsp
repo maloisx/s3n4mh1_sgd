@@ -31,46 +31,63 @@
                     <div class="tab-pane col-sm-12" id="div_mant_investigados_tbl">
                         <script>
                             pad_mant_investigados_tbl($('#txt_nroexp').val());
-                        </script>  
+                        </script>
                     </div> 
 <!--                    <div class="tab-pane col-sm-1">                        
                     </div>-->
                 </div>    
             </div>                    
-<!--PESTANA CREAR EXPEDIENTE Y DOCUMENTO-->            
+<!--PESTANA CREAR EXPEDIENTE Y DOCUMENTO-->
             <div class="tab-pane col-sm-12" id="doc">
                 <div class="row">
                     <div class="input-field col-sm-2">
                         <input type="text" name="txt_nroexp1" id="txt_nroexp1" value="${requestScope['nroexp']}"  style="text-align: center; color: red; font-size:120%; font-weight:bold;" />                   
                         <label for="txt_nroexp1" class="active">N° Exp:</label> 
-                    </div>                     
+                    </div>
                 </div>
-                <br>                
-                <div class="row">                    
+                <br>
+                <div class="row">
                     <div class="input-field col-sm-5">
-                        <input name="txt_investigado" id="txt_investigado" type="text" />                 
-                        <label for="txt_investigado" class="active">Investigado:</label> 
+                        <input name="txt_investigado" id="txt_investigado" type="text" />
+                        <label for="txt_investigado" class="active">Investigado:</label>
                     </div>
                     <input type="hidden" name="cb_investigado" id="cb_investigado"/>
                     <div class="input-field col-sm-5">
-                        <input name="txt_cargo" id="txt_cargo" type="text" />                    
-                        <label for="txt_cargo" class="active">Cargo:</label> 
+                        <input name="txt_cargo" id="txt_cargo" type="text" />
+                        <label for="txt_cargo" class="active">Cargo:</label>
                     </div>
                     <input type="hidden" name="cb_cargo" id="cb_cargo"/>
-                </div>                
+                </div>
                 <hr  style="width:90%"/>
-                <br><br>   
+                <br><br>  
+<!--                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">                            
+                            <div class="input-field text-right col-sm-10">
+                                <select name="cb_norma_jur" id="cb_norma_jur" class="form-control selectpicker" data-size="5" onchange="pad_mant_literal_norma_consulta();">${requestScope['norma']}</select>                    
+                                <label for="cb_norma_jur" class="active">Norma Jurídica:</label> 
+                            </div>                 
+                            <div class="input-field col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <br>       
+                <br>    -->
                 <div class="row">
-                    <div class="input-field col-sm-5">
-                        <select name="cb_falta" id="cb_falta" class="form-control selectpicker" data-size="3" multiple data-live-search="true" onchange="charge_list_boostrap_select('cb_falta','cb_faltasel')">${requestScope['falta']}</select>                    
+                    <div class="input-field col-sm-10">
+                        <select name="cb_falta" id="cb_falta" class="form-control selectpicker" data-size="5" multiple data-live-search="true" onchange="charge_list_boostrap_select('cb_falta','cb_faltasel')">${requestScope['falta']}</select>                    
                         <label for="cb_falta" class="active">Seleccione Falta:</label> 
                     </div>
-                    <div class="input-field col-md-5">
-                        <select name="cb_faltasel" id="cb_faltasel" class="form-control selectpicker" data-size="3" multiple data-live-search="true" onchange="delete_cascade_list_boostrap_select('cb_faltasel','cb_falta')"></select>    
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="input-field col-md-10">
+                        <select name="cb_faltasel" id="cb_faltasel" class="form-control selectpicker" data-size="5" multiple data-live-search="true" onchange="delete_cascade_list_boostrap_select('cb_faltasel','cb_falta')"></select>    
                         <label for="cb_faltasel" class="active">Faltas seleccionadas:</label>
                     </div>
                 </div>
-                <br><br>  
+                <br><br>
                 <div class="row">
                     <div class="input-field col-sm-5">
                         <select name="cb_sancion" id="cb_sancion" class="form-control selectpicker" data-size="3">${requestScope['sancion']}</select>                    

@@ -1052,9 +1052,6 @@ public class PadController {
             String cb_norma = util.contenido_combo(datos_cbo_norma, "");
             request.setAttribute("norma", cb_norma);
             
-//            **************************************************************************************************************************************
-            
-            
 //          información para el combo Falta
             String falta = "pad.fn_literal_investigado_consulta";
             String array_cbo_falta[] = new String[1];
@@ -1178,13 +1175,29 @@ public class PadController {
             String cb_cargo = util.contenido_combo(datos_cbo_cargo, "");
             request.setAttribute("cargo", cb_cargo);       
             
+////          información para el combo Falta
+//            String falta = "pad.fn_literal_investigado_consulta";
+//            String array_cbo_falta[] = new String[1];
+//            array_cbo_falta[0] = "";
+//            Vector datos_cbo_falta = cn.EjecutarProcedurePostgres(falta, array_cbo_falta);
+//            String cb_falta = util.contenido_combo(datos_cbo_falta, "");
+//            request.setAttribute("falta", cb_falta);
+
+//          información para el combo Norma
+//            String norma = "pad.fn_norma_consulta";
+//            String array_cbo_norma[] = new String[1];
+//            array_cbo_norma[0] = "";
+//            Vector datos_cbo_norma = cn.EjecutarProcedurePostgres(norma, array_cbo_norma);
+//            String cb_norma = util.contenido_combo(datos_cbo_norma, "");
+//            request.setAttribute("norma", cb_norma);            
+
 //          información para el combo Falta
             String falta = "pad.fn_literal_investigado_consulta";
             String array_cbo_falta[] = new String[1];
             array_cbo_falta[0] = "";
             Vector datos_cbo_falta = cn.EjecutarProcedurePostgres(falta, array_cbo_falta);
             String cb_falta = util.contenido_combo(datos_cbo_falta, "");
-            request.setAttribute("falta", cb_falta);
+            request.setAttribute("falta", cb_falta);            
             
 //            información combo Sanción
             String sancion = "pad.fn_sancion_consulta";//consulta combo destino                  
@@ -2179,7 +2192,30 @@ public class PadController {
 	}
 //FIN LISTA LITERAL TABLA
 //    
-//                  
+//INICIO CARCAR COMBO LITERAL POR NORMA
+    @RequestMapping(value = {"/pad/mant_literal_norma_consulta"}, method = RequestMethod.GET)
+    public String MantLiteralNormaQuery(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException { 
+        String var_request = "";
+        try {
+            String norma_jur = request.getParameter("norma_jur");
+            
+            ConeccionDB cn = new ConeccionDB();
+            
+            String np = "pad.fn_literal_norma_consulta";
+            String array[] = new String[1];
+            array[0] = norma_jur;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().contenido_combo(datos,"");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        
+        return "pad/mant_literal_norma_consulta";
+    } 
+//FIN CARCAR COMBO LITERAL POR NORMA
 //              
 }
 

@@ -164,6 +164,10 @@
      
     <definition name="pad/mant_literal_tbl"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_literal_tbl.jsp" />  
+    </definition>
+     
+    <definition name="pad/mant_literal_norma_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_literal_norma_consulta.jsp" />  
     </definition>      
     
 </tiles-definitions>
