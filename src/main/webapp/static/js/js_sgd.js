@@ -3444,8 +3444,7 @@ function sgd_mant_cargo_guardar(){
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");                
             },
-            success: function(requestData){   
-                console.log('--------------------------------*****************'+requestData)
+            success: function(requestData){  
                 arrayobj = jQuery.parseJSON(requestData);
 //                var id_documento = arrayobj[0][0];//id documento
                 var id = arrayobj[0][6];//id documento
@@ -3496,10 +3495,11 @@ function sgd_mant_expediente_dir_tbl(){
     var asunto = $('#txt_asun').val();
     var cd = $('#cb_clsdoc').val();
     var nro = $('#txt_nro').val();
-    var envia = $('#cb_envia').val();
+//    var envia = $('#cb_envia').val();
     var recibe = $('#cb_recibe').val();
-    var unidfunc_envia = $('#cb_unidfunc_envia').val();
+//    var unidfunc_envia = $('#cb_unidfunc_envia').val();
     var unidfunc_recibe = $('#cb_unidfunc_recibe').val();
+    var estado = $('#cb_estado').val();
     
     $.ajax({
             dataType: "html",
@@ -3510,10 +3510,9 @@ function sgd_mant_expediente_dir_tbl(){
                       "&asunto="+asunto+
                       "&cd="+cd+
                       "&nro="+nro+
-                      "&envia="+envia+
                       "&recibe="+recibe+
-                      "&unidfunc_envia="+unidfunc_envia+
-                      "&unidfunc_recibe="+unidfunc_recibe,
+                      "&unidfunc_recibe="+unidfunc_recibe+
+                      "&estado="+estado,
             beforeSend: function(data){
                 $('#div_expediente_dir_tbl').html("Cargando...");
             },
