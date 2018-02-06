@@ -1971,24 +1971,24 @@ public class PadController {
         return "pad/mant_medida_caut_guardar";
     }
 //FIN ASIGNA ABOGADO GUARDAR     
-//      
-//INICIO LISTA FALTAS BASE        
-    @RequestMapping(value = {"/pad/mant_falta"}, method = RequestMethod.GET)
-	public String MantFalta(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+//
+//INICIO LISTA FALTAS BASE - LITERAL       
+    @RequestMapping(value = {"/pad/mant_literal"}, method = RequestMethod.GET)
+	public String MantLiteral(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
             request.setAttribute("title_pag","GESTIÓN DE FALTAS");             
             request.setAttribute("btn_nuevo_reg","pad_mant_falta_popup()");
             request.setAttribute("tit_btn","NUEVO REGISTRO");
-            return "pad/mant_falta";
+            return "pad/mant_literal";
 	}
-//FIN LISTA FALTAS BASE
+//FIN LISTA FALTAS BASE - LITERAL    
 //         
-//INICIO LISTA FALTAS TABLA        
-    @RequestMapping(value = {"/pad/mant_falta_tbl"}, method = RequestMethod.GET)
-	public String AjaxQueryMedidaFaltaTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+//INICIO LISTA LITERAL TABLA        
+    @RequestMapping(value = {"/pad/mant_literal_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryLiteralTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
             ConeccionDB cn =  new ConeccionDB();            
 
-            String np = "pad.fn_falta_consulta";
+            String np = "pad.fn_literal_consulta";
             String array[] = new String[1];
             array[0] = "";
             Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
@@ -1996,16 +1996,18 @@ public class PadController {
             Vector v_temp = new Vector();
             for(int i = 0 ; i<v_datos.size() ; i++){
                 Vector vss =  (Vector) v_datos.get(i);
-                String i_id_medida_caut = vss.get(0).toString();
-                String c_des_medida_caut = vss.get(1).toString();
-                String c_est_reg = vss.get(2).toString();
+                String id_literal = vss.get(0).toString();
+                String des_literal = vss.get(1).toString();
+                String n_articulo = vss.get(2).toString();
+                String des_norma = vss.get(3).toString();
                  
-                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_falta_popup(\\\""+i_id_medida_caut+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_falta_popup(\\\""+id_literal+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
                 
                 Vector vv = new Vector();
-                vv.add(i_id_medida_caut);
-                vv.add(c_des_medida_caut);
-                vv.add(c_est_reg);
+                vv.add(id_literal);
+                vv.add(des_norma);
+                vv.add(n_articulo);
+                vv.add(des_literal);
                 vv.add(btn);
                 v_temp.add(vv);                
             }     
@@ -2017,9 +2019,10 @@ public class PadController {
             sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
             sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aoColumns");sv.add("["                                    
-                                    + "{'sTitle':'CÓDIGO'} , "
+                                    + "{'sTitle':'N°'} , "
+                                    + "{'sTitle':'NORMA'} , "
+                                    + "{'sTitle':'ARTÍCULO'} , "
                                     + "{'sTitle':'FALTA'} , "
-                                    + "{'sTitle':'ESTADO'} , "
                                     + "{'sTitle':'-'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
@@ -2038,10 +2041,10 @@ public class PadController {
             String tbl = util.datatable("c_tbl_falta",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
-            return "pad/mant_falta_tbl";
+            return "pad/mant_literal_tbl";
 	}
-//FIN LISTA FALTAS TABLA
-//    
+//FIN LISTA LITERAL TABLA
+// 
 //INICIO FALTAS POPUP            
     @RequestMapping(value = {"/pad/mant_falta_popup"}, method = RequestMethod.GET)
     public String MantFaltaPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
@@ -2052,39 +2055,53 @@ public class PadController {
         try {            
             ConeccionDB cn = new ConeccionDB(); 
             
-            String np = "pad.fn_falta_consulta";
+            String np = "pad.fn_literal_consulta";
             String array[] = new String[1];
             array[0] = id;
             Vector datos = cn.EjecutarProcedurePostgres(np, array);
             
             Util util =  new Util();
             
-            String i_id_falta = "";
-            String c_des_falta = "";
+            String id_literal = "";
+            String des_literal = "";
+            String id_articulo = "";
+            String cod_literal = "";            
             String c_est_reg = "";            
             
             for(int i = 0 ; i<datos.size() ; i++){
                 Vector datos_v =  (Vector) datos.get(i);
-                i_id_falta = datos_v.get(0).toString();
-                c_des_falta = datos_v.get(1).toString();
-                c_est_reg = datos_v.get(3).toString();
+                id_literal = datos_v.get(0).toString();
+                des_literal = datos_v.get(1).toString();
+                cod_literal = datos_v.get(4).toString();
+                c_est_reg = datos_v.get(5).toString();
+                id_articulo = datos_v.get(6).toString();
             }            
-            request.setAttribute("id", i_id_falta);  
-            request.setAttribute("descripcion", c_des_falta);  
+            request.setAttribute("id", id_literal);  
+            request.setAttribute("descripcion", des_literal); 
+            request.setAttribute("cod_literal", cod_literal);  
             
             String cb_desc_estado = "";
-//          información para el combo Estado
-            
+//          información para el combo Estado            
                 String nt = "sgd.fn_estado_consulta";
                 String array_cbo[] = new String[1];
                 array_cbo[0] = "";
                 Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
-                if (i_id_falta.length() != 0){
+                if (id_literal.length() != 0){
                     cb_desc_estado = util.contenido_combo(datos_cbo, c_est_reg);
                 }else{
                     cb_desc_estado = util.contenido_combo(datos_cbo, "1");    
                 }  
-                request.setAttribute("cb_estado", cb_desc_estado);                               
+                request.setAttribute("cb_estado", cb_desc_estado);    
+                
+            String cb_desc_articulo = "";
+//          información para el combo Artículo            
+                String articulo = "pad.fn_articulo_consulta";
+                String array_cbo_articulo[] = new String[1];
+                array_cbo_articulo[0] = "";
+                Vector datos_cbo_articulo = cn.EjecutarProcedurePostgres(articulo, array_cbo_articulo);
+                cb_desc_articulo = util.contenido_combo(datos_cbo_articulo, id_articulo);
+                
+                request.setAttribute("cb_articulo", cb_desc_articulo);                               
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -2121,77 +2138,7 @@ public class PadController {
         return "pad/mant_falta_guardar";
     }
 //FIN FALTA GUARDAR    
-//
-//INICIO LISTA FALTAS BASE - LITERAL       
-    @RequestMapping(value = {"/pad/mant_literal"}, method = RequestMethod.GET)
-	public String MantLiteral(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
-            request.setAttribute("title_pag","GESTIÓN DE FALTAS");             
-            request.setAttribute("btn_nuevo_reg","pad_mant_literal_popup()");
-            request.setAttribute("tit_btn","NUEVO REGISTRO");
-            return "pad/mant_literal";
-	}
-//FIN LISTA FALTAS BASE - LITERAL    
-//         
-//INICIO LISTA LITERAL TABLA        
-    @RequestMapping(value = {"/pad/mant_literal_tbl"}, method = RequestMethod.GET)
-	public String AjaxQueryLiteralTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-            
-            ConeccionDB cn =  new ConeccionDB();            
-
-            String np = "pad.fn_literal_consulta";
-            String array[] = new String[1];
-            array[0] = "";
-            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
-
-            Vector v_temp = new Vector();
-            for(int i = 0 ; i<v_datos.size() ; i++){
-                Vector vss =  (Vector) v_datos.get(i);
-                String i_id_literal = vss.get(0).toString();
-                String c_des_literal = vss.get(1).toString();
-                String c_est_reg = vss.get(2).toString();
-                 
-                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_falta_popup(\\\""+i_id_literal+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
-                
-                Vector vv = new Vector();
-                vv.add(i_id_literal);
-                vv.add(c_des_literal);
-                vv.add(c_est_reg);
-                vv.add(btn);
-                v_temp.add(vv);                
-            }     
-            
-            Util util = new Util();
-            String json = util.vector2json(v_temp);   
-            Vector vc_tbl = new Vector();
-            Vector sv =  new Vector();
-            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aoColumns");sv.add("["                                    
-                                    + "{'sTitle':'CÓDIGO'} , "
-                                    + "{'sTitle':'FALTA'} , "
-                                    + "{'sTitle':'ESTADO'} , "
-                                    + "{'sTitle':'-'}  "
-                                    + "]");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
-            //boton de excel
-            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
-            ////Pintar de rojo el registro si no t.iene datos
-//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
-//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
-//                          "}";
-//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
-
-            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_falta'></table>";
-            String tbl = util.datatable("c_tbl_falta",vc_tbl);            
-            request.setAttribute("response", tbl_html + tbl);
-
-            return "pad/mant_literal_tbl";
-	}
-//FIN LISTA LITERAL TABLA
-//    
+//        
 //INICIO CARCAR COMBO LITERAL POR NORMA
     @RequestMapping(value = {"/pad/mant_literal_norma_consulta"}, method = RequestMethod.GET)
     public String MantLiteralNormaQuery(HttpServletRequest request, HttpServletResponse response, ModelMap model)

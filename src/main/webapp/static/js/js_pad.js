@@ -1116,8 +1116,8 @@ function pad_mant_falta_popup(id){
     
     $.colorbox({
         "href" : url
-       ,"width" : 600
-       ,"height" : 400 
+       ,"width" : 800
+       ,"height" : 700 
     });
 }
 //FIN FALTA POPUP

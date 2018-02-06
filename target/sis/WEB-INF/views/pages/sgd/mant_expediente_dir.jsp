@@ -40,7 +40,7 @@
                 <div class="input-field col-md-1">
                 </div>
                 <div class="input-field col-sm-2">   
-                    <select name="cb_clsdoc" id="cb_clsdoc" class="form-control selectpicker" data-size="3">${requestScope['cb_clsdoc']}</select>
+                    <select name="cb_clsdoc" id="cb_clsdoc" class="form-control selectpicker" data-size="5" data-live-search="true">${requestScope['cb_clsdoc']}</select>
                     <label for="cb_clsdoc" class="active">Tipo documento</label>
                 </div> 
                 <div class="input-field col-md-1">
