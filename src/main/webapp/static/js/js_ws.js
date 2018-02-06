@@ -74,14 +74,19 @@ function ws_contenido_combo(cb_id_html, data, id_seleccionado) {
         ind = 0;
         id = null;
         val = null;
-        $.each(item, function (index_item, value_item) {
-            if (ind == 0) {
-                id = value_item;
-                ind++;
-            } else if (ind == 1) {
-                val = value_item;
-            }
-        });
+        if(Array.isArray(item)){
+            $.each(item, function (index_item, value_item) {
+                if (ind == 0) {
+                    id = value_item;
+                    ind++;
+                } else if (ind == 1) {
+                    val = value_item;
+                }
+            });
+        }else{
+            id = item;
+            val = item;
+        }
         //console.log(id + " // " + val);
         if (id_seleccionado == id) {
             cont_combo += "<option value='" + id + "' selected='selected' >" + val + "</option>";
