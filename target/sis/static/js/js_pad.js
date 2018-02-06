@@ -105,9 +105,7 @@ function pad_mant_expedientes_pad_guardar(){
     }else{
         uo_sancionador = sancionador.split('_')[1];
         sancionador = sancionador.split('_')[0];
-    }
-    console.log('****************************************'+sancionador); //vacio
-    
+    }    
     
     var fecnotif_iniPAD = $('#txt_fecnotif_iniPAD').val(); 
     if(fecnotif_iniPAD == undefined){
@@ -1118,8 +1116,8 @@ function pad_mant_falta_popup(id){
     
     $.colorbox({
         "href" : url
-       ,"width" : 600
-       ,"height" : 400 
+       ,"width" : 800
+       ,"height" : 700 
     });
 }
 //FIN FALTA POPUP
@@ -1176,5 +1174,30 @@ function pad_mant_literal_tbl(){
     });
 }
 //FIN LISTA LITERAL TABLA
+//
+//INICIO LISTA LITERAL POR NORMA
+function pad_mant_literal_norma_consulta(){        
+    var norma_jur = $('#cb_norma_jur').val();
+            
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_literal_norma_consulta/", 
+            data:     "norma_jur="+norma_jur,	 	 
+            beforeSend: function(data){ 	 	
+                $('#cb_falta').html("<option>CARGANDO...</option>");
+                $('#cb_falta').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_falta').html(requestData);
+                $('#cb_falta').selectpicker('refresh');
+            },			
+            error: function(requestData, strError, strTipoError){
+                $('#cb_falta').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_falta').selectpicker('refresh');
+            }
+        });  
+}
+//FIN LISTA LITERAL POR NORMA
 //
 //

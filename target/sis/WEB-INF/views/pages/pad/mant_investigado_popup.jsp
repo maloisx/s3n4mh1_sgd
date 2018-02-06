@@ -36,13 +36,13 @@
 <br>
 <hr  style="width:100%"/>                
 <br>                
-<div class="row">
+<!--<div class="row">
     <div class="col-sm-12">
         <div class="row">
             <div class="input-field col-sm-1">
             </div>
             <div class="input-field text-right col-sm-10">
-                <select name="cb_norma_jur" id="cb_norma_jur" class="form-control selectpicker" data-size="5" onchange="pad_mant_falta_cargar_cbo();">${requestScope['norma']}</select>                    
+                <select name="cb_norma_jur" id="cb_norma_jur" class="form-control selectpicker" data-size="5" onchange="pad_mant_literal_norma_consulta();">${requestScope['norma']}</select>                    
                 <label for="cb_norma_jur" class="active">Norma Jurídica:</label> 
             </div>                 
             <div class="input-field col-sm-1">
@@ -51,17 +51,28 @@
     </div>
 </div>    
 <br>       
-<br>       
+<br>       -->
 <div class="row">
     <div class="col-sm-12">
         <div class="row">
             <div class="input-field col-sm-1">
             </div>            
-            <div class="input-field text-right col-sm-5">
+            <div class="input-field text-right col-sm-10">
                 <select name="cb_falta" id="cb_falta" class="form-control selectpicker" data-size="5" multiple onchange="charge_list_boostrap_select('cb_falta','cb_faltasel')">${requestScope['falta']}</select>                    
                 <label for="cb_falta" class="active">Seleccione Falta:</label> 
             </div>
-            <div class="input-field text-right col-sm-5">
+            <div class="input-field col-sm-1">
+            </div>
+        </div>
+    </div>
+</div>    
+<br>       
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="input-field col-sm-1">
+            </div>
+            <div class="input-field text-right col-sm-10">
                 <select name="cb_faltasel" id="cb_faltasel" class="form-control selectpicker" data-size="5" multiple onchange="delete_cascade_list_boostrap_select('cb_faltasel','cb_falta')"></select>                    
                 <label for="cb_faltasel" class="active">Faltas seleccionadas:</label> 
             </div>
@@ -103,15 +114,15 @@
 </div>             
 
 <script>
-    $('#file-pad').fileinput({
-        language: 'es',
-        uploadUrl: '#',
-        allowedFileExtensions: ['pdf'],
-        showUpload: false,
-        //mainClass: "input-group-lg",
-        rtl: true
-    });    
+//    $('#file-pad').fileinput({
+//        language: 'es',
+//        uploadUrl: '#',
+//        allowedFileExtensions: ['pdf'],
+//        showUpload: false,
+//        //mainClass: "input-group-lg",
+//        rtl: true
+//    });    
     
-    $('#cb_etapa option:first-child').attr('selected', 'selected');
-    $('#div_mant_adjunto_tbl').toggle();
+//    $('#cb_etapa option:first-child').attr('selected', 'selected');
+//    $('#div_mant_adjunto_tbl').toggle();
 </script>            

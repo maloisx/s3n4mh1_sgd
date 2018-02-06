@@ -9188,7 +9188,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             request.setAttribute("cb_clsdoc", cb_clsdoc);   
             
 //            información combo envia (el que realiza la derivación)
-            String pers = "senamhi.fn_personal_consulta";//PERSONAL CONSULTADO ID_USER, NOMBRE DEL EMPLEADO / personal de la dirección
+//            String pers = "senamhi.fn_personal_consulta";//PERSONAL CONSULTADO ID_USER, NOMBRE DEL EMPLEADO / personal de la dirección
+            String pers = "senamhi.fn_personal_unidfunc_consulta";//PERSONAL CONSULTADO ID_USER, NOMBRE DEL EMPLEADO / personal de la dirección
             String array_cbo_personal[] = new String[1];
             array_cbo_personal[0] = codUO;
             Vector datos_cbo_personal = cn.EjecutarProcedurePostgres(pers, array_cbo_personal);            
@@ -9315,10 +9316,9 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 //    sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
 //    sv.add("aoColumnDefs");sv.add("[{ sClass:'dt-center','aTargets':[0,1,2,3,4,5,6,7,8]},{'aTargets':[ 3,4 ],'bVisible': true,'bSearchable': true}]");vc_tbl.add(sv);sv =  new Vector();
 
-    //boton de excel
-        sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
-//    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>rt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
+    sv.add("dom");sv.add("'<\"row\"<\"col-xs-6\"B><\"col-xs-6\"f>><\"row\"<\"col-xs-12 \"p>>irt<\"bottom\"><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
 //    sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+//    sv.add("dom");sv.add("'<\"top\"i>rt<\"bottom\"flp><\"clear\">'");vc_tbl.add(sv);sv =  new Vector();
 //    sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
     sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm' }]");vc_tbl.add(sv);sv =  new Vector();
     ////Pintar de rojo el registro si no t.iene datos
@@ -9364,10 +9364,14 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     @RequestMapping(value = {"/sgd/mant_unid_func_recibe"}, method = RequestMethod.GET)
     public String MantUnidFuncRecibe(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException { 
+        HttpSession session = request.getSession();
+        String codUO = (String) session.getAttribute("codUO");
         String var_request = "";
-        try {
+        try {            
             String unid_func_recibe = request.getParameter("unid_func_recibe");
-            
+            if (unid_func_recibe.equals("")){
+                unid_func_recibe = codUO;
+            }            
             ConeccionDB cn = new ConeccionDB();
             
             String np = "senamhi.fn_personal_unidfunc_consulta";
