@@ -906,10 +906,21 @@ function sisdad_js_mant_ptoobs_reporte_procesar(){
         $.alert(error_log,"ERROR");
     }else{
      var cad_ptoobs = ptoobs.toString();     
-     console.log(cad_ptoobs);
+     //console.log(cad_ptoobs);
      
-     var obj_data = ws('sisdad', 'pkg_ws.sp_obt_ptoobs_reportedata', '["'+cad_ptoobs+'","'+fecha_ini+'","'+fecha_fin+'"]');
+    var obj_data = ws('sisdad', 'pkg_ws.sp_obt_ptoobs_reportedata', '["'+cad_ptoobs+'","'+fecha_ini+'","'+fecha_fin+'"]');
+    console.log(obj_data);
+    $('#sisdad_js_mant_ptoobs_data_hd').val(JSON.stringify(obj_data.data));
      
+    var obj_data_ptoobs = new Array();
+    for(var i= 0 ; i<obj_data.data.length ; i++){
+        obj_data_ptoobs.push(obj_data.data[i].COD_EXTERNO);
+    }
+    var obj_data_ptoobs = Array.from(new Set(obj_data_ptoobs));
+    //console.log(obj_data_ptoobs);
+    ws_contenido_combo("cb_ptoobs_graf",obj_data_ptoobs,""); 
+    
+    
       var tbl_cab = [
                 {'sTitle': 'ID PTOOBS', 'sClass':'text-center'}, 
                 {'sTitle': 'SERIE', 'sClass':'text-center'},
@@ -942,8 +953,48 @@ function sisdad_js_mant_ptoobs_reporte_procesar(){
             
             ws_datatable("sisdad_js_mant_ptoobs_reporte_tbl", obj_data.data, tbl_cab, opciones);   
             
-     
     }
+}
+
+function sisdad_js_mant_ptoobs_reporte_btn_graf(){
+    
+    var json_data= $('#sisdad_js_mant_ptoobs_data_hd').val();
+    
+    var ptoobs = $('#cb_ptoobs_graf').val();
+    var ptoobs_var = $('#cb_ptoobs_var').val();
+    
+    
+    var data = jQuery.parseJSON(json_data);
+    console.log(ptoobs);
+    console.log(ptoobs_var);
+    console.log(data);
+    
+    
+    
+//    for(var i= 0 ; i<data.length ; i++){
+//        
+//    }
+    
+//    Highcharts.chart('chart_div', {
+//        chart: {
+//            zoomType: 'x'
+//        },
+//        title: {
+//            text: "GRAF DE " + nom_esta + " DEL " + fecha_ini + ' AL ' + fecha_fin + ' DE LA VARIABLE ' + col
+//        },
+//        xAxis: {
+//            categories: dat_cat
+//        },
+//        legend: {
+//            enabled: false
+//        },
+//        series: [{
+//                type: 'line',
+//                name: 'VALOR',
+//                data: dat_ser
+//            }]
+//    });
+    
 }
 
 
