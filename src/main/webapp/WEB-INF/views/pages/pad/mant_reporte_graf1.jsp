@@ -4,8 +4,8 @@
             <div class="input-field col-sm-10">
                 <div class="input-field col-sm-1">
                 </div>
-                <div class="input-field col-sm-2">
-                    <label class="bmd-label-floating" style="color: red; font-size:100%; font-weight:bold;">SELECCIONE PERIODO</label>
+                <div class="input-field col-sm-3">
+                    <label class="bmd-label-floating" style="color: red; font-size:100%; font-weight:bold;">SELECCIONE PERIODO DE REGISTRO DEL EXPEDIENTE</label>
                 </div>
             </div>      
         </div>  

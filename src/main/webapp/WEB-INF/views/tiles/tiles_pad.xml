@@ -95,14 +95,30 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_buscar_tbl.jsp" />  
     </definition>
     
-    <definition name="pad/mant_reporte1" extends="base-definition">   
-       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte1.jsp" />  
+    <definition name="pad/mant_reporte_por" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_por.jsp" />  
     </definition>
           
-    <definition name="pad/mant_rep1_tbl"  extends="ajax-definition">  
-        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_rep1_tbl.jsp" />  
+    <definition name="pad/mant_rep_por_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_rep_por_tbl.jsp" />  
     </definition>
     
+    <definition name="pad/mant_reporte_falta" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_falta.jsp" />  
+    </definition>
+         
+    <definition name="pad/mant_reporte_falta_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_falta_tbl.jsp" />  
+    </definition>
+     
+    <definition name="pad/mant_reporte_sancion" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_sancion.jsp" />  
+    </definition>
+         
+    <definition name="pad/mant_reporte_sancion_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_sancion_tbl.jsp" />  
+    </definition>
+                
     <definition name="pad/mant_reporte_graf1" extends="base-definition">   
        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_graf1.jsp" />  
     </definition>    
@@ -139,7 +155,7 @@
     <definition name="pad/mant_falta" extends="base-definition">  
        <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />   
        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta.jsp" />  
-    </definition> 
+    </definition>    
     
     <definition name="pad/mant_falta_tbl"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_falta_tbl.jsp" />  
@@ -169,5 +185,94 @@
     <definition name="pad/mant_literal_norma_consulta"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_literal_norma_consulta.jsp" />  
     </definition>      
+     
+    <definition name="pad/mant_articulo_capitulo_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo_capitulo_consulta.jsp" />  
+    </definition>      
+     
+    <definition name="pad/mant_capitulo_titulo_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_capitulo_titulo_consulta.jsp" />  
+    </definition> 
+     
+    <definition name="pad/mant_titulo_norma_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_titulo_norma_consulta.jsp" />  
+    </definition>
+         
+    <definition name="pad/mant_reporte_procedimiento" extends="base-definition">   
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_procedimiento.jsp" />  
+    </definition>     
+        
+    <definition name="pad/mant_reporte_procedimiento_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_reporte_procedimiento_tbl.jsp" />  
+    </definition>  
     
+    <definition name="pad/mant_norma" extends="base-definition"> 
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />     
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_norma.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_norma_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_norma_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_norma_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_norma_popup.jsp" />  
+    </definition>
+         
+    <definition name="pad/mant_norma_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_norma_guardar.jsp" />  
+    </definition>
+         
+    <definition name="pad/mant_titulo" extends="base-definition"> 
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />     
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_titulo.jsp" />  
+    </definition> 
+    
+    <definition name="pad/mant_titulo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_titulo_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_titulo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_titulo_popup.jsp" />  
+    </definition>
+        
+    <definition name="pad/mant_titulo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_titulo_guardar.jsp" />  
+    </definition>
+    
+    <definition name="pad/mant_capitulo" extends="base-definition"> 
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />     
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_capitulo.jsp" />  
+    </definition> 
+    
+    <definition name="pad/mant_capitulo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_capitulo_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_capitulo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_capitulo_popup.jsp" />  
+    </definition>
+        
+    <definition name="pad/mant_capitulo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_capitulo_guardar.jsp" />  
+    </definition>
+    
+    <definition name="pad/mant_articulo" extends="base-definition"> 
+       <put-attribute name="cab" value="/WEB-INF/views/tiles/layouts/defaultLayout_mant_cab.jsp" />     
+       <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo.jsp" />  
+    </definition> 
+    
+    <definition name="pad/mant_articulo_tbl"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo_tbl.jsp" />  
+    </definition>  
+    
+    <definition name="pad/mant_articulo_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo_popup.jsp" />  
+    </definition>
+        
+    <definition name="pad/mant_articulo_guardar"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo_guardar.jsp" />  
+    </definition>
+    
+              
 </tiles-definitions>

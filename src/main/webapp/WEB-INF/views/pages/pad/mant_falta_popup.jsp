@@ -6,7 +6,7 @@
             <div class="input-field col-md-1">
             </div>
             <div class="input-field text-right col-md-10">                    
-                <select name="cb_norma" id="cb_norma" class="form-control selectpicker">${requestScope['cb_norma']}</select>
+                <select name="cb_norma" id="cb_norma" class="form-control selectpicker" onchange="pad_mant_titulo_norma_consulta()">${requestScope['cb_norma']}</select>
                 <label for="cb_norma" class="active">Seleccione la norma:</label>   
             </div>                       
             <div class="input-field col-sm-1">
@@ -22,7 +22,7 @@
             <div class="input-field col-md-1">
             </div>
             <div class="input-field text-right col-md-10">                    
-                <select name="cb_titulo" id="cb_titulo" class="form-control selectpicker">${requestScope['cb_titulo']}</select>
+                <select name="cb_titulo" id="cb_titulo" class="form-control selectpicker" onchange="pad_mant_capitulo_titulo_consulta()">${requestScope['cb_titulo']}</select>
                 <label for="cb_titulo" class="active">Seleccione el título:</label>   
             </div>                       
             <div class="input-field col-sm-1">
@@ -38,7 +38,7 @@
             <div class="input-field col-md-1">
             </div>
             <div class="input-field text-right col-md-10">                    
-                <select name="cb_capitulo" id="cb_capitulo" class="form-control selectpicker">${requestScope['cb_capitulo']}</select>
+                <select name="cb_capitulo" id="cb_capitulo" class="form-control selectpicker" onchange="pad_mant_articulo_capitulo_consulta()">${requestScope['cb_capitulo']}</select>
                 <label for="cb_capitulo" class="active">Seleccione el capítulo:</label>   
             </div>                       
             <div class="input-field col-sm-1">
@@ -113,5 +113,5 @@
 </div>             
 
 <script>    
-    $('#cb_estado option:first-child').attr('selected', 'selected');
+//    $('#cb_estado option:first-child').attr('selected', 'selected');
 </script>            

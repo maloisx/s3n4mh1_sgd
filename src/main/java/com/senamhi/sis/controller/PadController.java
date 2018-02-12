@@ -739,7 +739,7 @@ public class PadController {
             array_tipo_proced[0] = "";
             Vector datos_cbo_tipo_proced = cn.EjecutarProcedurePostgres(cons_tipo_proced, array_tipo_proced); 
             String cb_datos_tipo_proced = util.contenido_combo(datos_cbo_tipo_proced, "");
-            request.setAttribute("tipo_proced", cb_datos_tipo_proced);             
+            request.setAttribute("tipo_proced", cb_datos_tipo_proced);
                         
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -1474,6 +1474,23 @@ public class PadController {
             String cb_clsdoc = util.contenido_combo(datos_cbo_clsdoc, "");
             request.setAttribute("cb_clsdoc", cb_clsdoc);
             
+            Calendar c = Calendar.getInstance();//Anio actual para el registro del expediente
+            
+            Date date = new Date();//Fecha de registro del documento (por referencia)
+            DateFormat formatofec = new SimpleDateFormat("dd/MM/yyyy");
+            String hoy = formatofec.format(date);
+            
+            request.setAttribute("hoy", hoy);
+            
+//Fecha de un mes antes
+            Date nuevaFecha = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, 365);
+            nuevaFecha = cal.getTime();
+            String fec_mes = formatofec.format(nuevaFecha); 
+            
+            request.setAttribute("fec_mes", fec_mes);
+            
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
         }            
@@ -1485,14 +1502,14 @@ public class PadController {
     @RequestMapping(value = {"/pad/mant_buscar_tbl"}, method = RequestMethod.GET)
 	public String AjaxQueryBuscarTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
-            String nroexp = request.getParameter("nroexp");    
-            String anio = request.getParameter("anio");    
-            String fecini = request.getParameter("fecini");    
-            String fecfin = request.getParameter("fecfin");    
-            String fecinipad = request.getParameter("fecinipad");    
-            String fecfinpad = request.getParameter("fecfinpad");    
+            String nroexp = request.getParameter("nroexp");
+            String anio = request.getParameter("anio");
+            String fecini = request.getParameter("fecini");
+            String fecfin = request.getParameter("fecfin");
+            String fecinipad = request.getParameter("fecinipad");
+            String fecfinpad = request.getParameter("fecfinpad");
             
-            ConeccionDB cn =  new ConeccionDB();  
+            ConeccionDB cn =  new ConeccionDB();
             String np = "pad.fn_buscar_consulta";
             String array[] = new String[6];
             array[0] = nroexp;
@@ -1572,8 +1589,8 @@ public class PadController {
 	}
 //FIN BUSCAR TABLA
 // 
-//INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
-    @RequestMapping(value = {"/pad/mant_reporte1"}, method = RequestMethod.GET)
+//INICIO REPORTE POR       
+    @RequestMapping(value = {"/pad/mant_reporte_por"}, method = RequestMethod.GET)
 	public String MantReporte1(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
             request.setAttribute("title_pag","REPORTE DE EXPEDIENTES POR");
         
@@ -1604,28 +1621,30 @@ public class PadController {
             Vector datos_cbo_abogado = cn.EjecutarProcedurePostgres(abogado, array_cbo_abogado);
             String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
             request.setAttribute("abogado", cb_abogado);
-            
+                        
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
         }            
-            return "pad/mant_reporte1";
+            return "pad/mant_reporte_por";
 	}
-//FIN LISTA DE EXPEDIENTE DEL PAD BASE
+//FIN REPORTE POR
 //
-//INICIO REPORTE POR TABLA        
-    @RequestMapping(value = {"/pad/mant_rep1_tbl"}, method = RequestMethod.GET)
-	public String AjaxQueryRep1Tbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+//INICIO REPORTE DE EXPEDIENTES POR TABLA        
+    @RequestMapping(value = {"/pad/mant_rep_por_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryRepPorTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
             String etapa = request.getParameter("etapa");    
             String estado = request.getParameter("estado");    
             String abogado = request.getParameter("abogado");   
+            String falta = request.getParameter("falta");   
+            String sancion = request.getParameter("sancion");   
             String fecini = request.getParameter("fecini");    
             String fecfin = request.getParameter("fecfin");    
             String fecinipad = request.getParameter("fecinipad");    
             String fecfinpad = request.getParameter("fecfinpad");    
             
             ConeccionDB cn =  new ConeccionDB();  
-            String np = "pad.fn_rep1_consulta";
+            String np = "pad.fn_rep_por_consulta";
             String array[] = new String[7];
             array[0] = etapa;
             array[1] = estado;
@@ -1696,8 +1715,214 @@ public class PadController {
             sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
             sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
-                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
-                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_reporte_por'></table>";
+            String tbl = util.datatable("c_tbl_reporte_por",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_rep_por_tbl";
+	}
+//FIN REPORTE DE EXPEDIENTES POR TABLA
+//
+//INICIO REPORTE POR FALTA
+    @RequestMapping(value = {"/pad/mant_reporte_falta"}, method = RequestMethod.GET)
+	public String MantReporteFalta(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","REPORTE DE EXPEDIENTES POR FALTA");
+        
+            try {
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+                        
+//          información para el combo faltas
+            String faltas = "pad.fn_literal_investigado_consulta";
+            String array_cbo_faltas[] = new String[1];
+            array_cbo_faltas[0] = "";
+            Vector datos_cbo_faltas = cn.EjecutarProcedurePostgres(faltas, array_cbo_faltas);
+            String cb_faltas = util.contenido_combo(datos_cbo_faltas, "");
+            request.setAttribute("falta", cb_faltas);           
+            
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            return "pad/mant_reporte_falta";
+	}
+//FIN REPORTE POR FALTA
+//
+//INICIO REPORTE POR FALTA TABLA
+    @RequestMapping(value = {"/pad/mant_reporte_falta_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryReporteFaltaTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            String falta = request.getParameter("falta"); 
+            
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_rep_falta_consulta";
+            String array[] = new String[1];
+            array[0] = falta;
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String nro_exp = vss.get(0).toString();
+                String v_investigado = vss.get(1).toString();
+                String v_falta = vss.get(2).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i+1);
+                vv.add(nro_exp);
+                vv.add(v_investigado);
+                vv.add(v_falta);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'ITEM'} , "
+                                    + "{'sTitle':'N° EXPEDIENTE'} , "
+                                    + "{'sTitle':'INVESTIGADO'} , "
+                                    + "{'sTitle':'FALTA'} , "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4]} },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_reporte_por'></table>";
+            String tbl = util.datatable("c_tbl_reporte_por",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_reporte_falta_tbl";
+	}
+//FIN REPORTE POR FALTA TABLA
+//
+//INICIO REPORTE POR SANCION
+    @RequestMapping(value = {"/pad/mant_reporte_sancion"}, method = RequestMethod.GET)
+	public String MantReporteSancion(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","REPORTE DE EXPEDIENTES POR SANCIÓN");
+        
+            try {
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+            
+//            información combo Sanción
+            String sancion = "pad.fn_sancion_consulta";//consulta combo sanción                  
+            String array_sancion[] = new String[1];
+            array_sancion[0] = "";
+            Vector datos_cbo_sancion = cn.EjecutarProcedurePostgres(sancion, array_sancion); 
+            String cb_sancion = util.contenido_combo(datos_cbo_sancion, "");
+            request.setAttribute("sancion", cb_sancion);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            return "pad/mant_reporte_sancion";
+	}
+//FIN REPORTE POR SANCION
+//
+//INICIO REPORTE POR SANCION TABLA
+    @RequestMapping(value = {"/pad/mant_reporte_sancion_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryReporteSancionTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            String sancion = request.getParameter("sancion"); 
+            
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_rep_sancion_consulta";
+            String array[] = new String[1];
+            array[0] = sancion;
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String nro_exp = vss.get(0).toString();
+                String v_investigado = vss.get(1).toString();
+                String v_sancion = vss.get(2).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i+1);
+                vv.add(nro_exp);
+                vv.add(v_investigado);
+                vv.add(v_sancion);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'ITEM'} , "
+                                    + "{'sTitle':'N° EXPEDIENTE'} , "
+                                    + "{'sTitle':'INVESTIGADO'} , "
+                                    + "{'sTitle':'SANCION'} , "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4]} },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
                                     + " ]");
             vc_tbl.add(sv);
             sv =  new Vector();
@@ -1711,10 +1936,10 @@ public class PadController {
             String tbl = util.datatable("c_tbl_reporte_por",vc_tbl);            
             request.setAttribute("response", tbl_html + tbl);
 
-            return "pad/mant_rep1_tbl";
+            return "pad/mant_reporte_sancion_tbl";
 	}
-//FIN REPORTE POR TABLA
-// 
+//FIN REPORTE POR SANCION TABLA        
+//        
 //INICIO LISTA DE EXPEDIENTE DEL PAD BASE        
     @RequestMapping(value = {"/pad/mant_reporte_graf1"}, method = RequestMethod.GET)
 	public String MantReporteGraf1(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
@@ -1943,7 +2168,7 @@ public class PadController {
     }   
 //FIN MEDIDA CAUTELAR POPUP
 // 
-//INICIO ASIGNA ABOGADO GUARDAR    
+//INICIO MEDIDA CAUTELAR GUARDAR    
 @RequestMapping(value = {"/pad/mant_medida_caut_guardar"}, method = RequestMethod.GET)
     public String MantMedidaCautGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {        
@@ -1970,7 +2195,7 @@ public class PadController {
         request.setAttribute("request", var_request);
         return "pad/mant_medida_caut_guardar";
     }
-//FIN ASIGNA ABOGADO GUARDAR     
+//FIN MEDIDA CAUTELAR GUARDAR     
 //
 //INICIO LISTA FALTAS BASE - LITERAL       
     @RequestMapping(value = {"/pad/mant_literal"}, method = RequestMethod.GET)
@@ -2051,11 +2276,11 @@ public class PadController {
             throws ServletException, IOException {
         request.setAttribute("title_pag","GESTIÓN DE FALTAS");
         String id = request.getParameter("id");
-           
-        try {            
-            ConeccionDB cn = new ConeccionDB(); 
+        
+        try {
+            ConeccionDB cn = new ConeccionDB();
             
-            String np = "pad.fn_literal_consulta";
+            String np = "pad.fn_literal_popup_consulta";
             String array[] = new String[1];
             array[0] = id;
             Vector datos = cn.EjecutarProcedurePostgres(np, array);
@@ -2064,24 +2289,30 @@ public class PadController {
             
             String id_literal = "";
             String des_literal = "";
+            String cod_literal = "";
+            String c_est_reg = "";
             String id_articulo = "";
-            String cod_literal = "";            
-            String c_est_reg = "";            
+            String id_capitulo = "";
+            String id_titulo = "";
+            String id_norma = "";
             
             for(int i = 0 ; i<datos.size() ; i++){
                 Vector datos_v =  (Vector) datos.get(i);
                 id_literal = datos_v.get(0).toString();
                 des_literal = datos_v.get(1).toString();
-                cod_literal = datos_v.get(4).toString();
-                c_est_reg = datos_v.get(5).toString();
-                id_articulo = datos_v.get(6).toString();
-            }            
-            request.setAttribute("id", id_literal);  
-            request.setAttribute("descripcion", des_literal); 
-            request.setAttribute("cod_literal", cod_literal);  
+                cod_literal = datos_v.get(2).toString();
+                c_est_reg = datos_v.get(3).toString();
+                id_articulo = datos_v.get(4).toString();
+                id_capitulo = datos_v.get(5).toString();
+                id_titulo = datos_v.get(6).toString();
+                id_norma = datos_v.get(7).toString();
+            }
+            request.setAttribute("id", id_literal);
+            request.setAttribute("descripcion", des_literal);
+            request.setAttribute("cod_literal", cod_literal);
             
             String cb_desc_estado = "";
-//          información para el combo Estado            
+//          información para el combo Estado
                 String nt = "sgd.fn_estado_consulta";
                 String array_cbo[] = new String[1];
                 array_cbo[0] = "";
@@ -2099,9 +2330,35 @@ public class PadController {
                 String array_cbo_articulo[] = new String[1];
                 array_cbo_articulo[0] = "";
                 Vector datos_cbo_articulo = cn.EjecutarProcedurePostgres(articulo, array_cbo_articulo);
-                cb_desc_articulo = util.contenido_combo(datos_cbo_articulo, id_articulo);
-                
+                cb_desc_articulo = util.contenido_combo(datos_cbo_articulo, id_articulo);                
                 request.setAttribute("cb_articulo", cb_desc_articulo);                               
+          
+            String cb_desc_capitulo = "";
+//          información para el combo Capítulo            
+                String capitulo = "pad.fn_capitulo_consulta";
+                String array_cbo_capitulo[] = new String[1];
+                array_cbo_capitulo[0] = "";
+                Vector datos_cbo_capitulo = cn.EjecutarProcedurePostgres(capitulo, array_cbo_capitulo);
+                cb_desc_capitulo = util.contenido_combo(datos_cbo_capitulo, id_capitulo);                
+                request.setAttribute("cb_capitulo", cb_desc_capitulo);                               
+          
+            String cb_desc_titulo = "";
+//          información para el combo Capítulo            
+                String titulo = "pad.fn_titulo_consulta";
+                String array_cbo_titulo[] = new String[1];
+                array_cbo_titulo[0] = "";
+                Vector datos_cbo_titulo = cn.EjecutarProcedurePostgres(titulo, array_cbo_titulo);
+                cb_desc_titulo = util.contenido_combo(datos_cbo_titulo, id_titulo);                
+                request.setAttribute("cb_titulo", cb_desc_titulo);                               
+          
+            String cb_desc_norma = "";
+//          información para el combo Capítulo            
+                String norma = "pad.fn_norma_consulta";
+                String array_cbo_norma[] = new String[1];
+                array_cbo_norma[0] = "";
+                Vector datos_cbo_norma = cn.EjecutarProcedurePostgres(norma, array_cbo_norma);
+                cb_desc_norma = util.contenido_combo(datos_cbo_norma, id_norma);                
+                request.setAttribute("cb_norma", cb_desc_norma);                               
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -2118,15 +2375,19 @@ public class PadController {
         String id = request.getParameter("id");        
         String descripcion = request.getParameter("descripcion");   
         String estado = request.getParameter("estado");   
+        String articulo = request.getParameter("articulo");   
+        String codigo_lit = request.getParameter("codigo_lit");   
         String var_request = "";
 
         try {
             ConeccionDB cdb = new ConeccionDB();                
             String np = "pad.fn_falta_mant";
-            String array[] = new String[3];
+            String array[] = new String[5];
             array[0] = id;
             array[1] = descripcion; 
             array[2] = estado; 
+            array[3] = articulo; 
+            array[4] = codigo_lit; 
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
             var_request = new Util().vector2json(datos);
             
@@ -2164,5 +2425,962 @@ public class PadController {
     } 
 //FIN CARCAR COMBO LITERAL POR NORMA
 //              
+//INICIO CARCAR COMBO LITERAL POR NORMA
+    @RequestMapping(value = {"/pad/mant_articulo_capitulo_consulta"}, method = RequestMethod.GET)
+    public String MantArticuloCapituloQuery(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException { 
+        String var_request = "";
+        try {
+            String capitulo = request.getParameter("capitulo");
+            
+            ConeccionDB cn = new ConeccionDB();
+            
+            String np = "pad.fn_articulo_capitulo_consulta";
+            String array[] = new String[1];
+            array[0] = capitulo;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().contenido_combo(datos,"");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        
+        return "pad/mant_articulo_capitulo_consulta";
+    } 
+//FIN CARCAR COMBO LITERAL POR NORMA
+//              
+//INICIO CARCAR COMBO CAPITULO POR TITULO
+    @RequestMapping(value = {"/pad/mant_capitulo_titulo_consulta"}, method = RequestMethod.GET)
+    public String MantCapituloTituloQuery(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException { 
+        String var_request = "";
+        try {
+            String titulo = request.getParameter("titulo");
+            
+            ConeccionDB cn = new ConeccionDB();
+            
+            String np = "pad.fn_capitulo_titulo_consulta";
+            String array[] = new String[1];
+            array[0] = titulo;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().contenido_combo(datos,"");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        
+        return "pad/mant_capitulo_titulo_consulta";
+    } 
+//FIN CARCAR COMBO CAPITULO POR TITULO
+//              
+//INICIO CARCAR COMBO TITULO POR NORMA
+    @RequestMapping(value = {"/pad/mant_titulo_norma_consulta"}, method = RequestMethod.GET)
+    public String MantTituloNormaQuery(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException { 
+        String var_request = "";
+        try {
+            String norma = request.getParameter("norma");
+            
+            ConeccionDB cn = new ConeccionDB();
+            
+            String np = "pad.fn_titulo_norma_consulta";
+            String array[] = new String[1];
+            array[0] = norma;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().contenido_combo(datos,"");
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        
+        return "pad/mant_titulo_norma_consulta";
+    } 
+//FIN CARCAR COMBO COMBO TITULO POR NORMA
+// 
+//INICIO REPORTE NO HA LUGAR        
+    @RequestMapping(value = {"/pad/mant_reporte_procedimiento"}, method = RequestMethod.GET)
+	public String MantReporteNohalugar(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","REPORTE POR PROCEDIMIENTO");
+        
+            try {
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+//          información para el combo periodo (año)
+            String ne = "pad.fn_anio_exp_consulta";
+            String array_cbo_anio[] = new String[1];
+            array_cbo_anio[0] = "";
+            Vector datos_cbo_anio = cn.EjecutarProcedurePostgres(ne, array_cbo_anio);            
+            String cb_anio = util.contenido_combo(datos_cbo_anio, "");
+            request.setAttribute("anio", cb_anio);
+            
+//            información combo: tipo de procedimiento
+            String cons_tipo_proced = "pad.fn_tipo_proced_consulta";//consulta combo destino                  
+            String array_tipo_proced[] = new String[1];
+            array_tipo_proced[0] = "";
+            Vector datos_cbo_tipo_proced = cn.EjecutarProcedurePostgres(cons_tipo_proced, array_tipo_proced); 
+            String cb_datos_tipo_proced = util.contenido_combo(datos_cbo_tipo_proced, "");
+            request.setAttribute("tipo_proced", cb_datos_tipo_proced);          
+            
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            return "pad/mant_reporte_procedimiento";
+	}
+//FIN REPORTE NO HA LUGAR
+//
+//INICIO REPORTE DE EXPEDIENTES POR TABLA        
+    @RequestMapping(value = {"/pad/mant_reporte_procedimiento_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryReporteProcedimientoTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            String anio = request.getParameter("anio");    
+            String procedimiento = request.getParameter("procedimiento");
+            
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_reporte_procedimiento_consulta";
+            String array[] = new String[2];
+            array[0] = anio;
+            array[1] = procedimiento;
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String nro_exp = vss.get(0).toString();
+                String fecharecep = vss.get(1).toString();
+                String v_etapa = vss.get(2).toString();
+                String v_estado = vss.get(4).toString();
+                String v_abogado = vss.get(5).toString();
+                String fec_presipad = vss.get(7).toString();
+                String fec_prespad = vss.get(9).toString();
+                String des_proced = vss.get(11).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_expedientes_pad_consulta_popup(\\\""+nro_exp+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i+1);
+                vv.add(nro_exp);
+                vv.add(fecharecep);
+                vv.add(fec_presipad);
+                vv.add(fec_prespad);
+                vv.add(v_etapa);
+                vv.add(v_estado);
+                vv.add(des_proced);
+                vv.add(v_abogado);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'ITEM'} , "
+                                    + "{'sTitle':'N° EXPEDIENTE'} , "
+                                    + "{'sTitle':'FECHA RECEP. ORH'} , "
+                                    + "{'sTitle':'FECHA PRESCR. INIC.PAD'} , "
+                                    + "{'sTitle':'FECHA PRESCR. PAD'} , "
+                                    + "{'sTitle':'ETAPA'} , "
+                                    + "{'sTitle':'ESTADO'} , "
+                                    + "{'sTitle':'PROCEDIMIENTO'} , "
+                                    + "{'sTitle':'ABOGADO'} , "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered  text-center' id='c_tbl_reporte_por'></table>";
+            String tbl = util.datatable("c_tbl_reporte_por",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_reporte_procedimiento_tbl";
+	}
+//FIN REPORTE DE EXPEDIENTES POR TABLA
+//
+//INICIO NORMA BASE        
+    @RequestMapping(value = {"/pad/mant_norma"}, method = RequestMethod.GET)
+	public String MantNorma(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE NORMAS Y REGLAMENTOS LEGALES");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_norma_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_norma";
+	}
+//FIN NORMA BASE
+//
+//INICIO NORMA TABLA        
+    @RequestMapping(value = {"/pad/mant_norma_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryNormaTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+                        
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_norma_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String id = vss.get(0).toString();
+                String descripcion = vss.get(1).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_norma_popup(\\\""+id+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(id);
+                vv.add(descripcion);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["
+                                    + "{'sTitle':'ID'} , "
+                                    + "{'sTitle':'NORMA / REGLAMENTO LEGAL'},  "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_norma'></table>";
+            String tbl = util.datatable("c_tbl_norma",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_norma_tbl";
+	}
+//FIN NORMA TABLA
+//
+//INICIO NORMA POPUP            
+    @RequestMapping(value = {"/pad/mant_norma_popup"}, method = RequestMethod.GET)
+    public String MantNormaPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","GESTIÓN DE NORMAS / REGLAMENTOS");
+        String id = request.getParameter("id");
+           
+        try {            
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String np = "pad.fn_norma_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            
+            Util util =  new Util();
+            
+            String id_norma = "";
+            String n_norma = "";
+            String des_norma = "";
+            String est_reg = "";            
+            
+            for(int i = 0 ; i<datos.size() ; i++){
+                Vector datos_v =  (Vector) datos.get(i);
+                id_norma = datos_v.get(0).toString();
+                des_norma = datos_v.get(3).toString();
+                n_norma = datos_v.get(2).toString();
+                est_reg = datos_v.get(4).toString();
+            }            
+            request.setAttribute("id", id_norma);  
+            request.setAttribute("n_norma", n_norma);  
+            request.setAttribute("descripcion", des_norma);  
+            
+//          información para el combo Estado
+            String cb_desc_estado = "";
+            String nt = "sgd.fn_estado_consulta";
+            String array_cbo[] = new String[1];
+            array_cbo[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
+            if (id_norma.length() != 0){
+                    cb_desc_estado = util.contenido_combo(datos_cbo, est_reg);
+                }else{
+                    cb_desc_estado = util.contenido_combo(datos_cbo, "1");    
+                }  
+                request.setAttribute("cb_estado", cb_desc_estado);            
+          
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_norma_popup";
+    }   
+//FIN NORMA POPUP
+// 
+//INICIO NORMA GUARDAR    
+@RequestMapping(value = {"/pad/mant_norma_guardar"}, method = RequestMethod.GET)
+    public String MantNormaGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {        
+
+        String id = request.getParameter("id");        
+        String nro = request.getParameter("nro");   
+        String descripcion = request.getParameter("descripcion");   
+        String estado = request.getParameter("estado");   
+        String var_request = "";
+
+        try {
+            ConeccionDB cdb = new ConeccionDB();                
+            String np = "pad.fn_norma_mant";
+            String array[] = new String[4];
+            array[0] = id;
+            array[1] = nro; 
+            array[2] = descripcion; 
+            array[3] = estado; 
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_norma_guardar";
+    }
+//FIN NORMA GUARDAR     
+//
+//INICIO TITULO BASE        
+    @RequestMapping(value = {"/pad/mant_titulo"}, method = RequestMethod.GET)
+	public String MantTitulo(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE TITULOS");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_titulo_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_titulo";
+	}
+//FIN NORMA BASE
+// 
+//INICIO TITULO TABLA        
+    @RequestMapping(value = {"/pad/mant_titulo_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryTituloTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+                        
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_titulo_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String id = vss.get(0).toString();
+                String descripcion = vss.get(1).toString();
+                String norma = vss.get(6).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_titulo_popup(\\\""+id+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(id);
+                vv.add(norma);
+                vv.add(descripcion);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["
+                                    + "{'sTitle':'ID'} , "
+                                    + "{'sTitle':'NORMA / REGLAMENTO LEGAL'} , "
+                                    + "{'sTitle':'TITULO'},  "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_titulo'></table>";
+            String tbl = util.datatable("c_tbl_titulo",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_titulo_tbl";
+	}
+//FIN TITULO TABLA
+//
+//INICIO TITULO POPUP            
+    @RequestMapping(value = {"/pad/mant_titulo_popup"}, method = RequestMethod.GET)
+    public String MantTituloPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","GESTIÓN DE TÍTULOS");
+        String id = request.getParameter("id");
+           
+        try {            
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String np = "pad.fn_titulo_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            
+            Util util =  new Util();
+            
+            String id_titulo = "";
+            String n_titulo = "";
+            String des_titulo = "";
+            String est_reg = "";            
+            String id_norma = "";            
+            
+            for(int i = 0 ; i<datos.size() ; i++){
+                Vector datos_v =  (Vector) datos.get(i);
+                id_titulo = datos_v.get(0).toString();
+                n_titulo = datos_v.get(2).toString();
+                des_titulo = datos_v.get(3).toString();
+                est_reg = datos_v.get(4).toString();
+                id_norma = datos_v.get(5).toString();
+            }            
+            request.setAttribute("id", id_titulo);  
+            request.setAttribute("n_titulo", n_titulo);  
+            request.setAttribute("descripcion", des_titulo);  
+            
+//          información para el combo Estado
+            String cb_desc_estado = "";
+            String nt = "sgd.fn_estado_consulta";
+            String array_cbo[] = new String[1];
+            array_cbo[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
+            if (id_titulo.length() != 0){
+                    cb_desc_estado = util.contenido_combo(datos_cbo, est_reg);
+            }else{
+                cb_desc_estado = util.contenido_combo(datos_cbo, "1");    
+            }  
+            request.setAttribute("cb_estado", cb_desc_estado);       
+            
+            String cb_desc_norma = "";
+//          información para el combo norma            
+                String norma = "pad.fn_norma_consulta";
+                String array_cbo_norma[] = new String[1];
+                array_cbo_norma[0] = "";
+                Vector datos_cbo_norma = cn.EjecutarProcedurePostgres(norma, array_cbo_norma);
+                cb_desc_norma = util.contenido_combo(datos_cbo_norma, id_norma);                
+                request.setAttribute("cb_norma", cb_desc_norma);            
+          
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_titulo_popup";
+    }   
+//FIN TITULO POPUP
+//
+//INICIO NORMA GUARDAR    
+@RequestMapping(value = {"/pad/mant_titulo_guardar"}, method = RequestMethod.GET)
+    public String MantTituloGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {        
+
+        String id = request.getParameter("id");        
+        String nro = request.getParameter("nro");   
+        String descripcion = request.getParameter("descripcion");   
+        String estado = request.getParameter("estado");   
+        String id_norma = request.getParameter("id_norma");   
+        String var_request = "";
+
+        try {
+            ConeccionDB cdb = new ConeccionDB();                
+            String np = "pad.fn_titulo_mant";
+            String array[] = new String[5];
+            array[0] = id;
+            array[1] = nro; 
+            array[2] = descripcion; 
+            array[3] = estado; 
+            array[4] = id_norma; 
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_titulo_guardar";
+    }
+//FIN NORMA GUARDAR     
+//
+//INICIO TITULO BASE        
+    @RequestMapping(value = {"/pad/mant_capitulo"}, method = RequestMethod.GET)
+	public String MantCapitulo(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE CAPITULOS");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_capitulo_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_capitulo";
+	}
+//FIN TITULO BASE
+// 
+//INICIO CAPITULO TABLA        
+    @RequestMapping(value = {"/pad/mant_capitulo_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryCapituloTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+                        
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_capitulo_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String id = vss.get(0).toString();
+                String descripcion = vss.get(1).toString();
+                String norma = vss.get(8).toString();
+                String titulo = vss.get(6).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_capitulo_popup(\\\""+id+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(id);
+                vv.add(norma);
+                vv.add(titulo);
+                vv.add(descripcion);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["
+                                    + "{'sTitle':'ID'} , "
+                                    + "{'sTitle':'NORMA / REGLAMENTO LEGAL'} , "
+                                    + "{'sTitle':'TITULO'},  "
+                                    + "{'sTitle':'CAPITULO'},  "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_titulo'></table>";
+            String tbl = util.datatable("c_tbl_titulo",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_capitulo_tbl";
+	}
+//FIN CAPITULO TABLA
+//
+//INICIO CAPITULO POPUP            
+    @RequestMapping(value = {"/pad/mant_capitulo_popup"}, method = RequestMethod.GET)
+    public String MantCapituloPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","GESTIÓN DE CAPÍTULOS");
+        String id = request.getParameter("id");
+           
+        try {            
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String np = "pad.fn_capitulo_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            
+            Util util =  new Util();
+            
+            String id_capitulo = "";
+            String n_capitulo = "";
+            String des_capitulo = "";
+            String est_reg = "";            
+            String id_norma = "";
+            String id_titulo = "";            
+            
+            for(int i = 0 ; i<datos.size() ; i++){
+                Vector datos_v =  (Vector) datos.get(i);
+                id_capitulo = datos_v.get(0).toString();
+                n_capitulo = datos_v.get(2).toString();
+                des_capitulo = datos_v.get(3).toString();
+                est_reg = datos_v.get(4).toString();
+                id_norma = datos_v.get(7).toString();
+                id_titulo = datos_v.get(5).toString();
+            }            
+            request.setAttribute("id", id_capitulo);  
+            request.setAttribute("n_capitulo", n_capitulo);  
+            request.setAttribute("descripcion", des_capitulo);  
+            
+//          información para el combo Estado
+            String cb_desc_estado = "";
+            String nt = "sgd.fn_estado_consulta";
+            String array_cbo[] = new String[1];
+            array_cbo[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
+            if (id_titulo.length() != 0){
+                    cb_desc_estado = util.contenido_combo(datos_cbo, est_reg);
+            }else{
+                cb_desc_estado = util.contenido_combo(datos_cbo, "1");    
+            }  
+            request.setAttribute("cb_estado", cb_desc_estado);       
+            
+            String cb_desc_norma = "";
+//          información para el combo norma            
+                String norma = "pad.fn_norma_consulta";
+                String array_cbo_norma[] = new String[1];
+                array_cbo_norma[0] = "";
+                Vector datos_cbo_norma = cn.EjecutarProcedurePostgres(norma, array_cbo_norma);
+                cb_desc_norma = util.contenido_combo(datos_cbo_norma, id_norma);                
+                request.setAttribute("cb_norma", cb_desc_norma);  
+                
+            String cb_desc_titulo = "";
+//          información para el combo título            
+                String titulo = "pad.fn_titulo_consulta";
+                String array_cbo_titulo[] = new String[1];
+                array_cbo_titulo[0] = "";
+                Vector datos_cbo_titulo = cn.EjecutarProcedurePostgres(titulo, array_cbo_titulo);
+                cb_desc_titulo = util.contenido_combo(datos_cbo_titulo, id_titulo);                
+                request.setAttribute("cb_titulo", cb_desc_titulo);      
+          
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_capitulo_popup";
+    }   
+//FIN CAPITULO POPUP
+//
+//INICIO CAPITULO GUARDAR    
+@RequestMapping(value = {"/pad/mant_capitulo_guardar"}, method = RequestMethod.GET)
+    public String MantCapituloGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {        
+
+        String id = request.getParameter("id");        
+        String nro = request.getParameter("nro");   
+        String descripcion = request.getParameter("descripcion");   
+        String estado = request.getParameter("estado");    
+        String id_titulo = request.getParameter("id_titulo");   
+        String var_request = "";
+
+        try {
+            ConeccionDB cdb = new ConeccionDB();                
+            String np = "pad.fn_capitulo_mant";
+            String array[] = new String[5];
+            array[0] = id;
+            array[1] = nro; 
+            array[2] = descripcion; 
+            array[3] = estado;  
+            array[4] = id_titulo; 
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_capitulo_guardar";
+    }
+//FIN CAPITULO GUARDAR     
+//
+//INICIO ARTICULO BASE        
+    @RequestMapping(value = {"/pad/mant_articulo"}, method = RequestMethod.GET)
+	public String MantArticulo(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE ARTÍCULOS");             
+            request.setAttribute("btn_nuevo_reg","pad_mant_articulo_popup()");
+            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "pad/mant_articulo";
+	}
+//FIN ARTICULO BASE
+// 
+//INICIO ARTICULO TABLA        
+    @RequestMapping(value = {"/pad/mant_articulo_tbl"}, method = RequestMethod.GET)
+	public String AjaxQueryArticuloTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+                        
+            ConeccionDB cn =  new ConeccionDB();  
+            String np = "pad.fn_articulo_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String id = vss.get(0).toString();
+                String descripcion = vss.get(1).toString();
+                String norma = vss.get(10).toString();
+                String titulo = vss.get(8).toString();
+                String capitulo = vss.get(6).toString();
+                
+                String btn = "<button type='button' class='btn btn-info' onclick='pad_mant_articulo_popup(\\\""+id+"\\\")'><span class='glyphicon glyphicon-edit'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(id);
+                vv.add(norma);
+                vv.add(titulo);
+                vv.add(capitulo);
+                vv.add(descripcion);
+                vv.add(btn);
+                v_temp.add(vv);
+            }
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");
+            sv.add("true");vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("sScrollY");
+            sv.add("'93%'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aoColumns");sv.add("["
+                                    + "{'sTitle':'ID'} , "
+                                    + "{'sTitle':'NORMA / REGLAMENTO LEGAL'} , "
+                                    + "{'sTitle':'TÍTULO'},  "
+                                    + "{'sTitle':'CAPÍTULO'},  "
+                                    + "{'sTitle':'ARTÍCULO'},  "
+                                    + "{'sTitle':'-'}  "
+                                    + "]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("aaData");
+            sv.add(json);
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            sv.add("dom");
+            sv.add("'Bfrtip'");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+//            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("[{ extend:'excel',text:'Exportar a Excel',className:'btn btn-info btn-sm',exportOptions:{columns:[1,2,3,4,5,6]} },"
+//                                    + "{ extend:'pdf',text:'Exportar a PDF',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',exportOptions:{columns:[1,2,3,4,5,6]},orientation:'landscape',pageSize:'A4',download:'open' },"
+//                                    + "{ extend:'print',text:'imprimir',className:'btn btn-info btn-sm',title:'Secretaría Técnica del Procedimiento Administrativo Disciplinario - PAD',messageTop:'REPORTE DE EXPEDIENTES',exportOptions:{columns:[1,2,3,4,5,6]} }"
+                                    + " ]");
+            vc_tbl.add(sv);
+            sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_articulo'></table>";
+            String tbl = util.datatable("c_tbl_articulo",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "pad/mant_articulo_tbl";
+	}
+//FIN ARTICULO TABLA
+//
+//
+//INICIO ARTICULO POPUP            
+    @RequestMapping(value = {"/pad/mant_articulo_popup"}, method = RequestMethod.GET)
+    public String MantArticuloPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","GESTIÓN DE ARTÍCULOS");
+        String id = request.getParameter("id");
+           
+        try {            
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String np = "pad.fn_articulo_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            
+            Util util =  new Util();
+            
+            String id_articulo = "";
+            String n_articulo = "";
+            String des_articulo = "";
+            String est_reg = "";            
+            String id_norma = "";
+            String id_titulo = "";            
+            String id_capitulo = "";            
+            
+            for(int i = 0 ; i<datos.size() ; i++){
+                Vector datos_v =  (Vector) datos.get(i);
+                id_articulo = datos_v.get(0).toString();
+                n_articulo = datos_v.get(2).toString();
+                des_articulo = datos_v.get(3).toString();
+                est_reg = datos_v.get(4).toString();
+                id_norma = datos_v.get(9).toString();
+                id_titulo = datos_v.get(7).toString();
+                id_capitulo = datos_v.get(5).toString();
+            }            
+            request.setAttribute("id", id_articulo);  
+            request.setAttribute("n_articulo", n_articulo);  
+            request.setAttribute("descripcion", des_articulo);  
+            
+//          información para el combo Estado
+            String cb_desc_estado = "";
+            String nt = "sgd.fn_estado_consulta";
+            String array_cbo[] = new String[1];
+            array_cbo[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(nt, array_cbo);
+            if (id_titulo.length() != 0){
+                    cb_desc_estado = util.contenido_combo(datos_cbo, est_reg);
+            }else{
+                cb_desc_estado = util.contenido_combo(datos_cbo, "1");    
+            }  
+            request.setAttribute("cb_estado", cb_desc_estado);       
+            
+            String cb_desc_norma = "";
+//          información para el combo norma            
+                String norma = "pad.fn_norma_consulta";
+                String array_cbo_norma[] = new String[1];
+                array_cbo_norma[0] = "";
+                Vector datos_cbo_norma = cn.EjecutarProcedurePostgres(norma, array_cbo_norma);
+                cb_desc_norma = util.contenido_combo(datos_cbo_norma, id_norma);                
+                request.setAttribute("cb_norma", cb_desc_norma);  
+                
+            String cb_desc_titulo = "";
+//          información para el combo título            
+                String titulo = "pad.fn_titulo_consulta";
+                String array_cbo_titulo[] = new String[1];
+                array_cbo_titulo[0] = "";
+                Vector datos_cbo_titulo = cn.EjecutarProcedurePostgres(titulo, array_cbo_titulo);
+                cb_desc_titulo = util.contenido_combo(datos_cbo_titulo, id_titulo);                
+                request.setAttribute("cb_titulo", cb_desc_titulo);      
+                
+            String cb_desc_capitulo = "";
+//          información para el combo Capítulo            
+                String capitulo = "pad.fn_capitulo_consulta";
+                String array_cbo_capitulo[] = new String[1];
+                array_cbo_capitulo[0] = "";
+                Vector datos_cbo_capitulo = cn.EjecutarProcedurePostgres(capitulo, array_cbo_capitulo);
+                cb_desc_capitulo = util.contenido_combo(datos_cbo_capitulo, id_capitulo);                
+                request.setAttribute("cb_capitulo", cb_desc_capitulo);                         
+          
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_articulo_popup";
+    }   
+//FIN ARTICULO POPUP
+//
+//INICIO ARTICULO GUARDAR    
+@RequestMapping(value = {"/pad/mant_articulo_guardar"}, method = RequestMethod.GET)
+    public String MantArticuloGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {        
+
+        String id = request.getParameter("id");        
+        String nro = request.getParameter("nro");   
+        String descripcion = request.getParameter("descripcion");   
+        String estado = request.getParameter("estado");    
+        String id_capitulo = request.getParameter("id_capitulo");   
+        String var_request = "";
+
+        try {
+            ConeccionDB cdb = new ConeccionDB();                
+            String np = "pad.fn_articulo_mant";
+            String array[] = new String[5];
+            array[0] = id;
+            array[1] = nro; 
+            array[2] = descripcion; 
+            array[3] = estado;  
+            array[4] = id_capitulo; 
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_articulo_guardar";
+    }
+//FIN ARTICULO GUARDAR     
+//       
 }
 
