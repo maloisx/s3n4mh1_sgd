@@ -13,11 +13,11 @@
 <div class="row">
     <div class="input-field col-sm-3"></div> 
     <div class="input-field col-sm-3">   
-        <input name="txt_fec_ini" id="txt_fec_ini" type="text" class="datepicker" value="01/07/2017" style="color: #000; " />
+        <input name="txt_fec_ini" id="txt_fec_ini" type="text" class="datepicker" value="" style="color: #000; " />
         <label for="txt_fec_ini" class="active">Fecha Inicio</label>
     </div>
     <div class="input-field col-sm-3">   
-        <input name="txt_fec_fin" id="txt_fec_fin" type="text" class="datepicker" value="31/07/2017" style="color: #000; " />
+        <input name="txt_fec_fin" id="txt_fec_fin" type="text" class="datepicker" value="" style="color: #000; " />
         <label for="txt_fec_fin" class="active">Fecha Fin</label>
     </div>
     <div class="input-field col-sm-3"></div> 
