@@ -35,25 +35,25 @@
                 <div class="input-field col-sm-1">
                 </div>
                 <div class="input-field col-sm-2">
-                    <input type="date" name="dt_fec_ini" id="dt_fec_ini" value=""/>
+                    <input name="dt_fec_ini" id="dt_fec_ini" type="text" class="datepicker" value="" style="text-align: center; font-size:120%; font-weight:bold;"/>
                     <label for="dt_fec_ini" class="active">Fecha Inicial:</label>
                 </div>
                 <div class="input-field col-sm-2">
-                    <input type="date" name="dt_fec_fin" id="dt_fec_fin" value=""/>
+                    <input name="dt_fec_fin" id="dt_fec_fin" type="text" class="datepicker" value="" style="text-align: center; font-size:120%; font-weight:bold;"/>
                     <label for="dt_fec_fin" class="active">Fecha Final:</label>
                 </div>
                 <div class="input-field col-sm-1">
                 </div>
                 <div class="input-field col-sm-2">
-                    <input type="date" name="dt_fec_inipad" id="dt_fec_inipad" value=""/>
+                    <input name="dt_fec_inipad" id="dt_fec_inipad" type="text" class="datepicker" value=""/>
                     <label for="dt_fec_inipad" class="active">Fecha Inicial:</label>
                 </div>
                 <div class="input-field col-sm-2">
-                    <input type="date" name="dt_fec_finpad" id="dt_fec_finpad" value=""/>
+                    <input name="dt_fec_finpad" id="dt_fec_finpad" type="text" class="datepicker" value=""/>
                     <label for="dt_fec_finpad" class="active">Fecha Final:</label>
                 </div>
                 <div class="input-field col-sm-2">
-                    <button id="btn_busca" onclick="pad_mant_buscar_tbl($('#txt_exp').val(),$('#cb_anio').val(),$('#dt_fec_ini').val(),$('#dt_fec_fin').val(),$('#dt_fec_inipad').val(),$('#dt_fec_finpad').val())" class="btn btn-info btn-sm" >
+                    <button id="btn_busca" onclick="pad_mant_buscar_tbl()" class="btn btn-info btn-sm" >
                         BUSCAR
                     </button>
                 </div>

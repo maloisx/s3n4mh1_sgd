@@ -5,17 +5,17 @@
                 <div class="input-field col-sm-1">
                 </div>
                 <div class="input-field col-sm-2">
-                    <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker" data-size="3">${requestScope['etapa']}</select>
+                    <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker" data-size="5">${requestScope['etapa']}</select>
                     <label for="cb_etapa" class="active">ETAPA</label>
                 </div>
-                <div class="input-field col-sm-2">
-                    <select name="cb_estado" id="cb_estado" class="form-control selectpicker" data-size="3">${requestScope['estado']}</select>
+                <div class="input-field col-sm-3">
+                    <select name="cb_estado" id="cb_estado" class="form-control selectpicker" data-size="5">${requestScope['estado']}</select>
                     <label for="cb_estado" class="active">ESTADO</label>
                 </div>
-                <div class="input-field col-sm-2">
-                    <select name="cb_abogado" id="cb_abogado" class="form-control selectpicker" data-size="3">${requestScope['abogado']}</select>
+                <div class="input-field col-sm-3">
+                    <select name="cb_abogado" id="cb_abogado" class="form-control selectpicker" data-size="5">${requestScope['abogado']}</select>
                     <label for="cb_abogado" class="active">ABOGADO</label>
-                </div>   
+                </div> 
             </div>
         </div>        
         <div class="row">     
@@ -57,7 +57,7 @@
                     <label for="dt_fec_finpad" class="active">Fecha Final:</label>
                 </div>
                 <div class="input-field col-sm-2">
-                    <button id="btn_busca" onclick="pad_mant_rep1_tbl()" class="btn btn-info btn-sm" >
+                    <button id="btn_busca" onclick="pad_mant_rep_por_tbl()" class="btn btn-info btn-sm" >
                         BUSCAR
                     </button>
                 </div>

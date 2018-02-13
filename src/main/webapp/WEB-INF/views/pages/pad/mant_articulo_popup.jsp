@@ -13,8 +13,8 @@
             </div>
         </div>
     </div>
-</div>              
-<br>   
+</div>  
+<br>  
 <br>   
 <div class="row">
     <div class="col-sm-12">
@@ -45,37 +45,32 @@
             </div>
         </div>
     </div>
-</div>              
+</div>           
 <br>   
-<br>   
+<br>     
 <div class="row">
     <div class="col-sm-12">
         <div class="row">
-            <div class="input-field col-md-1">
-            </div>
-            <div class="input-field text-right col-md-10">                    
-                <select name="cb_articulo" id="cb_articulo" class="form-control selectpicker">${requestScope['cb_articulo']}</select>
-                <label for="cb_articulo" class="active">Seleccione el artículo:</label>   
-            </div>                       
             <div class="input-field col-sm-1">
+            </div>
+            <div class="input-field text-right col-md-10">
+                <input type="text" name="txt_n_articulo" id="txt_n_articulo" value="${requestScope['n_articulo']}" />
+                <label for="txt_n_articulo" class="active">N°/Literal Artículo:</label>
+            </div>        
+            <div class="input-field col-md-1">
             </div>
         </div>
     </div>
-</div>              
-<br>   
-<br>   
+</div> 
+<br>                
 <div class="row">
     <div class="col-sm-12">
         <div class="row">
             <div class="input-field col-sm-1">
             </div>
-            <div class="input-field text-right col-md-2">
-                <input type="text" name="txt_literal" id="txt_literal" value="${requestScope['cod_literal']}" />
-                <label for="txt_literal" class="active">Literal:</label>
-            </div>        
-            <div class="input-field text-right col-md-8">
-                <input type="text" name="txt_des" id="txt_des" maxlength="500" minlength="1" value="${requestScope['descripcion']}" />
-                <label for="txt_des" class="active">Descripción de la falta:</label>
+            <div class="input-field text-right col-md-10">
+                <input type="text" name="txt_des" id="txt_des" value="${requestScope['descripcion']}" />
+                <label for="txt_des" class="active">Descripción:</label>
             </div>        
             <div class="input-field col-md-1">
             </div>
@@ -104,7 +99,7 @@
             <div class="input-field col-md-1">        
             </div>        
             <div class="input-field text-right col-md-10">
-                <button onclick="pad_mant_falta_guardar()" class="btn btn-info btn-sm">Guardar</button>            
+                <button onclick="pad_mant_articulo_guardar()" class="btn btn-info btn-sm">Guardar</button>            
             </div>
             <div class="input-field col-md-1">        
             </div>  
@@ -113,5 +108,5 @@
 </div>             
 
 <script>    
-//    $('#cb_estado option:first-child').attr('selected', 'selected');
+   
 </script>            

@@ -816,18 +816,48 @@ function pad_mant_asigna_abogado_modificar_guardar(){
 //FIN MODIFICAR ASIGNAR ABOGADO GUARDAR
 //
 //INICIO BUSCAR EXPEDIENTE TABLA   
-function pad_mant_buscar_tbl(nroexp, anio, fecini, fecfin, fecinipad, fecfinpad){   
-        
+function pad_mant_buscar_tbl(){ 
+    var nroexp = $('#txt_exp').val();
+    var anio = $('#cb_anio').val();
+    
+    var f_ini = $('#dt_fec_ini').val();
+    var f_ini_formato = '';    
+    if (f_ini !== ''){
+        f_ini_formato = f_ini.split('/');
+        f_ini_formato = f_ini_formato[2]+'-'+f_ini_formato[1]+'-'+f_ini_formato[0];  
+    }
+    
+    var f_fin = $('#dt_fec_fin').val();
+    var f_fin_formato = '';
+    if (f_fin !== ''){
+        f_fin_formato = f_fin.split('/');
+        f_fin_formato = f_fin_formato[2]+'-'+f_fin_formato[1]+'-'+f_fin_formato[0];
+    }
+    
+    var f_inipad = $('#dt_fec_inipad').val();
+    var f_inipad_formato = '';
+    if (f_inipad !== ''){
+        f_inipad_formato = f_inipad.split('/');
+        f_inipad_formato = f_inipad_formato[2]+'-'+f_inipad_formato[1]+'-'+f_inipad_formato[0];
+    }
+    
+    var f_finpad = $('#dt_fec_finpad').val();
+    var f_finpad_formato = '';
+    if (f_finpad !== ''){
+        f_finpad_formato = f_finpad.split('/');
+        f_finpad_formato = f_finpad_formato[2]+'-'+f_finpad_formato[1]+'-'+f_finpad_formato[0];
+    }
+    
     $.ajax({
         dataType: "html",
         type:     "GET",
         url:      path + "pad/mant_buscar_tbl/", 
         data:     "nroexp="+nroexp+
                   "&anio="+anio+
-                  "&fecini="+fecini+
-                  "&fecfin="+fecfin+
-                  "&fecinipad="+fecinipad+
-                  "&fecfinpad="+fecfinpad,
+                  "&fecini="+f_ini_formato+
+                  "&fecfin="+f_fin_formato+
+                  "&fecinipad="+f_inipad_formato+
+                  "&fecfinpad="+f_finpad_formato,
         beforeSend: function(data){
                 $('#div_mant_buscar_tbl').html("Cargando...");
         },
@@ -841,11 +871,13 @@ function pad_mant_buscar_tbl(nroexp, anio, fecini, fecfin, fecinipad, fecfinpad)
 }
 //FIN BUSCAR EXPEDIENTE TABLA  
 //
-//INICIO REPORTE EXPEDIENTE TABLA   
-function pad_mant_rep1_tbl(){   
+//INICIO REPORTE POR TABLA   
+function pad_mant_rep_por_tbl(){   
     var etapa = $('#cb_etapa').val();
     var estado = $('#cb_estado').val();
     var abogado = $('#cb_abogado').val();
+    var falta = $('#cb_falta').val();
+    var sancion = $('#cb_sancion').val();
     
     var fecini = $('#dt_fec_ini').val();
     var fecini_formato = fecini.split('/');
@@ -880,10 +912,12 @@ function pad_mant_rep1_tbl(){
     $.ajax({
         dataType: "html",
         type:     "GET",
-        url:      path + "pad/mant_rep1_tbl/", 
+        url:      path + "pad/mant_rep_por_tbl/", 
         data:     "etapa="+etapa+
                   "&estado="+estado+
                   "&abogado="+abogado+
+                  "&falta="+falta+
+                  "&sancion="+sancion+
                   "&fecini="+fecini_formato+
                   "&fecfin="+fecfin_formato+
                   "&fecinipad="+fec_inipad_formato+
@@ -899,7 +933,51 @@ function pad_mant_rep1_tbl(){
         }
     });
 }
-//FIN REPORTE EXPEDIENTE TABLA  
+//FIN REPORTE POR TABLA  
+//
+//INICIO REPORTE FALTA TABLA   
+function pad_mant_reporte_falta_tbl(){ 
+    var falta = $('#cb_falta').val();
+    
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_reporte_falta_tbl/", 
+        data:     "falta="+falta,
+        beforeSend: function(data){
+                $('#div_mant_reporte_falta_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_reporte_falta_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_reporte_falta_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN REPORTE FALTA TABLA  
+//
+//INICIO REPORTE SANCION TABLA   
+function pad_mant_reporte_sancion_tbl(){ 
+    var sancion = $('#cb_sancion').val();
+    
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_reporte_sancion_tbl/", 
+        data:     "sancion="+sancion,
+        beforeSend: function(data){
+                $('#div_mant_reporte_sancion_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_reporte_sancion_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_reporte_sancion_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN REPORTE SANCION TABLA  
 //
 //INICIO REPORTE GRÁFICO POR ETAPA
 function pad_mant_rep_grf1(){
@@ -1088,27 +1166,6 @@ function pad_mant_medida_caut_guardar(){
 }
 //FIN MEDIDA CAUTELAR GUARDAR//
 //
-//INICIO LISTA FALTA TABLA
-function pad_mant_falta_tbl(){
-        
-    $.ajax({
-        dataType: "html",
-        type:     "GET",
-        url:      path + "pad/mant_falta_tbl/", 
-        data:     "" ,
-        beforeSend: function(data){
-                $('#div_mant_falta_tbl').html("Cargando...");
-        },
-        success: function(requestData){
-                $('#div_mant_falta_tbl').html(requestData);
-        },
-        error: function(requestData, strError, strTipoError){											
-                $('#div_mant_falta_tbl').html("Error " + strTipoError +": " + strError);
-        }
-    });
-}
-//FIN LISTA FALTA TABLA
-//
 //INICIO FALTA POPUP
 function pad_mant_falta_popup(id){
     
@@ -1127,6 +1184,8 @@ function pad_mant_falta_guardar(){
     var id = $('#hd_id').val();
     var descripcion = $('#txt_des').val();
     var estado = $('#cb_estado').val();
+    var articulo = $('#cb_articulo').val();
+    var codigo_lit = $('#txt_literal').val();
        
     $.ajax({
             dataType: "html",
@@ -1134,7 +1193,9 @@ function pad_mant_falta_guardar(){
             url:      path + "pad/mant_falta_guardar/",
             data:     "id="+id+
                       "&descripcion="+descripcion+	 	 
-                      "&estado="+estado,	 	 
+                      "&estado="+estado+
+                      "&articulo="+articulo+	 	 
+                      "&codigo_lit="+codigo_lit,	 	 
             beforeSend: function(data){
                 $('#div_mensaje_ajax').html("Cargando...");
             },
@@ -1144,7 +1205,7 @@ function pad_mant_falta_guardar(){
                 var msj  = arrayobj[0][1];
                 
                 $('#hd_id').val(id);
-                pad_mant_falta_tbl();
+                pad_mant_literal_tbl();
                 $.alert('<h6>' + msj + '</h6>');                
             },
             error: function(requestData, strError, strTipoError){
@@ -1200,4 +1261,378 @@ function pad_mant_literal_norma_consulta(){
 }
 //FIN LISTA LITERAL POR NORMA
 //
+//INICIO LISTA ARTICULO POR CAPITULO
+function pad_mant_articulo_capitulo_consulta(){        
+    var capitulo = $('#cb_capitulo').val();
+            
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_articulo_capitulo_consulta/", 
+            data:     "capitulo="+capitulo,	 	 
+            beforeSend: function(data){ 	 	
+                $('#cb_articulo').html("<option>CARGANDO...</option>");
+                $('#cb_articulo').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_articulo').html(requestData);
+                $('#cb_articulo').selectpicker('refresh');
+            },			
+            error: function(requestData, strError, strTipoError){
+                $('#cb_articulo').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_articulo').selectpicker('refresh');
+            }
+        });  
+}
+//FIN LISTA ARTICULO POR CAPITULO
+//
+//INICIO LISTA CAPITULO POR TITULO
+function pad_mant_capitulo_titulo_consulta(){        
+    var titulo = $('#cb_titulo').val();
+            
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_capitulo_titulo_consulta/", 
+            data:     "titulo="+titulo,	 	 
+            beforeSend: function(data){ 	 	
+                $('#cb_capitulo').html("<option>CARGANDO...</option>");
+                $('#cb_capitulo').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_capitulo').html(requestData);
+                $('#cb_capitulo').selectpicker('refresh');
+            },			
+            error: function(requestData, strError, strTipoError){
+                $('#cb_capitulo').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_capitulo').selectpicker('refresh');
+            }
+        });  
+}
+//FIN LISTA CAPITULO POR TITULO
+//
+//INICIO LISTA CAPITULO POR TITULO
+function pad_mant_titulo_norma_consulta(){        
+    var norma = $('#cb_norma').val();
+            
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_titulo_norma_consulta/", 
+            data:     "norma="+norma,	 	 
+            beforeSend: function(data){ 	 	
+                $('#cb_titulo').html("<option>CARGANDO...</option>");
+                $('#cb_titulo').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_titulo').html(requestData);
+                $('#cb_titulo').selectpicker('refresh');
+            },			
+            error: function(requestData, strError, strTipoError){
+                $('#cb_titulo').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_titulo').selectpicker('refresh');
+            }
+        });  
+}
+//FIN LISTA CAPITULO POR TITULO
+//
+//INICIO REPORTE POR PROCEDIMIENTO TABLA   
+function pad_mant_reporte_procedimiento_tbl(){  
+    var anio = $('#cb_anio').val();
+    var procedimiento = $('#cb_procedimiento').val();
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_reporte_procedimiento_tbl/", 
+        data:     "anio="+anio+
+                  "&procedimiento="+procedimiento,
+        beforeSend: function(data){
+                $('#div_mant_reporte_procedimiento_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_reporte_procedimiento_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_reporte_procedimiento_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN REPORTE POR PROCEDIMIENTO TABLA
+//
+//INICIO LISTA NORMA TABLA
+function pad_mant_norma_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_norma_tbl/", 
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_norma_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_norma_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_norma_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN LISTA NORMA TABLA
+//
+//INICIO NUEVO NORMA POPUP
+function pad_mant_norma_popup(id){
+    var url = encodeURI(path + "pad/mant_norma_popup/?id="+id);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 600
+       ,"height" : 500 
+    });
+}
+//FIN NUEVO NORMA POPUP
+//
+//INICIO NORMA GUARDAR
+function pad_mant_norma_guardar(){
+    var id = $('#hd_id').val();
+    var nro = $('#txt_n_norma').val();
+    var descripcion = $('#txt_des').val();
+    var estado = $('#cb_estado').val();
+       
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_norma_guardar/",
+            data:     "id="+id+
+                      "&nro="+nro+	 	 
+                      "&descripcion="+descripcion+	 	 
+                      "&estado="+estado,	 	 
+            beforeSend: function(data){
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj  = arrayobj[0][1];
+                
+                $('#hd_id').val(id);
+                pad_mant_norma_tbl();
+                $.alert('<h6>' + msj + '</h6>');                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN NORMA GUARDAR//
+//
+//INICIO TITULO TABLA
+function pad_mant_titulo_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_titulo_tbl/", 
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_titulo_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_titulo_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_titulo_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN TITULO TABLA
+//
+//INICIO NUEVO TITULO POPUP
+function pad_mant_titulo_popup(id){
+    var url = encodeURI(path + "pad/mant_titulo_popup/?id="+id);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 600
+       ,"height" : 550 
+    });
+}
+//FIN NUEVO NORMA POPUP
+//
+//INICIO TITULO GUARDAR
+function pad_mant_titulo_guardar(){
+    var id = $('#hd_id').val();
+    var nro = $('#txt_n_titulo').val();
+    var descripcion = $('#txt_des').val();
+    var estado = $('#cb_estado').val();
+    var id_norma = $('#cb_norma').val();
+       
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_titulo_guardar/",
+            data:     "id="+id+
+                      "&nro="+nro+	 	 
+                      "&descripcion="+descripcion+	 	 
+                      "&estado="+estado+	 	 
+                      "&id_norma="+id_norma,	 	 
+            beforeSend: function(data){
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj  = arrayobj[0][1];
+                
+                $('#hd_id').val(id);
+                pad_mant_titulo_tbl();
+                $.alert('<h6>' + msj + '</h6>');                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN TITULO GUARDAR//
+//
+//INICIO CAPITULO TABLA
+function pad_mant_capitulo_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_capitulo_tbl/", 
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_capitulo_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_capitulo_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_capitulo_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN CAPITULO TABLA
+//
+//INICIO CAPITULO POPUP
+function pad_mant_capitulo_popup(id){
+    var url = encodeURI(path + "pad/mant_capitulo_popup/?id="+id);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 600
+       ,"height" : 600 
+    });
+}
+//FIN CAPITULO POPUP
+//
+//INICIO CAPITULO GUARDAR
+function pad_mant_capitulo_guardar(){
+    var id = $('#hd_id').val();
+    var nro = $('#txt_n_capitulo').val();
+    var descripcion = $('#txt_des').val();
+    var estado = $('#cb_estado').val();
+    var id_norma = $('#cb_norma').val();
+    var id_titulo = $('#cb_titulo').val();
+       
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_capitulo_guardar/",
+            data:     "id="+id+
+                      "&nro="+nro+	 	 
+                      "&descripcion="+descripcion+	 	 
+                      "&estado="+estado+	 	 
+                      "&id_norma="+id_norma+	 
+                      "&id_titulo="+id_titulo,	 	 
+            beforeSend: function(data){
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj  = arrayobj[0][1];
+                
+                $('#hd_id').val(id);
+                pad_mant_capitulo_tbl();
+                $.alert('<h6>' + msj + '</h6>');                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN CAPITULO GUARDAR//
+//
+//INICIO ARTICULO TABLA
+function pad_mant_articulo_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "pad/mant_articulo_tbl/", 
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_articulo_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_articulo_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){											
+                $('#div_mant_articulo_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN ARTICULO TABLA
+//
+//INICIO ARTICULO POPUP
+function pad_mant_articulo_popup(id){
+    var url = encodeURI(path + "pad/mant_articulo_popup/?id="+id);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 600
+       ,"height" : 700 
+    });
+}
+//FIN ARTICULO POPUP
+//
+//INICIO ARTICULO GUARDAR
+function pad_mant_articulo_guardar(){
+    var id = $('#hd_id').val();
+    var nro = $('#txt_n_articulo').val();
+    var descripcion = $('#txt_des').val();
+    var estado = $('#cb_estado').val();
+    var id_capitulo = $('#cb_capitulo').val();
+       
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_articulo_guardar/",
+            data:     "id="+id+
+                      "&nro="+nro+	 	 
+                      "&descripcion="+descripcion+	 	 
+                      "&estado="+estado+ 	 
+                      "&id_capitulo="+id_capitulo,	 	 
+            beforeSend: function(data){
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj  = arrayobj[0][1];
+                
+                $('#hd_id').val(id);
+                pad_mant_articulo_tbl();
+                $.alert('<h6>' + msj + '</h6>');                
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN ARTICULO GUARDAR//
 //
