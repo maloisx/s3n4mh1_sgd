@@ -822,7 +822,7 @@ $.extend( Buttons.prototype, {
 		while ( conf && conf.extend ) {
 			// Use `toConfObject` in case the button definition being extended
 			// is itself a string or a function
-                        console.log(_dtButtons);
+                        //console.log(_dtButtons);
 			if ( ! _dtButtons[ conf.extend ] ) {
 				throw 'Cannot extend unknown button type: '+conf.extend;
 			}

@@ -74,7 +74,7 @@ function ws_contenido_combo(cb_id_html, data, id_seleccionado) {
         ind = 0;
         id = null;
         val = null;
-        if(Array.isArray(item)){
+        if(typeof item === 'object'){
             $.each(item, function (index_item, value_item) {
                 if (ind == 0) {
                     id = value_item;
@@ -138,7 +138,7 @@ function ws_datatable(id_div_tbl, data, tbl_cab, opciones) {
         }
              
 
-    var html_tbl = "<table border='1' class='table table-striped table-bordered "+ tbl_responsive + "' id='tbl_dt_" + tbl_n + "'></table>";
+    var html_tbl = "<table border='1' class='table table-striped table-bordered "+ tbl_responsive + "' style='width:100%;' id='tbl_dt_" + id_div_tbl + "'></table>";
 
     $('#' + id_div_tbl).html(html_tbl);
 //    var tbl = $('#tbl_dt_' + tbl_n).dataTable({
@@ -156,7 +156,7 @@ function ws_datatable(id_div_tbl, data, tbl_cab, opciones) {
 //        "language": {'url': '/sis/static/datatables/Spanish.json'}
 //    });
         
-       var tbl = $('#tbl_dt_' + tbl_n).dataTable({
+       var tbl = $('#tbl_dt_' + id_div_tbl).dataTable({
         "bFilter": (opciones.bFilter != undefined)?opciones.bFilter : opciones_default.bFilter,
         "bLengthChange": (opciones.bLengthChange != undefined)?opciones.bLengthChange : opciones_default.bLengthChange,
         "bInfo": (opciones.bInfo != undefined)?opciones.bInfo : opciones_default.bInfo,
@@ -184,7 +184,7 @@ function tbl_ext_btn(name_btn, func) {
 
     var btn_n = parseInt(Math.random() * 99999 + 1);
     if (func != undefined) {
-        html_btn = '<button id="btn_' + btn_n + '" onclick="' + func + '" type="button" class="btn btn-info" onclick=""><span class="glyphicon ' + name_btn + '"></span></button>';
+        html_btn = '<button id="btn_' + btn_n + '" onclick="' + func + '" type="button" class="btn btn-info"><span class="glyphicon ' + name_btn + '"></span></button>';
     } else {
         html_btn = '<button id="btn_' + btn_n + '" type="button" class="btn btn-info" onclick=""><span class="glyphicon ' + name_btn + '"></span></button>';
     }

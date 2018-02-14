@@ -177,20 +177,198 @@ function popup_editar_estacion_sisdad(cod_esta) {
     });
 }
 
-function popup_editar_estacion_sisdad2(cod_esta) {
-    //console.log(cod_goes + '->' +nom_esta);
-    var url = encodeURI(path + "sisdad/popup_editar_estacion2/?cod_esta=" + cod_esta);
-    //console.log(url);
-    $.colorbox2({
-        "href": url
-        , "width": 1500
-        , "height": 800
-    });
+function sisdad_js_popup_editar_estacion(){
+    var cod_esta = $('#hd_cod_esta').val();
+    var obj_estaciones = ws('sisdad', ' pkg_ws.sp_obt_estaciones', '["'+cod_esta+'",""]');
+    //console.log(cod_esta);
+    //console.log(obj_estaciones);
+    
+    var nom_esta = obj_estaciones.data[0].NOM_ESTA;
+    var cod_goes = obj_estaciones.data[0].COD_GOES;
+    var cod_goesmarca = obj_estaciones.data[0].COD_GOESMARCA;
+    var estado_goes = obj_estaciones.data[0].ESTADO_GOES;
+        
+    var obj_goesmarca = ws('sisdad', 'pkg_ws.sp_obt_goesmarca', '');
+    
+    $('#txt_estacion').val(cod_esta + ' - '+ nom_esta);
+    $('#txt_cod_goes').val(cod_goes);
+    ws_contenido_combo("cb_tipogoes", obj_goesmarca.data, cod_goesmarca);
+    
+    //estado goes
+    var obj_estado_goes = [];
+    obj_estado_goes.push(["0","Off-LINE"]);
+    obj_estado_goes.push(["1","On-LINE"]);
+    
+    ws_contenido_combo("cb_estado_esta", obj_estado_goes, estado_goes);
+        
+    var tbl_cab = [
+                //{'sTitle': 'Nro','sWidth':'30px', 'sClass':'text-center'}, 
+                {'sTitle': 'VARIABLE', 'sClass':'text-center'}, 
+                {'sTitle': 'POSICION', 'sClass':'text-center'},
+                {'sTitle': 'LONGITUD', 'sClass':'text-center'},
+                {'sTitle': 'FAT. CONV.', 'sClass':'text-center'},
+                {'sTitle': 'DECIMALES', 'sClass':'text-center'},
+                {'sTitle': 'OFFSET', 'sClass':'text-center'},
+                {'sTitle': 'VAL. CONV. ADICIONAL', 'sClass':'text-center'},
+                {'sTitle': '-','sWidth':'30px', 'sClass':'text-center'}
+            ];       
+//            for(var i= 0 ; i<obj_items.data.length ; i++){
+//                obj_items.data[i].UNIDAD = obj_items.data[i].UNIDAD + 'xxxxx';
+//                obj_items.data[i].btn1 = tbl_ext_btn('glyphicon-edit',"$.alert('XXX')") ;
+//                obj_items.data[i].btn2 = tbl_ext_btn('glyphicon-trash',"$.alert('"+obj_items.data[i].PREC_UNIT+"')");
+//                obj_items.data[i].btn3 = tbl_ext_btn('glyphicon-print');
+//            }
+            //console.log(obj_items.data);
+            
+            var opciones_tbl= {
+                responsive: false
+                , bFilter: true
+                , bLengthChange: false
+                , bInfo: false
+                , bPaginate: false
+                , dom: "Blfrtip"
+                , buttons: [
+                            {text:'NUEVA VARIABLE',action:function( e, dt, node, config ) {sisdad_js_popup_editar_estacion_aniadir_var('','','','','','','')},className:'btn btn-info btn-sm'},
+                            {text:'GUARDAR CONFIGURACION',action:function( e, dt, node, config ) {sisdad_js_popup_editar_estacion_guardar_config()},className:'btn btn-info btn-sm'}
+                            //{extend: 'excel', text: 'Exportar a Excel', className: 'btn btn-info btn-sm'}
+                        ]
+            };
+            
+            ws_datatable("sisdad_js_popup_editar_estacion_config_trama_tbl",[], tbl_cab,opciones_tbl); 
+            
+            
+            var obj_lista_estacion_variables = ws('sisdad', 'pkg_ws.sp_obt_estacion_variable', '["'+cod_esta+'"]');
+            //console.log(obj_lista_estacion_variables);
+            for(var i = 0;i<obj_lista_estacion_variables.data.length ; i++){
+                sisdad_js_popup_editar_estacion_aniadir_var(
+                                                            obj_lista_estacion_variables.data[i].COD_VAR,
+                                                            obj_lista_estacion_variables.data[i].POS,
+                                                            obj_lista_estacion_variables.data[i].LONGITUD,
+                                                            obj_lista_estacion_variables.data[i].FATCONV,
+                                                            obj_lista_estacion_variables.data[i].NUMDEC,
+                                                            obj_lista_estacion_variables.data[i].OFFSET_TIME,
+                                                            obj_lista_estacion_variables.data[i].OFFSET_CONV
+                                                            );
+            }
+    
 }
+
+function sisdad_js_popup_editar_estacion_aniadir_var(COD_VAR,POS , LONGITUD ,FATCONV ,NUMDEC ,OFFSET_TIME ,OFFSET_CONV  ){
+   
+    var tbl = $('#tbl_dt_sisdad_js_popup_editar_estacion_config_trama_tbl').DataTable();
+    
+    var nn = parseInt(Math.random() * 99999 + 1); //tbl.rows().count();
+    
+    tbl.row.add( [
+            //tbl_row_count,
+            '<input type="hidden" class="tbl_var_row" value="'+nn+'"/><select id="tbl_cb_variable_'+nn+'" class="selectpicker" data-width="100%" data-live-search="true" data-size="10"></select>',
+            '<input id="tbl_txt_posicion_'+nn+'" type="text" value="'+POS+'" />',
+            '<input id="tbl_txt_longitud_'+nn+'" type="text" value="'+LONGITUD+'" />',
+            '<input id="tbl_txt_fact_conv_'+nn+'" type="text" value="'+FATCONV+'" />',
+            '<input id="tbl_txt_decimales_'+nn+'" type="text" value="'+NUMDEC+'" />',
+            '<input id="tbl_txt_offset_'+nn+'" type="text" value="'+OFFSET_TIME+'" />',
+            '<input id="tbl_txt_val_conv_adicional_'+nn+'" type="text"  value="'+OFFSET_CONV+'" />',
+            '<button id="tbl_btn_delete_' + nn + '" type="button" class="btn btn-info" onclick="sisdad_js_popup_editar_estacion_borrar_var(this)"><span class="glyphicon glyphicon-trash"></span></button>'
+        ] ).draw( false );
+        
+    var obj_lista_variables = ws('sisdad', 'pkg_ws.sp_obt_lista_variable', '');    
+    //console.log(obj_lista_variables);
+    ws_contenido_combo("tbl_cb_variable_"+nn, obj_lista_variables.data, COD_VAR);    
+}
+
+function sisdad_js_popup_editar_estacion_borrar_var(row) {
+    var tbl = $('#tbl_dt_sisdad_js_popup_editar_estacion_config_trama_tbl').DataTable();
+    
+    tbl.row( $(row).parents('tr') )
+        .remove()
+        .draw();
+}
+
+function sisdad_js_popup_editar_estacion_guardar_config(){
+    
+    var cod_esta = $("#hd_cod_esta").val();
+    var cod_goes = $("#txt_cod_goes").val();
+    var cod_goesmarca = $("#cb_tipogoes").val();
+    var estado_goes = $("#cb_estado_esta").val();
+    
+    var response_status = null; 
+    var error_reg = null;
+    
+    console.log(cod_esta + '->' + cod_goes + '->' + cod_goesmarca + '->' + estado_goes );
+    
+    var obj_reg = ws('sisdad', ' pkg_ws.SP_REG_ESTA_GOES', '["' + cod_esta + '","' + cod_goes + '","' + cod_goesmarca + '","' + estado_goes + '"]');
+    console.log("registro cab: " +obj_reg.request.STATUS);
+    if (obj_reg.request.STATUS == 'ERROR') {  error_reg = 1; }
+    
+    var obj_del_var = ws('sisdad', ' pkg_ws.SP_DEL_ESTA_GOES_VAR', '["' + cod_esta + '"]');
+    console.log(obj_del_var);
+    console.log("del det: " +obj_del_var.request.STATUS);
+    if (obj_del_var.request.STATUS == 'ERROR') {  error_reg = 1; }    
+    
+    
+//    if (response_status == 'OK') {
+//        response_msn = obj_reg.data[0].MSG;
+//        response_type = "green"
+//    } else {
+//        response_msn = obj_reg.request.MSG;
+//        response_type = "red";
+//    }
+//
+    
+    $(".tbl_var_row").each(function (index) {       
+        var nn = $(this).val();
+        var cod_var = $("#tbl_cb_variable_"+nn).val();
+        var posicion = $("#tbl_txt_posicion_"+nn).val();
+        var longitud = $("#tbl_txt_longitud_"+nn).val();
+        var fact_conv = $("#tbl_txt_fact_conv_"+nn).val();
+        var decimales = $("#tbl_txt_decimales_"+nn).val();
+        var offset = $("#tbl_txt_offset_"+nn).val();
+        var val_conv_adicional = $("#tbl_txt_val_conv_adicional_"+nn).val();
+        console.log(cod_var + '->' + posicion + '->' + longitud + '->' +trim(fact_conv) + '->' + decimales + '->' + offset + '->' + val_conv_adicional);
+        var obj_reg_var = ws('sisdad', ' pkg_ws.SP_REG_ESTA_GOES_VAR', '["' + cod_esta +  '","'+ cod_var + '","' + posicion + '","' + longitud + '","' + trim(fact_conv) + '","' + decimales + '","' + offset + '","' + val_conv_adicional + '"]'); 
+        console.log(obj_reg_var);
+        if (obj_reg_var.request.STATUS == 'ERROR') {  error_reg = 1; } 
+    });
+    
+    var response_msn = "";
+    var response_type = "";
+    if(error_reg == null){
+        response_msn = "GUARDADO EXITOSO";
+        response_type = "green"
+    }else{
+        response_msn = "ERROR EN EL PROCESO DE GUARDADO, COMUNICAR A LA OTI.";
+        response_type = "red";
+    }
+    
+    
+        $.confirm({
+            title: 'Mensaje:',
+            content: response_msn,
+            type: response_type,
+            typeAnimated: true,
+            buttons: {
+                close: function () {
+//                    location.reload();
+                }
+            }
+        });
+    
+}
+
+//function popup_editar_estacion_sisdad2(cod_esta) {
+//    //console.log(cod_goes + '->' +nom_esta);
+//    var url = encodeURI(path + "sisdad/popup_editar_estacion2/?cod_esta=" + cod_esta);
+//    //console.log(url);
+//    $.colorbox2({
+//        "href": url
+//        , "width": 1500
+//        , "height": 800
+//    });
+//}
 
 
 function buscar_maker_map(lon, lat) {
-    console.log(lon + " -> " + lat);
+    //console.log(lon + " -> " + lat);
     map.setOptions({zoom: 12, center: new google.maps.LatLng(lat, lon)});
 }
 
@@ -336,6 +514,13 @@ function graf_datos() {
      //     var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
      chart.draw(data, options);
      */
+
+//     console.log([{
+//                type: 'line',
+//                name: 'VALOR',
+//                data: dat_ser
+//            }]);
+
 
     Highcharts.chart('chart_div', {
         chart: {
@@ -963,37 +1148,74 @@ function sisdad_js_mant_ptoobs_reporte_btn_graf(){
     var ptoobs = $('#cb_ptoobs_graf').val();
     var ptoobs_var = $('#cb_ptoobs_var').val();
     
+    var fecha_ini = $('#txt_fec_ini').val();
+    var fecha_fin = $('#txt_fec_fin').val();
     
-    var data = jQuery.parseJSON(json_data);
-    console.log(ptoobs);
-    console.log(ptoobs_var);
-    console.log(data);
+    var error_log = '';
+    if(ptoobs == ''){
+        error_log = 'Seleccione un punto de observacion.<br>';
+    }
+    if(ptoobs_var.length  == 0){
+        error_log = 'Seleccione almenos una variable a graficar.<br>';
+    }
     
-    
-    
-//    for(var i= 0 ; i<data.length ; i++){
-//        
-//    }
-    
-//    Highcharts.chart('chart_div', {
-//        chart: {
-//            zoomType: 'x'
-//        },
-//        title: {
-//            text: "GRAF DE " + nom_esta + " DEL " + fecha_ini + ' AL ' + fecha_fin + ' DE LA VARIABLE ' + col
-//        },
-//        xAxis: {
-//            categories: dat_cat
-//        },
-//        legend: {
-//            enabled: false
-//        },
-//        series: [{
-//                type: 'line',
-//                name: 'VALOR',
-//                data: dat_ser
-//            }]
-//    });
+    if(error_log != ''){
+        $.alert(error_log,"ERROR");
+    }else{
+        
+        var data = jQuery.parseJSON(json_data);
+            var dat_cat = []; //fechas   
+
+            for(var i= 0 ; i<data.length ; i++){        
+                if(data[i].COD_EXTERNO == ptoobs){
+                   dat_cat.push(data[i].FECHA);
+                }        
+            }
+            var dat_series = []; //por serie  
+            for(var x= 0 ; x<ptoobs_var.length ; x++){  
+                var dat_series_t = []; //por serie  
+                var var_name = ptoobs_var[x];
+                dat_series_t["type"] = "line";
+                dat_series_t["name"] = var_name;
+
+                var dat_series_datos = [];
+                for(var i= 0 ; i<data.length ; i++){        
+                    if(data[i].COD_EXTERNO == ptoobs){                
+                       if(var_name == 'PR'){
+                           dat_series_datos.push(parseFloat(data[i].PR));
+                       } 
+                       if(var_name == 'RH'){
+                           dat_series_datos.push(parseFloat(data[i].RH));
+                       } 
+                       if(var_name == 'TM'){
+                           dat_series_datos.push(parseFloat(data[i].TM));
+                       } 
+                    }        
+                }
+                dat_series_t["data"] = dat_series_datos;      
+
+                dat_series.push(dat_series_t);
+            }
+
+        //    console.log(dat_series);
+
+            Highcharts.chart('sisdad_js_mant_ptoobs_reporte_graf', {
+                chart: {
+                    zoomType: 'x'
+                },
+                title: {
+                    text: "Grafico del Punto de Observacion "+ ptoobs + " entre las fechas "+fecha_ini+" al "+fecha_fin
+                },
+                xAxis: {
+                    categories: dat_cat
+                },
+                legend: {
+                    enabled: true
+                },
+                series: dat_series
+            });
+        
+    }
     
 }
 

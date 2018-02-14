@@ -44,7 +44,7 @@ public class SisdadController {
                     vx_t.add(vx.get(11)); //Estado
                     vx_t.add(vx.get(3)); //tipo
                     vx_t.add(vx.get(4)); //hora
-                    vx_t.add("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all' title='Descargar datos de "+vx.get(2)+"' onclick='popup_editar_estacion_sisdad(\\\""+vx.get(0)+"\\\")'><span class='ui-icon ui-icon-gear'></span></li></ul></div>"); //icon
+                    vx_t.add("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all' title='Configuración de trama para "+vx.get(2)+"' onclick='popup_editar_estacion_sisdad(\\\""+vx.get(0)+"\\\")'><span class='ui-icon ui-icon-gear'></span></li></ul></div>"); //icon
                     vx_t.add("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all' title='Descargar datos de "+vx.get(2)+"' onclick='popup_datos(\\\""+vx.get(0)+"\\\",\\\""+vx.get(1)+"\\\",\\\""+vx.get(2)+"\\\",\\\""+((vx.get(4).toString().equals(""))?"":vx.get(4).toString().substring(0,10))+"\\\")'><span class='ui-icon ui-icon-circle-arrow-s'></span></li></ul></div>"); //icon
                     vx_t.add("<div align='center'><ul><li style='width:18px' class='ui-state-default ui-corner-all' title='buscar datos de "+vx.get(2)+"' onclick='buscar_maker_map(\\\""+vx.get(5)+"\\\",\\\""+vx.get(6)+"\\\")'><span class='ui-icon ui-icon-search'></span></li></ul></div>"); //icon
                     vx_t.add(vx.get(9)); //horas de diferencia
@@ -133,7 +133,7 @@ public class SisdadController {
         @RequestMapping(value = { "/sisdad/popup_editar_estacion"}, method = RequestMethod.GET)
 	public String SisdadPopupEditarEstacion(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
-            request.setAttribute("title_pag","x1");
+            request.setAttribute("title_pag","Configuracion de trama");
             String cod_esta = request.getParameter("cod_esta");
             
             request.setAttribute("cod_esta", cod_esta); 
