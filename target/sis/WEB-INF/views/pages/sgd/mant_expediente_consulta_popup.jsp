@@ -72,7 +72,7 @@
                     <div class="col-sm-5">
                         <div class="row">
                             <div class="input-field col-sm-4">
-                                <select name="cb_tramite" id="cb_tramite" class="form-control selectpicker" onchange="sgd_mant_procedimiento_cargar_cbo();" data-size="3" disabled>${requestScope['cb_tramite']}</select>
+                                <select name="cb_tramite" id="cb_tramite" class="form-control selectpicker" data-size="3" disabled>${requestScope['cb_tramite']}</select>
                                 <label for="cb_tramite" class="active">Tipo de Tramite</label>
                             </div>
                             <div class="input-field col-sm-4">

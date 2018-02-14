@@ -1,6 +1,6 @@
 <!--<div id="div_mensaje_ajax" class="text-success"></div>-->    
 <input type="hidden" name="hd_iddoc" id="hd_iddoc" value="${requestScope['doc']}" />
-<input type="hidden" name="hd_estado" id="hd_estado" value="${requestScope['estado']}" />
+<input type="hidden" name="hd_idestado" id="hd_idestado" value="${requestScope['estado']}" />
 <br>
 <div class="row">
     <div class="col-sm-12">
