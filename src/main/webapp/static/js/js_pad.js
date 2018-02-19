@@ -71,7 +71,7 @@ function pad_mant_expedientes_pad_guardar(){
     var nrodoc = $('#txt_nrodoc').val();    
     var fechadoc = $('#txt_fechadoc').val();    
     var folio = $('#txt_folio').val();    
-    var plazo = $('#txt_plazo').val();    
+    var plazo = $('#txt_plazo').val(); 
     var remite = $('#cb_remite').val(); 
     var uo_remite = remite.split('_')[3];  
     remite = remite.split('_')[0];
@@ -87,7 +87,7 @@ function pad_mant_expedientes_pad_guardar(){
     observacion = observacion.replace("\”","'"); 
     var input = document.querySelector('input[type="file"]');
     var iddoc = $('#hd_iddoc').val(); 
-    var estado = $('#hd_estado').val(); 
+    var estado = $('#hd_idestado').val(); 
     var instructor = $('#cb_instructor').val();  
     var uo_instructor = '';
     if(instructor == undefined || instructor == ''){
@@ -171,10 +171,11 @@ function pad_mant_expedientes_pad_guardar(){
                       "&uo_instructor="+uo_instructor+
                       "&uo_sancionador="+uo_sancionador+ 
                       "&uo_remite="+uo_remite, 
-            beforeSend: function(data){ 	 	
+            beforeSend: function(data){ 
                 $('#div_mensaje_ajax').html("Cargando...");
             },
             success: function(requestData){ 
+                
                 arrayobj = jQuery.parseJSON(requestData);
                 
                 var id  = arrayobj[0][0];
@@ -182,6 +183,7 @@ function pad_mant_expedientes_pad_guardar(){
                 var id_doc = arrayobj[0][2];
                 var ndoc = arrayobj[0][3];
                 var fec_presc_ipad = arrayobj[0][4];
+    console.log('***************------------**************--'+id);
                 
                 $('#txt_nroexp').val(id);
                 $('#div_mensaje_ajax').html(msj);
@@ -260,6 +262,7 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
     var instructor = $('#cb_instructor').val();   
     var investigado = $('#cb_investigado').val();  
     var cargo = $('#cb_cargo').val(); 
+        
     if(instructor == undefined){
         instructor = '';
     }
@@ -281,7 +284,13 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
    
 //    Mensaje ingreso información 
      var msj_error = "";
-     
+    
+    var f_anio = '';
+    f_anio = fechadoc.split('/');
+    f_anio = f_anio[2];
+    if (f_anio !== anio){
+       msj_error += " El año del documento es diferente al del expediente."; 
+    }    
     if ($('#cb_denunciante').val() == ''){
         msj_error += " Denunciante.";
     }if ($('#cb_dependencia').val() == ''){
@@ -390,7 +399,11 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
             }
         }); 
     }else{
-         $.alert('<h6>Ingrese: '+ msj_error + '</h6>');
+        if (f_anio !== anio){
+            $.alert('<h6>Cuidado: '+ msj_error + '</h6>');
+        }else{
+            $.alert('<h6>Ingrese: '+ msj_error + '</h6>');
+        }
     } 
 }
 //FIN EXPEDIENTE PAD NUEVO GUARDAR

@@ -103,7 +103,7 @@
                             <div class="input-field col-sm-5">
                                 <input type="hidden" name="txt_doc" id="txt_doc" value="${requestScope['doc']}" />
                                 <input type="hidden" name="txt_flujo" id="txt_flujo" value="${requestScope['flujo']}" />
-                                <select name="cb_clsfdoc" id="cb_clsfdoc" class="form-control selectpicker" data-size="4" data-live-search="true" ${requestScope['obj_disabled_form']}>${requestScope['cb_clsfdoc']}</select>
+                                <select name="cb_clsfdoc" id="cb_clsfdoc" class="form-control selectpicker" data-size="4" ${requestScope['obj_disabled_form']}>${requestScope['cb_clsfdoc']}</select>
                                 <label for="cb_clsfdoc" class="active">Tipo de documento</label>
                             </div>
                             <div class="input-field col-sm-2">

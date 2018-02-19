@@ -3608,16 +3608,17 @@ public class SgdController {
             String cb_desc_tema = util.contenido_combo(datos_cbo_tema, i_tema);
             request.setAttribute("cb_tema", cb_desc_tema);    
             
-            String ntr = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+//            String ntr = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+            String ntr = "sgd.fn_tramite_procedimiento_consulta";//Trámite por procedimiento
             String array_cbo_tramite[] = new String[1];
             array_cbo_tramite[0] = i_proc;
             Vector datos_cbo_tramite = cn.EjecutarProcedurePostgres(ntr, array_cbo_tramite);
             String cb_desc_tramite = util.contenido_combo(datos_cbo_tramite, i_proc);
             request.setAttribute("cb_tramite", cb_desc_tramite);  
             
-            String proc = "sgd.fn_procedimiento_consulta";//combo Origen
+            String proc = "sgd.fn_procedimiento_consulta";//combo prcedimiento
             String array_cbo_proc[] = new String[1];
-            array_cbo_proc[0] = "";
+            array_cbo_proc[0] = i_proc;
             Vector datos_proc = cn.EjecutarProcedurePostgres(proc, array_cbo_proc);
             String cb_desc_proc = util.contenido_combo(datos_proc, i_proc);
             request.setAttribute("cb_procedimiento", cb_desc_proc); 
@@ -3843,7 +3844,8 @@ public class SgdController {
             String cb_desc_tema = util.contenido_combo(datos_cbo_tema, i_tema);
             request.setAttribute("cb_tema", cb_desc_tema);    
             
-            String ntr = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+//            String ntr = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+            String ntr = "sgd.fn_tramite_procedimiento_consulta";//Trámite por procedimiento
             String array_cbo_tramite[] = new String[1];
             array_cbo_tramite[0] = i_proc;
             Vector datos_cbo_tramite = cn.EjecutarProcedurePostgres(ntr, array_cbo_tramite);
@@ -6779,7 +6781,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String cb_desc_tema = util.contenido_combo(datos_cbo_tema, i_tema);
             request.setAttribute("cb_tema", cb_desc_tema);    
             
-            String cons_tram = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+//            String cons_tram = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+            String cons_tram = "sgd.fn_tramite_procedimiento_consulta";//Trámite por procedimiento
             String array_cbo_tramite[] = new String[1];
             array_cbo_tramite[0] = i_proc;
             Vector datos_cbo_tramite = cn.EjecutarProcedurePostgres(cons_tram, array_cbo_tramite);

@@ -1258,6 +1258,7 @@ function sgd_mant_expediente_guardar(){
     var id_doc = $('#hd_iddoc').val(); //id para consulta de documentos adjuntos
     
     var clsdoc = $('#cb_clsfdoc').val();
+    console.log('**********************************'+clsdoc);
     var numd = $('#txt_nrodoc').val();
     var fecd = $('#txt_fec_doc').val();
     var fecreg_doc = $('#hd_fecreg_doc').val();

@@ -772,6 +772,7 @@ public class PadController {
                 String i_id_etapa = "";                        
                 String fecnotif_iniPAD = "";      
                 String fecpres_PAD = "";      
+                String i_id_estado = "";      
 
                 for(int i = 0 ; i<datos.size() ; i++){                 
                     Vector datos_v =  (Vector) datos.get(i);
@@ -781,10 +782,12 @@ public class PadController {
                     i_id_etapa = datos_v.get(6).toString();
                     fecnotif_iniPAD = datos_v.get(13).toString();
                     fecpres_PAD = datos_v.get(14).toString();
+                    i_id_estado = datos_v.get(16).toString();
                 }  
                 request.setAttribute("nroexp", nroexp); 
                 request.setAttribute("fecharecep", d_fec_recep); 
                 request.setAttribute("fecpresc_iniPAD", d_fecpresc_iniPAD); 
+                request.setAttribute("estado", i_id_estado); 
                 
 //          información para el combo Etapa
             String etapa = "pad.fn_etapa_consulta";
