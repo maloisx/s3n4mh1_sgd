@@ -9509,6 +9509,50 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     }
 //FIN BUSCAR PRIMER DOCUMENTO
 //
+//INICIO SOLICITUD SERVICIOS ATENCIÓN AL CIUDADANO
+@RequestMapping(value = {"/sgd/mant_solicitud_servicios"}, method = RequestMethod.GET)
+    public String MantSolicitudAtencionCiudadano(HttpServletRequest request, HttpServletResponse response,ModelMap model) {        
+        request.setAttribute("title_pag","SOLICITUD DE SERVICIOS");
+                    
+            ConeccionDB cn = new ConeccionDB();               
+            Util util =  new Util();
+//          información para el combo periodo (año)
+            String ne = "senamhi.fn_sector_consulta";
+            String array_cbo_sector[] = new String[1];
+            array_cbo_sector[0] = "";
+            Vector datos_cbo_sector = cn.EjecutarProcedurePostgres(ne, array_cbo_sector);            
+            String cb_sector = util.contenido_combo(datos_cbo_sector, "");
+            request.setAttribute("cb_sector", cb_sector);   
+                                                
+        return "sgd/mant_solicitud_servicios";
+    }
+//FIN SOLICITUD SERVICIOS ATENCIÓN AL CIUDADANO
+//           
+//INICIO BUSCAR PRIMER DOCUMENTO
+    @RequestMapping(value = {"/sgd/mant_busca_ciudadano_dni"}, method = RequestMethod.GET)
+    public String AjaxQueryBuscarCiudadanoDni(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        String var_request = "";    
+        String n_doc = request.getParameter("n_doc");
 
+        try {        
+        ConeccionDB cdb = new ConeccionDB(); 
+            String np = "senamhi.fn_busca_ciudadano_consulta";
+            String array[] = new String[1];
+            array[0] = n_doc;
+
+        Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+
+        var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("response", var_request);
+        return "sgd/mant_busca_ciudadano_dni";
+    }
+//FIN BUSCAR PRIMER DOCUMENTO
+//  
 }
 
