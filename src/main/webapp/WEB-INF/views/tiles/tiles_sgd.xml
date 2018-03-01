@@ -775,5 +775,16 @@
     <definition name="sgd/mant_atencion_ciudadano_doc"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_atencion_ciudadano_doc.jsp" />
     </definition>
-    
+        
+    <definition name="sgd/mant_solicitud_servicios"  extends="login-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_servicios.jsp" />
+    </definition>
+        
+    <definition name="sgd/mant_busca_ciudadano_dni"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_busca_ciudadano_dni.jsp" />
+    </definition>
+            
+        
+        
+        
 </tiles-definitions>

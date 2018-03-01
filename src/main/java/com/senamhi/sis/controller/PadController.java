@@ -569,7 +569,7 @@ public class PadController {
 //                                    + "</div>";
                 
                 String btn_ver = "<div class='form-group dropdown text-center'>"
-                                    + "<button type='button' class='btn btn-info' onclick='window.open(\"http://sgd.senamhi.gob.pe/files/sgd/"+anio+"/"+dir+"/"+nom_doc+"\")'>"
+                                    + "<button type='button' class='btn btn-info' onclick='window.open(\"http://sgd.senamhi.gob.pe/files/pad/"+anio+"/"+dir+"/"+nom_doc+"\")'>"
                                     + "<span class='glyphicon glyphicon-search'>"
                                     + "</span>"
                                     + "</button>"

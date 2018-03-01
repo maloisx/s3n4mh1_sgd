@@ -175,7 +175,7 @@
             
             <script src="<c:url value='/static/js/js_generales.js'/>"></script>
             <script src="<c:url value='/static/js/js_login.js'/>"></script>
-            <script src="<c:url value='/static/js/js_sgd_atciu.js'/>"></script>
+            <script src="<c:url value='/static/js/js_sgd_atencionciudadano.js'/>"></script>
             
 </head>
  
