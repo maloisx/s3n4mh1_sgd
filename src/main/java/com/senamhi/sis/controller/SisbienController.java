@@ -18,11 +18,7 @@ public class SisbienController {
     @RequestMapping(value = { "/sisbien/prueba"}, method = RequestMethod.GET)
     public String SisbienPrueba(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
     throws ServletException, IOException{
-            
-//        Locale peruvianLocale = new Locale("es", "PE");
-//        ResourceBundle messageBundle = ResourceBundle.getBundle("MessageBundle", peruvianLocale);
-//        MySwingController msc = new MySwingController(messageBundle);
-//        msc.o
+
         return "sisbien/prueba";
     } 
     

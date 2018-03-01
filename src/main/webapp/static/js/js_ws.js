@@ -141,20 +141,6 @@ function ws_datatable(id_div_tbl, data, tbl_cab, opciones) {
     var html_tbl = "<table border='1' class='table table-striped table-bordered "+ tbl_responsive + "' style='width:100%;' id='tbl_dt_" + id_div_tbl + "'></table>";
 
     $('#' + id_div_tbl).html(html_tbl);
-//    var tbl = $('#tbl_dt_' + tbl_n).dataTable({
-//        "bFilter": true,
-//        "bLengthChange": false,
-//        "bInfo": false,
-//        "bPaginate": false,
-//        "bScrollCollapse": true,
-//        //"sScrollY": '93%', 
-//        "aoColumns": tbl_cab,
-//        "aaData": tbl_data,
-//        "fixedColumns": true,
-//        "dom": "Bfrtip",
-//        "buttons": [{extend: 'excel', text: 'Exportar a Excel', className: 'btn btn-info btn-sm'}],
-//        "language": {'url': '/sis/static/datatables/Spanish.json'}
-//    });
         
        var tbl = $('#tbl_dt_' + id_div_tbl).dataTable({
         "bFilter": (opciones.bFilter != undefined)?opciones.bFilter : opciones_default.bFilter,

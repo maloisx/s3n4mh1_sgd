@@ -1,5 +1,5 @@
 function sisbien_prueba_js_component_ws() {
-    console.log("token:" + localStorage.token);
+//    console.log("token:" + localStorage.token);
     var obj_rpta = ws('sisbien.fn_colorbien_obtener', '[""]');
     console.log(obj_rpta);
 
@@ -7,7 +7,7 @@ function sisbien_prueba_js_component_ws() {
     /*llenando un combo box*/
     ws_contenido_combo("cb_prueba", obj_rpta.data, "");
     ws_contenido_combo("cb_prueba_1", obj_rpta.data, "2");
-
+//
     $('#txt_prueba_db').val(obj_rpta.data[0].des_colorbien);
 
     $('#cb_prueba_1').change(function () {
