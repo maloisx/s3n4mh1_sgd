@@ -183,13 +183,15 @@ function pad_mant_expedientes_pad_guardar(){
                 var id_doc = arrayobj[0][2];
                 var ndoc = arrayobj[0][3];
                 var fec_presc_ipad = arrayobj[0][4];
-    console.log('***************------------**************--'+id);
+                var fec_presc_pad = arrayobj[0][5];
+    //console.log('***************------------**************--'+fec_presc_pad);
                 
                 $('#txt_nroexp').val(id);
                 $('#div_mensaje_ajax').html(msj);
                 $('#hd_iddoc').val(id_doc);
-                $('#txt_fecpresc_iniPAD').val(fec_presc_ipad);
                 $('#txt_nrodoc').val(ndoc);
+                $('#txt_fecpresc_iniPAD').val(fec_presc_ipad);
+                $('#txt_fecpres_PAD').val(fec_presc_pad);
                 
                 /*inicio subir archivos */
                 var exp = id.split('-')[0];
@@ -728,6 +730,7 @@ function pad_mant_investigado_detalle(id){
                 var sancion  = arrayobj[0][7];
                 var medidacaut  = arrayobj[0][8];
                 var recurso  = arrayobj[0][9];
+                var dias  = arrayobj[0][10];
                 
                 var msj  = arrayobj[0][0];    
                 $('#hd_idinv').val(id);
@@ -743,6 +746,8 @@ function pad_mant_investigado_detalle(id){
                 $("#cb_medida_caut").change();
                 $('#cb_recurso').val(recurso);
                 $("#cb_recurso").change(); 
+                $("#txt_dias").val(dias); 
+//                console.log('**************************'+dias);
                 
                  $('#cb_investigado').val(id);
                  $('#cb_cargo').val(idcargo);
