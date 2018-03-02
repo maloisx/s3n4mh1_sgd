@@ -236,8 +236,8 @@ public class SisdadController {
                                                     //+ 
                                                       "<span>"+ "<input type='checkbox' class='cb_var cb_var_"+nom_param+"' id='"+id_tmp+"' value='"+id_tmp+"'  idesta='"+cod_esta+"' fecha='"+fecha_trama+"' codvar='"+nom_param+"'  /><label for='"+id_tmp+"'></label>" + n + "</span>"
                                                     + "<div style='display: none' id='div_reg_"+id_tmp+"'></div> "
-                                                    //+"<br>"+btn_flag;
-                                                    + (p.equalsIgnoreCase("ADMIN")?"<br>"+btn_flag:"") ;
+                                                    +"<br>"+btn_flag;
+//                                                    + (p.equalsIgnoreCase("ADMIN")?"<br>"+btn_flag:"") ;
                                                   //+ "</div>";
                                                   
                                                   
@@ -266,10 +266,10 @@ public class SisdadController {
                                     break;
                                 }
                             }
-                    if(p.equalsIgnoreCase("ADMIN"))
+//                    if(p.equalsIgnoreCase("ADMIN"))
                        vx_t.add(btn_bajartrama + btn_mostrartrama); 
-                    else
-                        vx_t.add("");
+//                    else
+//                        vx_t.add("");
                     
                     vx_t.add(exist); 
                     

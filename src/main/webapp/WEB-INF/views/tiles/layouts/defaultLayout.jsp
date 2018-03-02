@@ -168,7 +168,8 @@
             <script src="<c:url value='/static/bootstrap/js/bootstrap.js'/>"></script>-->
               
             <!-- Font Awesome -->
-            <link rel="stylesheet" href="<c:url value='/static/css/font-awesome.min.css'/> ">            
+            <link rel="stylesheet" href="<c:url value='/static/css/font-awesome.min.css'/> ">   
+            
             <link href="<c:url value='/static/MDB/css/bootstrap.min.css'/>" rel="stylesheet">            
             <link href="<c:url value='/static/MDB/css/mdb.css'/>" rel="stylesheet">
             <script type="text/javascript" src="<c:url value='/static/MDB/js/bootstrap.min.js'/>"></script>
