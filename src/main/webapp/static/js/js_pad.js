@@ -287,12 +287,12 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
 //    Mensaje ingreso información 
      var msj_error = "";
     
-    var f_anio = '';
-    f_anio = fechadoc.split('/');
-    f_anio = f_anio[2];
-    if (f_anio !== anio){
-       msj_error += " El año del documento es diferente al del expediente."; 
-    }    
+//    var f_anio = '';
+//    f_anio = fechadoc.split('/');
+//    f_anio = f_anio[2];
+//    if (f_anio !== anio){
+//       msj_error += " El año del documento es diferente al del expediente."; 
+//    }    
     if ($('#cb_denunciante').val() == ''){
         msj_error += " Denunciante.";
     }if ($('#cb_dependencia').val() == ''){
