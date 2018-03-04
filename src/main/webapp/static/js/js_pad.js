@@ -61,6 +61,8 @@ function pad_mant_expedientes_pad_consulta_popup(id){
 function pad_mant_expedientes_pad_guardar(){
     var id = $('#txt_nroexp').val();
     var fecharecep = $('#txt_fecharecep').val();
+    var tiempo = $('#cb_tiempo').val();
+//    console.log('***************'+tiempo);
     var fecpresc_iniPAD = $('#txt_fecpresc_iniPAD').val();
     var etapa = $('#cb_etapa').val();
     var denunciante = $('#cb_denunciante').val();
@@ -170,7 +172,8 @@ function pad_mant_expedientes_pad_guardar(){
                       "&estado="+estado+
                       "&uo_instructor="+uo_instructor+
                       "&uo_sancionador="+uo_sancionador+ 
-                      "&uo_remite="+uo_remite, 
+                      "&uo_remite="+uo_remite+
+                      "&tiempo="+tiempo, 
             beforeSend: function(data){ 
                 $('#div_mensaje_ajax').html("Cargando...");
             },
@@ -262,8 +265,8 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
     var anio = $('#cb_anio').val(); 
     var tiempo = $('#cb_tiempo').val(); 
     var instructor = $('#cb_instructor').val();   
-    var investigado = $('#cb_investigado').val();  
-    var cargo = $('#cb_cargo').val(); 
+    var investigado = $('#cb_investigado').val();
+    var cargo = $('#cb_cargo').val();     
         
     if(instructor == undefined){
         instructor = '';
@@ -285,7 +288,7 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
     }
    
 //    Mensaje ingreso información 
-     var msj_error = "";
+    var msj_error = "";
     
 //    var f_anio = '';
 //    f_anio = fechadoc.split('/');
@@ -293,6 +296,10 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
 //    if (f_anio !== anio){
 //       msj_error += " El año del documento es diferente al del expediente."; 
 //    }    
+    if(investigado !== '' && cargo == ''){
+        msj_error += " Cargo de investigado.";
+    }    
+
     if ($('#cb_denunciante').val() == ''){
         msj_error += " Denunciante.";
     }if ($('#cb_dependencia').val() == ''){
@@ -401,11 +408,11 @@ function pad_mant_expedientes_pad_nuevo_guardar(){
             }
         }); 
     }else{
-        if (f_anio !== anio){
-            $.alert('<h6>Cuidado: '+ msj_error + '</h6>');
-        }else{
+//        if (f_anio !== anio){
+//            $.alert('<h6>Cuidado: '+ msj_error + '</h6>');
+//        }else{
             $.alert('<h6>Ingrese: '+ msj_error + '</h6>');
-        }
+//        }
     } 
 }
 //FIN EXPEDIENTE PAD NUEVO GUARDAR
@@ -633,6 +640,10 @@ function pad_mant_investigado_modificar_guardar(){
     var cargo = $('#cb_cargo').val();
     var observacion = $('#txt_observacion').val();
     var faltas = $('#cb_faltasel').val();
+    if (faltas == null){
+        faltas = "";
+    }
+//    console.log('--*****************'+faltas);
     var sancion = $('#cb_sancion').val();
     var dias = $('#txt_dias').val();
     var medcautelar = $('#cb_medida_caut').val();
@@ -751,6 +762,8 @@ function pad_mant_investigado_detalle(id){
                 
                  $('#cb_investigado').val(id);
                  $('#cb_cargo').val(idcargo);
+                 $("#cb_cargo").change();
+                 $('#txt_idcargo').val(idcargo);
                 
 //              DESHABILITA TABS
                 $('#lista_doc').attr('class','tab-pane');

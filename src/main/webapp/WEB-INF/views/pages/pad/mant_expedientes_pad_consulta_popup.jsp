@@ -47,12 +47,23 @@
                         <label for="txt_nroexp" class="active">N° Exp:</label> 
                     </div> 
                     <div class="input-field col-sm-1">
+                    </div>
+                    <div class="input-field col-sm-1">
                         <input name="txt_fecharecep" id="txt_fecharecep" type="text" class="datepicker" value="${requestScope['fecharecep']}" style="text-align: center; font-size:120%; font-weight:bold;" />
                         <label for="txt_fecharecep" class="active">Fecha Recep.ORH:</label>
+                    </div> 
+                    <div class="input-field text-right col-sm-1">
+                        <select name="cb_tiempo" id="cb_tiempo" class="form-control selectpicker" data-size="3">
+                            <option value="1">1 año</option>
+                            <option value="3">3 años</option>
+                        </select>                    
+                        <label for="cb_tiempo" class="active">Tiempo Prescr.</label>  
                     </div>
                     <div class="input-field col-sm-1">
                         <input name="txt_fecpresc_iniPAD" id="txt_fecpresc_iniPAD" type="text" value="${requestScope['fecpresc_iniPAD']}" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
                         <label for="txt_fecpresc_iniPAD" class="active">Fecha Prescr. Inicio PAD:</label>
+                    </div>
+                    <div class="input-field col-sm-1">
                     </div>
                     <div class="input-field col-sm-1">
                         <input name="txt_fecnotif_iniPAD" id="txt_fecnotif_iniPAD" type="text" class="datepicker" value="${requestScope['fecnotif_iniPAD']}" style="text-align: center; font-size:120%; font-weight:bold;"/>
@@ -62,9 +73,7 @@
                         <input name="txt_fecpres_PAD" id="txt_fecpres_PAD" type="text" value="${requestScope['fecpres_PAD']}" readonly style="text-align: center; color: red; font-size:120%; font-weight:bold;"/>
                         <label for="txt_fecpres_PAD" class="active">Fecha Prescr. PAD:</label>
                     </div>
-                    <div class="input-field col-sm-1">
-                    </div>
-                    <div class="input-field text-right col-sm-4">
+                    <div class="input-field text-right col-sm-2">
                         <select name="cb_etapa" id="cb_etapa" class="form-control selectpicker " data-size="4" disabled>${requestScope['etapa']}</select>                    
                         <label for="cb_etapa" class="active">Etapa:</label> 
                     </div>  
