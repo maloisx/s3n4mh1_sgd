@@ -53,10 +53,12 @@
                     </div>
                     <input type="hidden" name="cb_investigado" id="cb_investigado"/>
                     <div class="input-field col-sm-5">
-                        <input name="txt_cargo" id="txt_cargo" type="text" />
-                        <label for="txt_cargo" class="active">Cargo:</label>
+<!--                        <input name="txt_cargo" id="txt_cargo" type="text" />
+                        <label for="txt_cargo" class="active">Cargo:</label>-->
+                        <select name="cb_cargo" id="cb_cargo" class="form-control selectpicker" data-size="5" onchange="">${requestScope['cargo']}</select>                    
+                        <label for="cb_cargo" class="active">Cargo:</label> 
                     </div>
-                    <input type="hidden" name="cb_cargo" id="cb_cargo"/>
+                    <input type="hidden" name="txt_idcargo" id="txt_idcargo"/>
                 </div>
                 <hr  style="width:90%"/>
                 <br><br>  

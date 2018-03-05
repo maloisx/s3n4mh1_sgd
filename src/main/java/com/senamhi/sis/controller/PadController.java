@@ -333,13 +333,14 @@ public class PadController {
         String tipo_proced = request.getParameter("tipo_proced");  
         String estado = request.getParameter("estado");  
         String uo_remite = request.getParameter("uo_remite");  
+        String tiempo = request.getParameter("tiempo"); 
 //        
         String var_request = "";
 
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "pad.fn_expediente_pad_mant";
-            String array[] = new String[27];
+            String array[] = new String[28];
             array[0] = id;
             array[1] = fecharecep;
             array[2] = fecpresc_iniPAD;
@@ -367,6 +368,7 @@ public class PadController {
             array[24] = uo_instructor;
             array[25] = uo_sancionador;
             array[26] = uo_remite;
+            array[27] = tiempo;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
