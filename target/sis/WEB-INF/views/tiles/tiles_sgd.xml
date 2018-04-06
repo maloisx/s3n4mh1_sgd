@@ -783,8 +783,42 @@
     <definition name="sgd/mant_busca_ciudadano_dni"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_busca_ciudadano_dni.jsp" />
     </definition>
+    
+    <definition name="sgd/mant_mapa_mostrar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_mapa_mostrar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_variables_mostrar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_variables_mostrar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_solicitud_crear"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_crear.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_busca_ciudadano_ruc"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_busca_ciudadano_ruc.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_ciudadano_ruc_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ciudadano_ruc_guardar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_ciudadano_dni_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ciudadano_dni_guardar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_pendientes_dir"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_pendientes_dir.jsp" />
+    </definition>
+        
+    <definition name="sgd/mant_subdireccion_cbo"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_subdireccion_cbo.jsp" />
+    </definition>
+        
+    <definition name="sgd/mant_pendientes_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_pendientes_tbl.jsp" />
+    </definition>
             
-        
-        
         
 </tiles-definitions>
