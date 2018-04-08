@@ -1258,7 +1258,7 @@ function sgd_mant_expediente_guardar(){
     var id_doc = $('#hd_iddoc').val(); //id para consulta de documentos adjuntos
     
     var clsdoc = $('#cb_clsfdoc').val();
-    console.log('**********************************'+clsdoc);
+//    console.log('**********************************'+clsdoc);
     var numd = $('#txt_nrodoc').val();
     var fecd = $('#txt_fec_doc').val();
     var fecreg_doc = $('#hd_fecreg_doc').val();
@@ -3576,3 +3576,56 @@ function sgd_mant_unid_func_rec(){
         });  
 }
 //FIN BUSCAR PERSONAL POR UNIDAD FUNCIONAL RECIBE
+//
+//
+//INICIO BUSCAR SUBDIRECCIÓN
+function sgd_mant_subdireccion_cbo(){
+    var direccion = $('#cb_direccion').val();
+            
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_subdireccion_cbo/", 
+            data:     "direccion="+direccion,	 	 
+            beforeSend: function(data){ 	 	
+                $('#cb_subdireccion').html("<option>CARGANDO...</option>");
+                $('#cb_subdireccion').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_subdireccion').html(requestData);
+                $('#cb_subdireccion').selectpicker('refresh');
+            },			
+            error: function(requestData, strError, strTipoError){
+                $('#cb_subdireccion').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_subdireccion').selectpicker('refresh');
+            }
+        });  
+}
+//FIN BUSCAR BUSCAR SUBDIRECCIÓN
+//  
+//INICIO PENDIENTES
+function sgd_mant_pendientes_tbl(){
+    var anio = $('#cb_periodo').val();
+    var direccion = $('#cb_direccion').val();
+    var subdireccion = $('#cb_subdireccion').val();
+    
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_pendientes_tbl/",
+            data:     "anio="+anio+
+                      "&direccion="+direccion+
+                      "&subdireccion="+subdireccion,
+            beforeSend: function(data){
+                $('#div_pendientes_tbl').html("Cargando...");
+            },
+            success: function(requestData){
+                $('#div_pendientes_tbl').html(requestData);
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_pendientes_tbl').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN PENDIENTES
+//
