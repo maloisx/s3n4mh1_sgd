@@ -18,12 +18,12 @@ function ws(p_1, p_2, p_3) {
         p_schema = "";
         p_pkg = p_1;
         p_param = p_2;
-        url_path_db = "/pg";
+        url_path_db = "/global/pg";
     } else {
         p_schema = p_1;
         p_pkg = p_2;
         p_param = p_3;
-        url_path_db = "/ora";
+        url_path_db = "/global/ora";
     }
 
 
@@ -59,6 +59,32 @@ function ws(p_1, p_2, p_3) {
 
         localStorage.token = token;
         //console.log(localStorage.token); 
+    });
+    return respuesta;
+}
+
+function ws_server(p_ip,p_cmd) {  
+
+    var url_path_db =  "/servers/info";
+    
+    var respuesta = '';
+        var settings = {
+        'async': false,
+        'crossDomain': true,
+        'url': path_ws + url_path_db,
+        'method': 'POST',
+        'headers': {
+            'content-type': 'application/x-www-form-urlencoded',
+            'cache-control': 'no-cache'
+        },
+        'data': {
+            'ip': p_ip,
+            'cmd': p_cmd
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        respuesta = response;
     });
     return respuesta;
 }

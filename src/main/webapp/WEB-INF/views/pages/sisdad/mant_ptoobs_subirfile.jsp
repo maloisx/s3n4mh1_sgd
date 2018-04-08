@@ -27,7 +27,7 @@
 <div class="row">
     <div class="input-field col-sm-1"></div> 
     <div class="input-field col-sm-10">   
-        <label>LOG: ( Si encuentra error comunicarse al correo mpuza@senamhi.gob.pe o llamar al número 982 569 94. )</label><br><br>
+        <label>LOG: ( Si encuentra error comunicarse al correo mpuza@senamhi.gob.pe o llamar al número 982 569 941. )</label><br><br>
         <div id="id_div_log" style="border: 1px solid"></div>        
     </div>
 </div>

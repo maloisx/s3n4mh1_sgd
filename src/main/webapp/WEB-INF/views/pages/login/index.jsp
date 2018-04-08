@@ -25,7 +25,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col">
-                            <img src="/sis/static/img/48-anos-renovando.png" alt="48 años de renovacion constante" class="img-fluid" style="padding: 20px;" />
+                            <img src="/sis/static/img/anos-logo.png" alt="48 años de renovacion constante" class="img-fluid" style="padding: 20px;" />
   
                             <div class="container">
                                 <div class="row justify-content-md-center">
