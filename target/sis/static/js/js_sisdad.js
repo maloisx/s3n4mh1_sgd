@@ -1007,24 +1007,40 @@ function sisdad_js_mant_ptoobs_subirfile_btn_procesar() {
                             cad_json = '["' + serial + '","' + fecha + '","' + val_temp + '","' + val_rh + '","' + val_pr + '"]';
                             console.log(cad_json);
                             var obj_reg = ws('sisdad', 'pkg_ws.sp_reg_ptoobs_dat_codext', cad_json);
+                            console.log(i + ")");
                             console.log(obj_reg);
-                            var response_status = obj_reg.request.STATUS;
-                            var response_msn = "";
-                            var response_type = "";
-                            if (response_status == 'OK') {
-                                response_msn = obj_reg.data[0].MSG;
-                                //response_type = "green"
-                                cant_ok++;
-                                porc = (cant_ok * 100) / cant_reg;
-                                $('#pb_subirfile').css({'width': porc + '%'});
-                                //$('#id_div_log').append(cad_json + " " + "OK" + "<br>" ); 
-                            } else {
-                                response_msn = obj_reg.request.MSG;
-//                                    //response_type = "red";
-                                cant_error++;
-                                //$('#id_div_log').append(cad_json + " -> " + response_msn + "<br>"); 
-                                error_log += cad_json + " -> " + response_msn + "<br>";
+                                                        
+                            var dat = obj_reg.data ;
+                            if(dat == null){
+                                var nnn = 0;
+                                do{
+                                    var obj_reg = ws('sisdad', 'pkg_ws.sp_reg_ptoobs_dat_codext', cad_json);
+                                    dat = obj_reg.data ;
+                                    nnn++;
+                                    console.log("---> intento nro: " + nnn);
+                                    console.log(obj_reg);
+                                }while( nnn < 10 || !dat == null )
+                            }else{
+                                var response_status = obj_reg.request.STATUS;
+                                var response_msn = "";
+                                var response_type = "";
+                                if (response_status == 'OK') {
+                                    response_msn = obj_reg.data[0].MSG;
+                                    //response_type = "green"
+                                    cant_ok++;
+                                    porc = (cant_ok * 100) / cant_reg;
+                                    $('#pb_subirfile').css({'width': porc + '%'});
+                                    //$('#id_div_log').append(cad_json + " " + "OK" + "<br>" ); 
+                                } else {
+                                    response_msn = obj_reg.request.MSG;
+    //                                    //response_type = "red";
+                                    cant_error++;
+                                    //$('#id_div_log').append(cad_json + " -> " + response_msn + "<br>"); 
+                                    error_log += cad_json + " -> " + response_msn + "<br>";
+                                }
                             }
+                            
+                            
                         }
 
                         $('#id_div_log').append("<br>Archivo: " + theFile.name);
