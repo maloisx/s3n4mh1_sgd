@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>  
+
+    <definition name="sisserver/listserver" extends="base-definition">  
+       <put-attribute name="title" value="sisserver PRUEBA" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisserver/listserver.jsp" />  
+   </definition> 
+   
+   <definition name="sisserver/detalleservidor" extends="base-definition">  
+       <put-attribute name="title" value="sisserver PRUEBA" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisserver/detalleservidor.jsp" />  
+   </definition> 
+   
+ 
+</tiles-definitions>

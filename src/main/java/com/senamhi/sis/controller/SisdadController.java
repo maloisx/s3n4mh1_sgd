@@ -255,11 +255,11 @@ public class SisdadController {
                                 Vector v_rawdata_sub =  (Vector) v_rawdata.get(x);
                                 String fec_rawdata = (String) v_rawdata_sub.get(1);
                                 String t_rawdata = (String) v_rawdata_sub.get(2);
-                                t_rawdata = t_rawdata.replace("\"", " ").replace("'", "\\\\\\'").replace("\\", "\\\\\\\\");
+                                t_rawdata = t_rawdata.replace("\"", " ").replace("'", "\\\\\\'").replace("\\", "\\\\");
                                 //System.out.println(fec_rawdata +" -> " +fecha_trama);
                                 //System.out.println(t_rawdata);
                                 if(fec_rawdata.equalsIgnoreCase(fecha_trama)){
-                                    //System.out.println(fec_rawdata +" -> " +fecha_trama + " ok");                                    
+                                    System.out.println(fec_rawdata +" -> " +fecha_trama +" -> " +t_rawdata + " ok");                                    
                                     String id_div = fecha_trama.replace(" ","").replace("/","").replace(":","");
                                     btn_bajartrama   = "<div align='center' style='float:left' id='div_fecha_"+id_div+"'><ul><li style='width:18px' class='ui-state-default ui-corner-all btn_reg_rawdata btn_reg_rawdata_"+exist+"' title='Descargar datos "+fecha_trama+"' onclick='registrar_rawdata(\""+id_div+"\",\""+t_rawdata+"\")'><span class='ui-icon ui-icon-circle-arrow-s'></span></li></ul></div>";
                                     btn_mostrartrama = "<div align='center' style='float:right'><ul><li style='width:18px' class='ui-state-default ui-corner-all title='mostrar rawdata "+fecha_trama+"' onclick='$.dialog({title: \"RAWDATA del "+fecha_trama+"\" , content:\""+t_rawdata+"\"})'><span class='ui-icon ui-icon-info'></span></li></ul></div>";
