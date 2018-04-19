@@ -79,6 +79,7 @@
             <link href="<c:url value='/static/datatables/css/dataTables.bootstrap.css'/>" rel="stylesheet">
             
             <!--<link href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap.min.css" rel="stylesheet">-->
+            <link href="<c:url value='/static/datatables/css/responsive.bootstrap.min.css'/>" rel="stylesheet">
             <link href="<c:url value='/static/datatables/ext/responsive.bootstrap.min.css'/>" rel="stylesheet">
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/jquery.dataTables.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.bootstrap.js'/>"></script>
@@ -86,6 +87,9 @@
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/TableTools.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/FixedColumns.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/FixedHeader.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.responsive.min.js'/>"></script>
+            <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/responsive.bootstrap.min.js'/>"></script>
+            
 
             <!--xxxx<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>-->
         <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.buttons.js'/>"></script>

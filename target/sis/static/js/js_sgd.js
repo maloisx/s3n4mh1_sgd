@@ -3629,3 +3629,49 @@ function sgd_mant_pendientes_tbl(){
 }
 //FIN PENDIENTES
 //
+//INICIO SOLICITUD ATENCIÓN AL CIUDADANO TABLA
+function sgd_mant_solicitud_atenciud_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "sgd/mant_solicitud_atenciud_tbl/",
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_solicitud_atenciud_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_solicitud_atenciud_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){
+                $('#div_mant_solicitud_atenciud_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN SOLICITUD ATENCIÓN AL CIUDADANO TABLA
+//
+//INICIO SOLICITUD ATENCIÓN AL CIUDADANO POPUP
+function sgd_mant_solicituddetalle_popup(id_sol){
+    
+    var url = encodeURI(path + "sgd/mant_solicituddetalle_popup/?id_sol="+id_sol);
+  
+    $.colorbox({
+        "href" : url
+       ,"width" : 800
+       ,"height" : 900 
+    });
+}
+//FIN SOLICITUD ATENCIÓN AL CIUDADANO POPUP
+//
+//INICIO GENERAR CUT DESDE SOLICITUD
+function sgd_mant_solicitud_generacut_popup(id_sol){
+    
+    var url = encodeURI(path + "sgd/mant_solicitud_generarcut_popup/?id_sol="+id_sol);
+  
+    $.colorbox({
+        "href" : url
+       ,"width" : 1200
+       ,"height" : 1000 
+    });
+}
+//FIN GENERAR CUT DESDE SOLICITUD
