@@ -796,6 +796,10 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_crear.jsp" />
     </definition>
     
+    <definition name="sgd/mant_dpto_mostrar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_dpto_mostrar.jsp" />
+    </definition>
+    
     <definition name="sgd/mant_busca_ciudadano_ruc"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_busca_ciudadano_ruc.jsp" />
     </definition>
@@ -808,6 +812,34 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_ciudadano_dni_guardar.jsp" />
     </definition>
     
+    <definition name="sgd/mant_solicitud_otros_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_otros_guardar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_solicitud_info_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_info_guardar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_solicitud_tupa_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_tupa_guardar.jsp" />
+    </definition>
+    
+     <definition name="sgd/mant_solicitud_atenciud"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_atenciud.jsp" />
+    </definition>
+        
+    <definition name="sgd/mant_solicitud_atenciud_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_atenciud_tbl.jsp" />
+    </definition>
+        
+    <definition name="sgd/mant_solicituddetalle_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicituddetalle_popup.jsp" />  
+    </definition> 
+        
+    <definition name="sgd/mant_solicitud_generarcut_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_generarcut_popup.jsp" />  
+    </definition> 
+        
     <definition name="sgd/mant_pendientes_dir"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_pendientes_dir.jsp" />
     </definition>

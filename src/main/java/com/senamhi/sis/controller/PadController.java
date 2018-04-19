@@ -62,7 +62,6 @@ public class PadController {
             String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
             request.setAttribute("abogado", cb_abogado);
                         
-            
             return "pad/mant_expedientes_pad";
 	}
 //FIN LISTA DE EXPEDIENTE DEL PAD BASE

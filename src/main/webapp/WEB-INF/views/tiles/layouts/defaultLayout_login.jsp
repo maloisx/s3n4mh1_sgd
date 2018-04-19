@@ -182,6 +182,6 @@
 <body> 
 
             <tiles:insertAttribute name="body" />
- 
+<tiles:insertAttribute name="javascript_final_general" /> 
 </body>
 </html>

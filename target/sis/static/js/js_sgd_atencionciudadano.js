@@ -97,8 +97,7 @@ function sgd_mant_busca_ciudadano_dni(tipo_doc){
                     $('#lb_telefono').addClass('active');
                     $('#btn_guarda_ciudadano_dni').text('Actualizar');
                     $('#div_msg_registro').hide();
-                    $('#div_inf_ref').show();
-                    $('#div_mapa').show();
+                    $('#div_cbo_servicio').show();
                     sgd_mant_mapa_mostrar();
                 }else if (arrayobj.length == 0){
                     $('#div_msg_registro').text('Registre sus datos.');
@@ -150,7 +149,8 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                 var telefono  = "";
                 var sector  = "";
                 var representante  = "";
-                var dni_rep  = "";
+                var telef_rep  = "";
+                var email_rep  = "";
                 $('#div_per_juridica').show();
                                 
                 if (arrayobj.length !== 0){
@@ -162,7 +162,8 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                     telefono  = arrayobj[0][6];
                     sector  = arrayobj[0][9];
                     representante  = arrayobj[0][3];
-                    dni_rep  = arrayobj[0][8];
+                    telef_rep  = arrayobj[0][10];
+                    email_rep  = arrayobj[0][11];
 
                     $('#hd_id').val(id);
                     $('#txt_rsocial').val(rsocial);
@@ -177,12 +178,13 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                     $('#lbl_direccion_ruc').addClass('active');
                     $('#txt_representante').val(representante);
                     $('#lb_representante').addClass('active');
-                    $('#txt_dni_rep').val(dni_rep);
-                    $('#lb_dni_rep').addClass('active');
+                    $('#txt_telef_rep').val(telef_rep);
+                    $('#lb_telef_rep').addClass('active');
+                    $('#txt_email_rep').val(email_rep);
+                    $('#lb_email_rep').addClass('active');
                     $('#btn_guarda_ciudadano_ruc').text('Actualizar');
                     $('#div_msg_registro').hide();
-                    $('#div_inf_ref').show();
-                    $('#div_mapa').show();
+                    $('#div_cbo_servicio').show();
                 }else if (arrayobj.length == 0){
                     $('#div_msg_registro').text('Registre sus datos.');
                     $('#div_msg_registro').show();
@@ -194,7 +196,8 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                     $('#txt_telefono_ruc').val(email);
                     $('#txt_email_ruc').val(telefono);
                     $('#txt_representante').val(representante);
-                    $('#txt_dni_rep').val(dni_rep);
+                    $('#txt_telef_rep').val(telef_rep);
+                    $('#txt_email_rep').val(email_rep);
                 }
             },
             error: function(requestData, strError, strTipoError){
@@ -250,13 +253,15 @@ function sgd_mant_ciudadano_dni_guardar(){
 //INICIO BUSCAR MAPA
 function sgd_mant_mapa_mostrar(){
     var cod_estacion = $('#cb_estacion').val();
+    var cod_dpto = $('#cb_dpto').val();
     //console.log(cod_estacion);
     
     $.ajax({
             dataType: "html",
             type:     "GET",
             url:      path + "sgd/mant_mapa_mostrar/",
-            data:     "cod_estacion="+cod_estacion,
+            data:     "cod_estacion="+cod_estacion
+                     +"&cod_dpto="+cod_dpto,
             beforeSend: function(data){
                 $('#div_map').html("Cargando...");
             },
@@ -285,7 +290,7 @@ function sgd_mant_ciudadano_ruc_guardar(){
     var telefono = $('#txt_telefono_ruc').val();
     var representante = $('#txt_representante').val();
     var dni_rep = $('#txt_dni_rep').val();
-    if(msj_error == ''){   
+    if(msj_error == ''){
         $.ajax({
             dataType: "html",
             type:     "GET",
@@ -311,13 +316,13 @@ function sgd_mant_ciudadano_ruc_guardar(){
                 $('#div_msg_registro').show();
                 $('#div_msg_registro').html(msj);
             },
-            error: function(requestData, strError, strTipoError){								
+            error: function(requestData, strError, strTipoError){
                 $('#div_msg_registro').html("Error " + strTipoError +": " + strError);
             }
         });
     }else{
          $.alert('<h6>Ingrese: ' + msj_error + '</h6>');
-    }       
+    }
 }
 //FIN GUARDAR CIUDADANO RUC
 
@@ -468,12 +473,14 @@ function estacion_datos(codestacion, estacion, sub_esta, tipo, dpto, prov, dtrit
 //INICIO VARIABLES POR ESTACIÓN
 function sgd_estacion_variables(){
     var cod_estacion = $('#txt_cod_estacion').val();
+    var des_estacion = $('#txt_estacion').val();
     
     $.ajax({
             dataType: "html",
             type:     "GET",
             url:      path + "sgd/mant_variables_mostrar/",
-            data:     "cod_estacion="+cod_estacion,
+            data:     "cod_estacion="+cod_estacion+
+                      "&des_estacion="+des_estacion,
             beforeSend: function(data){
                 $('#div_variables').html("Cargando...");
             },
@@ -489,22 +496,31 @@ function sgd_estacion_variables(){
 //
 //INICIO ADICIONAR PEDIDO A SOLICITUD
 function sgd_mant_add_solicitud(){
-    var cod_estacion = $('#txt_cod_estacion').val();   
-    var des_estacion = $('#txt_estacion').val();   
+    var cod_estacion = $('#txt_cod_estacion').val();
+    var id_var = $('#hd_id_var').val();
+    $('#div_solicitud_detalle').show(); 
+    
     $.ajax({
             dataType: "html",
             type:     "GET",
             url:      path + "sgd/mant_solicitud_crear/",
             data:     "cod_estacion="+cod_estacion+
-                      "&des_estacion="+des_estacion,
+                      "&id_var="+id_var,
             beforeSend: function(data){
-                $('#div_solicitud').html("Cargando...");
+                $('#div_solicitud_detalle').html("Cargando...");
             },
             success: function(requestData){
-                $('#div_solicitud').html(requestData);
+//                console.log(requestData);
+                $('#div_solicitud_detalle').html(requestData);
+                $('#div_solicitud_titulo').show();
+                $('#div_solicitud_info').show();
+                $('#div_motivo').show();
+                $('#div_observacion').show();
+                $('#div_enviar_sol_info').show();
+                                
             },
             error: function(requestData, strError, strTipoError){								
-                $('#div_solicitud').html("Error " + strTipoError +": " + strError);
+                $('#div_solicitud_detalle').html("Error " + strTipoError +": " + strError);
             }
         });
 }
@@ -513,16 +529,266 @@ function sgd_mant_add_solicitud(){
 //INICIO LISTA DE VARIABLES
 function lista_variables(){
     var id_var = "";
-        $('.cb_variable:checked').each(function () {        
-            id_var += $(this).val() + ",";  
-        }); 
-        id_var = id_var.substring(0, id_var.length - 1); 
-        $('#hd_id_var').val(id_var);
-        console.log(id_var);
-}       
+    var valor_var = "";
+     var tempo = "";
+    var temp_var = $('#hd_id_var').val();   
+    
+    $('.cb_variable:checked').each(function () {
+        valor_var += $(this).val() + ",";  
+        tempo = $(this).val();
+    });
+
+        if (temp_var == ''){
+            var id_var_tmp = valor_var;
+            $('#hd_id_var').val(id_var_tmp); 
+        }else{
+            var array_cad_var = temp_var.split(',');
+            for (var i=0; i<array_cad_var.length-1; i++){
+                var cad = array_cad_var[i];
+                if(cad !== tempo){
+                    id_var += tempo + ",";
+                    var id_var_tmp = temp_var + valor_var;
+                    $('#hd_id_var').val(id_var_tmp);
+                }
+            }    
+        }           
+}
 //FIN LISTA DE DE VARIABLES
 //
-
-
-
-
+//INICIO MOSTRAR ESTACIONES POR DEPARTAMENTO
+function sgd_mant_dpto_mostrar(){
+    var cod_dpto = $('#cb_dpto').val();
+    
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_dpto_mostrar/",
+            data:     "cod_dpto="+cod_dpto,
+            beforeSend: function(data){
+                $('#cb_estacion').html("<option>CARGANDO...</option>");
+                $('#cb_estacion').selectpicker('refresh');
+            },
+            success: function(requestData){
+                $('#cb_estacion').html(requestData);
+                $('#cb_estacion').selectpicker('refresh');
+                sgd_mant_mapa_mostrar();
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#cb_estacion').html("<option>Error " + strTipoError +": " + strError+"</option>");
+                $('#cb_estacion').selectpicker('refresh');
+            }
+        });
+}
+//FIN MOSTRAR ESTACIONES POR DEPARTAMENTO
+//
+//INICIO MOSTRAR SOLICITUD
+function sgd_mant_solicitud_mostrar(){
+    var cod_procedimiento = $('#cb_servicio').val();
+    $('#div_solicitud_info').show();
+    $('#div_motivo').show();
+    
+    if (cod_procedimiento == '4'){
+        $('#div_mapa').show();
+        $('#div_solicitud_titulo').hide();
+        $('#div_solicitud_otros').hide();
+        $('#div_observacion').hide();
+        $('#div_enviar_sol_info').hide();
+        $('#div_enviar_sol_otros').hide();
+    }else if(cod_procedimiento == '2'){
+        $('#div_solicitud_titulo').show();
+        $('#div_solicitud_otros').show();
+        $('#div_solicitud_tupa').show()
+        $('#div_solicitud_tupa_detalle').show();
+        $('#div_enviar_sol_tupa').show();
+        $('#div_observacion').show();
+        $('#div_solicitud_info').hide();
+        $('#div_enviar_sol_otros').hide();
+    }else{
+        $('#div_solicitud_otros').show();
+        $('#div_mapa').hide();
+        $('#div_observacion').show();
+        $('#div_enviar_sol_info').hide();
+        $('#div_enviar_sol_otros').show();
+        $('#div_solicitud_titulo').show();
+//        $('#div_motivo').show();
+        $('#div_solicitud_detalle').show();
+        $('#div_solicitud_otros').show();
+    }
+        
+}
+//FIN MOSTRAR SOLICITUD
+//
+//INICIO GUARDAR SOLICITUD OTROS
+function sgd_mant_enviar_solicitud_otros(){//DETERMINAR CAMPOS OBLIGATORIOS
+    var id_sol = $('#hd_id_sol').val();
+    var motivo = $('#txt_motivo').val();
+    var proc = $('#cb_servicio').val();
+    var descr = $('#txt_descripcion').val();
+    var obs = $('#txt_observacion').val();
+    var cod_adm = $('#hd_id').val();
+    
+    var msj_error = "";
+    if (motivo.length == 0){
+        msj_error += " Ingrese el motivo de la solicitud.";
+    }
+    
+    if(msj_error == ''){
+        $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_solicitud_otros_guardar/",
+            data:     "id_sol="+id_sol
+                      +"&motivo="+motivo
+                      +"&proc="+proc
+                      +"&descr="+descr
+                      +"&obs="+obs
+                      +"&cod_adm="+cod_adm,
+            beforeSend: function(data){
+                $('#div_msg_registro_sol').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj = arrayobj[0][1];//datos guardados
+                
+                $('#hd_id_sol').val(id);
+                $('#div_msg_registro_sol').show();
+                $('#div_msg_registro_sol').html(msj);
+            },
+            error: function(requestData, strError, strTipoError){								
+                $('#div_msg_registro_sol').html("Error " + strTipoError +": " + strError);
+            }
+        });
+    }else{
+         $.alert('<h6>Ingrese: ' + msj_error + '</h6>');
+    }
+}
+//FIN GUARDAR SOLICITUD OTROS
+//
+//INICIO GUARDAR SOLICITUD TUSNE INFORMACIÓN
+function sgd_mant_enviar_solicitud_info(){
+    var id_sol = $('#hd_id_sol').val();
+    var motivo = $('#txt_motivo').val();
+    var proc = $('#cb_servicio').val();
+    var obs = $('#txt_observacion').val();
+    var id_var = $('#hd_id_var').val();
+    var cod_adm = $('#hd_id').val();
+    
+    var fec_ini = "";
+        $('.fec_ini').each(function () {
+            fec_ini += $(this).val() + ",";
+        }); 
+        fec_ini = fec_ini.substring(0, fec_ini.length - 1);
+    var fec_fin = "";
+        $('.fec_fin').each(function () {
+            fec_fin += $(this).val() + ",";
+        }); 
+        fec_fin = fec_fin.substring(0, fec_fin.length - 1);
+    var cad_var = "";
+        $('.cad_variable').each(function () {
+            cad_var += $(this).val() + ",";
+        }); 
+        cad_var = cad_var.substring(0, cad_var.length - 1);
+    var cad_esc = "";
+        $('.cb_escala').each(function () {
+            cad_esc += $(this).val() + ",";
+        }); 
+        cad_esc = cad_esc.substring(0, cad_esc.length - 1);
+    var cad_des_est = "";
+        $('.cad_estacion').each(function () {
+            cad_des_est += $(this).val() + ",";
+        }); 
+        cad_des_est = cad_des_est.substring(0, cad_des_est.length - 1);
+    var cad_des_var = "";
+        $('.cad_desvariable').each(function () {
+            cad_des_var += $(this).val() + ",";
+        }); 
+        cad_des_var = cad_des_var.substring(0, cad_des_var.length - 1);
+    
+    var msj_error = "";
+    if (motivo.length == 0){
+        msj_error += " Ingrese el motivo de la solicitud.";
+    }
+    
+    if(msj_error == ''){
+        $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_solicitud_info_guardar/",
+            data:     "id_sol="+id_sol
+                      +"&motivo="+motivo
+                      +"&proc="+proc
+                      +"&obs="+obs
+                      +"&cod_adm="+cod_adm
+                      +"&cad_var="+cad_var
+                      +"&fec_ini="+fec_ini
+                      +"&fec_fin="+fec_fin
+                      +"&cad_esc="+cad_esc
+                      +"&cad_des_est="+cad_des_est
+                      +"&cad_des_var="+cad_des_var,
+            beforeSend: function(data){
+                $('#div_msg_registro_sol').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj = arrayobj[0][1];//datos guardados
+                
+                $('#hd_id_sol').val(id);
+                $('#div_msg_registro_sol').show();
+                $('#div_msg_registro_sol').html(msj);
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_msg_registro_sol').html("Error " + strTipoError +": " + strError);
+            }
+        });
+    }else{
+         $.alert('<h6>Ingrese: ' + msj_error + '</h6>');
+    }
+}
+//FIN GUARDAR SOLICITUD TUSNE INFORMACIÓN
+//
+//INICIO GUARDAR SOLICITUD TUPA
+function sgd_mant_enviar_solicitud_tupa(){
+    var id_sol = $('#hd_id_sol').val();
+    var proc = $('#cb_servicio').val();
+    var descr = $('#txt_descripcion').val();
+    var obs = $('#txt_observacion').val();
+    var cod_adm = $('#hd_id').val();
+    
+    var msj_error = "";
+    if (descr.length == 0){
+        msj_error += " Ingrese el motivo de la solicitud.";
+    }
+    
+    if(msj_error == ''){
+        $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_solicitud_tupa_guardar/",
+            data:     "id_sol="+id_sol
+                      +"&proc="+proc
+                      +"&descr="+descr
+                      +"&obs="+obs
+                      +"&cod_adm="+cod_adm,
+            beforeSend: function(data){
+                $('#div_msg_registro_sol').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var id  = arrayobj[0][0];
+                var msj = arrayobj[0][1];//datos guardados
+                
+                $('#hd_id_sol').val(id);
+                $('#div_msg_registro_sol').show();
+                $('#div_msg_registro_sol').html(msj);
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_msg_registro_sol').html("Error " + strTipoError +": " + strError);
+            }
+        });
+    }else{
+         $.alert('<h6>Ingrese: ' + msj_error + '</h6>');
+    }    
+}
+//
