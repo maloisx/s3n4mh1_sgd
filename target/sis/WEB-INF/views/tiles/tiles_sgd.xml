@@ -824,13 +824,13 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_tupa_guardar.jsp" />
     </definition>
     
-     <definition name="sgd/mant_solicitud_atenciud"  extends="base-definition">
+    <definition name="sgd/mant_solicitud_atenciud"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_atenciud.jsp" />
     </definition>
         
     <definition name="sgd/mant_solicitud_atenciud_tbl"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_atenciud_tbl.jsp" />
-    </definition>
+    </definition>    
         
     <definition name="sgd/mant_solicituddetalle_popup"  extends="popup-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicituddetalle_popup.jsp" />  
@@ -839,7 +839,33 @@
     <definition name="sgd/mant_solicitud_generarcut_popup"  extends="popup-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_generarcut_popup.jsp" />  
     </definition> 
+    
+    <definition name="sgd/mant_solicitud_resumendia"  extends="base-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_resumendia.jsp" />
+    </definition>
         
+    <definition name="sgd/mant_solicitud_resumendia_tbl"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_resumendia_tbl.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_cut_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_cut_guardar.jsp" />
+    </definition>
+    
+    <definition name="sgd/reportesolicitud" extends="base-definition">  
+        <put-attribute name="title" value="SGD Reporte de Solicitud" />  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/reportesolicitud.jsp" />  
+    </definition> 
+    
+    <definition name="sgd/mant_tipo_entrega_chkb"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_tipo_entrega_chkb.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_rpta_email_chkb"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rpta_email_chkb.jsp" />
+    </definition>
+    
+                
     <definition name="sgd/mant_pendientes_dir"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_pendientes_dir.jsp" />
     </definition>

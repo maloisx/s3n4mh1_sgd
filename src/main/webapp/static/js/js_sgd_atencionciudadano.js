@@ -587,22 +587,60 @@ function sgd_mant_solicitud_mostrar(){
     $('#div_solicitud_info').show();
     $('#div_motivo').show();
     
-    if (cod_procedimiento == '4'){
+    if (cod_procedimiento == '4'){//EXPEDICIÓN DE LA INFORMACIÓN
         $('#div_mapa').show();
         $('#div_solicitud_titulo').hide();
         $('#div_solicitud_otros').hide();
         $('#div_observacion').hide();
+        $('#div_solicitud_info').hide();
         $('#div_enviar_sol_info').hide();
         $('#div_enviar_sol_otros').hide();
-    }else if(cod_procedimiento == '2'){
+        $('#div_solicitud_tupa').hide();
+        $('#div_solicitud_tupa_detalle').hide();
+        $('#div_solicitud_rpta').hide();
+        $('#div_enviar_sol_tupa').hide();
+    }else if(cod_procedimiento == '2'){//TUPA
         $('#div_solicitud_titulo').show();
         $('#div_solicitud_otros').show();
-        $('#div_solicitud_tupa').show()
+        $('#div_solicitud_tupa').show();
         $('#div_solicitud_tupa_detalle').show();
+        $('#div_solicitud_rpta').show();
+        sgd_tipo_entrega_chkb();
+        sgd_rpta_email_chkb();
         $('#div_enviar_sol_tupa').show();
         $('#div_observacion').show();
         $('#div_solicitud_info').hide();
         $('#div_enviar_sol_otros').hide();
+    }else if(cod_procedimiento == ''){
+        $('#hd_id').val('');
+        $('#txt_dni').val('');
+        $('#txt_dni').focus();
+        $('#txt_nombres').val('');
+        $('#txt_direccion').val('');
+        $('#txt_telefono').val('');
+        $('#div_per_natural').hide();
+        $('#div_per_juridica').hide();
+        $('#div_per_natural_buscar').show();
+        $('#div_per_juridica_buscar').hide();
+        $('#div_msg_re                                                                                                                                                                                                                                                        gistro').hide();
+        $('#div_guarda_ciudadano').hide();
+        $('#div_mapa').hide();
+        $('#div_cbo_servicio').hide();
+        $('#div_solicitud_titulo').hide();
+        $('#div_motivo').hide();
+        $('#div_solicitud_detalle').hide();
+        $('#div_solicitud_otros').hide();
+        $('#div_observacion').hide();
+        $('#div_enviar_sol_info').hide();
+        $('#div_enviar_sol_otros').hide();
+        $('#div_msg_registro_sol').hide();
+        $('#div_solicitud_tupa').hide();
+        $('#div_solicitud_tupa_detalle').hide();
+        $('#div_solicitud_rpta').hide();
+        $('#div_enviar_sol_tupa').hide();
+        $('#div_solicitud_tupa').hide();
+        $('#div_solicitud_tupa_detalle').hide();
+        $('#div_enviar_sol_tupa').hide();
     }else{
         $('#div_solicitud_otros').show();
         $('#div_mapa').hide();
@@ -610,13 +648,58 @@ function sgd_mant_solicitud_mostrar(){
         $('#div_enviar_sol_info').hide();
         $('#div_enviar_sol_otros').show();
         $('#div_solicitud_titulo').show();
-//        $('#div_motivo').show();
-        $('#div_solicitud_detalle').show();
+        $('#div_solicitud_detalle').hide();
         $('#div_solicitud_otros').show();
-    }
-        
+        $('#div_solicitud_tupa').hide();
+        $('#div_solicitud_tupa_detalle').hide();
+        $('#div_solicitud_rpta').hide();
+        $('#div_enviar_sol_tupa').hide();
+    }        
 }
 //FIN MOSTRAR SOLICITUD
+//
+//INICIO TIPO ENTREGA CHECKBOX
+function sgd_tipo_entrega_chkb(){
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_tipo_entrega_chkb/",
+            data:     "",
+            beforeSend: function(data){
+                $('#div_tipo_entrega_chkb').html("Cargando...");
+            },
+            success: function(requestData){
+//                console.log(requestData);
+                $('#div_tipo_entrega_chkb').html(requestData);
+                $('#div_tipo_entrega_chkb').show();                                
+            },
+            error: function(requestData, strError, strTipoError){								
+                $('#div_tipo_entrega_chkb').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN TIPO ENTREGA CHECKBOX
+//
+//INICIO TIPO ENTREGA CHECKBOX
+function sgd_rpta_email_chkb(){
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_rpta_email_chkb/",
+            data:     "",
+            beforeSend: function(data){
+                $('#div_rpta_email_chkb').html("Cargando...");
+            },
+            success: function(requestData){
+                $('#div_rpta_email_chkb').html(requestData);
+                $('#div_rpta_email_chkb').show();                                
+            },
+            error: function(requestData, strError, strTipoError){								
+                $('#div_rpta_email_chkb').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN TIPO ENTREGA CHECKBOX
 //
 //INICIO GUARDAR SOLICITUD OTROS
 function sgd_mant_enviar_solicitud_otros(){//DETERMINAR CAMPOS OBLIGATORIOS
@@ -629,7 +712,10 @@ function sgd_mant_enviar_solicitud_otros(){//DETERMINAR CAMPOS OBLIGATORIOS
     
     var msj_error = "";
     if (motivo.length == 0){
-        msj_error += " Ingrese el motivo de la solicitud.";
+        msj_error += " el motivo de la solicitud";
+    }
+    if (descr.length == 0){
+        msj_error += ", la descripción del servicio a solicitar.";
     }
     
     if(msj_error == ''){
@@ -755,10 +841,28 @@ function sgd_mant_enviar_solicitud_tupa(){
     var descr = $('#txt_descripcion').val();
     var obs = $('#txt_observacion').val();
     var cod_adm = $('#hd_id').val();
+    var funcionario = $('#cb_funcionario').val();
     
+    var tipo_entr = "";    
+    $('.cb_tipoentr:checked').each(function () {
+        tipo_entr += $(this).val() + ",";
+    });
+    tipo_entr = tipo_entr.substring(0,tipo_entr.length - 1);
+    
+    var rpta = "";    
+    $('.rb_rpta:checked').each(function () {
+        rpta =  $(this).attr("cod");
+    });
+            
     var msj_error = "";
     if (descr.length == 0){
         msj_error += " Ingrese el motivo de la solicitud.";
+    }
+    if (tipo_entr.length == 0){
+        msj_error += " Seleccione cómo desea recibir la información.";
+    }
+    if (rpta.length == 0){
+        msj_error += " Indique si desea o no recibir la respuesta por E-Mail.";
     }
     
     if(msj_error == ''){
@@ -770,7 +874,10 @@ function sgd_mant_enviar_solicitud_tupa(){
                       +"&proc="+proc
                       +"&descr="+descr
                       +"&obs="+obs
-                      +"&cod_adm="+cod_adm,
+                      +"&cod_adm="+cod_adm
+                      +"&funcionario="+funcionario
+                      +"&tipo_entr="+tipo_entr
+                      +"&rpta="+rpta,
             beforeSend: function(data){
                 $('#div_msg_registro_sol').html("Cargando...");
             },
@@ -780,15 +887,20 @@ function sgd_mant_enviar_solicitud_tupa(){
                 var msj = arrayobj[0][1];//datos guardados
                 
                 $('#hd_id_sol').val(id);
-                $('#div_msg_registro_sol').show();
-                $('#div_msg_registro_sol').html(msj);
+//                $('#div_msg_registro_sol').show();
+//                $('#div_msg_registro_sol').html(msj);
+                $.alert('<h6>' + msj + '</h6>');
             },
             error: function(requestData, strError, strTipoError){
                 $('#div_msg_registro_sol').html("Error " + strTipoError +": " + strError);
             }
         });
     }else{
-         $.alert('<h6>Ingrese: ' + msj_error + '</h6>');
+         $.alert('<h6>' + msj_error + '</h6>');
     }    
 }
 //
+//
+
+//
+

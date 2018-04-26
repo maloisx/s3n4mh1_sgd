@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="input-field col-sm-2">
                                 <input id ="txt_cut" type="text" value="${requestScope['cut']}" readonly style="text-align: center; color: red; font-size:150%; font-weight:bold;"/><!--n° cut-->
-                                <label for="txt_cut" class="active">N° CUT</label>
+                                <label for="txt_cut" class="active">N° CUT</label>                                
                                 
                                 <input type="hidden" name="hd_id" id="hd_id" value="${requestScope['id']}" /><!--id del expediente-->
                                 <input type="hidden" name="hd_userreg" id="hd_userreg" value="${requestScope['codUser']}" />
@@ -196,7 +196,8 @@
                 </div>
                 <div class="row form-group text-right" >
                     <div class="col-sm-12" >                        
-                        <button id="btn_guardar" onclick="sgd_mant_expediente_guardar()" class="btn btn-info btn-sm" >
+                        <!--<button id="btn_guardar" onclick="sgd_mant_expediente_guardar()" class="btn btn-info btn-sm" >-->
+                        <button id="btn_guardar" onclick="sgd_mant_cut_solicitud_guardar()" class="btn btn-info btn-sm" >
                             Guardar       
                         </button> 
                     </div> 

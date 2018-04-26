@@ -4,8 +4,10 @@ import com.senamhi.sis.connection.ConeccionDB;
 import com.senamhi.sis.functions.Util;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,9 +29,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Calendar;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
+import javax.servlet.ServletOutputStream;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -10273,8 +10281,11 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 String c_descripcion = vss.get(3).toString();
                 String c_est_sol = vss.get(4).toString();
                 String administrado = vss.get(5).toString();
+                String i_proc = vss.get(6).toString();
                       
-                String btn = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicituddetalle_popup("+i_solicitud+")'><span class='glyphicon glyphicon-search'></span></button>";
+                String btn = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicituddetalle_popup("+i_solicitud+","+i_proc+")'>"
+                           + "<span class='glyphicon glyphicon-search'></span>"
+                           + "</button><input type='hidden' name='hd_id_"+i_solicitud+"' id='hd_id_"+i_solicitud+"' value='${requestScope['"+i_proc+"']}' />";
                 String cut = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicitud_generacut_popup("+i_solicitud+")'><span class='glyphicon glyphicon-file'></span></button>";
                 
                 Vector vv = new Vector();
@@ -10306,7 +10317,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                                     + "{'sTitle':'-'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
-        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+//              sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 1 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
             //boton de excel
             sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
             sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
@@ -10331,6 +10342,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             throws ServletException, IOException {
         
         String id_sol = request.getParameter("id_sol");
+        String i_proc = request.getParameter("i_proc");
         request.setAttribute("title_pag","INFORMACIÓN DE SOLICITUD N° "+id_sol);     
 
         try {
@@ -10360,6 +10372,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String fec_ini = "";
             String fec_fin = "";
             String doc_adm = "";
+            String dir_adm = "";
+            String email_adm = "";
             String obj_active_form = "";
             
             for(int i = 0 ; i<datos.size() ; i++){
@@ -10380,6 +10394,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 fec_ini = datos_v.get(14).toString();
                 fec_fin = datos_v.get(15).toString();
                 doc_adm = datos_v.get(16).toString();
+                dir_adm = datos_v.get(20).toString();
+                email_adm = datos_v.get(21).toString();
                 
                 Vector vv = new Vector();
                 vv.add(id_detalle);
@@ -10414,9 +10430,10 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             sv.add("dom");sv.add("'fp'");vc_tbl.add(sv);sv =  new Vector();
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
             String tbl_html = "<div class='table-responsive'><table border='1' class='table table-striped table-hover table-bordered' id='c_tbl_detalle' style='width:100%'></table></div>";
-            String tbl = util.datatable("c_tbl_detalle",vc_tbl);            
-            request.setAttribute("response", tbl_html + tbl);            
-                        
+            String tbl = util.datatable("c_tbl_detalle",vc_tbl);    
+            if (!"".equals(id_detalle)){
+                request.setAttribute("response", tbl_html + tbl);            
+            }            
             request.setAttribute("id_sol", id_sol);
             request.setAttribute("fecha", fecha);
             request.setAttribute("procedimiento", procedimiento);
@@ -10427,6 +10444,9 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             request.setAttribute("observacion", observacion);
             request.setAttribute("estacion", estacion);
             request.setAttribute("variable", variable);       
+            request.setAttribute("i_proc", i_proc);       
+            request.setAttribute("dir_adm", dir_adm);       
+            request.setAttribute("email_adm", email_adm);       
             
             request.setAttribute("obj_active_form", obj_active_form);
           
@@ -10627,18 +10647,24 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String descr = request.getParameter("descr");
         String obs = request.getParameter("obs");
         String cod_adm = request.getParameter("cod_adm");
+        String funcionario = request.getParameter("funcionario");
+        String tipo_entr = request.getParameter("tipo_entr");
+        String rpta = request.getParameter("rpta");
         
         String var_request = "";
         
         try {
             ConeccionDB cdb = new ConeccionDB();
             String np = "sgd.fn_solicitud_tupa_mant";
-            String array[] = new String[5];
+            String array[] = new String[8];
             array[0] = id_sol;
             array[1] = proc;
             array[2] = descr;
             array[3] = obs;
             array[4] = cod_adm;
+            array[5] = funcionario;
+            array[6] = tipo_entr;
+            array[7] = rpta;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
             
@@ -10651,6 +10677,252 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         return "sgd/mant_solicitud_tupa_guardar";
     }
 //FIN MANTENIMIENTO SOLICITUD TUPA GUARDAR
+//
+//INICIO MANTENIMIENTO SOLICITUD ATENCIÓN AL CIUDADANO         
+    @RequestMapping(value = {"/sgd/mant_solicitud_resumendia"}, method = RequestMethod.GET)
+	public String MantSolicitudResumendia(HttpServletRequest request, HttpServletResponse response,ModelMap model) {            
+            request.setAttribute("title_pag","GESTIÓN DE SOLICITUDES DIARIAS");             
+//            request.setAttribute("btn_nuevo_reg","sgd_mant_tramite_popup()");
+//            request.setAttribute("tit_btn","NUEVO REGISTRO");
+            return "sgd/mant_solicitud_resumendia";
+	}
+//FIN MANTENIMIENTO TRAMITE
+//
+//INICIO MANTENIMIENTO SOLICITUD ATENCIÓN AL CIUDADANO TABLA
+    @RequestMapping(value = {"/sgd/mant_solicitud_resumendia_tbl"}, method = RequestMethod.GET)
+	public String AjaxQuerySolicitudResumendiaTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+            
+            ConeccionDB cn =  new ConeccionDB();            
+        
+            String np = "sgd.fn_solicitud_resumendia_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+
+            Vector v_temp = new Vector();
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String i_solicitud = vss.get(0).toString();
+                String d_fecha = vss.get(1).toString();
+                String c_procedimiento = vss.get(2).toString();
+                String c_descripcion = vss.get(3).toString();
+                String c_est_sol = vss.get(4).toString();
+                String administrado = vss.get(5).toString();
+                String cut = vss.get(6).toString();
+                String per_cut = vss.get(7).toString();
+                      
+//                String btn = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicituddetalle_popup("+i_solicitud+")'><span class='glyphicon glyphicon-search'></span></button>";
+//                String cut = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicitud_generacut_popup("+i_solicitud+")'><span class='glyphicon glyphicon-file'></span></button>";
+                
+                Vector vv = new Vector();
+                vv.add(i_solicitud);
+                vv.add(d_fecha);
+                vv.add(administrado);
+                vv.add(c_procedimiento);
+                vv.add(c_descripcion);
+                vv.add(c_est_sol);
+                vv.add(cut+'-'+per_cut);
+//                vv.add(cut);
+                v_temp.add(vv);
+            }     
+            
+            Util util = new Util();
+            String json = util.vector2json(v_temp);   
+            Vector vc_tbl = new Vector();
+            Vector sv =  new Vector();
+            sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aoColumns");sv.add("["                                    
+                                    + "{'sTitle':'CÓDIGO'} , "
+                                    + "{'sTitle':'FECHA'} , "
+                                    + "{'sTitle':'SOLICITANTE'} , "
+                                    + "{'sTitle':'SERVICIO'} , "
+                                    + "{'sTitle':'DESCRIPCION'} , "
+                                    + "{'sTitle':'ESTADO'} , "
+                                    + "{'sTitle':'CUT'} , "
+//                                    + "{'sTitle':'-'}  "
+                                    + "]");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
+        //      sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 10 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
+            //boton de excel
+            sv.add("dom");sv.add("'Bfrtip'");vc_tbl.add(sv);sv =  new Vector();
+            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
+            ////Pintar de rojo el registro si no t.iene datos
+//            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                          "}";
+//            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
+            ///////////////////////////////////////////////////////
+
+            String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_solicitud'></table>";
+            String tbl = util.datatable("c_tbl_solicitud",vc_tbl);            
+            request.setAttribute("response", tbl_html + tbl);
+
+            return "sgd/mant_solicitud_resumendia_tbl";
+	}
+//FIN MANTENIMIENTO SOLICITUD ATENCIÓN AL CIUDADANO TABLA    
+//
+//INICIO MANTENIMIENTO N° CUT DESDE SOLICITUD GUARDAR
+@RequestMapping(value = {"/sgd/mant_cut_guardar"}, method = RequestMethod.GET)
+    public String MantSolicitudCutGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        
+        String id_sol = request.getParameter("id_sol");        
+        String cut = "3030";        
+        String per = "2018";        
+        String var_request = "";
+        
+        try {            
+            ConeccionDB cdb = new ConeccionDB();
+            String np = "sgd.fn_solicitud_cut_mant";
+            String array[] = new String[3];
+            array[0] = id_sol;
+            array[1] = cut;
+            array[2] = per;
+            
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            
+            var_request = new Util().vector2json(datos);
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "sgd/mant_cut_guardar";
+    }
+//FIN MANTENIMIENTO N° CUT DESDE SOLICITUD GUARDAR
+//       
+//INICIO REPORTE SOLICITUD PDF
+@RequestMapping(value = { "/sgd/reportesolicitud"}, method = RequestMethod.GET)
+    public String SisperReporteAsistencia(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+//        String esquema = request.getParameter("s");
+        String id = request.getParameter("id");
+        String arch_report = request.getParameter("arch_report");
+        
+        System.setProperty("java.awt.headless", "true"); 
+        
+            try{                
+        String cn_error = "";
+        
+        Connection cnpg = new ConeccionDB().CnPostgres();
+        
+        String cad_url = "http://sgd.senamhi.gob.pe/sis/static/report_jasper/"+arch_report+".jasper";
+        URL url = new URL(cad_url);        
+        JasperReport reporte = (JasperReport) JRLoader.loadObject(url);
+        
+        Map parameters = new HashMap();// parametros
+        parameters.put("p_id_solicitud", id ); 
+//        parameters.put("P_FECHA_INI", "01/05/2015"); 
+//        parameters.put("P_FECHA_FIN", "31/05/2015"); 
+//        StringTokenizer str = new StringTokenizer(param,"|");
+//        int cant_str = str.countTokens();
+//        for(int i = 0 ; i < cant_str ; i++){
+//            StringTokenizer sub_str = new StringTokenizer(str.nextToken(),"$");
+//            int cant_sub_str = sub_str.countTokens();
+//            if(cant_sub_str == 2){
+//                String nom_param = sub_str.nextToken().toUpperCase();
+//                String val_param = sub_str.nextToken();
+//                parameters.put(nom_param, val_param);
+//            }if(cant_sub_str == 1){
+//                String nom_param = sub_str.nextToken().toUpperCase();
+//                parameters.put(nom_param,"");
+//            }
+//        }         
+//        parameters.put("P_COD_EMP", cod_emp); 
+//        parameters.put("P_FECHA_INI", fecha_ini); 
+//        parameters.put("P_FECHA_FIN", fecha_fin); 
+        
+//        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, cn);
+
+        
+        
+        byte[] bytes = JasperRunManager.runReportToPdf(reporte,parameters,cnpg);
+        response.setContentType("application/pdf");
+        response.setContentLength(bytes.length);
+        ServletOutputStream ouputStream = response.getOutputStream();        
+        ouputStream.write(bytes, 0, bytes.length);
+        ouputStream.flush();
+        ouputStream.close();
+    
+        }
+        catch(Exception e){
+        //cn_error = "ERROR: "+e.getMessage();
+        request.setAttribute("response",  "ERROR: "+e.getMessage());
+        }        
+        return "sgd/reportesolicitud";
+    }   
+//FIN REPORTE SOLICITUD PDF
 //    
+//INICIO TIPO ENTREGA CHECKBOX
+@RequestMapping(value = {"/sgd/mant_tipo_entrega_chkb"}, method = RequestMethod.GET)
+public String MantTipoEntregaChkb(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+        throws ServletException, IOException {
+//            request.setAttribute("title_pag","NUEVO PROCEDIMIENTO"); 
+        String var_request = "";
+        try {
+            ConeccionDB cn = new ConeccionDB();   
+
+            String np = "sgd.fn_tipo_entrega_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+//            var_request = new Util().contenido_combo(datos,"");
+            
+            String chbx = "";
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String id_tipoentr  = vss.get(0).toString();
+                String descr_tipoentr = vss.get(1).toString();
+                
+                chbx += "<div class='input-field col-sm-2'>"
+                     + "<input type='checkbox' value='"+id_tipoentr+"' class='cb_tipoentr' id='cb_tipoentr_"+id_tipoentr+"'/>"
+                     + "<label style='font-size: 10px' for='cb_tipoentr_"+id_tipoentr+"'>"+descr_tipoentr+"</label>"
+                     + "</div>";
+                
+            }
+        request.setAttribute("response", chbx);
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+
+        return "sgd/mant_tipo_entrega_chkb";
+    } 
+//FIN TIPO ENTREGA CHECKBOX
+//    
+//INICIO TIPO ENTREGA CHECKBOX
+@RequestMapping(value = {"/sgd/mant_rpta_email_chkb"}, method = RequestMethod.GET)
+public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+        throws ServletException, IOException {
+//            request.setAttribute("title_pag","NUEVO PROCEDIMIENTO"); 
+        String var_request = "";
+        try {
+            ConeccionDB cn = new ConeccionDB();   
+
+            String np = "sgd.fn_rpta_email_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
+//            var_request = new U  til().contenido_combo(datos,"");
+            
+            String chbx = "";
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector vss =  (Vector) v_datos.get(i);
+                String id_rpta  = vss.get(0).toString();
+                String descr_rpta = vss.get(1).toString();
+                
+                chbx += "<div class='input-field col-sm-2'>"
+                     + "<input type='radio' value='"+id_rpta+"' cod='"+id_rpta+"' class='rb_rpta' id='rb_rpta_"+id_rpta+"' name='rb_rpta'/>"
+                     + "<label style='font-size: 10px' for='rb_rpta_"+id_rpta+"'>"+descr_rpta+"</label>"
+                     + "</div>";                
+            }
+        request.setAttribute("response", chbx);
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "sgd/mant_rpta_email_chkb";
+    } 
+//FIN TIPO ENTREGA CHECKBOX
 }
 

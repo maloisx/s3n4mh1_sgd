@@ -1,5 +1,6 @@
 <div id="div_mensaje_ajax" class="text-success"></div>
 <input type="hidden" name="hd_id" id="hd_id" value="${requestScope['id_sol']}" />
+<input type="hidden" name="i_proc" id="hd_i_proc" value="${requestScope['i_proc']}" />
 <br>
 
 <div class="row">
@@ -71,7 +72,7 @@
                 <label for="txt_telefono" class="${requestScope['obj_active_form']}">Teléfono</label>           
             </div>
             <div class="input-field col-md-7"> 
-                <input type="text" name="txt_email" id="txt_email" value="${requestScope['administrado']}"/>
+                <input type="text" name="txt_email" id="txt_email" value="${requestScope['email_adm']}"/>
                 <label for="txt_email" class="${requestScope['obj_active_form']}">E-Mail</label>           
             </div>
             <div class="input-field col-md-1">        
@@ -157,7 +158,7 @@
             <div class="input-field col-md-1">        
             </div>
             <div class="input-field text-right col-md-10">  
-                <button onclick="sgd_mant_soldetalle_guardar()" class="btn btn-info btn-sm" >Guardar</button>            
+                <button onclick="sgd_mant_generar_pdf()" class="btn btn-info btn-sm" >Generar PDF</button>            
             </div>
             <div class="input-field col-md-1">        
             </div>
