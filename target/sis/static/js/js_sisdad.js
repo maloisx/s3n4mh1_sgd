@@ -1006,7 +1006,7 @@ function sisdad_js_mant_ptoobs_subirfile_btn_procesar() {
 
                             cad_json = '["' + serial + '","' + fecha + '","' + val_temp + '","' + val_rh + '","' + val_pr + '"]';
                             console.log(cad_json);
-                            var obj_reg = ws('sisdad', 'pkg_ws.sp_reg_ptoobs_dat_codext', cad_json);
+                            var obj_reg = ws_o('sisdad', 'pkg_ws.sp_reg_ptoobs_dat_codext', cad_json);
                             console.log(i + ")");
                             console.log(obj_reg);
                                                         
@@ -1014,7 +1014,7 @@ function sisdad_js_mant_ptoobs_subirfile_btn_procesar() {
                             if(dat == null){
                                 var nnn = 0;
                                 do{
-                                    var obj_reg = ws('sisdad', 'pkg_ws.sp_reg_ptoobs_dat_codext', cad_json);
+                                    var obj_reg = ws_o('sisdad', 'pkg_ws.sp_reg_ptoobs_dat_codext', cad_json);
                                     dat = obj_reg.data ;
                                     nnn++;
                                     console.log("---> intento nro: " + nnn);

@@ -103,7 +103,8 @@ public class Util {
             Vector v_rawdata = new Vector();        
 //            String json_rawdata = "";
             String trama = "";
-            String cad_url = "http://eddn.usgs.gov/cgi-bin/retrieveData.pl?DRS_SINCE=now%20-1000%20hours&DRS_UNTIL=now&NETWORKLIST=&DCP_ADDRESS="+cod_goes+"&CHANNEL=&BEFORE=//SOURCE%20GOESTR%20DCP%20DAPS\\n&AFTER=\\n//END\\n&SPACECRAFT=Any&BAUD=Any&ELECTRONIC_MAIL=&DCP_BUL=&GLOB_BUL=&TIMING=&RETRANSMITTED=Y&DAPS_STATUS=Y&";
+//            String cad_url = "http://eddn.usgs.gov/cgi-bin/retrieveData.pl?DRS_SINCE=now%20-1000%20hours&DRS_UNTIL=now&NETWORKLIST=&DCP_ADDRESS="+cod_goes+"&CHANNEL=&BEFORE=//SOURCE%20GOESTR%20DCP%20DAPS\\n&AFTER=\\n//END\\n&SPACECRAFT=Any&BAUD=Any&ELECTRONIC_MAIL=&DCP_BUL=&GLOB_BUL=&TIMING=&RETRANSMITTED=Y&DAPS_STATUS=Y&";
+            String cad_url = "https://lrgseddn3.cr.usgs.gov/cgi-bin/retrieveData.pl?DRS_SINCE=now%20-1000%20hours&DRS_UNTIL=now&NETWORKLIST=&DCP_ADDRESS="+cod_goes+"&CHANNEL=&BEFORE=//SOURCE%20GOESTR%20DCP%20DAPS\\n&AFTER=\\n//END\\n&SPACECRAFT=Any&BAUD=Any&ELECTRONIC_MAIL=&DCP_BUL=&GLOB_BUL=&TIMING=&RETRANSMITTED=Y&DAPS_STATUS=Y&";
             System.out.println(cad_url);
             String fecha_full = "";        
             try{
@@ -112,7 +113,7 @@ public class Util {
                 String inputLine;
 
                 while ((inputLine = in.readLine()) != null) {
-                    
+                    System.out.println(inputLine);
                     if(inputLine.length()>8){
                         if(inputLine.substring(0,8).equalsIgnoreCase(cod_goes)){
                             

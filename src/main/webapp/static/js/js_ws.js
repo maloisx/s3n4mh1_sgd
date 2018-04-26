@@ -63,6 +63,65 @@ function ws(p_1, p_2, p_3) {
     return respuesta;
 }
 
+function ws_o(p_1, p_2, p_3) {
+    /*
+     * si tiene 3 parametros validos es para oracle
+     * param_1 = p_schema
+     * param_2 = p_pkg
+     * param_3 = p_param
+     * 
+     * si tiene 2 parametros validos es para postgres
+     * param_1 = p_pkg
+     * param_2 = p_param
+     */
+    var p_schema = "";
+    var p_pkg = "";
+    var p_param = "";
+    var url_path_db = "";
+    if (p_3 === undefined) {
+        p_schema = "";
+        p_pkg = p_1;
+        p_param = p_2;
+        url_path_db = "/open/pg";
+    } else {
+        p_schema = p_1;
+        p_pkg = p_2;
+        p_param = p_3;
+        url_path_db = "/open/ora";
+    }
+
+
+    var respuesta = {data: null, request: null};
+
+    var settings = {
+        'async': false,
+        'crossDomain': true,
+        'url': path_ws + url_path_db,
+        'method': 'POST',
+        'headers': {
+            'content-type': 'application/x-www-form-urlencoded',
+            'cache-control': 'no-cache'
+        },
+        'data': {
+            'p_schema': p_schema,
+            'p_pkg': p_pkg,
+            'p_param': p_param
+        }
+    }
+
+
+
+    $.ajax(settings).done(function (response) {
+        arrayobj = jQuery.parseJSON(response);
+        data = arrayobj.data;
+        request = arrayobj.request;
+        
+        respuesta.data = data;
+        respuesta.request = request;
+    });
+    return respuesta;
+}
+
 function ws_server(p_ip,p_cmd) {  
 
     var url_path_db =  "/servers/info";

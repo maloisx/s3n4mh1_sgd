@@ -13,7 +13,28 @@ function sisserver_listserver() {
         }else{
             btn = '<img src="'+path+'static/img/minus.png" height="30px" />';
         }
-        $('#ul_listserver').append('<li class="list-group-item"  style="font-size: 1rem" onclick="window.open(\''+path+'sisserver/detalleservidor?cod='+obj_rpta.data[item].COD_SERVER+'&host='+obj_rpta.data[item].HOST+'&nomserver='+obj_rpta.data[item].NOM_SERVER+'\',\'_self\')">'+btn + ' '+obj_rpta.data[item].NOM_SERVER + '  ('+ obj_rpta.data[item].HOST + ')</li>');
+        
+        /*verificar servicios criticos*/
+        var obj_rpta_critico = ws('OTI','pkg_ws.sp_obt_listcmd_servers', '["'+obj_rpta.data[item].COD_SERVER+'"]');
+        var alert_critico = 0;
+        var desc_critico = '';
+         for (var item_crit = 0; item_crit < obj_rpta_critico.data.length; item_crit++) {
+            var cmd = obj_rpta_critico.data[item_crit].CMD;
+            var critico = obj_rpta_critico.data[item_crit].CRITICO;
+            var output_default = obj_rpta_critico.data[item_crit].OUTPUT_DEFAULT;                        
+                var desc_critico = '';
+                if(critico == '1'){
+                    var cmd_datos = ws_server(obj_rpta.data[item].HOST ,cmd);                                
+                        if( cmd_datos.indexOf(output_default) == -1){
+                            alert_critico++;
+                        }           
+                }            
+        }
+        if(alert_critico > 0){
+            desc_critico = '<img src="'+path+'static/img/alerta_amarilla.png" height="30px" />';
+        }
+        
+        $('#ul_listserver').append('<li class="list-group-item"  style="font-size: 1rem" onclick="window.open(\''+path+'sisserver/detalleservidor?cod='+obj_rpta.data[item].COD_SERVER+'&host='+obj_rpta.data[item].HOST+'&nomserver='+obj_rpta.data[item].NOM_SERVER+'\',\'_self\')">'+btn + ' '+obj_rpta.data[item].NOM_SERVER + '  ('+ obj_rpta.data[item].HOST + ') '+desc_critico+'</li>');
     }
 
 }
