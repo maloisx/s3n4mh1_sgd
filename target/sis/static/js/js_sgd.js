@@ -1474,23 +1474,23 @@ function sgd_mant_expediente_deriva(){
     var rpta_c = "";//conocimiento    
     var rpta_a = "";//conocimiento    
     $('.rd_accion_r:checked').each(function () {
-        rpta_r +=  $(this).attr("cod") + ",";  
+        rpta_r +=  $(this).attr("cod") + ",";
     });
     $('.rd_accion_c:checked').each(function () {
         rpta_c +=  $(this).attr("cod") + ",";  
-    });       
+    });
     $('.rd_accion_a:checked').each(function () {
-        rpta_a +=  $(this).attr("cod") + ",";  
-    });       
-//Fin Acciones para derivación    
+        rpta_a +=  $(this).attr("cod") + ",";
+    });
+//Fin Acciones para derivación
 
     var id = $('#hd_id_flujo').val();//id del flujo
     var codUser = $('#hd_codUser').val();
     var perfil = $('#hd_perfil').val();
     var id_uo = $('#hd_id_uo').val();
-    var cd_fin = $('#cb_cd_fin').val().toString(); 
+    var cd_fin = $('#cb_cd_fin').val().toString();
     var id_flujo_ant = $('#hd_id_flujo_ant').val();
-    var nivel = $('#hd_nivel').val();     
+    var nivel = $('#hd_nivel').val();
     var observa = $('#hd_observa').val();
 //    console.log('observación ------------------------------------------------>'+observa);
     observa = observa.replace("–","");
@@ -3650,10 +3650,31 @@ function sgd_mant_solicitud_atenciud_tbl(){
 }
 //FIN SOLICITUD ATENCIÓN AL CIUDADANO TABLA
 //
+//INICIO SOLICITUD ATENCIÓN AL CIUDADANO TABLA
+function sgd_mant_solicitud_resumendia_tbl(){
+        
+    $.ajax({
+        dataType: "html",
+        type:     "GET",
+        url:      path + "sgd/mant_solicitud_resumendia_tbl/",
+        data:     "" ,
+        beforeSend: function(data){
+                $('#div_mant_solicitud_resumendia_tbl').html("Cargando...");
+        },
+        success: function(requestData){
+                $('#div_mant_solicitud_resumendia_tbl').html(requestData);
+        },
+        error: function(requestData, strError, strTipoError){
+                $('#div_mant_solicitud_resumendia_tbl').html("Error " + strTipoError +": " + strError);
+        }
+    });
+}
+//FIN SOLICITUD ATENCIÓN AL CIUDADANO TABLA
+//
 //INICIO SOLICITUD ATENCIÓN AL CIUDADANO POPUP
-function sgd_mant_solicituddetalle_popup(id_sol){
+function sgd_mant_solicituddetalle_popup(id_sol, i_proc){
     
-    var url = encodeURI(path + "sgd/mant_solicituddetalle_popup/?id_sol="+id_sol);
+    var url = encodeURI(path + "sgd/mant_solicituddetalle_popup/?id_sol="+id_sol+"&i_proc="+i_proc);
   
     $.colorbox({
         "href" : url
@@ -3675,3 +3696,50 @@ function sgd_mant_solicitud_generacut_popup(id_sol){
     });
 }
 //FIN GENERAR CUT DESDE SOLICITUD
+//
+//INICIO N° CUT DESDE SOLICITUD
+function sgd_mant_cut_solicitud_guardar(){
+    var id = $('#txt_nrodoc').val();
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_cut_guardar/", 
+            data:     "id_sol="+id,	 	 
+            beforeSend: function(data){ 	 	
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                
+                arrayobj = jQuery.parseJSON(requestData);	
+//                console.log(arrayobj);
+//                var id  = arrayobj[0][0];
+//                var msj = arrayobj[0][0];
+//                
+//                $('#hd_id').val(id);
+//                $('#div_mensaje_ajax').html(msj);
+//                
+//                sgd_mant_tramite_tbl();
+            },		
+            error: function(requestData, strError, strTipoError){											
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });  
+}
+//FIN N° CUT DESDE SOLICITUD
+//
+//INICIO GENERAR PDF
+function sgd_mant_generar_pdf(){
+    var id = $('#hd_id').val();
+    
+    var i_proc = $('#hd_i_proc').val();
+    
+    if (i_proc == '4'){
+        var arch_report = "atenc_ciud_solicitud";
+    }else if (i_proc == '2'){
+        var arch_report = "atenc_ciud_solicitud_tupa";
+    }else{
+        var arch_report = "atenc_ciud_solicitud_otros";
+    }
+    var url = window.open("reportesolicitud/?id="+id+"&arch_report="+arch_report, "", "width=900,height=900");
+}
+//FIN GENERAR PDF

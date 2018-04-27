@@ -301,7 +301,7 @@
                 <div class="col-sm-12"><br>
                     <div class="input-field col-sm-12">
                         <select id="cb_funcionario" class="form-control selectpicker" name="cb_funcionario" data-size="5" data-live-search="true">${requestScope['cb_func']}</select>
-                        <label for="cb_funcionario" class="active">Funcionario responsable de entregar la información</label>
+                        <label for="cb_funcionario" class="active">Dependencia de la cual se requiere la información</label>
                     </div>
                 </div>
             </div>
@@ -311,31 +311,20 @@
                 <div class="col-sm-12">
                     <div class="input-field col-sm-12">
                         <label class="active">Recibir la información en:</label>
-                    </div>                        
-                </div>
-                <div class="col-sm-12">
-                    <div class="input-field col-sm-2">
-                        <input id="cb_copias" type="checkbox" name="cb_copias" class="cb_entrega"/>
-                        <label id="lb_copias" for="cb_copias" style="font-size: 11px;">Copia simple</label>
                     </div>
-                    <div class="input-field col-sm-3">
-                        <input id="cb_copiaa" type="checkbox" name="cb_copiaa" class="cb_entrega"/>
-                        <label id="lb_copiaa" for="cb_copiaa" style="font-size: 11px;">Copia autenticada</label>
-                    </div>
-                    <div class="input-field col-sm-2">
-                        <input id="cb_cd" type="checkbox" name="cb_cd" class="cb_entrega"/>
-                        <label id="lb_cd" for="cb_cd" style="font-size: 11px;">CD</label>
-                    </div>
-                    <div class="input-field col-sm-3">
-                        <input id="cb_email" type="checkbox" name="cb_email" class="cb_entrega"/>
-                        <label id="lb_email" for="cb_email" style="font-size: 11px;">Correo Electrónico</label>
-                    </div>
-                    <div class="input-field col-sm-2">
-                        <input id="cb_otro" type="checkbox" name="cb_otro" class="cb_entrega"/>
-                        <label id="lb_otro" for="cb_otro" style="font-size: 11px;">Otro</label>
-                    </div>
+                    <div class="col-sm-12" id="div_tipo_entrega_chkb"></div>                        
                 </div>
             </div>
+        </div><br><br><br>    
+        <div class="row" id="div_solicitud_rpta">            
+            <div class="col-sm-12">   
+                <div class="col-sm-12">
+                    <div class="input-field col-sm-12">
+                        <label class="active">Autorización para recibir respuesta de la solicitud por correo electrónico:</label>
+                    </div>
+                    <div class="col-sm-12" id="div_rpta_email_chkb"></div>                        
+                </div>
+            </div> 
         </div><br>
         <div class="row" id="div_observacion">
             <div class="col-sm-12">
@@ -382,6 +371,7 @@
     $('#div_msg_registro_sol').hide();
     $('#div_solicitud_tupa').hide();
     $('#div_solicitud_tupa_detalle').hide();
+    $('#div_solicitud_rpta').hide();
     $('#div_enviar_sol_tupa').hide();
     
     $('#div_guarda_ciudadano').toggle();
@@ -413,6 +403,15 @@
         $('#div_enviar_sol_info').hide();
         $('#div_enviar_sol_otros').hide();
         $('#div_msg_registro_sol').hide();
+        $('#div_solicitud_tupa').hide();
+        $('#div_solicitud_tupa_detalle').hide();
+        $('#div_enviar_sol_tupa').hide();
+        $("#cb_servicio").prop('selectedIndex', 0);
+        $('#cb_servicio').selectpicker('refresh');
+        $("#cb_dpto").prop('selectedIndex', 0);
+        $('#cb_dpto').selectpicker('refresh');
+        $("#cb_estacion").prop('selectedIndex', 0);
+        $('#cb_estacion').selectpicker('refresh');
     });
     
     $('#div_per_juridica_buscar').toggle();
@@ -443,9 +442,22 @@
         $('#div_enviar_sol_info').hide();
         $('#div_enviar_sol_otros').hide();
         $('#div_msg_registro_sol').hide();
+        $('#div_solicitud_tupa').hide();
+        $('#div_solicitud_tupa_detalle').hide();
+        $('#div_enviar_sol_tupa').hide();
+        $("#cb_servicio").prop('selectedIndex', 0);
+        $('#cb_servicio').selectpicker('refresh');
+        $("#cb_dpto").prop('selectedIndex', 0);
+        $('#cb_dpto').selectpicker('refresh');
+        $("#cb_estacion").prop('selectedIndex', 0);
+        $('#cb_estacion').selectpicker('refresh');
     });
-        
     
-
+    $('#cb_servicio').change(function() {
+        $("#cb_dpto").prop('selectedIndex', 0);
+        $('#cb_dpto').selectpicker('refresh');
+        $("#cb_estacion").prop('selectedIndex', 0);
+        $('#cb_estacion').selectpicker('refresh');
+        sgd_mant_mapa_mostrar();
+    });
 </script>
-
