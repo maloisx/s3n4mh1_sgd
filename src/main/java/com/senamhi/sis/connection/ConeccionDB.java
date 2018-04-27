@@ -257,7 +257,7 @@ public class ConeccionDB {
     Vector vr = new Vector();    
         
     try{
-        Connection con = this.CnPostgres();   
+        Connection con =  this.CnPostgres();   
         
         String variables = "";
         int ca = array.length;

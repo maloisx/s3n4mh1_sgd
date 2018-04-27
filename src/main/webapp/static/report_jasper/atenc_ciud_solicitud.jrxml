@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="atenc_ciud_solicitud" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a1d02b1-5b34-4136-b159-f92cb1441c35">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="341"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="5b37b08a-5604-4e41-8a6e-846312675cbd"/>
+	<parameter name="p_id_solicitud" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT s.i_id_solicitud,
+					 to_char(s.d_fecha_solicitud, 'DD-MM-YYYY HH24:MI:SS') as fecha_solicitud,
+					 pr.c_des_proc,
+					 a.c_des_adm,
+					 s.v_motivo_solicitud,
+					 s.v_descripcion_servicio,
+					 s.v_observacion_servicio,
+					 d.i_id_detalle,
+					 d.v_id_estacion,
+					 d.v_descr_estacion,
+					 d.v_id_variable,
+					 d.v_descr_variable,
+					 d.i_id_escala,
+					 e.v_descripcion_escala,
+					 d.d_fecha_ini,
+					 d.d_fecha_fin,
+					 a.c_docident_adm,
+					 a.i_id_adm,
+					 s.i_id_proc,
+					 s.d_fecha_solicitud,
+					 a.c_dir_adm,
+					 a.c_email_adm,
+					 a.c_repres_adm,
+					 a.c_email_repr,
+					 a.c_telef_repr,
+					 a.c_tlf_adm,
+					 sr.v_descripcion_sector
+						from sgd.sgdmvc_solicitud s
+								INNER JOIN sgd.sgdmvd_solicitud_detalle d on (d.i_id_solicitud = s.i_id_solicitud)
+								INNER JOIN senamhi.sgdtbp_administrado a ON (a.i_id_adm = s.i_id_adm)
+								INNER JOIN sgd.sgdtbp_proced pr ON (pr.i_id_proc = s.i_id_proc)
+								INNER JOIN sgd.sgdtbp_escala e ON (e.i_id_escala = d.i_id_escala)
+								LEFT JOIN senamhi.sentbp_sector sr ON (a.i_id_sector = sr.i_id_sector)
+						where s.i_id_solicitud::varchar like '%'||$P!{p_id_solicitud}
+						ORDER BY 1 ASC;]]>
+	</queryString>
+	<field name="i_id_solicitud" class="java.lang.Long">
+		<fieldDescription><![CDATA[ID de la solicitud.]]></fieldDescription>
+	</field>
+	<field name="fecha_solicitud" class="java.lang.String"/>
+	<field name="c_des_proc" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción del procedimiento.]]></fieldDescription>
+	</field>
+	<field name="c_des_adm" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción o nombre.]]></fieldDescription>
+	</field>
+	<field name="v_motivo_solicitud" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción del motivo de la solicitud.]]></fieldDescription>
+	</field>
+	<field name="v_descripcion_servicio" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción del servicio.]]></fieldDescription>
+	</field>
+	<field name="v_observacion_servicio" class="java.lang.String">
+		<fieldDescription><![CDATA[Observaciones adicionales.]]></fieldDescription>
+	</field>
+	<field name="i_id_detalle" class="java.lang.Long"/>
+	<field name="v_id_estacion" class="java.lang.String"/>
+	<field name="v_descr_estacion" class="java.lang.String"/>
+	<field name="v_id_variable" class="java.lang.String"/>
+	<field name="v_descr_variable" class="java.lang.String"/>
+	<field name="i_id_escala" class="java.lang.Integer"/>
+	<field name="v_descripcion_escala" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción de a escala.]]></fieldDescription>
+	</field>
+	<field name="d_fecha_ini" class="java.sql.Date"/>
+	<field name="d_fecha_fin" class="java.sql.Date"/>
+	<field name="c_docident_adm" class="java.lang.String">
+		<fieldDescription><![CDATA[Documento de identidad representante.]]></fieldDescription>
+	</field>
+	<field name="i_id_adm" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Número de documento de identidad.]]></fieldDescription>
+	</field>
+	<field name="i_id_proc" class="java.lang.Integer"/>
+	<field name="d_fecha_solicitud" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[Fecha de la solicitud.]]></fieldDescription>
+	</field>
+	<field name="c_dir_adm" class="java.lang.String">
+		<fieldDescription><![CDATA[Dirección física.]]></fieldDescription>
+	</field>
+	<field name="c_email_adm" class="java.lang.String">
+		<fieldDescription><![CDATA[Direción electrónica.]]></fieldDescription>
+	</field>
+	<field name="c_repres_adm" class="java.lang.String"/>
+	<field name="c_email_repr" class="java.lang.String"/>
+	<field name="c_telef_repr" class="java.lang.String"/>
+	<field name="c_tlf_adm" class="java.lang.String">
+		<fieldDescription><![CDATA[Número de teléfono.]]></fieldDescription>
+	</field>
+	<field name="v_descripcion_sector" class="java.lang.String"/>
+	<title>
+		<band height="154" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="333bfbec-b4d5-4e6a-bbab-63554c2b4d43" x="0" y="0" width="555" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de Solicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="003b6fe4-b506-4d84-ac72-bd35564962fd" positionType="FixRelativeToBottom" mode="Opaque" x="0" y="36" width="555" height="14" forecolor="#FFFFFF" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL SOLICITANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b2a4938-fe68-4414-adb6-0706c7ceffae" x="0" y="54" width="112" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Nombre o Razón Social:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2e7521c7-1a7a-4cb3-abc4-20bc267c40b5" x="0" y="68" width="112" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="80f00fca-232d-4795-9a9b-afdf16ddc218" x="0" y="82" width="112" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="64be5a7e-7d93-48f9-97cd-73fa921b9acf" x="0" y="95" width="112" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[E-Mail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="080f117e-01fd-4091-bc8e-2e1fc578438f" x="0" y="108" width="112" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Sector o Rubro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="be2bcd55-308e-468a-b1c7-adca2beb3f2e" x="0" y="121" width="112" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Representante:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f1b46888-7ce3-480b-bd01-cd32f8438def" x="112" y="54" width="443" height="14"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_des_adm}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7f9f0a05-dcb2-47f3-987f-29ac152525a5" x="229" y="82" width="41" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f045ac97-7741-4b6b-ba52-5134e620d0ec" x="0" y="135" width="112" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Teléfono Representante:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b5c6ec5a-68f9-4722-8ff2-ed3a81fbde3a" x="112" y="82" width="117" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_docident_adm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d4ab6bb1-16e6-4895-b9a8-7f7e44561f47" x="112" y="68" width="443" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_dir_adm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cad9b360-7227-4072-8891-14a361fb1803" x="112" y="95" width="443" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_email_adm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="19d41fa4-a137-41ce-aeb1-6283533ca776" x="112" y="135" width="117" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_telef_repr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b6cd10f-5610-4ada-bb11-685b5f19eeb7" x="329" y="135" width="226" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_email_repr}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c4dba2ad-b452-4cf8-9b87-2fe7fad0f522" x="229" y="135" width="100" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[E-Mail Representante:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="913098df-30ef-48a0-905d-7baed5375ce7" x="112" y="121" width="443" height="14"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_repres_adm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="656e749a-0e93-40c8-b6c4-4a0dfdd1aa0c" x="271" y="82" width="100" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_tlf_adm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="356ef444-dc90-46ad-99ac-c9aa73ea7f07" x="112" y="108" width="443" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{v_descripcion_sector}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a11fc4a9-bb6a-4e9a-9857-88deaf3882fa" x="100" y="14" width="455" height="38"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{v_motivo_solicitud}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="265fcdf2-b665-49ac-b7d2-466cdfbcd9c1" x="0" y="14" width="100" height="38"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Motivo Solicitud:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3707fc6a-5be3-4630-bd5c-aa87a5e47b32" mode="Opaque" x="0" y="0" width="555" height="14" forecolor="#FFFFFF" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORMACIÓN REFERENCIAL]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dffd4810-fc4f-4a16-ba07-1ec766ea3a34" style="table_TD" mode="Opaque" x="0" y="17" width="201" height="11" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Estación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5370fbd0-082f-43cb-bd6d-b73adde73f73" style="table_TD" mode="Opaque" x="371" y="17" width="59" height="11" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Escala]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="42be676e-bdee-497d-84b8-fb3a1c7e28c3" style="table_TD" mode="Opaque" x="201" y="17" width="170" height="11" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Variable]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8391945f-d323-4bca-b761-7d9c1f458f3b" style="table_TD" mode="Opaque" x="430" y="17" width="125" height="11" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bee51658-0135-4548-bb20-07164ebe8df7" x="0" y="0" width="44" height="14"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicio: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="076f40a2-db05-4d2a-84fc-5c7d656fec0e" x="44" y="0" width="511" height="14"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_des_proc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="6e790dc5-8577-4614-b696-c759b257b113" style="table_TD" x="0" y="0" width="201" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{v_descr_estacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4b5227be-4f8b-4507-b972-3b3570fdf652" style="table_TD" x="371" y="0" width="59" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{v_descripcion_escala}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cc9eb576-d2cf-49af-87b4-bae356e8899c" style="table_TD" x="201" y="0" width="170" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{v_descr_variable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5f806402-d0ba-4ea3-a264-974cffc9129d" style="table_TD" x="430" y="0" width="60" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{d_fecha_ini}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b8780286-5e2a-466a-99f9-d1f706cd72cd" style="table_TD" x="490" y="0" width="65" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{d_fecha_fin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="187">
+			<textField>
+				<reportElement uuid="f9e6ecf0-3f12-471b-9e3d-4d06cd0db0bc" x="430" y="72" width="125" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_solicitud}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6a27487e-e05c-45ac-b04c-daf2b642a7ca" x="395" y="72" width="35" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f6192728-5bc3-4e41-891b-b22bacb5d568" x="0" y="24" width="555" height="40"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{v_observacion_servicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="77a01355-ffab-44ba-9c25-3bd65c70425e" mode="Opaque" x="0" y="10" width="555" height="14" forecolor="#FFFFFF" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información Adicional / Observaciones]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>
