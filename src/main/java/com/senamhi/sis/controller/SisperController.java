@@ -1,5 +1,6 @@
 package com.senamhi.sis.controller;
 
+import com.senamhi.sis.connection.ConeccionDB;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -55,7 +56,7 @@ public class SisperController {
         DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
         Connection cn = DriverManager.getConnection("jdbc:oracle:thin:@"+host+":"+puerto+":"+sid, user, pass);
         String cn_error = "";
-        
+                
         String cad_url = "http://sgd.senamhi.gob.pe/sis/static/report_jasper/"+arch_report+".jasper";
         URL url = new URL(cad_url);        
         JasperReport reporte = (JasperReport) JRLoader.loadObject(url);
