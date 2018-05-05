@@ -3287,7 +3287,7 @@ public class SgdController {
         request.setAttribute("tab_bandeja_button",tab_bandeja_button);
         request.setAttribute("tab_bandeja_content",tab_bandeja_content);
         
-        return "sgd/bandeja_perfil_tbl";        
+        return "sgd/bandeja_perfil_tbl";
     } 
 //FIN BANDEJA ENTRADA POR PERFIL  
 //        
@@ -9773,6 +9773,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     public String MantMapaMostrar(HttpServletRequest request, HttpServletResponse response,ModelMap model) { 
         
         String cod_estacion = request.getParameter("cod_estacion");  
+        String[] desc_dpto = cod_estacion.split("-");
         String cod_dpto = request.getParameter("cod_dpto");
         
             //tabla de datos!            
@@ -10431,6 +10432,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 //            sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
             String tbl_html = "<div class='table-responsive'><table border='1' class='table table-striped table-hover table-bordered' id='c_tbl_detalle' style='width:100%'></table></div>";
             String tbl = util.datatable("c_tbl_detalle",vc_tbl);    
+            
             if (!"".equals(id_detalle)){
                 request.setAttribute("response", tbl_html + tbl);            
             }            
@@ -10768,8 +10770,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             throws ServletException, IOException {
         
         String id_sol = request.getParameter("id_sol");        
-        String cut = "3030";        
-        String per = "2018";        
+        String cut = request.getParameter("cut");        
+        String per = request.getParameter("id_sol");        
         String var_request = "";
         
         try {            

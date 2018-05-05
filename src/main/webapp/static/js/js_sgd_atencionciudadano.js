@@ -496,6 +496,7 @@ function sgd_estacion_variables(){
 //
 //INICIO ADICIONAR PEDIDO A SOLICITUD
 function sgd_mant_add_solicitud(){
+        
     var cod_estacion = $('#txt_cod_estacion').val();
     var id_var = $('#hd_id_var').val();
     $('#div_solicitud_detalle').show(); 
@@ -528,30 +529,26 @@ function sgd_mant_add_solicitud(){
 //
 //INICIO LISTA DE VARIABLES
 function lista_variables(){
-    var id_var = "";
     var valor_var = "";
-     var tempo = "";
-    var temp_var = $('#hd_id_var').val();   
+    var tempo = "";
+    var temp_var = $('#hd_id_var').val(); 
+    var temporal = "";
     
     $('.cb_variable:checked').each(function () {
-        valor_var += $(this).val() + ",";  
+        valor_var += $(this).val() + ",";
         tempo = $(this).val();
-    });
-
+    
         if (temp_var == ''){
             var id_var_tmp = valor_var;
-            $('#hd_id_var').val(id_var_tmp); 
+            $('#hd_id_var').val(id_var_tmp);
         }else{
-            var array_cad_var = temp_var.split(',');
-            for (var i=0; i<array_cad_var.length-1; i++){
-                var cad = array_cad_var[i];
-                if(cad !== tempo){
-                    id_var += tempo + ",";
-                    var id_var_tmp = temp_var + valor_var;
-                    $('#hd_id_var').val(id_var_tmp);
+            if (temp_var.indexOf(tempo) == -1){
+                temporal += tempo + ',';
+                var id_var_tmp = temp_var + temporal;
+                $('#hd_id_var').val(id_var_tmp); 
                 }
-            }    
-        }           
+            }
+    });   
 }
 //FIN LISTA DE DE VARIABLES
 //
@@ -669,7 +666,6 @@ function sgd_tipo_entrega_chkb(){
                 $('#div_tipo_entrega_chkb').html("Cargando...");
             },
             success: function(requestData){
-//                console.log(requestData);
                 $('#div_tipo_entrega_chkb').html(requestData);
                 $('#div_tipo_entrega_chkb').show();                                
             },
@@ -738,8 +734,7 @@ function sgd_mant_enviar_solicitud_otros(){//DETERMINAR CAMPOS OBLIGATORIOS
                 var msj = arrayobj[0][1];//datos guardados
                 
                 $('#hd_id_sol').val(id);
-                $('#div_msg_registro_sol').show();
-                $('#div_msg_registro_sol').html(msj);
+                $.alert('<h6>' + msj + '</h6>');
             },
             error: function(requestData, strError, strTipoError){								
                 $('#div_msg_registro_sol').html("Error " + strTipoError +": " + strError);
@@ -821,8 +816,7 @@ function sgd_mant_enviar_solicitud_info(){
                 var msj = arrayobj[0][1];//datos guardados
                 
                 $('#hd_id_sol').val(id);
-                $('#div_msg_registro_sol').show();
-                $('#div_msg_registro_sol').html(msj);
+                $.alert('<h6>' + msj + '</h6>');
             },
             error: function(requestData, strError, strTipoError){
                 $('#div_msg_registro_sol').html("Error " + strTipoError +": " + strError);

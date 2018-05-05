@@ -199,7 +199,7 @@
                                     <div class="input-field col-md-4">
                                     </div>    
                                 </div>                                  
-                                <div class="col-md-12 demo-section" style="height: calc(100%);">        
+                                <div class="col-md-12 demo-section" style="height: calc(90%);">        
                                     <div id="div_map" style="width: 100% ;height: 100%"></div>
                                 </div>  
                             </div>
@@ -242,7 +242,8 @@
                                     </div>                                
                                     <div class="row">
                                         <div class="col-md-4 text-right">
-                                            <button onclick="sgd_mant_add_solicitud()" onfocus="lista_variables()" class="btn btn-info btn-sm">Agregar a Solicitud</button>            
+                                            <!--<button onclick="sgd_mant_add_solicitud()" onfocus="lista_variables()" class="btn btn-info btn-sm">Agregar a Solicitud</button>-->            
+                                            <button onclick="lista_variables();sgd_mant_add_solicitud()" class="btn btn-info btn-sm">Agregar a Solicitud</button>            
                                         </div>
                                         <div class="input-field col-sm-8">
                                         </div>

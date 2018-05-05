@@ -197,7 +197,7 @@
                 <div class="row form-group text-right" >
                     <div class="col-sm-12" >                        
                         <!--<button id="btn_guardar" onclick="sgd_mant_expediente_guardar()" class="btn btn-info btn-sm" >-->
-                        <button id="btn_guardar" onclick="sgd_mant_cut_solicitud_guardar()" class="btn btn-info btn-sm" >
+                        <button id="btn_guardar" onclick="sgd_mant_expediente_solicitud_guardar()" class="btn btn-info btn-sm" >
                             Guardar       
                         </button> 
                     </div> 
