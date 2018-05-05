@@ -29,16 +29,16 @@ s.i_id_proc,
 s.d_fecha_solicitud,
 a.c_dir_adm,
 a.c_email_adm,
-a.c_repres_adm,
-a.c_email_repr,
-a.c_telef_repr,
+COALESCE(a.c_repres_adm,'') as c_repres_adm,
+COALESCE(a.c_email_repr,'') as c_email_repr,
+COALESCE(a.c_telef_repr,'') as c_telef_repr,
 a.c_tlf_adm,
-sr.v_descripcion_sector
+COALESCE(sr.v_descripcion_sector,'') as v_descripcion_sector
 from sgd.sgdmvc_solicitud s
-	INNER JOIN sgd.sgdmvd_solicitud_detalle d on (d.i_id_solicitud = s.i_id_solicitud)
-	INNER JOIN senamhi.sgdtbp_administrado a ON (a.i_id_adm = s.i_id_adm)
-	INNER JOIN sgd.sgdtbp_proced pr ON (pr.i_id_proc = s.i_id_proc)
-	INNER JOIN sgd.sgdtbp_escala e ON (e.i_id_escala = d.i_id_escala)
+	LEFT JOIN sgd.sgdmvd_solicitud_detalle d on (d.i_id_solicitud = s.i_id_solicitud)
+	LEFT JOIN senamhi.sgdtbp_administrado a ON (a.i_id_adm = s.i_id_adm)
+	LEFT JOIN sgd.sgdtbp_proced pr ON (pr.i_id_proc = s.i_id_proc)
+	LEFT JOIN sgd.sgdtbp_escala e ON (e.i_id_escala = d.i_id_escala)
 	LEFT JOIN senamhi.sentbp_sector sr ON (a.i_id_sector = sr.i_id_sector)
 where s.i_id_solicitud::varchar like '%'||$P!{p_id_solicitud}
 ORDER BY 1 ASC;]]>

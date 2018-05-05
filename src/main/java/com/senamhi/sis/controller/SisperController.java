@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -12,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.stereotype.Controller;
@@ -28,7 +32,7 @@ public class SisperController {
     @RequestMapping(value = { "/sisper/index"}, method = RequestMethod.GET)
     public String SisperIndex(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
     throws ServletException, IOException{
-
+            
         return "sisper/index";
     } 
     
@@ -36,10 +40,42 @@ public class SisperController {
     public String SisperReporteAsistencia(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
     throws ServletException, IOException{
         
-        String esquema = request.getParameter("s");
+        String iframe = "<iframe height=\"100%\" width=\"100%\" src=\"reporteasistenciapdf\">";
+        
+        request.setAttribute("response",iframe);
+        
+        return "sisper/reporteasistencia";
+    }
+    
+    @RequestMapping(value = { "/sisper/reporteasistenciapdf"}, method = RequestMethod.GET)
+    public String SisperReporteAsistenciaPDF(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        //String esquema = request.getParameter("s");
         String arch_report = request.getParameter("r");
         String param = request.getParameter("p");
         
+        if(arch_report == null){
+            arch_report = "asistenciaempleado";
+        }
+        if(param == null){
+            HttpSession session = request.getSession();
+            String idPers = session.getAttribute("idPers").toString(); 
+           
+            SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechai =  new Date();
+            fechai.setMonth(fechai.getMonth() - 1);
+            fechai.setDate(1);
+            String fecha_ini =  sm.format(fechai);            
+            
+            Date fechaf =  new Date();
+            String fecha_fin =  sm.format(fechaf);
+            
+            param = "p_cod_emp$"+idPers+"|p_fecha_ini$"+fecha_ini+"|p_fecha_fin$"+fecha_fin;
+            System.out.println(param);
+            
+        }
+                
         System.setProperty("java.awt.headless", "true"); 
         
             try{
@@ -101,7 +137,7 @@ public class SisperController {
         request.setAttribute("response",  "ERROR: "+e.getMessage());
         }
         
-        return "sisper/reporteasistencia";
+        return "sisper/reporteasistenciapdf";
     } 
     
 }
