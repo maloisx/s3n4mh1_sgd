@@ -3700,11 +3700,15 @@ function sgd_mant_solicitud_generacut_popup(id_sol){
 //INICIO N° CUT DESDE SOLICITUD
 function sgd_mant_cut_solicitud_guardar(){
     var id = $('#txt_nrodoc').val();
+    var cut = $('#txt_cut').val();
+    var per = $('#txt_per').val();
     $.ajax({
             dataType: "html",
             type:     "GET",
             url:      path + "sgd/mant_cut_guardar/", 
-            data:     "id_sol="+id,	 	 
+            data:     "id_sol="+id+ 	 
+                      "&cut="+cut+ 	 
+                      "&per="+per,	 	 
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");
             },
@@ -3743,3 +3747,15 @@ function sgd_mant_generar_pdf(){
     var url = window.open("reportesolicitud/?id="+id+"&arch_report="+arch_report, "", "width=900,height=900");
 }
 //FIN GENERAR PDF
+
+function sgd_mant_expediente_solicitud_guardar(){
+    sgd_mant_expediente_guardar();
+    var cut = $('#txt_cut').val();
+    if (cut != ''){
+        sgd_mant_cut_solicitud_guardar();
+        var msj = 'La solicitud se actualizó con exito';
+        $.alert('<h6>' + msj + '</h6>');
+    }
+    
+    
+}
