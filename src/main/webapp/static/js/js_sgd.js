@@ -1240,12 +1240,12 @@ function sgd_mant_expediente_modificadoc_popup(id_exp, id_doc, id_flujo, codUser
 //
 //INICIO GUARDAR EXPEDIENTE POPUP
 function sgd_mant_expediente_guardar(){
-    var id = $('#hd_id').val();
+    var id = $('#hd_id').val(); 
     var per = $('#txt_per').val();
     var orig = $('#cb_origen').val();
     var tema = $('#cb_tema').val();
     var proc = $('#cb_procedimiento').val();
-    var alcan = $('#cb_alcance').val();
+    var alcan = $('#cb_alcance').val();     console.log('**********************************'+alcan);
     var userreg = $('#hd_userreg').val();
     var fecreg = $('#txt_fecreg').val();    
     
@@ -1257,8 +1257,7 @@ function sgd_mant_expediente_guardar(){
     
     var id_doc = $('#hd_iddoc').val(); //id para consulta de documentos adjuntos
     
-    var clsdoc = $('#cb_clsfdoc').val();
-//    console.log('**********************************'+clsdoc);
+    var clsdoc = $('#cb_clsfdoc').val();    
     var numd = $('#txt_nrodoc').val();
     var fecd = $('#txt_fec_doc').val();
     var fecreg_doc = $('#hd_fecreg_doc').val();
@@ -1277,7 +1276,7 @@ function sgd_mant_expediente_guardar(){
     obs = obs.replace("\“","'");
     obs = obs.replace("\”","'");
     
-    var idrem = $('#hd_idrem').val();    
+    var idrem = $('#hd_idrem').val(); //console.log('**********************************'+idrem);  
     var iddes = $('#hd_iddes').val();
     var input = document.querySelector('input[type="file"]');     
     var obsmodifica = $('#txt_obsmodifica').val();    
@@ -1333,7 +1332,32 @@ function sgd_mant_expediente_guardar(){
             dataType: "html",
             type:     "GET",
             url:      path + "sgd/mant_expediente_guardar/", 
-            data:     "id="+id+"&per="+per+"&orig="+orig+"&tema="+tema+"&proc="+proc+"&alcan="+alcan+"&userreg="+userreg+"&fecreg="+fecreg+"&cond="+cond+"&cutext="+cutext+"&priori="+priori+"&plazo="+plazo+"&id_doc="+id_doc+"&clsdoc="+clsdoc+"&numd="+numd+"&fecd="+fecd+"&fecreg_doc="+fecreg_doc+"&asu_doc="+escape(asu_doc)+"&folio="+folio+"&uoreg_doc="+uoreg_doc+"&prflreg_doc="+prflreg_doc+"&userreg_doc="+userreg_doc+"&obs="+escape(obs)+"&idrem="+idrem+"&iddes="+iddes+"&id_vt="+id_vt+"&obsmodifica="+escape(obsmodifica),
+            data:     "id="+id+
+                    "&per="+per+"&orig="+orig+
+                    "&tema="+tema+
+                    "&proc="+proc+
+                    "&alcan="+alcan+
+                    "&userreg="+userreg+
+                    "&fecreg="+fecreg+
+                    "&cond="+cond+
+                    "&cutext="+cutext+
+                    "&priori="+priori+
+                    "&plazo="+plazo+
+                    "&id_doc="+id_doc+
+                    "&clsdoc="+clsdoc+
+                    "&numd="+numd+
+                    "&fecd="+fecd+
+                    "&fecreg_doc="+fecreg_doc+
+                    "&asu_doc="+escape(asu_doc)+
+                    "&folio="+folio+
+                    "&uoreg_doc="+uoreg_doc+
+                    "&prflreg_doc="+prflreg_doc+
+                    "&userreg_doc="+userreg_doc+
+                    "&obs="+escape(obs)+
+                    "&idrem="+idrem+
+                    "&iddes="+iddes+
+                    "&id_vt="+id_vt+
+                    "&obsmodifica="+escape(obsmodifica),
             beforeSend: function(data){ 	 	
                 $('#div_mensaje_ajax').html("Cargando...");                
             },

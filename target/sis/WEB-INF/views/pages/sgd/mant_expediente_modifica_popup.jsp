@@ -15,10 +15,10 @@
             </li>
         </ul>
     </div>
-
+    
     <div class="col-sm-9">
         <div class="tab-content" >
-<!--PESTANA MODIFICAR DOCUMENTO-->            
+<!--PESTANA MODIFICAR DOCUMENTO-->
             <div class="tab-pane active" id="doc">
                 <div class="row">
                     <div class="col-sm-6">
@@ -28,13 +28,13 @@
                                 <label for="txt_cut" class="active">N° CUT</label>
                                 <input type="hidden" name="hd_id" id="hd_id" value="${requestScope['id']}" /><!--id del expediente-->
                                 <input type="hidden" name="hd_userreg" id="hd_userreg" value="${requestScope['codUser']}" />
-                                <input type="hidden" name="hd_uorem" id="hd_uorem" value="${requestScope['id_uo']}" />                                
+                                <input type="hidden" name="hd_uorem" id="hd_uorem" value="${requestScope['id_uo']}" />
                                 <input type="hidden" name="hd_perfil" id="hd_perfil" value="${requestScope['perfil']}" />
                                 <input type="hidden" name="hd_user_agrupa" id="hd_user_agrupa" value="${requestScope['user_agrupa']}" />
                                 <input type="hidden" name="hd_iddoc" id="hd_iddoc" value="${requestScope['doc']}"/><!--id documentos para cargar adjuntos-->
                                 <input type="hidden" name="hd_cta_agrup" id="hd_cta_agrup" value="${requestScope['cta_agrup']}"/>
                                 <input type="hidden" name="hd_id_vtn" id="hd_id_vtn" value="${requestScope['id_vt']}" />
-                                <input type="hidden" name="hd_operacion" id="hd_operacion" value="0"/> 
+                                <input type="hidden" name="hd_operacion" id="hd_operacion" value="0"/>
                             </div>
                             <div class="input-field col-sm-2">
                                 <input id ="txt_per" type="text" value="${requestScope['per']}" style="color: red; font-size:130%; font-weight:bold;" readonly/>
@@ -44,14 +44,14 @@
                                 <input id="txt_fecreg" type="text" value="${requestScope['fecreg']}" readonly/>
                                 <label for="txt_fecreg" class="active">Fecha Reg.</label>
                             </div>
-                            <div class="input-field col-sm-4">   
+                            <div class="input-field col-sm-4">
                                 <select name="cb_condicion" id="cb_condicion" class="form-control selectpicker " disabled>${requestScope['cb_condicion']}</select>
                                 <label for="cb_condicion" class="active">Condición</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col-sm-4">
-                                <select name="cb_priori" id="cb_priori" class="form-control selectpicker" data-size="3" disabled>${requestScope['cb_priori']}</select>
+                                <select name="cb_priori" id="cb_priori" class="form-control selectpicker" data-size="3" ${requestScope['vtn_enabled_form']}>${requestScope['cb_priori']}</select>
                                 <label for="cb_priori" class="active">Prioridad</label>
                             </div>
                             <div class="input-field col-sm-4">
@@ -59,7 +59,7 @@
                                 <label for="txt_plazo" class="active">Plazo (días):</label>
                             </div>
                             <div class="input-field col-sm-4">
-                                <select name="cb_alcance" id="cb_alcance" class="form-control selectpicker" disabled>${requestScope['cb_alcance']}</select>
+                                <select name="cb_alcance" id="cb_alcance" class="form-control selectpicker" ${requestScope['vtn_enabled_form']}>${requestScope['cb_alcance']}</select>
                                 <label for="cb_alcance" class="active">Alcance</label>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                     <div class="col-sm-5">
                         <div class="row">
                             <div class="input-field col-sm-4">
-                                <select name="cb_tramite" id="cb_tramite" class="form-control selectpicker" onchange="sgd_mant_procedimiento_cargar_cbo();" data-size="3" disabled>${requestScope['cb_tramite']}</select>
+                                <select name="cb_tramite" id="cb_tramite" class="form-control selectpicker" onchange="sgd_mant_procedimiento_cargar_cbo();" data-size="3" ${requestScope['vtn_enabled_form']}>${requestScope['cb_tramite']}</select>
                                 <label for="cb_tramite" class="active">Tipo de Tramite</label>
                             </div>
                             <div class="input-field col-sm-4">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="row" style="padding-top: 13px">
                             <div class="input-field col-sm-11">
-                                <select name="cb_procedimiento" id="cb_procedimiento" class="form-control selectpicker" data-size="3" disabled>${requestScope['cb_procedimiento']}</select>
+                                <select name="cb_procedimiento" id="cb_procedimiento" class="form-control selectpicker" data-size="3" ${requestScope['vtn_enabled_form']}>${requestScope['cb_procedimiento']}</select>
                                 <label for="cb_procedimiento" class="active">Procedimiento</label>
                             </div>                            
                         </div>
@@ -127,7 +127,7 @@
                     <div class="col-sm-6">
                         <div class="row">
                             <div class="input-field col-sm-12">
-                                <select name="cb_remite" id="cb_remite" class="form-control selectpicker" data-live-search="true" data-size="6" ${requestScope['vtn_enabled_form']}>${requestScope['cb_remite']}</select>                                       
+                                <select name="cb_remite" id="cb_remite" class="form-control selectpicker" data-live-search="true" data-size="6" onchange="hd_idrem.value=this.value;" ${requestScope['vtn_enabled_form']}>${requestScope['cb_remite']}</select>                                       
                                 <label for="cb_remite" class="active">Remitente: Institución/Unid.Org. </label>
                             </div>
                         </div>
