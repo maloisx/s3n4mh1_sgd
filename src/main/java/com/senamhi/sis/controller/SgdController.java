@@ -9713,24 +9713,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             Vector datos_cbo_sector = cn.EjecutarProcedurePostgres(ne, array_cbo_sector);
             String cb_sector = util.contenido_combo(datos_cbo_sector, "");
             request.setAttribute("cb_sector", cb_sector);
-            
-            String array[] = new String[2];
-            array[0] = "";
-            array[1] = "";
-            Vector datos = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.sp_obt_list_estacion", array);
-            String cb_est ="";
-            cb_est += "<option value=''></option>";
-            for(int i= 0; i<datos.size(); i++){
-                Vector vss =  (Vector) datos.get(i);
-                String cod_est = vss.get(0).toString();
-                String des_est = vss.get(1).toString();
-                String cat_est = vss.get(9).toString();
-                String dpto = vss.get(5).toString();
-                
-                cb_est += "<option value='"+cod_est+"'>"+des_est+"-"+cat_est+"-"+dpto+"</option>";                
-            }         
-            request.setAttribute("cb_estacion", cb_est);
-         
+        
             String array_dpto[] = new String[1];
             array_dpto[0] = "";
             Vector datos_dpto = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.sp_obt_list_dep", array_dpto);
@@ -9762,8 +9745,6 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String cb_func = util.contenido_combo(datos_cbo_func, "");
             request.setAttribute("cb_func", cb_func);
             
-            
-            
         return "sgd/mant_solicitud_servicios";
     }
 //FIN SOLICITUD SERVICIOS ATENCIÓN AL CIUDADANO
@@ -9772,11 +9753,10 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 @RequestMapping(value = {"/sgd/mant_mapa_mostrar"}, method = RequestMethod.GET)
     public String MantMapaMostrar(HttpServletRequest request, HttpServletResponse response,ModelMap model) { 
         
-        String cod_estacion = request.getParameter("cod_estacion");  
-        String[] desc_dpto = cod_estacion.split("-");
+        String cod_estacion = request.getParameter("cod_estacion");          
         String cod_dpto = request.getParameter("cod_dpto");
         
-            //tabla de datos!            
+            //tabla de datos
             String array[] = new String[2];
             array[0] = cod_estacion;
             array[1] = cod_dpto;
@@ -10097,6 +10077,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 String des_est = vss.get(1).toString();
                 String cat_est = vss.get(9).toString();
 //                String dpto = vss.get(5).toString();
+//                String cod_dpto = vss.get(13).toString();
+                cod_est = cod_est + '_' + cod_dpto;
                 
                 cb_est += "<option value='"+cod_est+"'>"+des_est+"-"+cat_est+"</option>";                
             }         

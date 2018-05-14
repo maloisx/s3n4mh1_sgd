@@ -268,11 +268,18 @@
     
     <definition name="pad/mant_articulo_popup"  extends="popup-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo_popup.jsp" />  
-    </definition>
+    </definition>    
         
     <definition name="pad/mant_articulo_guardar"  extends="ajax-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_articulo_guardar.jsp" />  
+    </definition>    
+        
+    <definition name="pad/mant_alertaip_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_alertaip_popup.jsp" />  
+    </definition>        
+        
+    <definition name="pad/mant_ipad_consulta"  extends="ajax-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/pad/mant_ipad_consulta.jsp" />  
     </definition>
-    
-              
+        
 </tiles-definitions>

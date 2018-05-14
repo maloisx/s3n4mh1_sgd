@@ -165,9 +165,9 @@
                             </button>
                         </div>
                     </div>
-                </div>    
+                </div>
             </div>
-        </div> 
+        </div>
         <br>
         <div class="row" id="div_cbo_servicio">
             <div class="col-sm-12">
@@ -186,22 +186,23 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <br>
-                            <div class="col-sm-8" id="div_ciudadano_mapa" style="width: 65%; height: 65%;">
+                            <div class="col-sm-6" id="div_ciudadano_mapa" style="width: 65%; height: 65%;">
                                 <div class="row">
                                     <div class="input-field col-md-4">
                                         <select id="cb_dpto" name="cb_dpto" class="form-control selectpicker" data-size="5" data-live-search="true" onchange="sgd_mant_dpto_mostrar()">${requestScope['cb_dpto']}</select>
                                         <label for="cb_dpto" class="active">Departamento</label>
-                                    </div>    
+                                    </div>
                                     <div class="input-field col-md-4" id="div_combos">        
+                                        <!--<select id="cb_estacion" class="form-control selectpicker" name="cb_estacion" data-size="5" data-live-search="true" onchange="sgd_mant_mapa_mostrar()">${requestScope['cb_estacion']}</select>-->
                                         <select id="cb_estacion" class="form-control selectpicker" name="cb_estacion" data-size="5" data-live-search="true" onchange="sgd_mant_mapa_mostrar()">${requestScope['cb_estacion']}</select>
                                         <label for="cb_estacion" class="active">Estación</label>
-                                    </div>    
+                                    </div>
                                     <div class="input-field col-md-4">
-                                    </div>    
-                                </div>                                  
+                                    </div>
+                                </div>
                                 <div class="col-md-12 demo-section" style="height: calc(90%);">        
                                     <div id="div_map" style="width: 100% ;height: 100%"></div>
-                                </div>  
+                                </div>
                             </div>
                             <div class="col-sm-4" id="div_detalle" style="width: 35%; height: 700px;">
                                 <div class="col-sm-12" id="div_detalle">
@@ -237,9 +238,9 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="input-field col-sm-12" id="div_variables" >                                            
-                                        </div> 
-                                    </div>                                
+                                        <div class="input-field col-sm-12" id="div_variables" >
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-4 text-right">
                                             <!--<button onclick="sgd_mant_add_solicitud()" onfocus="lista_variables()" class="btn btn-info btn-sm">Agregar a Solicitud</button>-->            
@@ -413,7 +414,9 @@
         $('#cb_dpto').selectpicker('refresh');
         $("#cb_estacion").prop('selectedIndex', 0);
         $('#cb_estacion').selectpicker('refresh');
+        
     });
+    document.getElementById("cb_estacion").disabled=true;
     
     $('#div_per_juridica_buscar').toggle();
     $('#div_per_juridica').hide();
@@ -459,6 +462,8 @@
         $('#cb_dpto').selectpicker('refresh');
         $("#cb_estacion").prop('selectedIndex', 0);
         $('#cb_estacion').selectpicker('refresh');
-        sgd_mant_mapa_mostrar();
+        if (this.options[this.selectedIndex].value === '4'){
+            sgd_mant_mapa_mostrar();
+        }
     });
 </script>

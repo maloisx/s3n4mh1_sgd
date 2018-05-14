@@ -62,7 +62,7 @@ function pad_mant_expedientes_pad_guardar(){
     var id = $('#txt_nroexp').val();
     var fecharecep = $('#txt_fecharecep').val();
     var tiempo = $('#cb_tiempo').val();
-//    console.log('***************'+tiempo);
+    console.log('***************'+tiempo);
     var fecpresc_iniPAD = $('#txt_fecpresc_iniPAD').val();
     var etapa = $('#cb_etapa').val();
     var denunciante = $('#cb_denunciante').val();
@@ -1666,4 +1666,42 @@ function pad_mant_articulo_guardar(){
         });
 }
 //FIN ARTICULO GUARDAR//
+//
+//INICIO ALERTA IPAD FIN INVESTIGACIÓN PREVIA POPUP
+function pad_mant_alertaip_popup(){
+    var url = encodeURI(path + "pad/mant_alertaip_popup/");
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 600
+       ,"height" : 500
+    });
+}
+//FIN ALERTA IPAD FIN INVESTIGACIÓN PREVIA POPUP
+//
+//INICIO ALERTA IPAD 
+function pad_mant_alerta_consulta(){
+       
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "pad/mant_ipad_consulta/",
+            data:     "",	 	 
+            beforeSend: function(data){
+//                $('#div_alertaipad').html("Cargando...");
+            },
+            success: function(requestData){
+                
+                if (jQuery.trim(requestData) !== '[]'){
+                    console.log('**--'+ jQuery.trim(requestData) );
+                    pad_mant_alertaip_popup();                    
+                }
+
+            },
+            error: function(requestData, strError, strTipoError){
+//                $('#div_alertaipad').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN ALERTA IPAD//
 //

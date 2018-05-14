@@ -98,7 +98,7 @@ function sgd_mant_busca_ciudadano_dni(tipo_doc){
                     $('#btn_guarda_ciudadano_dni').text('Actualizar');
                     $('#div_msg_registro').hide();
                     $('#div_cbo_servicio').show();
-                    sgd_mant_mapa_mostrar();
+//                    sgd_mant_mapa_mostrar();
                 }else if (arrayobj.length == 0){
                     $('#div_msg_registro').text('Registre sus datos.');
                     $('#div_msg_registro').show();
@@ -252,10 +252,23 @@ function sgd_mant_ciudadano_dni_guardar(){
 //
 //INICIO BUSCAR MAPA
 function sgd_mant_mapa_mostrar(){
-    var cod_estacion = $('#cb_estacion').val();
-    var cod_dpto = $('#cb_dpto').val();
-    //console.log(cod_estacion);
+    var cad = $('#cb_estacion').val();
+    var cod_estacion = "";
+    var cod_dpto = "";
     
+    if (cad.indexOf("_") == -1){
+        cod_estacion = cad;
+        cod_dpto = $('#cb_dpto').val();
+        console.log('***********'+cod_estacion);
+        console.log('***********'+cod_dpto);
+    }else{
+        var cadena = cad.split('_');
+        cod_estacion = cadena[0];
+        cod_dpto = cadena[1];
+        console.log('///////////'+cod_estacion);
+        console.log('///////////'+cod_dpto);
+    }
+        
     $.ajax({
             dataType: "html",
             type:     "GET",
@@ -436,7 +449,6 @@ function removermarkers(markersArray) {
 //
 //INICIO CENTRAR MAPA
 function centrarmapa() {
-
     if (markersArray.length > 0) {
         //console.log('m1');
         var limits = new google.maps.LatLngBounds();
@@ -464,8 +476,7 @@ function estacion_datos(codestacion, estacion, sub_esta, tipo, dpto, prov, dtrit
     $('#txt_tipo').val(sub_esta);
     $('#lb_tipo').addClass('active');
     $('#txt_categoria').val(tipo);
-    $('#lb_categoria').addClass('active'); 
-    
+    $('#lb_categoria').addClass('active');    
     sgd_estacion_variables();
 }
 //FIN DETALLE DE LA ESTACIÓN
@@ -486,6 +497,7 @@ function sgd_estacion_variables(){
             },
             success: function(requestData){
                 $('#div_variables').html(requestData);
+                $('#div_variables').show();
             },
             error: function(requestData, strError, strTipoError){								
                 $('#div_variables').html("Error " + strTipoError +": " + strError);
@@ -566,6 +578,7 @@ function sgd_mant_dpto_mostrar(){
                 $('#cb_estacion').selectpicker('refresh');
             },
             success: function(requestData){
+                $('#cb_estacion').attr('disabled',false);
                 $('#cb_estacion').html(requestData);
                 $('#cb_estacion').selectpicker('refresh');
                 sgd_mant_mapa_mostrar();
@@ -608,6 +621,15 @@ function sgd_mant_solicitud_mostrar(){
         $('#div_observacion').show();
         $('#div_solicitud_info').hide();
         $('#div_enviar_sol_otros').hide();
+        $('#div_mapa').hide();
+        $('#cb_estacion').attr('disabled', true);
+        $('#txt_cod_estacion').val('');
+        $('#txt_estacion').val('');
+        $('#txt_dpto').val('');
+        $('#txt_provincia').val('');
+        $('#txt_tipo').val('');
+        $('#txt_categoria').val('');
+        $('#div_variables').hide();
     }else if(cod_procedimiento == ''){
         $('#hd_id').val('');
         $('#txt_dni').val('');
@@ -638,6 +660,14 @@ function sgd_mant_solicitud_mostrar(){
         $('#div_solicitud_tupa').hide();
         $('#div_solicitud_tupa_detalle').hide();
         $('#div_enviar_sol_tupa').hide();
+        $('#cb_estacion').attr('disabled', true);
+        $('#txt_cod_estacion').val('');
+        $('#txt_estacion').val('');
+        $('#txt_dpto').val('');
+        $('#txt_provincia').val('');
+        $('#txt_tipo').val('');
+        $('#txt_categoria').val('');
+        $('#div_variables').hide();
     }else{
         $('#div_solicitud_otros').show();
         $('#div_mapa').hide();
@@ -651,6 +681,14 @@ function sgd_mant_solicitud_mostrar(){
         $('#div_solicitud_tupa_detalle').hide();
         $('#div_solicitud_rpta').hide();
         $('#div_enviar_sol_tupa').hide();
+        $('#cb_estacion').attr('disabled', true);
+        $('#txt_cod_estacion').val('');
+        $('#txt_estacion').val('');
+        $('#txt_dpto').val('');
+        $('#txt_provincia').val('');
+        $('#txt_tipo').val('');
+        $('#txt_categoria').val('');
+        $('#div_variables').hide();
     }        
 }
 //FIN MOSTRAR SOLICITUD
