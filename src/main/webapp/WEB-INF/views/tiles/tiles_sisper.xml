@@ -13,5 +13,10 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisper/reporteasistencia.jsp" />  
    </definition> 
    
+   <definition name="sisper/reporteasistenciapdf" extends="base-definition">  
+       <put-attribute name="title" value="sisper reporte de asistencia" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisper/reporteasistenciapdf.jsp" />  
+   </definition> 
+   
  
 </tiles-definitions>
