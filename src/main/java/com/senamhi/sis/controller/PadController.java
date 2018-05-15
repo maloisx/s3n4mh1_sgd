@@ -1365,13 +1365,13 @@ public class PadController {
     }
 //FIN NUEVO INVESTIGADO GUARDAR     
 //
-//INICIO ASIGNA ABOGADO POPUP            
+//INICIO ASIGNA ABOGADO POPUP
     @RequestMapping(value = {"/pad/mant_asigna_abogado_popup"}, method = RequestMethod.GET)
     public String MantAsignaAbogadoConsultaPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
-        request.setAttribute("title_pag","ASIGNAR ABOGADO");   
-        String array_expediente = request.getParameter("array_expediente");  
-        int x = 0;   
+        request.setAttribute("title_pag","ASIGNAR ABOGADO");
+        String array_expediente = request.getParameter("array_expediente");
+        int x = 0;
         try {
             String exp = "";
             String nro_exp = "";
@@ -1380,21 +1380,21 @@ public class PadController {
             String cad_id_exp = "";
             
             
-            String[] array_exp = array_expediente.split(","); 
+            String[] array_exp = array_expediente.split(",");
             
             String tbl_exp = "<table class='table table-striped'>" +
-                                    "<tr class='success'>" +
-                                    "  <td>ITEM</td>" +
-                                    "  <td>N° EXPEDIENTE</td>" +
-                                    "  <td>FECHA RECEP.(ORH)</td>" +
-                                    "  <td>ETAPA</td>" +
-                                    "</tr>";  
+                             "<tr class='success'>" +
+                             "  <td>ITEM</td>" +
+                             "  <td>N° EXPEDIENTE</td>" +
+                             "  <td>FECHA RECEP.(ORH)</td>" +
+                             "  <td>ETAPA</td>" +
+                             "</tr>";
             String id_exp_array = "";
             for (x = 0; x < array_exp.length; x++){
                 exp = array_exp[x];
                 String[] array_elem = exp.split("_");
                 nro_exp = array_elem [0];
-                fec_rec = array_elem [1];                
+                fec_rec = array_elem [1];
                 etapa = array_elem [2];
                 
                 tbl_exp += "<tr>" +
@@ -1402,16 +1402,16 @@ public class PadController {
                                 "  <td>"+nro_exp+"</td>" +
                                 "  <td>"+fec_rec+"</td>" +
                                 "  <td>"+etapa+ "</td>" +
-                                "</tr>";  
+                                "</tr>";
                 cad_id_exp += nro_exp + ",";
-            }            
+            }
             cad_id_exp = cad_id_exp.replace(id_exp_array, "");
             cad_id_exp = id_exp_array + cad_id_exp;
-            tbl_exp += "</table>";            
+            tbl_exp += "</table>";
             request.setAttribute("tbl_exp", tbl_exp);
-            request.setAttribute("cad_id_exp", cad_id_exp);            
+            request.setAttribute("cad_id_exp", cad_id_exp);  
             
-            ConeccionDB cn = new ConeccionDB();   
+            ConeccionDB cn = new ConeccionDB();
             Util util =  new Util();
 //          información para el combo Abogado
             String abogado = "pad.fn_abogado_consulta";
@@ -1419,13 +1419,13 @@ public class PadController {
             array_cbo_abogado[0] = "";
             Vector datos_cbo_abogado = cn.EjecutarProcedurePostgres(abogado, array_cbo_abogado);
             String cb_abogado = util.contenido_combo(datos_cbo_abogado, "");
-            request.setAttribute("abogado", cb_abogado);            
+            request.setAttribute("abogado", cb_abogado);        
           
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "pad/mant_asigna_abogado_popup";
-    }   
+    }
 //FIN ASIGNA ABOGADO POPUP
 //  
 //INICIO ASIGNA ABOGADO GUARDAR    
@@ -2765,7 +2765,7 @@ public class PadController {
         return "pad/mant_norma_popup";
     }   
 //FIN NORMA POPUP
-// 
+//
 //INICIO NORMA GUARDAR    
 @RequestMapping(value = {"/pad/mant_norma_guardar"}, method = RequestMethod.GET)
     public String MantNormaGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
@@ -3385,6 +3385,79 @@ public class PadController {
         return "pad/mant_articulo_guardar";
     }
 //FIN ARTICULO GUARDAR     
-//       
+//
+//INICIO NORMA POPUP
+    @RequestMapping(value = {"/pad/mant_alertaip_popup"}, method = RequestMethod.GET)
+    public String MantAlertaipPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        request.setAttribute("title_pag","ALERTA IPAD");
+        String id = request.getParameter("id");
+        
+        try {
+            ConeccionDB cn = new ConeccionDB();
+            
+            String np = "pad.fn_alertaip_consulta";
+            String array[] = new String[1];
+            array[0] = id;
+            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+            Integer ii = 0;            
+            String n_exp = "";
+            String dias = "";
+            String fec_ipad = "";
+            String tbl_exp = "<table class='table table-striped'>" +
+                             "<tr class='success'>" +
+                             "  <td>ITEM</td>" +
+                             "  <td>N° EXPEDIENTE</td>" +
+                             "  <td>DÍAS A CADUCAR</td>" +
+                             "  <td>FECHA IPAD</td>" +
+                             "</tr>";
+            
+            for(int i = 0; i<datos.size(); i++){
+                Vector datos_v = (Vector) datos.get(i);
+                n_exp = datos_v.get(0).toString();
+                fec_ipad = datos_v.get(1).toString();
+                dias = datos_v.get(2).toString();
+                ii = i+1;
+                
+                tbl_exp += "<tr>" +
+                    "  <td class='text-center'>"+ii+"</td>" +
+                    "  <td>"+n_exp+"</td>" +
+                    "  <td>"+dias+"</td>" +
+                    "  <td>"+fec_ipad+ "</td>" +
+                    "</tr>";                                
+            }
+            tbl_exp += "</table>";
+            request.setAttribute("tbl_exp", tbl_exp);            
+        
+        } catch (Exception ex) {
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "pad/mant_alertaip_popup";
+    }   
+//FIN NORMA POPUP
+//
+//INICIO ARTICULO GUARDAR    
+@RequestMapping(value = {"/pad/mant_ipad_consulta"}, method = RequestMethod.GET)
+    public String MantIpadConsulta(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+        throws ServletException, IOException {
+        String var_request = "";
+        
+        try {
+            ConeccionDB cdb = new ConeccionDB();
+            String np = "pad.fn_alertaip_consulta";
+            String array[] = new String[1];
+            array[0] = "";
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            var_request = new Util().vector2json(datos);
+            
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "pad/mant_ipad_consulta";
+    }
+//FIN ARTICULO GUARDAR     
+//    
 }
 
