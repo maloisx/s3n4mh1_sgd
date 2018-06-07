@@ -173,7 +173,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-12">
                     <div class="input-field col-sm-12">
-                        <select id="cb_servicio" class="form-control selectpicker" name="cb_servicio" data-size="5" data-live-search="true" onchange="sgd_mant_solicitud_mostrar()">${requestScope['cb_proc']}</select>
+                        <select id="cb_servicio" class="form-control selectpicker" name="cb_servicio" onchange="sgd_mant_solicitud_mostrar()">${requestScope['cb_proc']}</select>
                         <label for="cb_servicio" class="active">Seleccione Servicio</label>
                     </div>
                 </div>
@@ -293,7 +293,7 @@
                 <div class="col-sm-12"><br>
                     <div class="input-field col-sm-6">
                         <textarea  id="txt_descripcion" name="txt_descripcion" class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="1000" minlength="1"></textarea>
-                        <label for="txt_descripcion" class="active">Descripción detallada del Servicio</label>
+                        <label for="txt_descripcion" class="active">Descripción de la Información Solicitada: <span style='font-size: 11pt; font-weight: bold; color: red;'>(*)</span></label>
                     </div>
                 </div>
             </div>
@@ -322,9 +322,10 @@
             <div class="col-sm-12">   
                 <div class="col-sm-12">
                     <div class="input-field col-sm-12">
-                        <label class="active">Autorización para recibir respuesta de la solicitud por correo electrónico:</label>
+                        <label class="active">Autorización para recibir respuesta de la solicitud por correo electrónico: <span style='font-size: 11pt; font-weight: bold; color: red;'>(*)</span></label>
                     </div>
-                    <div class="col-sm-12" id="div_rpta_email_chkb"></div>                        
+                    <div class="col-sm-12" id="div_rpta_email_chkb">                        
+                    </div>                        
                 </div>
             </div> 
         </div><br>
@@ -337,7 +338,8 @@
                     </div>
                 </div>
             </div>
-        </div><br><br>
+        </div>        
+        <br><br>
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-sm-12">
@@ -358,7 +360,22 @@
         <div class="row">
             <div class="col-sm-12" id="div_msg_registro_sol">                                     
             </div>                
-        </div>     
+        </div>
+        <div class="row" id="div_nota">
+            <div class="col-sm-12">
+                <div class="col-sm-12"><br>
+                    <div class="input-field col-sm-12">
+                        <label>
+                            <span style='font-size: 10pt; font-weight: bold; color: black;'>Nota: </span>
+                            El plazo para el otorgamiento de respuesta conforme al artículo 11° del Texto Único Ordenado de la Ley N° 27806, 
+                            Ley de Transparencia y Acceso a la Información Pública, aprobado mediante Decreto Supremo N° 043-2003-PCM y modificado 
+                            por el Decreto Legislativo N° 1353, iniciará al día siguiente de haberse registrado la Solicitud de Acceso a la 
+                            Información Pública en el Sistema de Trámite Documentario - SITRADOC con el correspondiente número de Registro.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
                                  
@@ -375,6 +392,7 @@
     $('#div_solicitud_tupa_detalle').hide();
     $('#div_solicitud_rpta').hide();
     $('#div_enviar_sol_tupa').hide();
+    $('#div_nota').hide();
     
     $('#div_guarda_ciudadano').toggle();
     $('#div_per_natural_buscar').toggle();

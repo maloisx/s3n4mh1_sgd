@@ -630,6 +630,7 @@ function sgd_mant_solicitud_mostrar(){
         $('#txt_tipo').val('');
         $('#txt_categoria').val('');
         $('#div_variables').hide();
+        $('#div_nota').show();
     }else if(cod_procedimiento == ''){
         $('#hd_id').val('');
         $('#txt_dni').val('');
