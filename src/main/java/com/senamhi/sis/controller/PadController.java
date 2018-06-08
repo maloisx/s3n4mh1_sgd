@@ -3386,7 +3386,7 @@ public class PadController {
     }
 //FIN ARTICULO GUARDAR     
 //
-//INICIO NORMA POPUP
+//INICIO ALERTA POPUP
     @RequestMapping(value = {"/pad/mant_alertaip_popup"}, method = RequestMethod.GET)
     public String MantAlertaipPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
@@ -3434,9 +3434,9 @@ public class PadController {
         }
         return "pad/mant_alertaip_popup";
     }   
-//FIN NORMA POPUP
+//FIN ALERTA POPUP
 //
-//INICIO ARTICULO GUARDAR    
+//INICIO ALERTA CONSULTA
 @RequestMapping(value = {"/pad/mant_ipad_consulta"}, method = RequestMethod.GET)
     public String MantIpadConsulta(HttpServletRequest request, HttpServletResponse response, ModelMap model)
         throws ServletException, IOException {
@@ -3457,7 +3457,7 @@ public class PadController {
         request.setAttribute("request", var_request);
         return "pad/mant_ipad_consulta";
     }
-//FIN ARTICULO GUARDAR     
+//FIN ALERTA CONSULTA
 //    
 }
 
