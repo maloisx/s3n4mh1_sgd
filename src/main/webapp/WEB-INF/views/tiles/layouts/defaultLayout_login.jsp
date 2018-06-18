@@ -120,12 +120,20 @@
             <script src="<c:url value='/static/kendo/js/kendo.culture.es-PE.js'/>"></script>
             <script>kendo.culture('es-PE');</script>	
             <script src="<c:url value='/static/kendo/js/kendo_fn.js'/>"></script>
-            
+            <!--
             <script src="https://code.highcharts.com/highcharts.js"></script>
             <script src="https://code.highcharts.com/highcharts-more.js"></script>
             <script src="https://code.highcharts.com/modules/data.js"></script>
             <script src="https://code.highcharts.com/modules/heatmap.js"></script>
             <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            -->
+            
+            <script src="<c:url value='/static/highcharts/highcharts.js'/>"></script>
+            <script src="<c:url value='/static/highcharts/highcharts-more.js'/>"></script>
+            <script src="<c:url value='/static/highcharts/data.js'/>"></script>
+            <script src="<c:url value='/static/highcharts/heatmap.js'/>"></script>
+            <script src="<c:url value='/static/highcharts/exporting.js'/>"></script>
+            
             <script>
             Highcharts.setOptions({
                     lang: {
