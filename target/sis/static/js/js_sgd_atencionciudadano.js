@@ -97,8 +97,10 @@ function sgd_mant_busca_ciudadano_dni(tipo_doc){
                     $('#lb_telefono').addClass('active');
                     $('#btn_guarda_ciudadano_dni').text('Actualizar');
                     $('#div_msg_registro').hide();
-                    $('#div_cbo_servicio').show();
-//                    sgd_mant_mapa_mostrar();
+                    
+                    if(nombres !== '' && direccion !== '' && email !== '' && telefono !== ''){
+                        sgd_mant_tupa_mostrar();
+                    }
                 }else if (arrayobj.length == 0){
                     $('#div_msg_registro').text('Registre sus datos.');
                     $('#div_msg_registro').show();
@@ -149,6 +151,7 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                 var telefono  = "";
                 var sector  = "";
                 var representante  = "";
+                var dni_representante  = "";
                 var telef_rep  = "";
                 var email_rep  = "";
                 $('#div_per_juridica').show();
@@ -160,6 +163,7 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                     direccion  = arrayobj[0][4];
                     email  = arrayobj[0][5];
                     telefono  = arrayobj[0][6];
+                    dni_representante  = arrayobj[0][8];
                     sector  = arrayobj[0][9];
                     representante  = arrayobj[0][3];
                     telef_rep  = arrayobj[0][10];
@@ -178,13 +182,19 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                     $('#lbl_direccion_ruc').addClass('active');
                     $('#txt_representante').val(representante);
                     $('#lb_representante').addClass('active');
+                    $('#txt_dni_rep').val(dni_representante);
+                    $('#lb_dni_rep').addClass('active');
                     $('#txt_telef_rep').val(telef_rep);
                     $('#lb_telef_rep').addClass('active');
                     $('#txt_email_rep').val(email_rep);
                     $('#lb_email_rep').addClass('active');
-                    $('#btn_guarda_ciudadano_ruc').text('Actualizar');
+                    $('#btn_guarda_ciudadano_ruc').text('Actualizar');                    
                     $('#div_msg_registro').hide();
-                    $('#div_cbo_servicio').show();
+                    
+                    if(rsocial !== '' && direccion !== '' && email !== '' && telefono !== '' && sector !== '' && representante !== ''  && telef_rep !== '' && email_rep !== ''){
+                        sgd_mant_tupa_mostrar();
+                    }
+//                    $('#div_cbo_servicio').show();
                 }else if (arrayobj.length == 0){
                     $('#div_msg_registro').text('Registre sus datos.');
                     $('#div_msg_registro').show();
@@ -198,7 +208,7 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
                     $('#txt_representante').val(representante);
                     $('#txt_telef_rep').val(telef_rep);
                     $('#txt_email_rep').val(email_rep);
-                }
+                }                
             },
             error: function(requestData, strError, strTipoError){
                 $('#div_msg_registro').show();
@@ -211,6 +221,15 @@ function sgd_mant_busca_ciudadano_ruc(tipo_doc){
 }
 //FIN BUSCAR RUC
 //
+//INICIO MOSTRAR TUPA
+function sgd_mant_tupa_mostrar(){
+    $('#div_infosol').show();
+    sgd_tipo_entrega_chkb();
+    sgd_rpta_email_chkb();    
+}
+
+//FIN MOSTRAR TUPA
+//
 //INICIO GUARDAR CIUDADANO DNI
 function sgd_mant_ciudadano_dni_guardar(){
     var id = $('#hd_id').val();
@@ -220,35 +239,68 @@ function sgd_mant_ciudadano_dni_guardar(){
     var email = $('#txt_email').val();
     var telefono = $('#txt_telefono').val();
     
-    $.ajax({
-            dataType: "html",
-            type:     "GET",
-            url:      path + "sgd/mant_ciudadano_dni_guardar/",
-            data:     "id="+id
-                      +"&dni="+dni
-                      +"&nombres="+nombres
-                      +"&direccion="+direccion
-                      +"&email="+email
-                      +"&telefono="+telefono,
-            beforeSend: function(data){
-                $('#div_msg_registro').html("Cargando...");
-            },
-            success: function(requestData){
-                arrayobj = jQuery.parseJSON(requestData);
-                var id  = arrayobj[0][0];
-                var msj = arrayobj[0][1];//datos guardados
-                
-                $('#hd_id').val(id);
-                $('#div_msg_registro').show();
-                $('#div_msg_registro').html(msj);
-            },
-            error: function(requestData, strError, strTipoError){								
-                $('#div_msg_registro').html("Error " + strTipoError +": " + strError);
-            }
-        });
+    var msj_error = "";
+    if (nombres == ''){
+        msj_error += " Nombres." + "<br>";
+    }
+    if (direccion == ''){
+        msj_error += " Dirección." + "<br>";
+    }
+    if (email == '' || !IsMail(email)){
+        msj_error += " E-mail." + "<br>";
+    }
+    if (telefono == ''){
+        msj_error += " Teléfono.";
+    }   
+    
+    if(msj_error == ''){
+        $.ajax({
+                dataType: "html",
+                type:     "GET",
+                url:      path + "sgd/mant_ciudadano_dni_guardar/",
+                data:     "id="+id
+                          +"&dni="+dni
+                          +"&nombres="+nombres
+                          +"&direccion="+direccion
+                          +"&email="+email
+                          +"&telefono="+telefono,
+                beforeSend: function(data){
+                    $('#div_msg_registro').html("Cargando...");
+                },
+                success: function(requestData){
+                    arrayobj = jQuery.parseJSON(requestData);
+                    var id  = arrayobj[0][0];
+                    var msj = arrayobj[0][1];//datos guardados
+
+                    $('#hd_id').val(id);
+                    $('#div_msg_registro').show();
+                    $('#div_msg_registro').html(msj);
+                    sgd_mant_tupa_mostrar();                  
+                    
+                },
+                error: function(requestData, strError, strTipoError){								
+                    $('#div_msg_registro').html("Error " + strTipoError +": " + strError);
+                }
+            });
+        }else{
+//            $.alert('<h6>' + msj_error + '</h6>');
+            $.confirm({
+                title: 'ERROR!',
+                content: '<h6>Ingrese: <br>' + msj_error + '</h6>',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    cerrar: {
+                        text: 'Cerrar',
+                        btnClass: 'btn-red',
+                        action: function(){
+                        }
+                    }
+                }
+            });
+    }
 }
-//FIN GUARDAR CIUDADANO DNI
-//
+//FIN GUARDAR CIUDADANO DNI//
 //
 //INICIO BUSCAR MAPA
 function sgd_mant_mapa_mostrar(){
@@ -295,14 +347,46 @@ function sgd_mant_ciudadano_ruc_guardar(){
     var rsocial = $('#txt_rsocial').val();
     var direccion_ruc = $('#txt_direccion_ruc').val();
     var sector = $('#cb_sector').val();
-    var msj_error = "";
-    if ($('#cb_sector').val().length == 0){
-        msj_error += " Seleccione sector.";
-    }
     var email = $('#txt_email_ruc').val();
     var telefono = $('#txt_telefono_ruc').val();
     var representante = $('#txt_representante').val();
-    var dni_rep = $('#txt_dni_rep').val();
+    var dni_rep = $('#txt_dni_rep').val();    
+    var telef_rep = $('#txt_telef_rep').val();    
+    var email_rep = $('#txt_email_rep').val();    
+    
+    var msj_error = "";
+    if (rsocial == ''){
+        msj_error += " Razón social." + "<br>";
+    }
+    if (direccion_ruc == ''){
+        msj_error += "  Dirección." + "<br>";
+    }
+    if ($('#cb_sector').val().length == 0){
+        msj_error += " sector." + "<br>";
+    }
+    if (email == '' || !IsMail(email)){
+        msj_error += " E-mail." + "<br>";
+    }
+    if (telefono == ''){
+        msj_error += " Teléfono." + "<br>";
+    }
+    if (representante == ''){
+        msj_error += " Contacto." + "<br>";
+    }
+    if (dni_rep == ''){
+        msj_error += " DNI de contacto." + "<br>";
+    }
+    if (telef_rep == ''){
+        msj_error += " N° teléfono de contacto." + "<br>";
+    }
+    if (email_rep == '' || !IsMail(email_rep)){
+        msj_error += " E-mail de contacto.";
+    }
+        
+//    if (!IsMail(email_rep)){
+//        msj_error += " E-mail de contacto." + "\n";
+//    }
+    
     if(msj_error == ''){
         $.ajax({
             dataType: "html",
@@ -328,16 +412,33 @@ function sgd_mant_ciudadano_ruc_guardar(){
                 $('#hd_id').val(id);
                 $('#div_msg_registro').show();
                 $('#div_msg_registro').html(msj);
+                sgd_mant_tupa_mostrar();
             },
             error: function(requestData, strError, strTipoError){
                 $('#div_msg_registro').html("Error " + strTipoError +": " + strError);
             }
         });
     }else{
-         $.alert('<h6>Ingrese: ' + msj_error + '</h6>');
+         //$.alert('<h6>Ingrese: ' + msj_error + '</h6>');
+         $.confirm({
+                title: 'ERROR!',
+                content: '<h6>Ingrese: <br>' + msj_error + '</h6>',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    cerrar: {
+                        text: 'Cerrar',
+                        btnClass: 'btn-red',
+                        action: function(){
+                        }
+                    }
+                }
+            });
     }
 }
 //FIN GUARDAR CIUDADANO RUC
+
+
 
 ///////////////////////////////////////
 var map, manager;
@@ -593,104 +694,103 @@ function sgd_mant_dpto_mostrar(){
 //
 //INICIO MOSTRAR SOLICITUD
 function sgd_mant_solicitud_mostrar(){
-    var cod_procedimiento = $('#cb_servicio').val();
-    $('#div_solicitud_info').show();
-    $('#div_motivo').show();
-    
-    if (cod_procedimiento == '4'){//EXPEDICIÓN DE LA INFORMACIÓN
-        $('#div_mapa').show();
-        $('#div_solicitud_titulo').hide();
-        $('#div_solicitud_otros').hide();
-        $('#div_observacion').hide();
-        $('#div_solicitud_info').hide();
-        $('#div_enviar_sol_info').hide();
-        $('#div_enviar_sol_otros').hide();
-        $('#div_solicitud_tupa').hide();
-        $('#div_solicitud_tupa_detalle').hide();
-        $('#div_solicitud_rpta').hide();
-        $('#div_enviar_sol_tupa').hide();
-    }else if(cod_procedimiento == '2'){//TUPA
-        $('#div_solicitud_titulo').show();
-        $('#div_solicitud_otros').show();
-        $('#div_solicitud_tupa').show();
-        $('#div_solicitud_tupa_detalle').show();
-        $('#div_solicitud_rpta').show();
-        sgd_tipo_entrega_chkb();
-        sgd_rpta_email_chkb();
-        $('#div_enviar_sol_tupa').show();
-        $('#div_observacion').show();
-        $('#div_solicitud_info').hide();
-        $('#div_enviar_sol_otros').hide();
-        $('#div_mapa').hide();
-        $('#cb_estacion').attr('disabled', true);
-        $('#txt_cod_estacion').val('');
-        $('#txt_estacion').val('');
-        $('#txt_dpto').val('');
-        $('#txt_provincia').val('');
-        $('#txt_tipo').val('');
-        $('#txt_categoria').val('');
-        $('#div_variables').hide();
-        $('#div_nota').show();
-    }else if(cod_procedimiento == ''){
-        $('#hd_id').val('');
-        $('#txt_dni').val('');
-        $('#txt_dni').focus();
-        $('#txt_nombres').val('');
-        $('#txt_direccion').val('');
-        $('#txt_telefono').val('');
-        $('#div_per_natural').hide();
-        $('#div_per_juridica').hide();
-        $('#div_per_natural_buscar').show();
-        $('#div_per_juridica_buscar').hide();
-        $('#div_msg_re                                                                                                                                                                                                                                                        gistro').hide();
-        $('#div_guarda_ciudadano').hide();
-        $('#div_mapa').hide();
-        $('#div_cbo_servicio').hide();
-        $('#div_solicitud_titulo').hide();
-        $('#div_motivo').hide();
-        $('#div_solicitud_detalle').hide();
-        $('#div_solicitud_otros').hide();
-        $('#div_observacion').hide();
-        $('#div_enviar_sol_info').hide();
-        $('#div_enviar_sol_otros').hide();
-        $('#div_msg_registro_sol').hide();
-        $('#div_solicitud_tupa').hide();
-        $('#div_solicitud_tupa_detalle').hide();
-        $('#div_solicitud_rpta').hide();
-        $('#div_enviar_sol_tupa').hide();
-        $('#div_solicitud_tupa').hide();
-        $('#div_solicitud_tupa_detalle').hide();
-        $('#div_enviar_sol_tupa').hide();
-        $('#cb_estacion').attr('disabled', true);
-        $('#txt_cod_estacion').val('');
-        $('#txt_estacion').val('');
-        $('#txt_dpto').val('');
-        $('#txt_provincia').val('');
-        $('#txt_tipo').val('');
-        $('#txt_categoria').val('');
-        $('#div_variables').hide();
-    }else{
-        $('#div_solicitud_otros').show();
-        $('#div_mapa').hide();
-        $('#div_observacion').show();
-        $('#div_enviar_sol_info').hide();
-        $('#div_enviar_sol_otros').show();
-        $('#div_solicitud_titulo').show();
-        $('#div_solicitud_detalle').hide();
-        $('#div_solicitud_otros').show();
-        $('#div_solicitud_tupa').hide();
-        $('#div_solicitud_tupa_detalle').hide();
-        $('#div_solicitud_rpta').hide();
-        $('#div_enviar_sol_tupa').hide();
-        $('#cb_estacion').attr('disabled', true);
-        $('#txt_cod_estacion').val('');
-        $('#txt_estacion').val('');
-        $('#txt_dpto').val('');
-        $('#txt_provincia').val('');
-        $('#txt_tipo').val('');
-        $('#txt_categoria').val('');
-        $('#div_variables').hide();
-    }        
+//    var cod_procedimiento = $('#cb_servicio').val();
+//    $('#div_solicitud_info').show();    
+//    $('#div_motivo').show();
+//    if (cod_procedimiento == '4'){//EXPEDICIÓN DE LA INFORMACIÓN
+//        $('#div_mapa').show();
+//        $('#div_solicitud_titulo').hide();
+//        $('#div_solicitud_otros').hide();
+//        $('#div_observacion').hide();
+//        $('#div_solicitud_info').hide();
+//        $('#div_enviar_sol_info').hide();
+//        $('#div_enviar_sol_otros').hide();
+//        $('#div_solicitud_tupa').hide();
+//        $('#div_solicitud_tupa_detalle').hide();
+//        $('#div_solicitud_rpta').hide();
+//        $('#div_enviar_sol_tupa').hide();
+//    }else if(cod_procedimiento == '2'){//TUPA
+//        $('#div_solicitud_titulo').show();
+//        $('#div_solicitud_otros').show();
+//        $('#div_solicitud_tupa').show();
+//        $('#div_solicitud_tupa_detalle').show();
+//        $('#div_solicitud_rpta').show();
+//        sgd_tipo_entrega_chkb();
+//        sgd_rpta_email_chkb();
+//        $('#div_enviar_sol_tupa').show();
+//        $('#div_observacion').show();
+//        $('#div_solicitud_info').hide();
+//        $('#div_enviar_sol_otros').hide();
+//        $('#div_mapa').hide();
+//        $('#cb_estacion').attr('disabled', true);
+//        $('#txt_cod_estacion').val('');
+//        $('#txt_estacion').val('');
+//        $('#txt_dpto').val('');
+//        $('#txt_provincia').val('');
+//        $('#txt_tipo').val('');
+//        $('#txt_categoria').val('');
+//        $('#div_variables').hide();
+//        $('#div_nota').show();
+//    }else if(cod_procedimiento == ''){
+//        $('#hd_id').val('');
+//        $('#txt_dni').val('');
+//        $('#txt_dni').focus();
+//        $('#txt_nombres').val('');
+//        $('#txt_direccion').val('');
+//        $('#txt_telefono').val('');
+//        $('#div_per_natural').hide();
+//        $('#div_per_juridica').hide();
+//        $('#div_per_natural_buscar').show();
+//        $('#div_per_juridica_buscar').hide();
+//        $('#div_msg_re                                                                                                                                                                                                                                                        gistro').hide();
+//        $('#div_guarda_ciudadano').hide();
+//        $('#div_mapa').hide();
+//        $('#div_cbo_servicio').hide();
+//        $('#div_solicitud_titulo').hide();
+//        $('#div_motivo').hide();
+//        $('#div_solicitud_detalle').hide();
+//        $('#div_solicitud_otros').hide();
+//        $('#div_observacion').hide();
+//        $('#div_enviar_sol_info').hide();
+//        $('#div_enviar_sol_otros').hide();
+//        $('#div_msg_registro_sol').hide();
+//        $('#div_solicitud_tupa').hide();
+//        $('#div_solicitud_tupa_detalle').hide();
+//        $('#div_solicitud_rpta').hide();
+//        $('#div_enviar_sol_tupa').hide();
+//        $('#div_solicitud_tupa').hide();
+//        $('#div_solicitud_tupa_detalle').hide();
+//        $('#div_enviar_sol_tupa').hide();
+//        $('#cb_estacion').attr('disabled', true);
+//        $('#txt_cod_estacion').val('');
+//        $('#txt_estacion').val('');
+//        $('#txt_dpto').val('');
+//        $('#txt_provincia').val('');
+//        $('#txt_tipo').val('');
+//        $('#txt_categoria').val('');
+//        $('#div_variables').hide();
+//    }else{
+//        $('#div_solicitud_otros').show();
+//        $('#div_mapa').hide();
+//        $('#div_observacion').show();
+//        $('#div_enviar_sol_info').hide();
+//        $('#div_enviar_sol_otros').show();
+//        $('#div_solicitud_titulo').show();
+//        $('#div_solicitud_detalle').hide();
+//        $('#div_solicitud_otros').show();
+//        $('#div_solicitud_tupa').hide();
+//        $('#div_solicitud_tupa_detalle').hide();
+//        $('#div_solicitud_rpta').hide();
+//        $('#div_enviar_sol_tupa').hide();
+//        $('#cb_estacion').attr('disabled', true);
+//        $('#txt_cod_estacion').val('');
+//        $('#txt_estacion').val('');
+//        $('#txt_dpto').val('');
+//        $('#txt_provincia').val('');
+//        $('#txt_tipo').val('');
+//        $('#txt_categoria').val('');
+//        $('#div_variables').hide();
+//    }        
 }
 //FIN MOSTRAR SOLICITUD
 //
@@ -867,35 +967,34 @@ function sgd_mant_enviar_solicitud_info(){
 }
 //FIN GUARDAR SOLICITUD TUSNE INFORMACIÓN
 //
-//INICIO GUARDAR SOLICITUD TUPA
+//INICIO GUARDAR SOLICITUD TUPA*******************************************************************
 function sgd_mant_enviar_solicitud_tupa(){
     var id_sol = $('#hd_id_sol').val();
-    var proc = $('#cb_servicio').val();
-    var descr = $('#txt_descripcion').val();
-    var obs = $('#txt_observacion').val();
     var cod_adm = $('#hd_id').val();
+    var descr = $('#txt_infosol').val();
     var funcionario = $('#cb_funcionario').val();
+    var obs = $('#txt_observacion').val();
     
-    var tipo_entr = "";    
+    var tipo_entr = "";
     $('.cb_tipoentr:checked').each(function () {
         tipo_entr += $(this).val() + ",";
     });
     tipo_entr = tipo_entr.substring(0,tipo_entr.length - 1);
     
-    var rpta = "";    
+    var rpta = "";
     $('.rb_rpta:checked').each(function () {
         rpta =  $(this).attr("cod");
     });
             
     var msj_error = "";
     if (descr.length == 0){
-        msj_error += " Ingrese el motivo de la solicitud.";
+        msj_error += " La información solicitada." + "<br>";
     }
     if (tipo_entr.length == 0){
-        msj_error += " Seleccione cómo desea recibir la información.";
+        msj_error += " Cómo desea recibir la información." + "<br>";
     }
     if (rpta.length == 0){
-        msj_error += " Indique si desea o no recibir la respuesta por E-Mail.";
+        msj_error += " Si desea o no recibir la respuesta por E-Mail.";
     }
     
     if(msj_error == ''){
@@ -904,7 +1003,6 @@ function sgd_mant_enviar_solicitud_tupa(){
             type:     "GET",
             url:      path + "sgd/mant_solicitud_tupa_guardar/",
             data:     "id_sol="+id_sol
-                      +"&proc="+proc
                       +"&descr="+descr
                       +"&obs="+obs
                       +"&cod_adm="+cod_adm
@@ -920,8 +1018,6 @@ function sgd_mant_enviar_solicitud_tupa(){
                 var msj = arrayobj[0][1];//datos guardados
                 
                 $('#hd_id_sol').val(id);
-//                $('#div_msg_registro_sol').show();
-//                $('#div_msg_registro_sol').html(msj);
                 $.alert('<h6>' + msj + '</h6>');
             },
             error: function(requestData, strError, strTipoError){
@@ -929,7 +1025,21 @@ function sgd_mant_enviar_solicitud_tupa(){
             }
         });
     }else{
-         $.alert('<h6>' + msj_error + '</h6>');
+//         $.alert('<h6>' + msj_error + '</h6>');
+        $.confirm({
+            title: 'ERROR!',
+            content: '<h6>Indique: <br>' + msj_error + '</h6>',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                cerrar: {
+                    text: 'Cerrar',
+                    btnClass: 'btn-red',
+                    action: function(){
+                    }
+                }
+            }
+        });
     }    
 }
 //

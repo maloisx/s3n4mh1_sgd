@@ -10627,7 +10627,6 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             throws ServletException, IOException {
         
         String id_sol = request.getParameter("id_sol");
-        String proc = request.getParameter("proc");
         String descr = request.getParameter("descr");
         String obs = request.getParameter("obs");
         String cod_adm = request.getParameter("cod_adm");
@@ -10640,15 +10639,14 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         try {
             ConeccionDB cdb = new ConeccionDB();
             String np = "sgd.fn_solicitud_tupa_mant";
-            String array[] = new String[8];
+            String array[] = new String[7];
             array[0] = id_sol;
-            array[1] = proc;
-            array[2] = descr;
-            array[3] = obs;
-            array[4] = cod_adm;
-            array[5] = funcionario;
-            array[6] = tipo_entr;
-            array[7] = rpta;
+            array[1] = descr;
+            array[2] = obs;
+            array[3] = cod_adm;
+            array[4] = funcionario;
+            array[5] = tipo_entr;
+            array[6] = rpta;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
             
@@ -10860,11 +10858,10 @@ public String MantTipoEntregaChkb(HttpServletRequest request, HttpServletRespons
                 String id_tipoentr  = vss.get(0).toString();
                 String descr_tipoentr = vss.get(1).toString();
                 
-                chbx += "<div class='input-field col-sm-2'>"
+                chbx += "<div class='input-field col-sm-3'>"
                      + "<input type='checkbox' value='"+id_tipoentr+"' class='cb_tipoentr' id='cb_tipoentr_"+id_tipoentr+"'/>"
                      + "<label style='font-size: 10px' for='cb_tipoentr_"+id_tipoentr+"'>"+descr_tipoentr+"</label>"
-                     + "</div>";
-                
+                     + "</div>";                
             }
         request.setAttribute("response", chbx);
         } catch (Exception ex) {
@@ -10874,21 +10871,20 @@ public String MantTipoEntregaChkb(HttpServletRequest request, HttpServletRespons
         return "sgd/mant_tipo_entrega_chkb";
     } 
 //FIN TIPO ENTREGA CHECKBOX
-//    
+//
 //INICIO TIPO ENTREGA CHECKBOX
 @RequestMapping(value = {"/sgd/mant_rpta_email_chkb"}, method = RequestMethod.GET)
 public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse response, ModelMap model)
         throws ServletException, IOException {
-//            request.setAttribute("title_pag","NUEVO PROCEDIMIENTO"); 
+//            request.setAttribute("title_pag","NUEVO PROCEDIMIENTO");
         String var_request = "";
         try {
-            ConeccionDB cn = new ConeccionDB();   
+            ConeccionDB cn = new ConeccionDB();
 
             String np = "sgd.fn_rpta_email_consulta";
             String array[] = new String[1];
             array[0] = "";
             Vector v_datos = cn.EjecutarProcedurePostgres(np, array);
-//            var_request = new U  til().contenido_combo(datos,"");
             
             String chbx = "";
             for(int i = 0 ; i<v_datos.size() ; i++){
@@ -10896,17 +10892,17 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
                 String id_rpta  = vss.get(0).toString();
                 String descr_rpta = vss.get(1).toString();
                 
-                chbx += "<div class='input-field col-sm-2'>"
+                chbx += "<div class='input-field col-sm-3'>"
                      + "<input type='radio' value='"+id_rpta+"' cod='"+id_rpta+"' class='rb_rpta' id='rb_rpta_"+id_rpta+"' name='rb_rpta'/>"
                      + "<label style='font-size: 10px' for='rb_rpta_"+id_rpta+"'>"+descr_rpta+"</label>"
-                     + "</div>";                
+                     + "</div>";
             }
         request.setAttribute("response", chbx);
         } catch (Exception ex) {
             Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "sgd/mant_rpta_email_chkb";
-    } 
+    }
 //FIN TIPO ENTREGA CHECKBOX
 }
 
