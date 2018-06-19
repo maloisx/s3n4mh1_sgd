@@ -13,7 +13,7 @@ pr.c_des_proc,
 a.c_des_adm,
 s.v_motivo_solicitud,
 s.v_descripcion_servicio,
-s.v_observacion_servicio,
+COALESCE(s.v_observacion_servicio,'') as v_observacion_servicio,
 d.i_id_detalle,
 d.v_id_estacion,
 d.v_descr_estacion,
@@ -283,7 +283,7 @@ ORDER BY 1 ASC;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Información Adicional / Observaciones]]></text>
+				<text><![CDATA[INFORMACIÓN ADICIONAL / OBSERVACIONES]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="96d9c469-651d-4e40-879e-0f1ec88f7715" x="0" y="104" width="555" height="38"/>

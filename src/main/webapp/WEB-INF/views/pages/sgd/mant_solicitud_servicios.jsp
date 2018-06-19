@@ -1,487 +1,282 @@
 <br>
 <br>
 <input type="hidden" name="hd_id_sol" id="hd_id_sol" value=""/>
-<input type="hidden" name="hd_id" id="hd_id" value=""/>
-<input type="hidden" name="hd_id_var" id="hd_id_var" value=""/>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="row">
-            <div class="input-field col-sm-12">
-                <div class="input-field col-sm-12">
-                    <label  class="active" style="font-size:150%; font-weight:bold;">DATOS DEL SOLICITANTE</label>
-                </div>
-            </div>
+<input type="hidden" name="hd_id" id="hd_id" value=""/><!--administrado-->
+  
+<div class="row input-field col-sm-12">
+    <div class="input-field col-sm-12">
+        <label  class="active" style=" font-weight: bold;">I. FUNCIONARIO RESPONSABLE DE ENTREGAR LA INFORMACIÓN</label>
+    </div>
+</div>
+<div class="row input-field col-sm-12">
+    <div class="input-field col-sm-12">
+        <label  class="active">Director de la Unidad de Atención al Ciudadano y Gestión Documental</label>
+    </div>
+</div>
+<div class="row input-field col-sm-12">
+    <div class="input-field col-sm-12">
+        <label  class="active">II. DATOS DEL SOLICITANTE</label>
+    </div>
+</div>
+<div class="row input-field col-sm-12">
+    <div class="md-radio md-radio-inline col-sm-3">
+        <input id="rb_per_natural" type="radio" name="rb_persona"/>
+        <label for="rb_per_natural" style="font-size: 12px;">Persona Natural</label>
+    </div>
+    <div class="md-radio md-radio-inline col-sm-3">
+        <input id="rb_per_juridica" type="radio" name="rb_persona"/>
+        <label for="rb_per_juridica" style="font-size: 12px;">Persona Jurídica</label>
+    </div>
+</div>
+<!--TIPO DE PERSONA-->
+<div class="row input-field col-sm-12">                
+    <div class="col-sm-11" id="div_per_natural_buscar">
+        <div class="input-field md-radio md-radio-inline col-sm-2">
+            <input id="txt_dni" type="text" name="txt_dni"/>
+            <label for="txt_dni">DNI</label>
         </div>
-        <div class="row">
-            <div class="input-field col-sm-12">
-                <div class="md-radio md-radio-inline col-sm-3">
-                    <input id="rb_per_natural" type="radio" name="rb_persona"/>
-                    <label for="rb_per_natural" style="font-size: 12px;">Persona Natural</label>
-                </div>
-                <div class="md-radio md-radio-inline col-sm-3">
-                    <input id="rb_per_juridica" type="radio" name="rb_persona"/>
-                    <label for="rb_per_juridica" style="font-size: 12px;">Persona Jurídica</label>
-                </div>
-            </div>
+        <div class="col-sm-2">
+            <button id="btn_busca_dni" onclick="sgd_mant_busca_ciudadano_dni(1)" class="btn btn-info btn-sm" >
+                BUSCAR
+            </button>
+            <br>
+            <br>
+            <br>
         </div>
-        <br>
-        <br>
-        <div class="row">
-            <div class="input-field col-sm-12">                
-                <div class="col-sm-11" id="div_per_natural_buscar">
-                    <div class="input-field md-radio md-radio-inline col-sm-2">
-                        <input id="txt_dni" type="text" name="txt_dni"/>
-                        <label for="txt_dni">DNI</label>
-                    </div>
-                    <div class="col-sm-2">
-                        <button id="btn_busca_dni" onclick="sgd_mant_busca_ciudadano_dni(1)" class="btn btn-info btn-sm" >
-                            BUSCAR
-                        </button>
-                    </div>
-                </div>                
-                <div class="col-sm-11" id="div_per_juridica_buscar">
-                    <div class="input-field col-sm-2">
-                        <input id="txt_ruc" type="text" name="txt_ruc"/>
-                        <label for="txt_ruc">RUC</label>
-                    </div>
-                     <div class="col-sm-2">
-                        <button id="btn_busca_ruc" onclick="sgd_mant_busca_ciudadano_ruc(2)" class="btn btn-info btn-sm" >
-                            BUSCAR
-                        </button>
-                    </div>
-                </div>
-            </div>
+    </div>                
+    <div class="col-sm-11" id="div_per_juridica_buscar">
+        <div class="input-field col-sm-2">
+            <input id="txt_ruc" type="text" name="txt_ruc"/>
+            <label for="txt_ruc">RUC</label>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-sm-12">
-                    <div class="input-field col-sm-11" id="div_msg_registro" style=" color: red; font-size:150%; font-weight:bold;">
-                        Registre sus datos.
-                    </div>    
-                </div>
-            </div>
-        </div>        
-        <div class="row" id="div_per_natural">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-12">
-                        <div class="col-sm-6">
-                            <div class="input-field col-sm-12">
-                                <input id="txt_nombres" type="text" name="txt_nombres" style="text-transform: uppercase" />
-                                <label id="lb_nombres" for="txt_nombres">Apellidos y Nombres</label>
-                            </div>  
-                        </div>   
-                        <div class="col-sm-6">
-                            <div class="input-field col-sm-12">
-                                <input id="txt_direccion" type="text" name="txt_direccion" style="text-transform: uppercase"/>
-                                <label id="lb_direccion" for="txt_direccion">Dirección</label>
-                            </div>
-                        </div>
-                    </div>     
-                </div>     
-            </div>
-            <div class="row">
-                <div class=" col-sm-12">
-                    <div class=" col-sm-12">
-                        <div class="col-sm-6">
-                            <div class="input-field col-sm-12">
-                                <input id="txt_email" type="email" name="txt_email" style="text-transform: lowercase"/>
-                                <label id="lb_email" for="txt_email">E-Mail</label>
-                            </div>    
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-field col-sm-5">
-                                <input id="txt_telefono" type="text" name="txt_telefono">
-                                <label id="lb_telefono" for="txt_telefono">Teléfono</label>
-                            </div>    
+         <div class="col-sm-2">
+            <button id="btn_busca_ruc" onclick="sgd_mant_busca_ciudadano_ruc(2)" class="btn btn-info btn-sm" >
+                BUSCAR
+            </button>
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
 
-                            <div class="input-field col-sm-7 text-right" id="div_guarda_ciudadano_dni">
-                                <button id="btn_guarda_ciudadano_dni" onclick="sgd_mant_ciudadano_dni_guardar()" class="btn btn-info btn-sm" >
-                                    REGISTRAR
-                                </button>
-                            </div>
-                        </div>                        
-                    </div>    
-                </div>    
-            </div>
-        </div>
-        <div class="row" id="div_per_juridica">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-6">
-                        <div class="input-field col-sm-12">
-                            <input id="txt_rsocial" type="text" name="txt_rsocial" style="text-transform: uppercase" />
-                            <label id="lb_rsocial" for="txt_rsocial">Razón social</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-field col-sm-12">
-                            <input id="txt_direccion_ruc" type="text" name="txt_direccion_ruc" style="text-transform: uppercase"/>
-                            <label id="lbl_direccion_ruc" for="txt_direccion_ruc">Dirección</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-6">
-                        <div class="input-field col-sm-7">
-                            <select id="cb_sector" class="form-control selectpicker" name="cb_sector" data-size="5" >${requestScope['cb_sector']}</select>
-                            <label for="cb_sector" class="active">Sector</label>
-                        </div>   
-                        <div class="input-field col-sm-5">
-                            <input id="txt_telefono_ruc" type="text" name="txt_telefono_ruc">
-                            <label id="lb_telefono_ruc" for="txt_telefono_ruc">Teléfono</label>
-                        </div>      
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-field col-sm-12">
-                            <input id="txt_email_ruc" type="text" name="txt_email_ruc" style="text-transform: lowercase"/>
-                            <label id="lb_email_ruc" for="txt_email_ruc">E-Mail</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-6">
-                        <div class="input-field col-sm-12">
-                            <input id="txt_representante" type="email" name="txt_representante" style="text-transform: uppercase"/>
-                            <label id="lb_representante" for="txt_representante">Persona de contacto</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-field col-sm-3">
-                            <input id="txt_telef_rep" type="text" name="txt_telef_rep">
-                            <label id="lb_telef_rep" for="txt_telef_rep">Telef.Cont.</label>
-                        </div>
-                        <div class="input-field col-sm-6">
-                            <input id="txt_email_rep" type="text" name="txt_email_rep">
-                            <label id="lb_email_rep" for="txt_email_rep">E-Mail Cont.</label>
-                        </div>
-                        <div class="input-field col-sm-3 text-right" id="div_guarda_ciudadano_ruc">
-                            <button id="btn_guarda_ciudadano_ruc" onclick="sgd_mant_ciudadano_ruc_guardar()" class="btn btn-info btn-sm" >
-                                REGISTRAR
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row" id="div_cbo_servicio">
+<!--PERSONA NATURAL-->
+<div class="row" id="div_per_natural">  
+    <div class="row">        
+        <div class="col-sm-12">
             <div class="col-sm-12">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-12">                        
+                        <input id="txt_nombres" type="text" name="txt_nombres" style="text-transform: uppercase" />
+                        <label id="lb_nombres" for="txt_nombres">Apellidos y Nombres<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>  
+                </div>   
+                <div class="col-sm-6">
                     <div class="input-field col-sm-12">
-                        <select id="cb_servicio" class="form-control selectpicker" name="cb_servicio" onchange="sgd_mant_solicitud_mostrar()">${requestScope['cb_proc']}</select>
-                        <label for="cb_servicio" class="active">Seleccione Servicio</label>
+                        <input id="txt_direccion" type="text" name="txt_direccion" style="text-transform: uppercase"/>
+                        <label id="lb_direccion" for="txt_direccion">Dirección<span style='font-size: 11pt; color: red;'>(*)</span></label>
                     </div>
                 </div>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="div_mapa" class="col-sm-12" style="background-color:#E9FFFF; border-color:#999; border-style:solid; border-radius: 10px; ">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <br>
-                            <div class="col-sm-6" id="div_ciudadano_mapa" style="width: 65%; height: 65%;">
-                                <div class="row">
-                                    <div class="input-field col-md-4">
-                                        <select id="cb_dpto" name="cb_dpto" class="form-control selectpicker" data-size="5" data-live-search="true" onchange="sgd_mant_dpto_mostrar()">${requestScope['cb_dpto']}</select>
-                                        <label for="cb_dpto" class="active">Departamento</label>
-                                    </div>
-                                    <div class="input-field col-md-4" id="div_combos">        
-                                        <!--<select id="cb_estacion" class="form-control selectpicker" name="cb_estacion" data-size="5" data-live-search="true" onchange="sgd_mant_mapa_mostrar()">${requestScope['cb_estacion']}</select>-->
-                                        <select id="cb_estacion" class="form-control selectpicker" name="cb_estacion" data-size="5" data-live-search="true" onchange="sgd_mant_mapa_mostrar()">${requestScope['cb_estacion']}</select>
-                                        <label for="cb_estacion" class="active">Estación</label>
-                                    </div>
-                                    <div class="input-field col-md-4">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 demo-section" style="height: calc(90%);">        
-                                    <div id="div_map" style="width: 100% ;height: 100%"></div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4" id="div_detalle" style="width: 35%; height: 700px;">
-                                <div class="col-sm-12" id="div_detalle">
-                                    <div class="row">
-                                        <div class="input-field text-right col-sm-4">
-                                            <input id="txt_cod_estacion" type="text" name="txt_cod_estacion"/>
-                                            <label id="lb_cod_estacion" for="txt_cod_estacion">Código</label>
-                                        </div>
-                                        <div class="input-field text-right col-sm-8">
-                                            <input id="txt_estacion" type="text" name="txt_estacion"/>
-                                            <label id="lb_estacion" for="txt_estacion">Estación</label>
-                                        </div>                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field text-right col-sm-4">
-                                            <input id="txt_dpto" type="text" name="txt_dpto"/>
-                                            <label id="lb_dpto" for="txt_dpto">Departamento</label>
-                                        </div>
-                                        <div class="input-field text-right col-sm-8">
-                                            <input id="txt_provincia" type="text" name="txt_provincia"/>
-                                            <label id="lb_provincia" for="txt_provincia">Provincia / Distrito</label>
-                                        </div> 
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field text-right col-sm-4">
-                                            <input id="txt_tipo" type="text" name="txt_tipo"/>
-                                            <label id="lb_tipo" for="txt_tipo">Tipo Estación</label>
-                                        </div>
-                                        <div class="input-field text-right col-sm-8">
-                                            <input id="txt_categoria" type="text" name="txt_categoria"/>
-                                            <label id="lb_categoria" for="txt_categoria">Categoría</label>
-                                        </div> 
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="input-field col-sm-12" id="div_variables" >
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4 text-right">
-                                            <!--<button onclick="sgd_mant_add_solicitud()" onfocus="lista_variables()" class="btn btn-info btn-sm">Agregar a Solicitud</button>-->            
-                                            <button onclick="lista_variables();sgd_mant_add_solicitud()" class="btn btn-info btn-sm">Agregar a Solicitud</button>            
-                                        </div>
-                                        <div class="input-field col-sm-8">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="row" id="div_solicitud_titulo">
-            <div class="col-sm-12">
-                <div class="col-sm-12">
-                    <div class="input-field text-center col-sm-6">
-                        <label  class="active" style="font-size:150%; font-weight:bold;">SOLICITUD</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="div_solicitud_info">
-            <div class="col-sm-12" id="div_motivo">
-                <div class="col-sm-12"><br>
-                    <div class="input-field col-sm-6">
-                        <textarea  id="txt_motivo" name="txt_motivo" class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="500" minlength="1"></textarea>
-                        <label for="txt_motivo" class="active">Motivo del requerimiento</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-12 table-responsive">
-                        <div class="col-sm-12">
-                            <div class="input-field" id="div_solicitud_detalle">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="div_solicitud_otros">
-            <div class="col-sm-12">
-                <div class="col-sm-12"><br>
-                    <div class="input-field col-sm-6">
-                        <textarea  id="txt_descripcion" name="txt_descripcion" class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="1000" minlength="1"></textarea>
-                        <label for="txt_descripcion" class="active">Descripción de la Información Solicitada: <span style='font-size: 11pt; font-weight: bold; color: red;'>(*)</span></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="div_solicitud_tupa">
-            <div class="col-sm-12">
-                <div class="col-sm-12"><br>
-                    <div class="input-field col-sm-12">
-                        <select id="cb_funcionario" class="form-control selectpicker" name="cb_funcionario" data-size="5" data-live-search="true">${requestScope['cb_func']}</select>
-                        <label for="cb_funcionario" class="active">Dependencia de la cual se requiere la información</label>
-                    </div>
-                </div>
-            </div>
-        </div><br>
-        <div class="row" id="div_solicitud_tupa_detalle">
-            <div class="col-sm-12">                
-                <div class="col-sm-12">
-                    <div class="input-field col-sm-12">
-                        <label class="active">Recibir la información en:</label>
-                    </div>
-                    <div class="col-sm-12" id="div_tipo_entrega_chkb"></div>                        
-                </div>
-            </div>
-        </div><br><br><br>    
-        <div class="row" id="div_solicitud_rpta">            
-            <div class="col-sm-12">   
-                <div class="col-sm-12">
-                    <div class="input-field col-sm-12">
-                        <label class="active">Autorización para recibir respuesta de la solicitud por correo electrónico: <span style='font-size: 11pt; font-weight: bold; color: red;'>(*)</span></label>
-                    </div>
-                    <div class="col-sm-12" id="div_rpta_email_chkb">                        
-                    </div>                        
-                </div>
-            </div> 
-        </div><br>
-        <div class="row" id="div_observacion">
-            <div class="col-sm-12">
-                <div class="col-sm-12"><br>
-                    <div class="input-field col-sm-6">
-                        <textarea  id="txt_observacion" name="txt_observacion" class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="1000" minlength="1"></textarea>
-                        <label for="txt_observacion" class="active">Observaciones</label>
-                    </div>
-                </div>
-            </div>
-        </div>        
-        <br><br>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-sm-12">
-                    <div class="col-md-3" id="div_enviar_sol_info">
-                        <button onclick="sgd_mant_enviar_solicitud_info()" class="btn btn-info btn-sm">Enviar Solicitud</button>
-                    </div>
-                    <div class="col-md-3" id="div_enviar_sol_otros">
-                        <button onclick="sgd_mant_enviar_solicitud_otros()" class="btn btn-info btn-sm">Enviar Solicitud</button>
-                    </div>
-                    <div class="col-md-3" id="div_enviar_sol_tupa">
-                        <button onclick="sgd_mant_enviar_solicitud_tupa()" class="btn btn-info btn-sm">Enviar Solicitud</button>
-                    </div>
-                    <div class="input-field col-sm-3">
-                    </div>     
-                </div>                       
-            </div>                
+            </div>     
         </div>     
-        <div class="row">
-            <div class="col-sm-12" id="div_msg_registro_sol">                                     
-            </div>                
-        </div>
-        <div class="row" id="div_nota">
+    </div>
+    <div class="row">
+        <div class=" col-sm-12">
             <div class="col-sm-12">
-                <div class="col-sm-12"><br>
+                <div class="col-sm-6">
                     <div class="input-field col-sm-12">
-                        <label>
-                            <span style='font-size: 10pt; font-weight: bold; color: black;'>Nota: </span>
-                            El plazo para el otorgamiento de respuesta conforme al artículo 11° del Texto Único Ordenado de la Ley N° 27806, 
-                            Ley de Transparencia y Acceso a la Información Pública, aprobado mediante Decreto Supremo N° 043-2003-PCM y modificado 
-                            por el Decreto Legislativo N° 1353, iniciará al día siguiente de haberse registrado la Solicitud de Acceso a la 
-                            Información Pública en el Sistema de Trámite Documentario - SITRADOC con el correspondiente número de Registro.
-                        </label>
+                        <input id="txt_email" type="email" name="txt_email" style="text-transform: lowercase" required/>
+                        <label id="lb_email" for="txt_email">E-Mail<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>    
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-6">
+                        <input id="txt_telefono" type="text" name="txt_telefono" required/>
+                        <label id="lb_telefono" for="txt_telefono">Teléfono<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                    <div class="input-field col-sm-5 text-right" id="div_guarda_ciudadano_dni">
+                        <button id="btn_guarda_ciudadano_dni" onclick="sgd_mant_ciudadano_dni_guardar()" class="btn btn-info btn-sm" >
+                            REGISTRAR
+                        </button>
+                    </div>
+                </div>
+            </div>    
+        </div>    
+    </div>
+</div>
+<!--PERSONA JURIDICA-->
+<div class="row" id="div_per_juridica">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-12">
+                        <input id="txt_rsocial" type="text" name="txt_rsocial" style="text-transform: uppercase" required/>
+                        <label id="lb_rsocial" for="txt_rsocial">Razón social<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-12">
+                        <input id="txt_direccion_ruc" type="text" name="txt_direccion_ruc" style="text-transform: uppercase" required/>
+                        <label id="lbl_direccion_ruc" for="txt_direccion_ruc">Dirección (Empresa/Institución)<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-7">
+                        <select id="cb_sector" class="form-control selectpicker" name="cb_sector" data-size="5" required>${requestScope['cb_sector']}</select>
+                        <label for="cb_sector" class="active">Sector<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>   
+                    <div class="input-field col-sm-5">
+                        <input id="txt_telefono_ruc" type="text" name="txt_telefono_ruc" required/>
+                        <label id="lb_telefono_ruc" for="txt_telefono_ruc">Teléfono<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>      
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-12">
+                        <input id="txt_email_ruc" type="text" name="txt_email_ruc" style="text-transform: lowercase" required/>
+                        <label id="lb_email_ruc" for="txt_email_ruc">E-Mail (Empresa/Institución)<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div class="input-field col-sm-7">
+                        <input id="txt_representante" type="email" name="txt_representante" style="text-transform: uppercase" required/>
+                        <label id="lb_representante" for="txt_representante">Persona de contacto<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                    <div class="input-field col-sm-5">
+                        <input id="txt_dni_rep" type="text" name="txt_dni_rep" required/>
+                        <label id="lb_dni_rep" for="txt_dni_rep">DNI Contacto<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                    
+                </div>
+                <div class="col-sm-6">   
+                    <div class="input-field col-sm-2">
+                        <input id="txt_telef_rep" type="text" name="txt_telef_rep" required/>
+                        <label id="lb_telef_rep" for="txt_telef_rep">Telef.Cont.<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                    <div class="input-field col-sm-6">
+                        <input id="txt_email_rep" placeholder="e-mail@dominio.xyz" type="text" name="txt_email_rep"/>
+                        <label id="lb_email_rep" for="txt_email_rep">E-Mail Contacto<span style='font-size: 11pt; color: red;'>(*)</span></label>
+                    </div>
+                    <div class="input-field col-sm-3 text-right" id="div_guarda_ciudadano_ruc">
+                        <button id="btn_guarda_ciudadano_ruc" onclick="sgd_mant_ciudadano_ruc_guardar()" class="btn btn-info btn-sm" >
+                            REGISTRAR
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--MENSAJE CONFIRMACIÓN-->
+<div class="input-field col-sm-11" id="div_msg_registro" style=" color: red; font-size:110%; font-weight:bold;">
+    Registre sus datos.
+</div> 
+<!--SOLICITUD-->
+<!--<br>-->
+<div class="row col-sm-12" id="div_infosol">
+    <div class="row input-field col-sm-12">
+        <div class="input-field col-sm-12">
+            <label class="active">III. INFORMACIÓN SOLICITADA:<span style='font-size: 11pt; color: red;'>(*)</span></label>
+            <textarea  id="txt_infosol" name="txt_infosol" class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="500" minlength="1"></textarea>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row input-field col-sm-12">
+        <div class="input-field col-sm-12">
+            <label class="active">IV. DEPENDENCIA DE LA CUAL SE REQUIERE LA INFORMACIÓN:</label>           
+            <select id="cb_funcionario" class="form-control selectpicker" name="cb_funcionario" data-size="5" data-live-search="true">${requestScope['cb_func']}</select>
+        </div>
+    </div>
+    <div class="row input-field col-sm-12">
+        <br>
+        <br>
+        <div class="input-field col-sm-12">
+            <label class="active">V. FORMA DE ENTREGA DE LA INFORMACIÓN:<span style='font-size: 11pt; color: red;'>(*)</span></label>
+        </div>
+        <div class="col-sm-12" id="div_tipo_entrega_chkb">
+        </div>
+    </div>
+    <div class="row input-field col-sm-12">
+        <br>
+        <br>
+        <div class="input-field col-sm-12">            
+            <label class="active">VI. AUTORIZACIÓN PARA RECIBIR RESPUESTA DE LA SOLICITUD POR CORREO ELECTRÓNICO:<span style='font-size: 11pt; color: red;'>(*)</span></label>
+        </div>
+        <div class="col-sm-12" id="div_rpta_email_chkb">
+        </div>
+    </div>
+    <div class="row input-field col-sm-12">
+        <br>
+        <br>
+        <div class="input-field col-sm-12">
+            <label class="active">VII. OBSERVACIONES:</label>
+            <textarea  id="txt_observacion" name="txt_observacion" class="materialize-textarea text-uppercase" type="text" class="validate" maxlength="500" minlength="1"></textarea>
+        </div>
+    </div>
+    <div class="row input-field col-sm-12">
+        <br>
+        <br>
+        <div class="input-field col-sm-6">
+            <label class="active"><span style='color: red;'>(*) Campos Obligatorios</span></label>
+        </div>
+        <div class="col-md-6 text-right" id="div_enviar_sol_tupa">
+            <button onclick="sgd_mant_enviar_solicitud_tupa()" class="btn btn-info btn-sm">Enviar Solicitud</button>
+        </div>
+    </div>        
+</div>
+<div class="row input-field col-sm-12" id="div_nota">
+    <div class="input-field col-sm-11">
+       <label>
+           <span style='font-size: 10pt; font-weight: bold; color: black;'>Nota: </span>
+           El plazo para el otorgamiento de respuesta conforme al artículo 11° del Texto Único Ordenado de la Ley N° 27806, 
+           Ley de Transparencia y Acceso a la Información Pública, aprobado mediante Decreto Supremo N° 043-2003-PCM y modificado 
+           por el Decreto Legislativo N° 1353, iniciará al día siguiente de haberse registrado la Solicitud de Acceso a la 
+           Información Pública en el Sistema de Trámite Documentario - SITRADOC con el correspondiente número de Registro.
+       </label>
+    </div> 
+    
+</div>
+
+
                                  
 <script>
-    $('#cb_anio option:first-child').attr('selected', 'selected');
-    $('#div_cbo_servicio').hide();
-    $('#div_solicitud_titulo').hide();
-    $('#div_solicitud_otros').hide();
-    $('#div_observacion').hide();
-    $('#div_enviar_sol_info').hide();
-    $('#div_enviar_sol_otros').hide();
-    $('#div_msg_registro_sol').hide();
-    $('#div_solicitud_tupa').hide();
-    $('#div_solicitud_tupa_detalle').hide();
-    $('#div_solicitud_rpta').hide();
-    $('#div_enviar_sol_tupa').hide();
-    $('#div_nota').hide();
-    
-    $('#div_guarda_ciudadano').toggle();
     $('#div_per_natural_buscar').toggle();
+    $('#div_per_juridica_buscar').toggle();
     $('#div_msg_registro').hide();
     $('#div_per_natural').hide();
-    $('#div_solicitud_info').hide();
-    $('#div_mapa').hide();
+    $('#div_per_juridica').hide();
+    $('#div_infosol').hide();
+    
     $('#rb_per_natural').click(function() {        
-        $('#hd_id').val('');
-        $('#txt_dni').val('');
-        $('#txt_dni').focus();
-        $('#txt_nombres').val('');
-        $('#txt_direccion').val('');
-        $('#txt_telefono').val('');
-        $('#div_per_natural').hide();
-        $('#div_per_juridica').hide();
         $('#div_per_natural_buscar').show();
         $('#div_per_juridica_buscar').hide();
-        $('#div_msg_re                                                                                                                                                                                                                                                        gistro').hide();
-        $('#div_guarda_ciudadano').hide();
-        $('#div_mapa').hide();
-        $('#div_cbo_servicio').hide();
-        $('#div_solicitud_titulo').hide();
-        $('#div_motivo').hide();
-        $('#div_solicitud_detalle').hide();
-        $('#div_solicitud_otros').hide();
-        $('#div_observacion').hide();
-        $('#div_enviar_sol_info').hide();
-        $('#div_enviar_sol_otros').hide();
-        $('#div_msg_registro_sol').hide();
-        $('#div_solicitud_tupa').hide();
-        $('#div_solicitud_tupa_detalle').hide();
-        $('#div_enviar_sol_tupa').hide();
-        $("#cb_servicio").prop('selectedIndex', 0);
-        $('#cb_servicio').selectpicker('refresh');
-        $("#cb_dpto").prop('selectedIndex', 0);
-        $('#cb_dpto').selectpicker('refresh');
-        $("#cb_estacion").prop('selectedIndex', 0);
-        $('#cb_estacion').selectpicker('refresh');
-        
-    });
-    document.getElementById("cb_estacion").disabled=true;
-    
-    $('#div_per_juridica_buscar').toggle();
-    $('#div_per_juridica').hide();
-    $('#rb_per_juridica').click(function() {
-        $('#hd_id').val('');
-        $('#txt_ruc').val('');
-        $('#txt_ruc').focus();
-        $('#txt_rsocial').val('');
-        $('#txt_direccion_ruc').val('');
-        $('#txt_telefono_ruc').val('');
-        $('#txt_email_ruc').val('');
-        $('#txt_representante').val('');
-        $('#txt_telef_rep').val('');
         $('#div_per_natural').hide();
         $('#div_per_juridica').hide();
-        $('#div_per_juridica_buscar').show();
-        $('#div_per_natural_buscar').hide();
-        $('#div_msg_registro').hide();
-        $('#div_guarda_ciudadano').hide();
-        $('#div_mapa').hide();
-        $('#div_cbo_servicio').hide();
-        $('#div_solicitud_titulo').hide();
-        $('#div_motivo').hide();
-        $('#div_solicitud_detalle').hide();
-        $('#div_solicitud_otros').hide();
-        $('#div_observacion').hide();
-        $('#div_enviar_sol_info').hide();
-        $('#div_enviar_sol_otros').hide();
-        $('#div_msg_registro_sol').hide();
-        $('#div_solicitud_tupa').hide();
-        $('#div_solicitud_tupa_detalle').hide();
-        $('#div_enviar_sol_tupa').hide();
-        $("#cb_servicio").prop('selectedIndex', 0);
-        $('#cb_servicio').selectpicker('refresh');
-        $("#cb_dpto").prop('selectedIndex', 0);
-        $('#cb_dpto').selectpicker('refresh');
-        $("#cb_estacion").prop('selectedIndex', 0);
-        $('#cb_estacion').selectpicker('refresh');
-    });
+        $('#hd_id').val('');
+        $('#txt_dni').val('');
+        $('#div_infosol').hide();
+    });    
     
-    $('#cb_servicio').change(function() {
-        $("#cb_dpto").prop('selectedIndex', 0);
-        $('#cb_dpto').selectpicker('refresh');
-        $("#cb_estacion").prop('selectedIndex', 0);
-        $('#cb_estacion').selectpicker('refresh');
-        if (this.options[this.selectedIndex].value === '4'){
-            sgd_mant_mapa_mostrar();
-        }
-    });
+    $('#rb_per_juridica').click(function() {        
+        $('#div_per_natural_buscar').hide();        
+        $('#div_per_juridica_buscar').show();
+        $('#div_per_natural').hide();
+        $('#div_per_juridica').hide();
+        $('#hd_id').val('');
+        $('#txt_ruc').val('');
+        $('#div_infosol').hide();
+    });    
 </script>

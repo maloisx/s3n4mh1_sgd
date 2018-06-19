@@ -16,6 +16,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 
 /**
@@ -26,6 +28,16 @@ public class Util {
     
     public String GetPath(){
         return new AppConfig().Path();
+    }
+    
+    public boolean validar_mail(String email){
+    
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+ 
+        Matcher mather = pattern.matcher(email);
+        return mather.find();    
     }
     
     public String datatable(String id, Vector opciones){

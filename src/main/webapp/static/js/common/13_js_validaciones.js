@@ -192,6 +192,11 @@ function validarnumerosyletras_sinenter(e) {
     return patron.test(te);
 }
 
+function IsMail(email){
+    var patron_mail= /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i ;
+    return patron_mail.test(email);
+}
+
 function IsNumeric(expression)
 {
     return (String(expression).search(/^\d+$/) != -1);
