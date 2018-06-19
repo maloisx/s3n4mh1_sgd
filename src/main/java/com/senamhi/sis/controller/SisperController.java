@@ -36,6 +36,17 @@ public class SisperController {
         return "sisper/index";
     } 
     
+    @RequestMapping(value = { "/sisper/listadopersonal"}, method = RequestMethod.GET)
+    public String SisperListadoPersonal(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        //String iframe = "<iframe height=\"100%\" width=\"100%\" src=\"reporteasistenciapdf\">";
+        
+        //request.setAttribute("response",iframe);
+        
+        return "sisper/listadopersonal";
+    }
+    
     @RequestMapping(value = { "/sisper/reporteasistencia"}, method = RequestMethod.GET)
     public String SisperReporteAsistencia(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
     throws ServletException, IOException{

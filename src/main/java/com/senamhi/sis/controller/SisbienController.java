@@ -29,4 +29,11 @@ public class SisbienController {
         return "sisbien/preregistro";
     } 
     
+    @RequestMapping(value = { "/sisbien/sigamef_bienes"}, method = RequestMethod.GET)
+    public String SisbienSigaMefBienes(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+        
+        return "sisbien/sigamef_bienes";
+    } 
+    
 }

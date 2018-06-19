@@ -1,28 +1,100 @@
-function sisbien_prueba_js_component_ws() {
+
+
+function sisper_listadopersonal_js_component_ws() {
     console.log("token:" + localStorage.token);
-    var obj_rpta = ws('sisbien.fn_colorbien_obtener', '[""]');
+    var obj_rpta = ws('SISPER', 'pkg_ws.sp_obt_listapersonal', '[""]');
     console.log(obj_rpta);
+       var tbl_cab = [
+                      {'sTitle': 'COD_EMP'}
+                    , {'sTitle': 'APPAT'}
+                    , {'sTitle': 'APMAT'}
+                    , {'sTitle': 'NOMBRE'}
+                    , {'sTitle': 'COND_LAB'}
+                    , {'sTitle': 'NIVEL'}
+                    , {'sTitle': 'DRE'}
+                    , {'sTitle': 'DEPEN'}
+                    , {'sTitle': 'UNID'}
+                    , {'sTitle': 'TIP_DOC'}
+                    , {'sTitle': 'DNI'}
+                    , {'sTitle': 'EST_CIVIL'}
+                    , {'sTitle': 'SEXO'}
+                    , {'sTitle': 'VIVIENDA'}
+                    , {'sTitle': 'FECHA_NAC'}
+                    , {'sTitle': 'GRAD_ACADEMICO'}
+                    , {'sTitle': 'GRAD_INSTRUCCION'}
+                    , {'sTitle': 'PAIS_NAC'}
+                    , {'sTitle': 'DEPA_NAC'}
+                    , {'sTitle': 'PROV_NAC'}
+                    , {'sTitle': 'DIST_NAC'}
+                    , {'sTitle': 'PAIS_DOM'}
+                    , {'sTitle': 'DEP_DOM'}
+                    , {'sTitle': 'PROV_DOM'}
+                    , {'sTitle': 'DIST_DOM'}
+                    , {'sTitle': 'DIRECCION'}
+                    , {'sTitle': 'INGRESO_AL_ESTADO'}
+                    , {'sTitle': 'REG_LABORAL'}
+                    , {'sTitle': 'AFP'}
+                    , {'sTitle': 'FECHA_AFP'}
+                    , {'sTitle': 'GRUPO_OCUPACIONAL'}
+                    , {'sTitle': 'ENTIDAD_ESTUDIOS'}
+                    , {'sTitle': 'ESPECIALIDAD_ESTUDIOS'}
+                    , {'sTitle': 'COLEGIATURA'}
+                    , {'sTitle': 'CARGO'}
+                    , {'sTitle': 'CARGO_CAP'}
+                    , {'sTitle': 'DRE_CAP'}
+                    , {'sTitle': 'DEPEN_CAP'}
+                    , {'sTitle': 'UNID_CAP'}
+                    , {'sTitle': 'NIVEL_CAP'}
+                    , {'sTitle': 'TIP_PLAZA'}
+                    , {'sTitle': 'FECHA_ING_SENAMHI'}
+                    , {'sTitle': 'LEY_PENSIONES'}
+                    , {'sTitle': 'CSP'}
+                    , {'sTitle': 'ESTADO_EMP'}
+                    , {'sTitle': 'FECHA_ESTADO_EMP'}
+                    , {'sTitle': 'COD_ESSALUD'}
+                    , {'sTitle': 'GRUP_SANGRE'}
+                    , {'sTitle': 'TELEFONO_EMP'}
+                    , {'sTitle': 'ALERGIAS'}
+                    , {'sTitle': 'POLICLINICO'}
+                    , {'sTitle': 'CLINICA'}
+                    , {'sTitle': 'NOMBRE_FAMILIAR'}
+                    , {'sTitle': 'TELEFONO_FAMILIAR'}
+                    , {'sTitle': 'CANT_HIJOS'}
+                    , {'sTitle': 'HORA_ENTRADA'}
+                    , {'sTitle': 'HORA_SALIDA'}
+                    , {'sTitle': 'EMP_MARCACION'}
+                    , {'sTitle': 'TARJETA_MARCACION'}
+                    , {'sTitle': 'fecha_cambio_reg_lab'}
+                    ];  
+                    
+     var opciones = {
+                responsive: true
+                //, bLengthChange: true
+                , bInfo: true
+                , bPaginate: true
+                , buttons: [{extend: 'excel', text: 'Exportar a Excel', className: 'btn btn-info btn-sm'},{extend: 'csv', text: 'Exportar a CSV', className: 'btn btn-info btn-sm'}]
+            };
+       ws_datatable("tabla_listadopersonal", obj_rpta.data, tbl_cab , opciones);
 
-
-    /*llenando un combo box*/
-    ws_contenido_combo("cb_prueba", obj_rpta.data, "");
-    ws_contenido_combo("cb_prueba_1", obj_rpta.data, "2");
-
-    $('#txt_prueba_db').val(obj_rpta.data[0].des_colorbien);
-
-    $('#cb_prueba_1').change(function () {
-        var valor_seleccionado = $(this).val();
-        console.log(valor_seleccionado);
-        $('#txt_prueba_combo').val(valor_seleccionado);
-    });
-
-    $('#div_prueba').html('');
-    for (var item = 0; item < obj_rpta.data.length; item++) {
-        $('#div_prueba').append(obj_rpta.data[item].id_colorbien + '->' + obj_rpta.data[item].des_colorbien + '<br>');
-    }
-
-    var tbl_cab = [{'sTitle': 'ID'}, {'sTitle': 'DESC'}];
-    ws_datatable("tabla_prueba", obj_rpta.data, tbl_cab);
+    
+//    ws_contenido_combo("cb_prueba", obj_rpta.data, "");
+//    ws_contenido_combo("cb_prueba_1", obj_rpta.data, "2");
+//
+//    $('#txt_prueba_db').val(obj_rpta.data[0].des_colorbien);
+//
+//    $('#cb_prueba_1').change(function () {
+//        var valor_seleccionado = $(this).val();
+//        console.log(valor_seleccionado);
+//        $('#txt_prueba_combo').val(valor_seleccionado);
+//    });
+//
+//    $('#div_prueba').html('');
+//    for (var item = 0; item < obj_rpta.data.length; item++) {
+//        $('#div_prueba').append(obj_rpta.data[item].id_colorbien + '->' + obj_rpta.data[item].des_colorbien + '<br>');
+//    }
+//
+//    var tbl_cab = [{'sTitle': 'ID'}, {'sTitle': 'DESC'}];
+//    ws_datatable("tabla_prueba", obj_rpta.data, tbl_cab);
 
 }
 

@@ -67,3 +67,8 @@ function sisbien_PreRegistro() {
     });
 
 }
+
+function  sisbien_js_sigamef_bienes(){
+    
+}
+
