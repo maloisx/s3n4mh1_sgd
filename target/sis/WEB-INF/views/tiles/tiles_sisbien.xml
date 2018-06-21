@@ -13,5 +13,10 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisbien/preregistro.jsp" />  
    </definition> 
    
+   <definition name="sisbien/sigamef_bienes" extends="base-definition">  
+       <put-attribute name="title" value="SISBIEN SIGAMEF BIENES" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisbien/sigamef_bienes.jsp" />  
+   </definition> 
+   
  
 </tiles-definitions>
