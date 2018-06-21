@@ -3,7 +3,7 @@
     <div class="input-field col-sm-3"></div> 
     <div class="input-field col-sm-6">   
         <label>AÑO:</label><br>
-        <select id="cb_anio" class="selectpicker" data-live-search="false" data-width="100px" multiple data-actions-box="false" >            
+        <select id="cb_anio" class="selectpicker" data-live-search="false" data-width="100px" data-actions-box="false" >            
         </select>
     </div>
     <div class="input-field col-sm-3"></div> 
@@ -12,12 +12,12 @@
     <div class="input-field col-sm-3"></div> 
     <div class="input-field col-sm-3">   
         <label>SEDE</label><br>
-        <select id="cb_sede" class="selectpicker" data-live-search="true" data-width="100%" multiple data-actions-box="false" >            
+        <select id="cb_sede" class="selectpicker" data-live-search="true" data-width="100%"  data-actions-box="false" >            
         </select>
     </div>
     <div class="input-field col-sm-3">   
         <label>CENTRO DE COSTO</label><br>
-        <select id="cb_centro_costo" class="selectpicker" data-live-search="true" data-width="100%" multiple data-actions-box="false" >            
+        <select id="cb_centro_costo" class="selectpicker" data-live-search="true" data-width="100%"  data-actions-box="false" >            
         </select>
     </div>
     <div class="input-field col-sm-3"></div> 
@@ -26,12 +26,12 @@
     <div class="input-field col-sm-3"></div> 
     <div class="input-field col-sm-3">   
         <label>UBICACION FISICA</label><br>
-        <select id="cb_ubic_fisica" class="selectpicker" data-live-search="true" data-width="100%" multiple data-actions-box="false" >            
+        <select id="cb_ubic_fisica" class="selectpicker" data-live-search="true" data-width="100%"  data-actions-box="false" >            
         </select>
     </div>
     <div class="input-field col-sm-3">   
         <label>USUARIO FINAL</label><br>
-        <select id="cb_usuario_final" class="selectpicker" data-live-search="true" data-width="100%" multiple data-actions-box="false" >            
+        <select id="cb_usuario_final" class="selectpicker" data-live-search="true" data-width="100%"  data-actions-box="false" >            
         </select>
     </div>
     <div class="input-field col-sm-3"></div> 
@@ -53,7 +53,8 @@
 <div class="row">
     <div class="input-field col-sm-1"></div> 
     <div class="input-field col-sm-10 text-center">   
-        <button id="btn_procesar" onclick="sisdad_js_mant_ptoobs_reporte_resum_procesar();" class="btn btn-info btn-sm" >PROCESAR</button> 
+        <button id="btn_procesar" onclick="sisbien_js_sigamef_bienes_listar();" class="btn btn-info btn-sm" >LISTAR</button> 
+        <button id="btn_procesar" onclick="sisbien_js_sigamef_bienes_rpt_etiquetas();" class="btn btn-info btn-sm" >OBTENER ETIQUETAS</button> 
     </div>
 </div>
 <br>

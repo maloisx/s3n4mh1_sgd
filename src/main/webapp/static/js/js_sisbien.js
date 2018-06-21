@@ -69,6 +69,7 @@ function sisbien_PreRegistro() {
 }
 
 function  sisbien_js_sigamef_bienes(){
-    
+    var obj_rpta = ws('SIGAMEF','pkg_senamhi.sp_patrimonio_anios', '');
+    ws_contenido_combo("cb_anio", obj_rpta.data, "");
 }
 
