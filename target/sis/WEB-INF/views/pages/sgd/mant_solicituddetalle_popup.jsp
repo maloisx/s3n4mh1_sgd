@@ -40,7 +40,8 @@
             </div>
             <div class="input-field col-md-3"> 
                 <input type="text" name="txt_doc_adm" id="txt_doc_adm" value="${requestScope['doc_adm']}"/>
-                <label for="txt_doc_adm" class="${requestScope['obj_active_form']}">DNI/RUC</label>           
+                <label for="txt_doc_adm" class="${requestScope['obj_active_form']}">DNI/CE/RUC/OTRO</label>
+                <input type="hidden" name="hd_tipopers" id="hd_tipopers" value="${requestScope['id_tipopers']}"/>
             </div>
             <div class="input-field col-md-7"> 
                 <input type="text" name="txt_administrado" id="txt_administrado" value="${requestScope['administrado']}"/>

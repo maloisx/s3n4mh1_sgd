@@ -9714,34 +9714,34 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String cb_sector = util.contenido_combo(datos_cbo_sector, "");
             request.setAttribute("cb_sector", cb_sector);
         
-            String array_dpto[] = new String[1];
-            array_dpto[0] = "";
-            Vector datos_dpto = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.sp_obt_list_dep", array_dpto);
-            String cb_dpto ="";
-            cb_dpto += "<option value=''></option>";
-            for(int i= 0; i<datos_dpto.size(); i++){
-                Vector vss =  (Vector) datos_dpto.get(i);
-                String cod_dpto = vss.get(0).toString();
-                String des_dpto = vss.get(1).toString();
-                
-                cb_dpto += "<option value='"+cod_dpto+"'>"+des_dpto+"</option>";                
-            }         
-            request.setAttribute("cb_dpto", cb_dpto);
+//            String array_dpto[] = new String[1];
+//            array_dpto[0] = "";
+//            Vector datos_dpto = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.sp_obt_list_dep", array_dpto);
+//            String cb_dpto ="";
+//            cb_dpto += "<option value=''></option>";
+//            for(int i= 0; i<datos_dpto.size(); i++){
+//                Vector vss =  (Vector) datos_dpto.get(i);
+//                String cod_dpto = vss.get(0).toString();
+//                String des_dpto = vss.get(1).toString();
+//                
+//                cb_dpto += "<option value='"+cod_dpto+"'>"+des_dpto+"</option>";                
+//            }         
+//            request.setAttribute("cb_dpto", cb_dpto);
          
-            ConeccionDB cn_proc = new ConeccionDB();
+//            ConeccionDB cn_proc = new ConeccionDB();
 //            Util util =  new Util();
 //          información para el combo procedimiento
-            String proc = "sgd.fn_procedimiento_atenciu_consulta";
-            String array_cbo_proc[] = new String[1];
-            array_cbo_proc[0] = "";
-            Vector datos_cbo_proc = cn_proc.EjecutarProcedurePostgres(proc, array_cbo_proc);
-            String cb_proc = util.contenido_combo(datos_cbo_proc, "");
-            request.setAttribute("cb_proc", cb_proc);
+//            String proc = "sgd.fn_procedimiento_atenciu_consulta";
+//            String array_cbo_proc[] = new String[1];
+//            array_cbo_proc[0] = "";
+//            Vector datos_cbo_proc = cn_proc.EjecutarProcedurePostgres(proc, array_cbo_proc);
+//            String cb_proc = util.contenido_combo(datos_cbo_proc, "");
+//            request.setAttribute("cb_proc", cb_proc);
             
             String func = "senamhi.fn_uo_funcionario_consulta";
             String array_cbo_func[] = new String[1];
             array_cbo_func[0] = "";
-            Vector datos_cbo_func = cn_proc.EjecutarProcedurePostgres(func, array_cbo_func);
+            Vector datos_cbo_func = cn.EjecutarProcedurePostgres(func, array_cbo_func);
             String cb_func = util.contenido_combo(datos_cbo_func, "");
             request.setAttribute("cb_func", cb_func);
             
@@ -10357,6 +10357,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String doc_adm = "";
             String dir_adm = "";
             String email_adm = "";
+            String id_tipopers = "";
             String obj_active_form = "";
             
             for(int i = 0 ; i<datos.size() ; i++){
@@ -10379,6 +10380,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 doc_adm = datos_v.get(16).toString();
                 dir_adm = datos_v.get(20).toString();
                 email_adm = datos_v.get(21).toString();
+                id_tipopers = datos_v.get(27).toString();
                 
                 Vector vv = new Vector();
                 vv.add(id_detalle);
@@ -10431,6 +10433,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             request.setAttribute("i_proc", i_proc);       
             request.setAttribute("dir_adm", dir_adm);       
             request.setAttribute("email_adm", email_adm);       
+            request.setAttribute("id_tipopers", id_tipopers);       
             
             request.setAttribute("obj_active_form", obj_active_form);
           

@@ -33,7 +33,7 @@
     <div class="col-sm-11" id="div_per_natural_buscar">
         <div class="input-field md-radio md-radio-inline col-sm-2">
             <input id="txt_dni" type="text" name="txt_dni"/>
-            <label for="txt_dni">DNI</label>
+            <label for="txt_dni">D.N.I./C.E./OTRO</label>
         </div>
         <div class="col-sm-2">
             <button id="btn_busca_dni" onclick="sgd_mant_busca_ciudadano_dni(1)" class="btn btn-info btn-sm" >
