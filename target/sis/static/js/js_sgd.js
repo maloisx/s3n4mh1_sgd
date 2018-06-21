@@ -3756,18 +3756,30 @@ function sgd_mant_cut_solicitud_guardar(){
 //FIN N° CUT DESDE SOLICITUD
 //
 //INICIO GENERAR PDF
+//function sgd_mant_generar_pdf(){
+//    var id = $('#hd_id').val();
+//    
+//    var i_proc = $('#hd_i_proc').val();
+//    
+//    if (i_proc == '4'){
+//        var arch_report = "atenc_ciud_solicitud";
+//    }else if (i_proc == '2'){
+//        var arch_report = "atenc_ciud_solicitud_tupa";
+//    }else{
+//        var arch_report = "atenc_ciud_solicitud_otros";
+//    }
+//    var url = window.open("reportesolicitud/?id="+id+"&arch_report="+arch_report, "", "width=900,height=900");
+//}
 function sgd_mant_generar_pdf(){
     var id = $('#hd_id').val();
+    var id_tipopers = $('#hd_tipopers').val();        
     
-    var i_proc = $('#hd_i_proc').val();
-    
-    if (i_proc == '4'){
-        var arch_report = "atenc_ciud_solicitud";
-    }else if (i_proc == '2'){
+    if (id_tipopers == '1'){
+        var arch_report = "atenc_ciud_solicitud_tupa_dni";
+    }else if (id_tipopers == '2'){
         var arch_report = "atenc_ciud_solicitud_tupa";
-    }else{
-        var arch_report = "atenc_ciud_solicitud_otros";
     }
+//    var url = window.open("reportesolicitud/?id="+id+"&arch_report="+arch_report, "", "width=900,height=900");
     var url = window.open("reportesolicitud/?id="+id+"&arch_report="+arch_report, "", "width=900,height=900");
 }
 //FIN GENERAR PDF
@@ -3780,6 +3792,4 @@ function sgd_mant_expediente_solicitud_guardar(){
         var msj = 'La solicitud se actualizó con exito';
         $.alert('<h6>' + msj + '</h6>');
     }
-    
-    
 }

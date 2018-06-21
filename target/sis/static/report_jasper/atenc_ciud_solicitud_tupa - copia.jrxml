@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="atenc_ciud_solicitud_tupa" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="611dfb7f-98c9-4d93-8b43-59074edd3a0c">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="p_id_solicitud" class="java.lang.String">
@@ -229,7 +229,7 @@ ORDER BY 1 ASC;]]>
 (Texto Único Ordenado de la Ley N° 27806, Ley de Transparencia y Acceso a la Información Pública, aprobado por Decreto Supremo N° 043-2003-PCM)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="12ed9374-8da5-4112-b1d4-fe45c727eea2" x="0" y="40" width="214" height="16"/>
+				<reportElement uuid="12ed9374-8da5-4112-b1d4-fe45c727eea2" x="0" y="40" width="212" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -264,8 +264,8 @@ ORDER BY 1 ASC;]]>
 				<text><![CDATA[Director de la Unidad de Atención al Ciudadano y Gestión Documental]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="8e8824fa-c3a9-49d0-bcea-090776f82bf6" x="0" y="0" width="214" height="50"/>
-				<imageExpression><![CDATA["D:\\GitHub\\reportes\\LOGO-MINAM---editado.jpg"]]></imageExpression>
+				<reportElement uuid="2ed73012-f252-4c84-9b99-a84a91680a06" x="2" y="0" width="212" height="40"/>
+				<imageExpression><![CDATA["http://sgd.senamhi.gob.pe/sis/static/img/logo-minam.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

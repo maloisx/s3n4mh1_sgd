@@ -227,7 +227,6 @@ function sgd_mant_tupa_mostrar(){
     sgd_tipo_entrega_chkb();
     sgd_rpta_email_chkb();    
 }
-
 //FIN MOSTRAR TUPA
 //
 //INICIO GUARDAR CIUDADANO DNI
@@ -437,8 +436,6 @@ function sgd_mant_ciudadano_ruc_guardar(){
     }
 }
 //FIN GUARDAR CIUDADANO RUC
-
-
 
 ///////////////////////////////////////
 var map, manager;
