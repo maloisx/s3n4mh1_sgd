@@ -10999,7 +10999,7 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
 //FIN TIPO ENTREGA CHECKBOX
 //
 //INICIO SOLICITUD BUSCAR EXPEDIENTES POPUP    
-@RequestMapping(value = {"/sgd/mant_solicitud_buscarexp_popup"}, method = RequestMethod.GET)
+@RequestMapping(value = {"/sgd/mant_buscarexp_popup"}, method = RequestMethod.GET)
     public String MantSolicitudBuscarexpPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
         throws ServletException, IOException {
         request.setAttribute("title_pag","CONSULTANDO EXPEDIENTE");
@@ -11039,7 +11039,7 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
             Util util =  new Util();
             ConeccionDB cn = new ConeccionDB(); 
             
-            String nc = "sgd.fn_solicitud_buscarexp_consulta";//consulta de documento             
+            String nc = "sgd.fn_buscarexp_consulta";//consulta de documento             
             String array[] = new String[2];
             array[0] = id_exp;
             array[1] = id_doc;
@@ -11201,7 +11201,7 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
         } catch (Exception ex) {
             Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);            
         }
-    return "sgd/mant_solicitud_buscarexp_popup";  
+    return "sgd/mant_buscarexp_popup";  
     }
 //FIN SOLICITUD BUSCAR EXPEDIENTES POPUP     
 //        
