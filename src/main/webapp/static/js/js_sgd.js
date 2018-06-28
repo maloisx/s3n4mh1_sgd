@@ -3709,17 +3709,72 @@ function sgd_mant_solicituddetalle_popup(id_sol, i_proc){
 //FIN SOLICITUD ATENCIÓN AL CIUDADANO POPUP
 //
 //INICIO GENERAR CUT DESDE SOLICITUD
-function sgd_mant_solicitud_generacut_popup(id_sol){
+//function sgd_mant_solicitud_generacut_popup(id_sol){
+//    
+//    var url = encodeURI(path + "sgd/mant_solicitud_generarcut_popup/?id_sol="+id_sol);
+//  
+//    $.colorbox({
+//        "href" : url
+//       ,"width" : 1200
+//       ,"height" : 1000 
+//    });
+//}
+function sgd_mant_asignacut_popup(id_sol, per_sol){
+      
+    var url = encodeURI(path + "sgd/mant_asignacut_popup/?id_sol="+id_sol+"&per_sol="+per_sol);
     
-    var url = encodeURI(path + "sgd/mant_solicitud_generarcut_popup/?id_sol="+id_sol);
-  
     $.colorbox({
         "href" : url
-       ,"width" : 1200
-       ,"height" : 1000 
+       ,"width" : 400
+       ,"height" : 400 
     });
 }
-//FIN GENERAR CUT DESDE SOLICITUD
+//FIN ASIGNAR CUT DESDE SOLICITUD
+//
+//INICIO MODIFICAR CUT DESDE SOLICITUD
+function sgd_mant_modificacut_popup(id_sol, per_sol, cut_asig, per_cut){
+    
+    var url = encodeURI(path + "sgd/mant_asignacut_popup/?id_sol="+id_sol+"&per_sol="+per_sol+"&cut_asig="+cut_asig+"&per_cut="+per_cut);
+    console.log('****'+cut_asig);
+    console.log('----'+per_cut);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 400
+       ,"height" : 400 
+    });
+}
+//FIN ASIGNAR CUT DESDE SOLICITUD
+//
+//INICIO ASIGNAR CUT PARA SOLICITUD
+function sgd_mant_asignacut_guardar(){
+    var id_sol = $('#hd_idsol').val();
+    var per_sol = $('#hd_per_sol').val();
+    var cut = $('#txt_cut').val();
+    var periodo = $('#cb_periodo').val();
+    
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_asignacut_guardar/",
+            data:     "id_sol="+id_sol+
+                      "&per_sol="+per_sol+
+                      "&cut="+cut+
+                      "&periodo="+periodo,
+            beforeSend: function(data){
+                $('#div_mensaje_ajax').html("Cargando...");
+            },
+            success: function(requestData){
+                arrayobj = jQuery.parseJSON(requestData);
+                var msj = arrayobj[0][0];
+                  $.alert('<h6>' + msj + '</h6>');
+            },
+            error: function(requestData, strError, strTipoError){
+                $('#div_mensaje_ajax').html("Error " + strTipoError +": " + strError);
+            }
+        });
+}
+//FIN ASIGNAR CUT PARA SOLICITUD
 //
 //INICIO N° CUT DESDE SOLICITUD
 function sgd_mant_cut_solicitud_guardar(){
@@ -3783,7 +3838,8 @@ function sgd_mant_generar_pdf(){
     var url = window.open("reportesolicitud/?id="+id+"&arch_report="+arch_report, "", "width=900,height=900");
 }
 //FIN GENERAR PDF
-
+//
+//INICIO GUARDAR N EXPEDIENTE PARA SOLICITUD
 function sgd_mant_expediente_solicitud_guardar(){
     sgd_mant_expediente_guardar();
     var cut = $('#txt_cut').val();
@@ -3793,3 +3849,18 @@ function sgd_mant_expediente_solicitud_guardar(){
         $.alert('<h6>' + msj + '</h6>');
     }
 }
+//FIN GUARDAR N EXPEDIENTE PARA SOLICITUD
+//
+//INICIO MOSTRAR EXPEDIENTE EN SOLICITUD
+function sgd_expediente_buscar_popup(cut, per_exp){
+     
+    var url = encodeURI(path + "sgd/mant_solicitud_buscarexp_popup/?cut="+cut+"&per_exp="+per_exp);
+  
+    $.colorbox({
+        "href" : url
+       ,"width" : 1200
+       ,"height" : 1000 
+    });
+}
+//FIN MOSTRAR EXPEDIENTE EN SOLICITUD
+//

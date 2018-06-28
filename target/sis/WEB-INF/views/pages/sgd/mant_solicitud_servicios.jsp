@@ -166,7 +166,7 @@
                         <label id="lb_telef_rep" for="txt_telef_rep">Telef.Cont.<span style='font-size: 11pt; color: red;'>(*)</span></label>
                     </div>
                     <div class="input-field col-sm-6">
-                        <input id="txt_email_rep" placeholder="e-mail@dominio.xyz" type="text" name="txt_email_rep"/>
+                        <input id="txt_email_rep" placeholder="e-mail@dominio.xyz" type="text" name="txt_email_rep" style="text-transform: lowercase" required />
                         <label id="lb_email_rep" for="txt_email_rep">E-Mail Contacto<span style='font-size: 11pt; color: red;'>(*)</span></label>
                     </div>
                     <div class="input-field col-sm-3 text-right" id="div_guarda_ciudadano_ruc">
