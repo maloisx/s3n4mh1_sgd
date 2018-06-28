@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="etiqueta_chica" pageWidth="600" pageHeight="450" columnWidth="600" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="259997ab-cc66-4e6b-8462-cad02cb66731">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_COD_INI" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_COD_FIN" class="java.lang.String"/>
+	<parameter name="P_ANIO" class="java.lang.String"/>
+	<parameter name="P_COD_SEDE" class="java.lang.String"/>
+	<parameter name="P_COD_CENTRO_COSTO" class="java.lang.String"/>
+	<parameter name="P_COD_UBIC_FISICA" class="java.lang.String"/>
+	<parameter name="P_COD_EMP_FINAL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select codigo_activo ,
+             p.descripcion,
+             to_char(p.fecha_compra, 'dd/mm/yyyy') fecha_compra,
+             p.nro_orden,
+             (case when p.tipo_bien = 'B' and p.grupo_bien = '74' and p.clase_bien = '64' then p.medidas else p.nro_serie end ) as nro_serie,
+             m.nombre AS MARCA,
+             p.modelo,
+             s.nombre_sede,
+             cc.nombre_depend,
+             cc.abreviado_depend,
+             uf.ubicac_fisica,
+             --sbn.nombre_item as nombre_sbn,
+             pe.apellido_paterno,
+             pe.apellido_materno,
+             pe.nombres
+        from sig_patrimonio p
+        left join sig_sedes s
+          on p.sede = s.sede
+         and p.pliego = s.pliego
+        left join sig_ubicac_fisica uf
+          on p.TIPO_UBICAC = uf.TIPO_UBICAC
+         and p.COD_UBICAC = uf.COD_UBICAC
+        left join sig_centro_costo cc
+          on cc.ano_eje = p.ano_eje
+         and cc.sec_ejec = p.sec_ejec
+         and cc.centro_costo = p.centro_costo
+        left join catalogo_bien_serv sbn
+          on sbn.SEC_EJEC = p.SEC_EJEC
+         and sbn.TIPO_BIEN = p.TIPO_BIEN
+         and sbn.GRUPO_BIEN = p.GRUPO_BIEN
+         and sbn.CLASE_BIEN = p.CLASE_BIEN
+         and sbn.FAMILIA_BIEN = p.FAMILIA_BIEN
+         and sbn.ITEM_BIEN = p.ITEM_BIEN
+        left join marca m
+          on m.tipo_marca = p.tipo_marca
+         and m.marca = p.marca
+        left join sig_personal pe
+          on pe.sec_ejec = p.sec_ejec
+         and pe.empleado = p.empleado_final
+       where ((p.codigo_activo like '%'||$P{P_COD_INI}) or ( p.codigo_activo between $P{P_COD_INI} and  $P{P_COD_FIN} ) )
+         and P.SEC_EJEC = '474'
+         and p.ano_eje = $P{P_ANIO}
+         and s.sede || '_' || S.PLIEGO like '%' || $P{P_COD_SEDE}
+         and cc.centro_costo like '%' || $P{P_COD_CENTRO_COSTO}
+         and uf.tipo_ubicac || '_' || uf.cod_ubicac like '%' || $P{P_COD_UBIC_FISICA}
+         and pe.empleado like '%' || $P{P_COD_EMP_FINAL}
+order by codigo_activo]]>
+	</queryString>
+	<field name="CODIGO_ACTIVO" class="java.lang.String"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="FECHA_COMPRA" class="java.lang.String"/>
+	<field name="NRO_ORDEN" class="java.math.BigDecimal"/>
+	<field name="NRO_SERIE" class="java.lang.String"/>
+	<field name="MARCA" class="java.lang.String"/>
+	<field name="MODELO" class="java.lang.String"/>
+	<field name="NOMBRE_SEDE" class="java.lang.String"/>
+	<field name="NOMBRE_DEPEND" class="java.lang.String"/>
+	<field name="ABREVIADO_DEPEND" class="java.lang.String"/>
+	<field name="UBICAC_FISICA" class="java.lang.String"/>
+	<field name="APELLIDO_PATERNO" class="java.lang.String"/>
+	<field name="APELLIDO_MATERNO" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<detail>
+		<band height="450" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement uuid="d81d4830-a392-44d6-8a6e-be32b5580f39" mode="Transparent" x="0" y="0" width="307" height="110"/>
+				<imageExpression><![CDATA["http://sgd.senamhi.gob.pe/sis/static/img/logo_negro.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="40a9d3a2-bd15-476c-8b10-67c15bf31efe" x="10" y="147" width="297" height="153"/>
+				<textElement textAlignment="Left">
+					<font size="22" isBold="true"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="20.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRIPCION} + "\n" +
+"MARCA: "+ $F{MARCA} + "\n" +
+(($F{CODIGO_ACTIVO}.substring( 0, 4 ).equals("7464"))?"DIMEN.: ":"SERIE: ") + $F{NRO_SERIE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9e7676a0-4a7e-4a06-b22f-22ad490d7584" x="11" y="300" width="90" height="38"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADQ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8b14427c-45cf-41ca-9213-789c47156f33" x="101" y="300" width="194" height="38"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_COMPRA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="16bb2658-f147-4d30-9f2b-0834e49e4f26" x="295" y="300" width="64" height="38"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O/C:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f485bb35-361f-4bc9-b697-00f6ceb43633" x="359" y="300" width="231" height="38"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_ORDEN}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement uuid="d967e0df-edb6-4bf2-a430-13c918054abc" mode="Transparent" x="307" y="20" width="283" height="280" backcolor="#FFFFFF"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+new com.google.zxing.qrcode.QRCodeWriter().encode(
+$F{CODIGO_ACTIVO},
+com.google.zxing.BarcodeFormat.QR_CODE, 300, 300))]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="3671189a-60fb-407c-847b-79cdd736a567" x="0" y="80" width="307" height="67"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="35" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO_ACTIVO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3365096b-eeb1-4b1d-9ab1-f09dba68e07b" x="11" y="338" width="90" height="32"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UBIC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dbd41814-87c6-4bf3-83b1-9f74491ac071" x="101" y="338" width="489" height="94"/>
+				<textElement>
+					<font size="25" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_SEDE} + " / " + $F{UBICAC_FISICA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

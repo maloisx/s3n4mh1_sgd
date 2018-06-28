@@ -154,6 +154,7 @@ function ws_contenido_combo(cb_id_html, data, id_seleccionado) {
     //cb_id_html = "cb_prueba";
     //id_seleccionado = "";
     cont_combo = "";
+    cont_combo += "<option value='' "+((id_seleccionado == '')?" selected='selected' ":"")+"  >Seleccione una Opcion</option>";
     for (var i = 0; i < data.length; i++) {
         var item = data[i];
         ind = 0;

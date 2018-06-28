@@ -93,14 +93,7 @@
 
             <!--xxxx<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>-->
         <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/js/dataTables.buttons.js'/>"></script>
-<!--           <script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-            <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/pdfmake.min.js"></script>
-            <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.24/build/vfs_fonts.js"></script>
-            <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-               
-            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js"></script>
-            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.0/js/responsive.bootstrap.min.js"></script>-->
-            
+           
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/jszip.min.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/pdfmake.min.js'/>"></script>
             <script type="text/javascript" language="javascript" src="<c:url value='/static/datatables/ext/vfs_fonts.js'/>"></script>

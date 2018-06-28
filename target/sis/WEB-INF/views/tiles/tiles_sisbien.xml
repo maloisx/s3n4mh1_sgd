@@ -18,5 +18,9 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisbien/sigamef_bienes.jsp" />  
    </definition> 
    
+   <definition name="sisbien/sigamef_bienes_etiquetas" extends="base-definition">  
+       <put-attribute name="title" value="SISBIEN SIGAMEF BIENES Etiquetas" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisbien/sigamef_bienes_etiquetas.jsp" />  
+   </definition> 
  
 </tiles-definitions>
