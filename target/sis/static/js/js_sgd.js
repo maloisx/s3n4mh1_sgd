@@ -3852,15 +3852,15 @@ function sgd_mant_expediente_solicitud_guardar(){
 //FIN GUARDAR N EXPEDIENTE PARA SOLICITUD
 //
 //INICIO MOSTRAR EXPEDIENTE EN SOLICITUD
-function sgd_expediente_buscar_popup(cut, per_exp){
-     
-    var url = encodeURI(path + "sgd/mant_solicitud_buscarexp_popup/?cut="+cut+"&per_exp="+per_exp);
-  
-    $.colorbox({
-        "href" : url
-       ,"width" : 1200
-       ,"height" : 1000 
-    });
-}
+//function sgd_expediente_buscar_popup(cut, per_exp){
+//     
+//    var url = encodeURI(path + "sgd/mant_buscarexp_popup/?cut="+cut+"&per_exp="+per_exp);
+//  
+//    $.colorbox({
+//        "href" : url
+//       ,"width" : 1200
+//       ,"height" : 1000 
+//    });
+//}
 //FIN MOSTRAR EXPEDIENTE EN SOLICITUD
 //
