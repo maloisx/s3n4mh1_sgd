@@ -9858,13 +9858,15 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String telefono = request.getParameter("telefono");
         String representante = request.getParameter("representante");
         String dni_rep = request.getParameter("dni_rep");
+        String telef_rep = request.getParameter("telef_rep");
+        String email_rep = request.getParameter("email_rep");
 
         String var_request = "";
 
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "senamhi.fn_administrado_mant_1";
-            String array[] = new String[10];
+            String array[] = new String[12];
             array[0] = id;
             array[1] = rsocial;
             array[2] = representante;
@@ -9875,6 +9877,8 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             array[7] = ruc;
             array[8] = sector;
             array[9] = dni_rep;
+            array[10] = telef_rep;
+            array[11] = email_rep;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -10265,18 +10269,34 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 String c_est_sol = vss.get(4).toString();
                 String administrado = vss.get(5).toString();
                 String i_proc = vss.get(6).toString();
+                String id_sol = vss.get(7).toString();
+                String per_sol = vss.get(8).toString();
+                String cut_asig = vss.get(9).toString();
+                String per_cut = vss.get(10).toString();
                       
                 String btn = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicituddetalle_popup("+i_solicitud+","+i_proc+")'>"
-                           + "<span class='glyphicon glyphicon-search'></span>"
-                           + "</button><input type='hidden' name='hd_id_"+i_solicitud+"' id='hd_id_"+i_solicitud+"' value='${requestScope['"+i_proc+"']}' />";
-                String cut = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicitud_generacut_popup("+i_solicitud+")'><span class='glyphicon glyphicon-file'></span></button>";
-                
+                             + "<span class='glyphicon glyphicon-search'></span>"
+                             + "</button><input type='hidden' name='hd_id_"+i_solicitud+"' id='hd_id_"+i_solicitud+"' value='${requestScope['"+i_proc+"']}' />";
+//                String cut = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicitud_generacut_popup("+i_solicitud+")'><span class='glyphicon glyphicon-file'></span></button>";
+                String cut = "";
+                if (!"".equals(cut_asig)){
+                    cut += "<button type='button' class='btn btn-info' onclick='sgd_mant_modificacut_popup("+i_solicitud+","+per_sol+","+cut_asig+","+per_cut+")'>";
+                    cut += "<span class='glyphicon glyphicon-pencil' style='text-align:center'></span></button>";
+                }else{
+                    cut_asig = "";
+                    per_cut = "";
+                    cut += "<button type='button' class='btn btn-info' onclick='sgd_mant_asignacut_popup("+i_solicitud+","+per_sol+")'>";
+                    cut += "<span class='glyphicon glyphicon-folder-open' style='text-align:center'></span></button>";
+                }
+                String lk_cut = "<label for='txt_per' onclick='sgd_mant_asignacut_popup("+i_solicitud+","+per_sol+")'>"+cut_asig +'-'+ per_cut+"</label>";
+                        
                 Vector vv = new Vector();
-                vv.add(i_solicitud);
+                vv.add(id_sol);
                 vv.add(d_fecha);
                 vv.add(administrado);
                 vv.add(c_procedimiento);
                 vv.add(c_descripcion);
+                vv.add(lk_cut);
                 vv.add(c_est_sol);
                 vv.add(btn);
                 vv.add(cut);
@@ -10290,14 +10310,15 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
             sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aoColumns");sv.add("["                                    
-                                    + "{'sTitle':'CÓDIGO'} , "
+                                    + "{'sTitle':'N° SOLICITUD'} , "
                                     + "{'sTitle':'FECHA'} , "
                                     + "{'sTitle':'SOLICITANTE'} , "
                                     + "{'sTitle':'SERVICIO'} , "
                                     + "{'sTitle':'DESCRIPCION'} , "
+                                    + "{'sTitle':'CUT ASIG.'} , "
                                     + "{'sTitle':'ESTADO'} , "
-                                    + "{'sTitle':'-'} , "
-                                    + "{'sTitle':'-'}  "
+                                    + "{'sTitle':'PDF'} , "
+                                    + "{'sTitle':'ASIG. CUT'}  "
                                     + "]");vc_tbl.add(sv);sv =  new Vector();
             sv.add("aaData");sv.add(json);vc_tbl.add(sv);sv =  new Vector();
 //              sv.add("aoColumnDefs");sv.add("[{'sClass':'center','aTargets':[0,1,4,5,6]},{'aTargets':[ 1 ],'bVisible': false,'bSearchable': false}]");vc_tbl.add(sv);sv =  new Vector();
@@ -10445,182 +10466,222 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 //FIN MANTENIMIENTO TRÁMITE POPUP            
 //
 //INICIO MANTENIMIENTO GENERAR CUT - SOLICITUD POPUP
-    @RequestMapping(value = {"/sgd/mant_solicitud_generarcut_popup"}, method = RequestMethod.GET)
-    public String MantGenerarCutPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+//    @RequestMapping(value = {"/sgd/mant_solicitud_generarcut_popup"}, method = RequestMethod.GET)
+//    public String MantGenerarCutPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+//            throws ServletException, IOException {
+//        
+//        String id_sol = request.getParameter("id_sol");
+////        request.setAttribute("title_pag","INFORMACIÓN DE SOLICITUD N° "+id_sol);     
+//
+//        try {
+//            Util util =  new Util();
+////            Vector v_temp = new Vector();
+//            ConeccionDB cn = new ConeccionDB(); 
+//            
+//            String np = "sgd.fn_solicituddetalle_busca";
+//            String array[] = new String[1];
+//            array[0] = id_sol;
+//            Vector datos = cn.EjecutarProcedurePostgres(np, array);
+//            
+//            String fecha = "";
+//            String procedimiento = "";
+//            String administrado = "";
+//            String motivo = "";
+//            String descripcion = "";
+//            String observacion = "";
+//            String id_detalle = "";
+//            String id_estacion = "";
+//            String id_variable = "";
+//            String estacion = "";
+//            String variable = "";
+//            String id_escala = "";
+//            String escala = "";
+//            String fec_ini = "";
+//            String fec_fin = "";
+//            String doc_adm = "";
+//            String id_adm = "";
+//            String id_proc = "";
+//            String fec_formato = "";
+//            String obj_active_form = "";
+//            
+//            for(int i = 0 ; i<datos.size() ; i++){
+//                Vector datos_v =  (Vector) datos.get(i);
+//                fecha = datos_v.get(1).toString();
+//                procedimiento = datos_v.get(2).toString();
+//                administrado = datos_v.get(3).toString();
+//                motivo = datos_v.get(4).toString();
+//                descripcion = datos_v.get(5).toString();
+//                observacion = datos_v.get(6).toString();
+//                id_detalle = datos_v.get(7).toString();
+//                id_estacion = datos_v.get(8).toString();
+//                estacion = datos_v.get(9).toString();
+//                id_variable = datos_v.get(10).toString();
+//                variable = datos_v.get(11).toString();
+//                id_escala = datos_v.get(12).toString();
+//                escala = datos_v.get(13).toString();
+//                fec_ini = datos_v.get(14).toString();
+//                fec_fin = datos_v.get(15).toString();
+//                doc_adm = datos_v.get(16).toString();
+//                id_adm = datos_v.get(17).toString();
+//                id_proc = datos_v.get(18).toString();
+//                fec_formato = datos_v.get(19).toString();
+//                
+//                obj_active_form = "active";
+//            }
+//                        
+//            String nc = "sgd.fn_condicion_consulta";//combo condición               
+//            String array_cbo_condicion[] = new String[1];
+//            array_cbo_condicion[0] = "";
+//            Vector datos_cbo_condicion = cn.EjecutarProcedurePostgres(nc, array_cbo_condicion);
+//            String cb_desc_condicion = util.contenido_combo(datos_cbo_condicion, "2");
+//            request.setAttribute("cb_condicion", cb_desc_condicion);
+//            
+//            String npr = "sgd.fn_prioridad_consulta";//combo Prioridad
+//            String array_cbo_prioridad[] = new String[1];
+//            array_cbo_prioridad[0] = "";
+//            Vector datos_cbo_prioridad = cn.EjecutarProcedurePostgres(npr, array_cbo_prioridad);
+//            String cb_desc_prioridad = util.contenido_combo(datos_cbo_prioridad, "3");
+//            request.setAttribute("cb_priori", cb_desc_prioridad);
+//            
+//            String nacc = "sgd.fn_alcance_consulta";//combo Alcance
+//            String array_cbo_alcance[] = new String[2];
+//            array_cbo_alcance[0] = "";
+//            array_cbo_alcance[1] = "1";
+//            Vector datos_cbo_alcance = cn.EjecutarProcedurePostgres(nacc, array_cbo_alcance);
+//            String cb_desc_alcance = util.contenido_combo(datos_cbo_alcance, "");
+//            request.setAttribute("cb_alcance", cb_desc_alcance);
+//            
+//            String nt = "sgd.fn_tema_consulta";//combo Tema
+//            String array_cbo_tema[] = new String[2];
+//            array_cbo_tema[0] = "";
+//            array_cbo_tema[1] = "1";
+//            Vector datos_cbo_tema = cn.EjecutarProcedurePostgres(nt, array_cbo_tema);
+//            String cb_desc_tema = util.contenido_combo(datos_cbo_tema, "4");
+//            request.setAttribute("cb_tema", cb_desc_tema);    
+//            
+//            String no = "sgd.fn_origen_consulta";//combo Origen
+//            String array_cbo_origen[] = new String[1];
+//            array_cbo_origen[0] = "";
+//            Vector datos_cbo = cn.EjecutarProcedurePostgres(no, array_cbo_origen);
+//            String cb_desc_orig = util.contenido_combo(datos_cbo, "2");
+//            request.setAttribute("cb_origen", cb_desc_orig);      
+//            
+//            String ntr = "sgd.fn_tramite_procedimiento_consulta";//Trámite por procedimiento
+//            String array_cbo_tramite[] = new String[1];
+//            array_cbo_tramite[0] = id_proc;
+//            Vector datos_cbo_tramite = cn.EjecutarProcedurePostgres(ntr, array_cbo_tramite);
+//            String cb_desc_tramite = util.contenido_combo(datos_cbo_tramite, id_proc);
+//            request.setAttribute("cb_tramite", cb_desc_tramite);
+//            
+//            String proced = "sgd.fn_procedimiento_atenciu_busca";//Procedimiento
+//            String array_cbo_proced[] = new String[1];
+//            array_cbo_proced[0] = id_proc;
+//            Vector datos_cbo_proced = cn.EjecutarProcedurePostgres(proced, array_cbo_proced);
+//            String cb_desc_proced = util.contenido_combo(datos_cbo_proced, id_proc);
+//            request.setAttribute("cb_proced", cb_desc_proced);
+//            
+//            Calendar c = Calendar.getInstance();//Anio actual para el registro del expediente o documento (por referencia)           
+//            String annio = Integer.toString(c.get(Calendar.YEAR));
+//            
+//            Date date = new Date();//Fecha de registro del documento (por referencia)
+//            DateFormat formatofec = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
+//            String fecha_reg = formatofec.format(date);
+//            
+//            request.setAttribute("per", annio);
+//            request.setAttribute("fecreg", fecha_reg);
+//            request.setAttribute("nrodoc", id_sol);
+//            request.setAttribute("fec_doc", fecha);
+//            request.setAttribute("folio", "1");
+//            request.setAttribute("doc_adm", doc_adm);
+//            request.setAttribute("motivo", motivo);
+//            request.setAttribute("descripcion", descripcion);
+//            request.setAttribute("observacion", observacion);
+//            request.setAttribute("estacion", estacion);
+//            request.setAttribute("variable", variable);
+//            
+//            request.setAttribute("obj_active_form", obj_active_form);
+//            
+//            String ntdoc = "sgd.fn_clasifdoc_consulta";//combo Tipo de Documentos por Unidad Orgánica
+//            String array_cbo_tdoc[] = new String[1];
+//            array_cbo_tdoc[0] = "";
+//            Vector datos_cbo_tdoc = cn.EjecutarProcedurePostgres(ntdoc, array_cbo_tdoc);
+//            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "123");
+//            request.setAttribute("cb_clsfdoc", cb_desc_clsfdoc);
+//            
+//            String cons_rmte_uo = "senamhi.fn_uo_entidad_consulta";//consulta combo remite
+//            String array_rmte_uo[] = new String[1];
+//            array_rmte_uo[0] = "";//id persona
+//            Vector datos_cbo_uo_rmte = cn.EjecutarProcedurePostgres(cons_rmte_uo, array_rmte_uo);
+//            String cb_uo_rmte = util.contenido_combo(datos_cbo_uo_rmte, id_adm);
+//            request.setAttribute("cb_remite", cb_uo_rmte);
+//            request.setAttribute("txt_remite", administrado);
+//            request.setAttribute("id_remite", id_adm);
+//
+//            String nom_dest = "";
+//            String id_dest = "";
+//            String uo_dest = "";
+//            String cons_dest = "senamhi.fn_destino_consulta_exp_existe";//consulta para txt destino
+//            String array_dest[] = new String[1];
+//            array_dest[0] = "90000054";
+//            Vector v_dest = cn.EjecutarProcedurePostgres(cons_dest, array_dest);
+//            String cb_uo_dest = util.contenido_combo(v_dest, "90000054");
+//            request.setAttribute("cb_destino", cb_uo_dest);
+//            for(int u = 0 ; u<v_dest.size() ; u++){
+//                Vector datos_v =  (Vector) v_dest.get(u);
+//                nom_dest = datos_v.get(3).toString();
+//                id_dest = datos_v.get(2).toString();
+//                uo_dest = datos_v.get(0).toString();
+//            }
+//            request.setAttribute("txt_destino", nom_dest); 
+//            request.setAttribute("hd_id_des", id_dest); 
+//            request.setAttribute("asunto", "SOLICITO "+procedimiento); 
+//                        
+//            request.setAttribute("obj_readonly", "readonly"); 
+//            
+//        } catch (Exception ex) {
+//            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return "sgd/mant_solicitud_generarcut_popup";
+//    }   
+    @RequestMapping(value = {"/sgd/mant_asignacut_popup"}, method = RequestMethod.GET)
+    public String MantAsignaCutPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
         
         String id_sol = request.getParameter("id_sol");
-//        request.setAttribute("title_pag","INFORMACIÓN DE SOLICITUD N° "+id_sol);     
+        String per_sol = request.getParameter("per_sol");
+        String cut_asig = request.getParameter("cut_asig");
+        String per_cut = request.getParameter("per_cut");
+        request.setAttribute("title_pag","Solicitud N° "+id_sol+"_"+per_sol);
 
         try {
+            request.setAttribute("id_sol", id_sol);
+            request.setAttribute("per_sol", per_sol);
+            request.setAttribute("cut_asig", cut_asig);
+            request.setAttribute("per_cut", per_cut);
+            
+            String c_per = "";
+            if (per_cut != null){
+                c_per = per_cut;
+            }else{
+                c_per = "";
+            }
+            
+            ConeccionDB cn = new ConeccionDB();
+            
             Util util =  new Util();
-//            Vector v_temp = new Vector();
-            ConeccionDB cn = new ConeccionDB(); 
+//          información para el combo periodo (año)
+            String ne = "sgd.fn_solicitud_exp_anio_consulta";
+            String array_cbo_est[] = new String[1];
+            array_cbo_est[0] = "";
+            Vector datos_cbo_per = cn.EjecutarProcedurePostgres(ne, array_cbo_est);
             
-            String np = "sgd.fn_solicituddetalle_busca";
-            String array[] = new String[1];
-            array[0] = id_sol;
-            Vector datos = cn.EjecutarProcedurePostgres(np, array);
-            
-            String fecha = "";
-            String procedimiento = "";
-            String administrado = "";
-            String motivo = "";
-            String descripcion = "";
-            String observacion = "";
-            String id_detalle = "";
-            String id_estacion = "";
-            String id_variable = "";
-            String estacion = "";
-            String variable = "";
-            String id_escala = "";
-            String escala = "";
-            String fec_ini = "";
-            String fec_fin = "";
-            String doc_adm = "";
-            String id_adm = "";
-            String id_proc = "";
-            String fec_formato = "";
-            String obj_active_form = "";
-            
-            for(int i = 0 ; i<datos.size() ; i++){
-                Vector datos_v =  (Vector) datos.get(i);
-                fecha = datos_v.get(1).toString();
-                procedimiento = datos_v.get(2).toString();
-                administrado = datos_v.get(3).toString();
-                motivo = datos_v.get(4).toString();
-                descripcion = datos_v.get(5).toString();
-                observacion = datos_v.get(6).toString();
-                id_detalle = datos_v.get(7).toString();
-                id_estacion = datos_v.get(8).toString();
-                estacion = datos_v.get(9).toString();
-                id_variable = datos_v.get(10).toString();
-                variable = datos_v.get(11).toString();
-                id_escala = datos_v.get(12).toString();
-                escala = datos_v.get(13).toString();
-                fec_ini = datos_v.get(14).toString();
-                fec_fin = datos_v.get(15).toString();
-                doc_adm = datos_v.get(16).toString();
-                id_adm = datos_v.get(17).toString();
-                id_proc = datos_v.get(18).toString();
-                fec_formato = datos_v.get(19).toString();
-                
-                obj_active_form = "active";
-            }
-                        
-            String nc = "sgd.fn_condicion_consulta";//combo condición               
-            String array_cbo_condicion[] = new String[1];
-            array_cbo_condicion[0] = "";
-            Vector datos_cbo_condicion = cn.EjecutarProcedurePostgres(nc, array_cbo_condicion);
-            String cb_desc_condicion = util.contenido_combo(datos_cbo_condicion, "2");
-            request.setAttribute("cb_condicion", cb_desc_condicion);
-            
-            String npr = "sgd.fn_prioridad_consulta";//combo Prioridad
-            String array_cbo_prioridad[] = new String[1];
-            array_cbo_prioridad[0] = "";
-            Vector datos_cbo_prioridad = cn.EjecutarProcedurePostgres(npr, array_cbo_prioridad);
-            String cb_desc_prioridad = util.contenido_combo(datos_cbo_prioridad, "3");
-            request.setAttribute("cb_priori", cb_desc_prioridad);
-            
-            String nacc = "sgd.fn_alcance_consulta";//combo Alcance
-            String array_cbo_alcance[] = new String[2];
-            array_cbo_alcance[0] = "";
-            array_cbo_alcance[1] = "1";
-            Vector datos_cbo_alcance = cn.EjecutarProcedurePostgres(nacc, array_cbo_alcance);
-            String cb_desc_alcance = util.contenido_combo(datos_cbo_alcance, "");
-            request.setAttribute("cb_alcance", cb_desc_alcance);
-            
-            String nt = "sgd.fn_tema_consulta";//combo Tema
-            String array_cbo_tema[] = new String[2];
-            array_cbo_tema[0] = "";
-            array_cbo_tema[1] = "1";
-            Vector datos_cbo_tema = cn.EjecutarProcedurePostgres(nt, array_cbo_tema);
-            String cb_desc_tema = util.contenido_combo(datos_cbo_tema, "4");
-            request.setAttribute("cb_tema", cb_desc_tema);    
-            
-            String no = "sgd.fn_origen_consulta";//combo Origen
-            String array_cbo_origen[] = new String[1];
-            array_cbo_origen[0] = "";
-            Vector datos_cbo = cn.EjecutarProcedurePostgres(no, array_cbo_origen);
-            String cb_desc_orig = util.contenido_combo(datos_cbo, "2");
-            request.setAttribute("cb_origen", cb_desc_orig);      
-            
-            String ntr = "sgd.fn_tramite_procedimiento_consulta";//Trámite por procedimiento
-            String array_cbo_tramite[] = new String[1];
-            array_cbo_tramite[0] = id_proc;
-            Vector datos_cbo_tramite = cn.EjecutarProcedurePostgres(ntr, array_cbo_tramite);
-            String cb_desc_tramite = util.contenido_combo(datos_cbo_tramite, id_proc);
-            request.setAttribute("cb_tramite", cb_desc_tramite);
-            
-            String proced = "sgd.fn_procedimiento_atenciu_busca";//Procedimiento
-            String array_cbo_proced[] = new String[1];
-            array_cbo_proced[0] = id_proc;
-            Vector datos_cbo_proced = cn.EjecutarProcedurePostgres(proced, array_cbo_proced);
-            String cb_desc_proced = util.contenido_combo(datos_cbo_proced, id_proc);
-            request.setAttribute("cb_proced", cb_desc_proced);
-            
-            Calendar c = Calendar.getInstance();//Anio actual para el registro del expediente o documento (por referencia)           
-            String annio = Integer.toString(c.get(Calendar.YEAR));
-            
-            Date date = new Date();//Fecha de registro del documento (por referencia)
-            DateFormat formatofec = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
-            String fecha_reg = formatofec.format(date);
-            
-            request.setAttribute("per", annio);
-            request.setAttribute("fecreg", fecha_reg);
-            request.setAttribute("nrodoc", id_sol);
-            request.setAttribute("fec_doc", fecha);
-            request.setAttribute("folio", "1");
-            request.setAttribute("doc_adm", doc_adm);
-            request.setAttribute("motivo", motivo);
-            request.setAttribute("descripcion", descripcion);
-            request.setAttribute("observacion", observacion);
-            request.setAttribute("estacion", estacion);
-            request.setAttribute("variable", variable);
-            
-            request.setAttribute("obj_active_form", obj_active_form);
-            
-            String ntdoc = "sgd.fn_clasifdoc_consulta";//combo Tipo de Documentos por Unidad Orgánica
-            String array_cbo_tdoc[] = new String[1];
-            array_cbo_tdoc[0] = "";
-            Vector datos_cbo_tdoc = cn.EjecutarProcedurePostgres(ntdoc, array_cbo_tdoc);
-            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, "123");
-            request.setAttribute("cb_clsfdoc", cb_desc_clsfdoc);
-            
-            String cons_rmte_uo = "senamhi.fn_uo_entidad_consulta";//consulta combo remite
-            String array_rmte_uo[] = new String[1];
-            array_rmte_uo[0] = "";//id persona
-            Vector datos_cbo_uo_rmte = cn.EjecutarProcedurePostgres(cons_rmte_uo, array_rmte_uo);
-            String cb_uo_rmte = util.contenido_combo(datos_cbo_uo_rmte, id_adm);
-            request.setAttribute("cb_remite", cb_uo_rmte);
-            request.setAttribute("txt_remite", administrado);
-            request.setAttribute("id_remite", id_adm);
-
-            String nom_dest = "";
-            String id_dest = "";
-            String uo_dest = "";
-            String cons_dest = "senamhi.fn_destino_consulta_exp_existe";//consulta para txt destino
-            String array_dest[] = new String[1];
-            array_dest[0] = "90000054";
-            Vector v_dest = cn.EjecutarProcedurePostgres(cons_dest, array_dest);
-            String cb_uo_dest = util.contenido_combo(v_dest, "90000054");
-            request.setAttribute("cb_destino", cb_uo_dest);
-            for(int u = 0 ; u<v_dest.size() ; u++){
-                Vector datos_v =  (Vector) v_dest.get(u);
-                nom_dest = datos_v.get(3).toString();
-                id_dest = datos_v.get(2).toString();
-                uo_dest = datos_v.get(0).toString();
-            }
-            request.setAttribute("txt_destino", nom_dest); 
-            request.setAttribute("hd_id_des", id_dest); 
-            request.setAttribute("asunto", "SOLICITO "+procedimiento); 
-                        
-            request.setAttribute("obj_readonly", "readonly"); 
+            String cb_periodo = util.contenido_combo(datos_cbo_per, c_per);
+            request.setAttribute("cb_periodo", cb_periodo);
             
         } catch (Exception ex) {
             Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "sgd/mant_solicitud_generarcut_popup";
+        return "sgd/mant_asignacut_popup";
     }   
 //FIN MANTENIMIENTO GENERAR CUT - SOLICITUD POPUP
 //
@@ -10695,10 +10756,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 String administrado = vss.get(5).toString();
                 String cut = vss.get(6).toString();
                 String per_cut = vss.get(7).toString();
-                      
-//                String btn = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicituddetalle_popup("+i_solicitud+")'><span class='glyphicon glyphicon-search'></span></button>";
-//                String cut = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicitud_generacut_popup("+i_solicitud+")'><span class='glyphicon glyphicon-file'></span></button>";
-                
+                                
                 Vector vv = new Vector();
                 vv.add(i_solicitud);
                 vv.add(d_fecha);
@@ -10747,6 +10805,38 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 	}
 //FIN MANTENIMIENTO SOLICITUD ATENCIÓN AL CIUDADANO TABLA    
 //
+//INICIO MANTENIMIENTO N° CUT DESDE SOLICITUD GUARDAR
+@RequestMapping(value = {"/sgd/mant_asignacut_guardar"}, method = RequestMethod.GET)
+    public String MantAsignaCutGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        
+        String id_sol = request.getParameter("id_sol");
+        String per_sol = request.getParameter("per_sol");
+        String cut = request.getParameter("cut");
+        String periodo = request.getParameter("periodo");
+        String var_request = "";
+        
+        try {
+            ConeccionDB cdb = new ConeccionDB();
+            String np = "sgd.fn_solicitud_asignacut_mant";
+            String array[] = new String[4];
+            array[0] = id_sol;
+            array[1] = per_sol;
+            array[2] = cut;
+            array[3] = periodo;
+            
+            Vector datos = cdb.EjecutarProcedurePostgres(np, array);
+            
+            var_request = new Util().vector2json(datos);
+        } catch (Exception ex) {
+            var_request = ex.getMessage();
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("request", var_request);
+        return "sgd/mant_asignacut_guardar";
+    }
+//FIN MANTENIMIENTO N° CUT DESDE SOLICITUD GUARDAR
+//       
 //INICIO MANTENIMIENTO N° CUT DESDE SOLICITUD GUARDAR
 @RequestMapping(value = {"/sgd/mant_cut_guardar"}, method = RequestMethod.GET)
     public String MantSolicitudCutGuardar(HttpServletRequest request, HttpServletResponse response, ModelMap model)
@@ -10907,5 +10997,216 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
         return "sgd/mant_rpta_email_chkb";
     }
 //FIN TIPO ENTREGA CHECKBOX
+//
+//INICIO SOLICITUD BUSCAR EXPEDIENTES POPUP    
+@RequestMapping(value = {"/sgd/mant_solicitud_buscarexp_popup"}, method = RequestMethod.GET)
+    public String MantSolicitudBuscarexpPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+        throws ServletException, IOException {
+        request.setAttribute("title_pag","CONSULTANDO EXPEDIENTE");
+        HttpSession session = request.getSession();
+        String codUser = (String) session.getAttribute("codUser");
+        String id_exp = request.getParameter("id_exp"); 
+        String id_doc = request.getParameter("id_doc"); 
+        
+        String i_id_exp = "";//id del expediente
+        String i_cut = "";//id del cut, numeración anual
+        String i_per = "";//año del expediente
+        String d_fec_reg = "";//fecha del registro del expediente
+        String i_vtn = "";//ventanilla desde donde se generó el expediente
+        String c_nro_cutext = "";//nro de cut externo, de otras entidades
+        String i_cond = "";//condición del expediente
+        String i_priori = "";//prioridad
+        String i_plazo = "";//plazo de atención a partir de día de su creación
+        String i_alcan = "";//alcance del expediente
+        String i_tema = "";//tema del expediente            
+        String i_origen = "";//variable para el origen: externo o interno            
+        String i_proc = "";//id del procedimiento
+        String i_id_doc = ""; 
+        String i_clsfdoc = "";
+        String i_nrodoc = "";
+        String d_fec_doc = "";
+        String i_folio = "";
+        String i_rmte = "";
+        String c_destino = "";
+        String c_asunto = ""; 
+        String c_observacion = ""; 
+//        String i_id_flujo = "";
+        String nom_dest = "";
+        String uo_dest = ""; 
+//        String user_agrupa = ""; 
+        
+        try {
+            Util util =  new Util();
+            ConeccionDB cn = new ConeccionDB(); 
+            
+            String nc = "sgd.fn_solicitud_buscarexp_consulta";//consulta de documento             
+            String array[] = new String[2];
+            array[0] = id_exp;
+            array[1] = id_doc;
+            Vector v_datos = cn.EjecutarProcedurePostgres(nc, array);
+            for(int i = 0 ; i<v_datos.size() ; i++){
+                Vector datos_v =  (Vector) v_datos.get(i);
+                i_id_exp = datos_v.get(0).toString();
+                i_cut = datos_v.get(1).toString();
+                i_per = datos_v.get(2).toString();
+                i_id_doc = datos_v.get(3).toString();
+                d_fec_reg = datos_v.get(4).toString();
+                i_cond = datos_v.get(5).toString();
+                i_priori = datos_v.get(6).toString();
+                i_plazo = datos_v.get(7).toString();
+                i_alcan = datos_v.get(8).toString();
+                i_tema = datos_v.get(9).toString();
+                i_origen = datos_v.get(10).toString();
+                i_proc = datos_v.get(11).toString();
+                c_nro_cutext = datos_v.get(12).toString();
+                i_clsfdoc = datos_v.get(13).toString();
+                i_nrodoc = datos_v.get(14).toString();
+                d_fec_doc = datos_v.get(15).toString();
+                i_folio = datos_v.get(16).toString();
+                i_rmte = datos_v.get(17).toString();
+                c_destino = datos_v.get(18).toString();
+                c_asunto = datos_v.get(19).toString();
+                c_observacion = datos_v.get(20).toString();
+//                i_id_flujo = datos_v.get(21).toString();         
+//                user_agrupa = datos_v.get(22).toString();         
+                }  
+            request.setAttribute("codUser", codUser);
+//            request.setAttribute("user_agrupa", user_agrupa); 
+            request.setAttribute("id", i_id_exp); 
+            request.setAttribute("cut", i_cut);         
+            request.setAttribute("per", i_per);         
+            request.setAttribute("fecreg", d_fec_reg);
+            request.setAttribute("doc", i_id_doc);
+            request.setAttribute("i_vtn", i_vtn);
+            request.setAttribute("cutext", c_nro_cutext);
+            request.setAttribute("plazo", i_plazo);   
+            request.setAttribute("id_remite", i_rmte);
+            request.setAttribute("nrodoc", i_nrodoc);
+            request.setAttribute("fec_doc", d_fec_doc);
+            request.setAttribute("folio", i_folio);
+            request.setAttribute("asunto", c_asunto);
+            request.setAttribute("observacion", c_observacion);
+            
+            String cons_cond = "sgd.fn_condicion_consulta";//combo condición               
+            String array_cbo_condicion[] = new String[1];
+            array_cbo_condicion[0] = "";
+            Vector datos_cbo_condicion = cn.EjecutarProcedurePostgres(cons_cond, array_cbo_condicion);
+            String cb_desc_condicion = util.contenido_combo(datos_cbo_condicion, i_cond);
+            request.setAttribute("cb_condicion", cb_desc_condicion);    
+            
+            String cons_prio = "sgd.fn_prioridad_consulta";//combo Prioridad
+            String array_cbo_prioridad[] = new String[1];
+            array_cbo_prioridad[0] = "";            
+            Vector datos_cbo_prioridad = cn.EjecutarProcedurePostgres(cons_prio, array_cbo_prioridad);
+            String cb_desc_prioridad = util.contenido_combo(datos_cbo_prioridad, i_priori);
+            request.setAttribute("cb_priori", cb_desc_prioridad);   
+            
+            String cons_alc = "sgd.fn_alcance_consulta";//combo Alcance
+            String array_cbo_alcance[] = new String[2];
+            array_cbo_alcance[0] = "";
+            array_cbo_alcance[1] = "1";
+            Vector datos_cbo_alcance = cn.EjecutarProcedurePostgres(cons_alc, array_cbo_alcance);
+            String cb_desc_alcance = util.contenido_combo(datos_cbo_alcance, i_alcan);
+            request.setAttribute("cb_alcance", cb_desc_alcance);
+            
+            String cons_tema = "sgd.fn_tema_consulta";//combo Tema
+            String array_cbo_tema[] = new String[2];
+            array_cbo_tema[0] = "";
+            array_cbo_tema[1] = "1";
+            Vector datos_cbo_tema = cn.EjecutarProcedurePostgres(cons_tema, array_cbo_tema);
+            String cb_desc_tema = util.contenido_combo(datos_cbo_tema, i_tema);
+            request.setAttribute("cb_tema", cb_desc_tema);    
+            
+//            String cons_tram = "sgd.fn_tramite_consulta";//Trámite por procedimiento
+            String cons_tram = "sgd.fn_tramite_procedimiento_consulta";//Trámite por procedimiento
+            String array_cbo_tramite[] = new String[1];
+            array_cbo_tramite[0] = i_proc;
+            Vector datos_cbo_tramite = cn.EjecutarProcedurePostgres(cons_tram, array_cbo_tramite);
+            String cb_desc_tramite = util.contenido_combo(datos_cbo_tramite, i_proc);
+            request.setAttribute("cb_tramite", cb_desc_tramite);  
+            
+            String cons_proc = "sgd.fn_procedimiento_consulta";//combo Origen
+            String array_cbo_proc[] = new String[1];
+            array_cbo_proc[0] = "";
+            Vector datos_proc = cn.EjecutarProcedurePostgres(cons_proc, array_cbo_proc);
+            String cb_desc_proc = util.contenido_combo(datos_proc, i_proc);
+            request.setAttribute("cb_procedimiento", cb_desc_proc);  
+            
+            String cons_orig = "sgd.fn_origen_consulta";//combo Origen
+            String array_cbo_origen[] = new String[1];
+            array_cbo_origen[0] = "";
+            Vector datos_cbo = cn.EjecutarProcedurePostgres(cons_orig, array_cbo_origen);
+            String cb_desc_orig = util.contenido_combo(datos_cbo, i_origen);
+            request.setAttribute("cb_origen", cb_desc_orig);          
+                        
+            String nom_pers = "";
+            String id_pers = "";
+            String id_uo = "";
+            String np_pu = "senamhi.fn_uo_entidad_consulta";//consulta´para txt remite
+            String array_pu[] = new String[1];
+            array_pu[0] = i_rmte;
+            Vector v_remite = cn.EjecutarProcedurePostgres(np_pu, array_pu);
+            for(int u = 0 ; u<v_remite.size() ; u++){
+                Vector datos_v =  (Vector) v_remite.get(u);
+                nom_pers = datos_v.get(1).toString();
+                id_pers = datos_v.get(0).toString();
+                id_uo = datos_v.get(3).toString();
+            }
+            request.setAttribute("txt_remite", nom_pers); 
+            
+            String cons_rmte_uo = "senamhi.fn_uo_entidad_consulta";//consulta combo remite
+            String array_rmte_uo[] = new String[1];
+            array_rmte_uo[0] = "";//id persona
+            Vector datos_cbo_uo_rmte = cn.EjecutarProcedurePostgres(cons_rmte_uo, array_rmte_uo);
+            String cb_uo_rmte = util.contenido_combo(datos_cbo_uo_rmte, id_uo); 
+            request.setAttribute("cb_remite", cb_uo_rmte); 
+            
+            String cons_dest = "senamhi.fn_uo_entidad_consulta";//consulta para txt destino
+            String array_dest[] = new String[1];
+            array_dest[0] = c_destino;
+            Vector v_dest = cn.EjecutarProcedurePostgres(cons_dest, array_dest);
+            for(int u = 0 ; u<v_dest.size() ; u++){
+                Vector datos_v =  (Vector) v_dest.get(u);
+                nom_dest = datos_v.get(1).toString();
+                uo_dest = datos_v.get(3).toString();
+            }
+            request.setAttribute("txt_destino", nom_dest); 
+            
+            String cons_destino_uo = "senamhi.fn_uo_entidad_consulta";//consulta combo destino                  
+            String array_destino_uo[] = new String[1];
+            array_destino_uo[0] = "";
+            Vector datos_cbo_uo_destino = cn.EjecutarProcedurePostgres(cons_destino_uo, array_destino_uo); 
+            String cb_uo_dest = util.contenido_combo(datos_cbo_uo_destino, uo_dest);//variable de selección para combo destino
+            request.setAttribute("cb_destino", cb_uo_dest);    
+            
+            String ntdoc = "sgd.fn_clasificadoc_consulta";//combo Tipo de Documentos por Unidad Orgánica
+            String array_cbo_tdoc[] = new String[1];
+            array_cbo_tdoc[0] = "";
+            Vector datos_cbo_tdoc = cn.EjecutarProcedurePostgres(ntdoc, array_cbo_tdoc);
+            String cb_desc_clsfdoc = util.contenido_combo(datos_cbo_tdoc, i_clsfdoc);
+            request.setAttribute("cb_clsfdoc", cb_desc_clsfdoc);
+            
+            String cta_agrup = "";
+            String cons_cta_agrupados = "sgd.fn_agrupacuenta_consulta";//combo Tipo de Documentos por Unidad Orgánica
+            String array_cta[] = new String[1];
+            array_cta[0] = id_exp;
+            Vector datos_cta = cn.EjecutarProcedurePostgres(cons_cta_agrupados, array_cta); 
+            for(int u = 0 ; u<datos_cta.size() ; u++){
+                Vector datos_v =  (Vector) datos_cta.get(u);
+                cta_agrup = datos_v.get(0).toString();                
+            }
+            request.setAttribute("cta_agrup", cta_agrup);       
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+    return "sgd/mant_solicitud_buscarexp_popup";  
+    }
+//FIN SOLICITUD BUSCAR EXPEDIENTES POPUP     
+//        
+
+
+
 }
 

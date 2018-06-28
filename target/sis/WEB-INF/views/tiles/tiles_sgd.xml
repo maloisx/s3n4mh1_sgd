@@ -824,6 +824,7 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_tupa_guardar.jsp" />
     </definition>
     
+    
     <definition name="sgd/mant_solicitud_atenciud"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_atenciud.jsp" />
     </definition>
@@ -836,9 +837,16 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicituddetalle_popup.jsp" />  
     </definition> 
         
-    <definition name="sgd/mant_solicitud_generarcut_popup"  extends="popup-definition">  
+<!--    <definition name="sgd/mant_solicitud_generarcut_popup"  extends="popup-definition">  
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_generarcut_popup.jsp" />  
+    </definition> -->
+    <definition name="sgd/mant_asignacut_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_asignacut_popup.jsp" />  
     </definition> 
+    
+    <definition name="sgd/mant_asignacut_guardar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_asignacut_guardar.jsp" />
+    </definition>
     
     <definition name="sgd/mant_solicitud_resumendia"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_resumendia.jsp" />

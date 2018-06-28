@@ -399,7 +399,9 @@ function sgd_mant_ciudadano_ruc_guardar(){
                       +"&email="+email
                       +"&telefono="+telefono
                       +"&representante="+representante
-                      +"&dni_rep="+dni_rep,
+                      +"&dni_rep="+dni_rep
+                      +"&telef_rep="+telef_rep
+                      +"&email_rep="+email_rep,
             beforeSend: function(data){
                 $('#div_msg_registro').html("Cargando...");
             },
