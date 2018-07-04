@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="atenc_ciud_solicitud_tupa_dni" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5119ea36-e436-478e-80c7-c20f184e6b45">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="273"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="p_id_solicitud" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -89,7 +89,7 @@ ORDER BY 1 ASC;]]>
 		<band height="197" splitType="Stretch">
 			<image>
 				<reportElement uuid="423aa6c6-6392-4d82-a24c-8ceb2df40f0d" x="0" y="0" width="214" height="50"/>
-				<imageExpression><![CDATA["D:\\GitHub\\reportes\\LOGO-MINAM---editado.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["http://sgd.senamhi.gob.pe/sis/static/img/logo-minam.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement uuid="4e357c5b-c5be-4896-9878-7a096749036e" x="0" y="40" width="214" height="16"/>

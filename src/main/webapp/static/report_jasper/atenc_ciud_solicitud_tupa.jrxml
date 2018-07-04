@@ -265,7 +265,7 @@ ORDER BY 1 ASC;]]>
 			</staticText>
 			<image>
 				<reportElement uuid="8e8824fa-c3a9-49d0-bcea-090776f82bf6" x="0" y="0" width="214" height="50"/>
-				<imageExpression><![CDATA["D:\\GitHub\\reportes\\LOGO-MINAM---editado.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["http://sgd.senamhi.gob.pe/sis/static/img/logo-minam.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
