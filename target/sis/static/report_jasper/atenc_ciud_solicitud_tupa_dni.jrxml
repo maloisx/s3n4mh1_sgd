@@ -92,7 +92,7 @@ ORDER BY 1 ASC;]]>
 				<imageExpression><![CDATA["http://sgd.senamhi.gob.pe/sis/static/img/logo-minam.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="4e357c5b-c5be-4896-9878-7a096749036e" x="0" y="40" width="214" height="16"/>
+				<reportElement uuid="4e357c5b-c5be-4896-9878-7a096749036e" x="0" y="50" width="214" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>

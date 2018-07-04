@@ -229,7 +229,7 @@ ORDER BY 1 ASC;]]>
 (Texto Único Ordenado de la Ley N° 27806, Ley de Transparencia y Acceso a la Información Pública, aprobado por Decreto Supremo N° 043-2003-PCM)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="12ed9374-8da5-4112-b1d4-fe45c727eea2" x="0" y="40" width="214" height="16"/>
+				<reportElement uuid="12ed9374-8da5-4112-b1d4-fe45c727eea2" x="0" y="49" width="214" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
