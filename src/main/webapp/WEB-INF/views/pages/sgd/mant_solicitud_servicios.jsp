@@ -244,7 +244,7 @@
            El plazo para el otorgamiento de respuesta conforme al artículo 11° del Texto Único Ordenado de la Ley N° 27806, 
            Ley de Transparencia y Acceso a la Información Pública, aprobado mediante Decreto Supremo N° 043-2003-PCM y modificado 
            por el Decreto Legislativo N° 1353, iniciará al día siguiente de haberse registrado la Solicitud de Acceso a la 
-           Información Pública en el Sistema de Trámite Documentario - SITRADOC con el correspondiente número de Registro.
+           Información Pública en el Sistema de Gestión Documentaria - SGD con el correspondiente número de Registro.
        </label>
     </div> 
     
