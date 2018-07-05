@@ -3735,8 +3735,6 @@ function sgd_mant_asignacut_popup(id_sol, per_sol){
 function sgd_mant_modificacut_popup(id_sol, per_sol, cut_asig, per_cut){
     
     var url = encodeURI(path + "sgd/mant_asignacut_popup/?id_sol="+id_sol+"&per_sol="+per_sol+"&cut_asig="+cut_asig+"&per_cut="+per_cut);
-    console.log('****'+cut_asig);
-    console.log('----'+per_cut);
     
     $.colorbox({
         "href" : url
@@ -3852,9 +3850,9 @@ function sgd_mant_expediente_solicitud_guardar(){
 //FIN GUARDAR N EXPEDIENTE PARA SOLICITUD
 //
 //INICIO MOSTRAR EXPEDIENTE EN SOLICITUD
-//function sgd_expediente_buscar_popup(cut, per_exp){
+//function sgd_solicitud_expediente_buscar_popup(cut, per_exp){
 //     
-//    var url = encodeURI(path + "sgd/mant_buscarexp_popup/?cut="+cut+"&per_exp="+per_exp);
+//    var url = encodeURI(path + "sgd/mant_solicitud_buscarexp_popup/?cut="+cut+"&per_exp="+per_exp);
 //  
 //    $.colorbox({
 //        "href" : url
@@ -3863,4 +3861,20 @@ function sgd_mant_expediente_solicitud_guardar(){
 //    });
 //}
 //FIN MOSTRAR EXPEDIENTE EN SOLICITUD
+//
+
+//INICIO MODIFICAR CUT DESDE SOLICITUD
+function sgd_mant_solicitud_exp_popup(cut_asig, per_cut){
+    
+    var url = encodeURI(path + "sgd/mant_solicitud_exp_popup/?cut_asig="+cut_asig+"&per_cut="+per_cut);
+    console.log('****'+cut_asig);
+    console.log('----'+per_cut);
+    
+    $.colorbox({
+        "href" : url
+       ,"width" : 1200
+       ,"height" : 1000
+    });
+}
+//FIN ASIGNAR CUT DESDE SOLICITUD
 //

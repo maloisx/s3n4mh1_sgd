@@ -873,6 +873,9 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_rpta_email_chkb.jsp" />
     </definition>
     
+    <definition name="sgd/mant_solicitud_exp_popup"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_solicitud_exp_popup.jsp" />  
+    </definition>
                 
     <definition name="sgd/mant_pendientes_dir"  extends="base-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_pendientes_dir.jsp" />
