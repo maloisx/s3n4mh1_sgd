@@ -10252,7 +10252,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
     @RequestMapping(value = {"/sgd/mant_solicitud_atenciud_tbl"}, method = RequestMethod.GET)
 	public String AjaxQuerySolicitudAtenciudTbl(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
             
-            ConeccionDB cn =  new ConeccionDB();            
+            ConeccionDB cn =  new ConeccionDB();
 
             String np = "sgd.fn_solicitud_atenciud_consulta";
             String array[] = new String[1];
@@ -10273,23 +10273,22 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 String per_sol = vss.get(8).toString();
                 String cut_asig = vss.get(9).toString();
                 String per_cut = vss.get(10).toString();
-                      
+                
                 String btn = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicituddetalle_popup("+i_solicitud+","+i_proc+")'>"
                              + "<span class='glyphicon glyphicon-search'></span>"
                              + "</button><input type='hidden' name='hd_id_"+i_solicitud+"' id='hd_id_"+i_solicitud+"' value='${requestScope['"+i_proc+"']}' />";
-//                String cut = "<button type='button' class='btn btn-info' onclick='sgd_mant_solicitud_generacut_popup("+i_solicitud+")'><span class='glyphicon glyphicon-file'></span></button>";
                 String cut = "";
+                String lk_cut = "";
                 if (!"".equals(cut_asig)){
                     cut += "<button type='button' class='btn btn-info' onclick='sgd_mant_modificacut_popup("+i_solicitud+","+per_sol+","+cut_asig+","+per_cut+")'>";
                     cut += "<span class='glyphicon glyphicon-pencil' style='text-align:center'></span></button>";
-                }else{
-                    cut_asig = "";
-                    per_cut = "";
+                    lk_cut += "<label for='txt_per' onclick='sgd_mant_solicitud_exp_popup("+cut_asig+","+per_cut+")'>"+ cut_asig +'-'+ per_cut +"</label>";
+                }else{                    
                     cut += "<button type='button' class='btn btn-info' onclick='sgd_mant_asignacut_popup("+i_solicitud+","+per_sol+")'>";
                     cut += "<span class='glyphicon glyphicon-folder-open' style='text-align:center'></span></button>";
+                    lk_cut += "-";
                 }
-                String lk_cut = "<label for='txt_per' onclick='sgd_mant_asignacut_popup("+i_solicitud+","+per_sol+")'>"+cut_asig +'-'+ per_cut+"</label>";
-                        
+                
                 Vector vv = new Vector();
                 vv.add(id_sol);
                 vv.add(d_fecha);
@@ -10301,15 +10300,15 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 vv.add(btn);
                 vv.add(cut);
                 v_temp.add(vv);
-            }     
+            }
             
             Util util = new Util();
-            String json = util.vector2json(v_temp);   
+            String json = util.vector2json(v_temp);
             Vector vc_tbl = new Vector();
             Vector sv =  new Vector();
             sv.add("bScrollCollapse");sv.add("true");vc_tbl.add(sv);sv =  new Vector();
             sv.add("sScrollY");sv.add("'93%'");vc_tbl.add(sv);sv =  new Vector();
-            sv.add("aoColumns");sv.add("["                                    
+            sv.add("aoColumns");sv.add("["
                                     + "{'sTitle':'N° SOLICITUD'} , "
                                     + "{'sTitle':'FECHA'} , "
                                     + "{'sTitle':'SOLICITANTE'} , "
@@ -10327,20 +10326,20 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             sv.add("buttons");sv.add("['excel']");vc_tbl.add(sv);sv =  new Vector();
             ////Pintar de rojo el registro si no t.iene datos
 //            String fnc = "function( nRow, aData, iDisplayIndex ){ "+
-//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +                     
+//                            " if (rtrim(aData[2]) == 'CONFIDENCIAL'){$('td', nRow).addClass('ui-state-error' );} " +
 //                          "}";
 //            sv.add("fnRowCallback");sv.add(fnc);vc_tbl.add(sv);sv =  new Vector();
             ///////////////////////////////////////////////////////
 
             String tbl_html = "<table border='1' class='table table-striped table-bordered' id='c_tbl_solicitud'></table>";
-            String tbl = util.datatable("c_tbl_solicitud",vc_tbl);            
+            String tbl = util.datatable("c_tbl_solicitud",vc_tbl);
             request.setAttribute("response", tbl_html + tbl);
 
             return "sgd/mant_solicitud_atenciud_tbl";
 	}
-//FIN MANTENIMIENTO SOLICITUD ATENCIÓN AL CIUDADANO TABLA    
+//FIN MANTENIMIENTO SOLICITUD ATENCIÓN AL CIUDADANO TABLA
 //
-//INICIO MANTENIMIENTO TRÁMITE POPUP            
+//INICIO MANTENIMIENTO TRÁMITE POPUP
     @RequestMapping(value = {"/sgd/mant_solicituddetalle_popup"}, method = RequestMethod.GET)
     public String MantSolicitudDetallePopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
@@ -10754,9 +10753,16 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 String c_descripcion = vss.get(3).toString();
                 String c_est_sol = vss.get(4).toString();
                 String administrado = vss.get(5).toString();
-                String cut = vss.get(6).toString();
+                String cut_asig = vss.get(6).toString();
                 String per_cut = vss.get(7).toString();
-                                
+                
+                String lk_cut = "";
+                if (!"".equals(cut_asig)){
+                    lk_cut += "<label onclick='sgd_mant_solicitud_exp_popup("+cut_asig+","+per_cut+")'>"+ cut_asig +'-'+ per_cut +"</label>";
+                }else{ 
+                    lk_cut += "-";
+                }                
+                
                 Vector vv = new Vector();
                 vv.add(i_solicitud);
                 vv.add(d_fecha);
@@ -10764,8 +10770,7 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
                 vv.add(c_procedimiento);
                 vv.add(c_descripcion);
                 vv.add(c_est_sol);
-                vv.add(cut+'-'+per_cut);
-//                vv.add(cut);
+                vv.add(lk_cut);
                 v_temp.add(vv);
             }     
             
@@ -10910,8 +10915,6 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
 //        parameters.put("P_FECHA_FIN", fecha_fin); 
         
 //        JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, cn);
-
-        
         
         byte[] bytes = JasperRunManager.runReportToPdf(reporte,parameters,cnpg);
         response.setContentType("application/pdf");
@@ -10999,14 +11002,14 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
 //FIN TIPO ENTREGA CHECKBOX
 //
 //INICIO SOLICITUD BUSCAR EXPEDIENTES POPUP    
-@RequestMapping(value = {"/sgd/mant_buscarexp_popup"}, method = RequestMethod.GET)
+@RequestMapping(value = {"/sgd/mant_solicitud_exp_popup"}, method = RequestMethod.GET)
     public String MantSolicitudBuscarexpPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
         throws ServletException, IOException {
         request.setAttribute("title_pag","CONSULTANDO EXPEDIENTE");
         HttpSession session = request.getSession();
         String codUser = (String) session.getAttribute("codUser");
-        String id_exp = request.getParameter("id_exp"); 
-        String id_doc = request.getParameter("id_doc"); 
+        String cut_asig = request.getParameter("cut_asig"); 
+        String per_cut = request.getParameter("per_cut"); 
         
         String i_id_exp = "";//id del expediente
         String i_cut = "";//id del cut, numeración anual
@@ -11039,10 +11042,10 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
             Util util =  new Util();
             ConeccionDB cn = new ConeccionDB(); 
             
-            String nc = "sgd.fn_buscarexp_consulta";//consulta de documento             
+            String nc = "sgd.fn_solicitud_buscarexp_consulta";//consulta de documento             
             String array[] = new String[2];
-            array[0] = id_exp;
-            array[1] = id_doc;
+            array[0] = cut_asig;
+            array[1] = per_cut;
             Vector v_datos = cn.EjecutarProcedurePostgres(nc, array);
             for(int i = 0 ; i<v_datos.size() ; i++){
                 Vector datos_v =  (Vector) v_datos.get(i);
@@ -11188,8 +11191,9 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
             
             String cta_agrup = "";
             String cons_cta_agrupados = "sgd.fn_agrupacuenta_consulta";//combo Tipo de Documentos por Unidad Orgánica
-            String array_cta[] = new String[1];
-            array_cta[0] = id_exp;
+            String array_cta[] = new String[2];
+            array_cta[0] = cut_asig;
+            array_cta[1] = per_cut;
             Vector datos_cta = cn.EjecutarProcedurePostgres(cons_cta_agrupados, array_cta); 
             for(int u = 0 ; u<datos_cta.size() ; u++){
                 Vector datos_v =  (Vector) datos_cta.get(u);
@@ -11201,7 +11205,7 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
         } catch (Exception ex) {
             Logger.getLogger(SgdController.class.getName()).log(Level.SEVERE, null, ex);            
         }
-    return "sgd/mant_buscarexp_popup";  
+    return "sgd/mant_solicitud_exp_popup";  
     }
 //FIN SOLICITUD BUSCAR EXPEDIENTES POPUP     
 //        
