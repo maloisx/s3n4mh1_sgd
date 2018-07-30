@@ -156,7 +156,7 @@ ORDER BY 1 ASC;]]>
 				<text><![CDATA[E-Mail:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="81826185-ebcf-4f35-8d93-cb5f3154da03" x="222" y="175" width="41" height="14"/>
+				<reportElement uuid="81826185-ebcf-4f35-8d93-cb5f3154da03" x="379" y="175" width="41" height="14"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -173,12 +173,12 @@ ORDER BY 1 ASC;]]>
 				<textFieldExpression><![CDATA[$F{c_dir_adm}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="d5feb51e-e4bb-4748-8d53-181aefd1d797" x="112" y="175" width="110" height="14"/>
+				<reportElement uuid="d5feb51e-e4bb-4748-8d53-181aefd1d797" x="112" y="175" width="267" height="14"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{c_email_adm}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="711cc14a-ba7f-445b-aa54-3c4452785368" x="263" y="175" width="292" height="14"/>
+				<reportElement uuid="711cc14a-ba7f-445b-aa54-3c4452785368" x="420" y="175" width="135" height="14"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{c_telef_repr}]]></textFieldExpression>
 			</textField>

@@ -1245,7 +1245,7 @@ function sgd_mant_expediente_guardar(){
     var orig = $('#cb_origen').val();
     var tema = $('#cb_tema').val();
     var proc = $('#cb_procedimiento').val();
-    var alcan = $('#cb_alcance').val();     console.log('**********************************'+alcan);
+    var alcan = $('#cb_alcance').val();     //console.log('**********************************'+alcan);
     var userreg = $('#hd_userreg').val();
     var fecreg = $('#txt_fecreg').val();    
     

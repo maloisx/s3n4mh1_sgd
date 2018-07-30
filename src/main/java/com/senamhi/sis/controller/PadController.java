@@ -3391,7 +3391,7 @@ public class PadController {
     public String MantAlertaipPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
         request.setAttribute("title_pag","ALERTA IPAD");
-        String id = request.getParameter("id");
+        String id = "";
         
         try {
             ConeccionDB cn = new ConeccionDB();
@@ -3404,7 +3404,7 @@ public class PadController {
             String n_exp = "";
             String dias = "";
             String fec_ipad = "";
-            String tbl_exp = "<table class='table table-striped'>" +
+            String tbl_exp = "<table id='tbl_ipad' class='table table-striped'>" +
                              "<tr class='success'>" +
                              "  <td>ITEM</td>" +
                              "  <td>N° EXPEDIENTE</td>" +
@@ -3417,8 +3417,7 @@ public class PadController {
                 n_exp = datos_v.get(0).toString();
                 fec_ipad = datos_v.get(1).toString();
                 dias = datos_v.get(2).toString();
-                ii = i+1;
-                
+                ii = i+1;                
                 tbl_exp += "<tr>" +
                     "  <td class='text-center'>"+ii+"</td>" +
                     "  <td>"+n_exp+"</td>" +
@@ -3426,8 +3425,48 @@ public class PadController {
                     "  <td>"+fec_ipad+ "</td>" +
                     "</tr>";                                
             }
-            tbl_exp += "</table>";
-            request.setAttribute("tbl_exp", tbl_exp);            
+            tbl_exp += "</table><br>";
+            if (ii > 0){
+                request.setAttribute("tbl_exp", tbl_exp);
+            }else{
+                request.setAttribute("tbl_exp", "");
+            }
+            
+            String npad = "pad.fn_alertap_consulta";
+            String array_pad[] = new String[1];
+            array_pad[0] = id;
+            Vector datos_pad = cn.EjecutarProcedurePostgres(npad, array_pad);
+            Integer x = 0;            
+            String n_exp_p = "";
+            String dias_p = "";
+            String fec_pad = "";
+            String tbl_exp_p = "<table id='tbl_pad' class='table table-striped'>" +
+                             "<tr class='success'>" +
+                             "  <td>ITEM</td>" +
+                             "  <td>N° EXPEDIENTE</td>" +
+                             "  <td>DÍAS A CADUCAR</td>" +
+                             "  <td>FECHA PAD</td>" +
+                             "</tr>";
+            
+            for(int i = 0; i<datos_pad.size(); i++){
+                Vector datos_v = (Vector) datos_pad.get(i);
+                n_exp_p = datos_v.get(0).toString();
+                fec_pad = datos_v.get(1).toString();
+                dias_p = datos_v.get(2).toString();
+                x = i+1;                
+                tbl_exp_p += "<tr>" +
+                    "  <td class='text-center'>"+x+"</td>" +
+                    "  <td>"+n_exp_p+"</td>" +
+                    "  <td>"+dias_p+"</td>" +
+                    "  <td>"+fec_pad+ "</td>" +
+                    "</tr>";                                
+            }
+            tbl_exp_p += "</table>";
+            if (x > 0){
+                request.setAttribute("tbl_exp_p", tbl_exp_p);
+            }else{
+                request.setAttribute("tbl_exp_p", "");
+            }
         
         } catch (Exception ex) {
             Logger.getLogger(PadController.class.getName()).log(Level.SEVERE, null, ex);
@@ -3444,7 +3483,7 @@ public class PadController {
         
         try {
             ConeccionDB cdb = new ConeccionDB();
-            String np = "pad.fn_alertaip_consulta";
+            String np = "pad.fn_alertaipp_consulta";
             String array[] = new String[1];
             array[0] = "";
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);

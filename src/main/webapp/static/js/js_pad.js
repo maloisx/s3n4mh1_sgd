@@ -1667,7 +1667,7 @@ function pad_mant_articulo_guardar(){
 }
 //FIN ARTICULO GUARDAR//
 //
-//INICIO ALERTA IPAD FIN INVESTIGACIÓN PREVIA POPUP
+//INICIO ALERTA POPUP
 function pad_mant_alertaip_popup(){
     var url = encodeURI(path + "pad/mant_alertaip_popup/");
     
@@ -1677,9 +1677,9 @@ function pad_mant_alertaip_popup(){
        ,"height" : 500
     });
 }
-//FIN ALERTA IPAD FIN INVESTIGACIÓN PREVIA POPUP
+//FIN ALERTA POPUP
 //
-//INICIO ALERTA IPAD 
+//INICIO ALERTA IPAD - PAD 
 function pad_mant_alerta_consulta(){
        
     $.ajax({
@@ -1693,7 +1693,7 @@ function pad_mant_alerta_consulta(){
             success: function(requestData){
                 
                 if (jQuery.trim(requestData) !== '[]'){
-                    console.log('**--'+ jQuery.trim(requestData) );
+                    //console.log('**--'+ jQuery.trim(requestData) );
                     pad_mant_alertaip_popup();                    
                 }
 
@@ -1703,5 +1703,5 @@ function pad_mant_alerta_consulta(){
             }
         });
 }
-//FIN ALERTA IPAD//
+//FIN ALERTA IPAD - PAD //
 //

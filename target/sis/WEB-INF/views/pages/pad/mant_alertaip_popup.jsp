@@ -7,6 +7,7 @@
             </div>
             <div class="input-field col-sm-10" id="div_mant_lista" >
                 ${requestScope['tbl_exp']}
+                ${requestScope['tbl_exp_p']}
             </div>
             <div class="input-field col-md-1">
             </div>
