@@ -165,8 +165,8 @@ public class SisdadController {
             String fecha_ini = request.getParameter("fecha_ini");
             String fecha_fin = request.getParameter("fecha_fin");
             
-            Vector v_rawdata = new Util().obt_rawdata(cod_goes);
-            
+            //Vector v_rawdata = new Util().obt_rawdata(cod_goes);
+            Vector v_rawdata = new Vector();
             String param_variables[] = new String[1];
             param_variables[0] = cod_esta;
             Vector v_param = new ConeccionDB().EjecutarProcedureOracle("pkg_decode.sp_obt_variable_estacion", param_variables);
