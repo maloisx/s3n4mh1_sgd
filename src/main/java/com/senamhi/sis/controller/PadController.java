@@ -3390,7 +3390,7 @@ public class PadController {
     @RequestMapping(value = {"/pad/mant_alertaip_popup"}, method = RequestMethod.GET)
     public String MantAlertaipPopup(HttpServletRequest request, HttpServletResponse response, ModelMap model)
             throws ServletException, IOException {
-        request.setAttribute("title_pag","ALERTA IPAD");
+        request.setAttribute("title_pag","ALERTAS");
         String id = "";
         
         try {
@@ -3404,7 +3404,7 @@ public class PadController {
             String n_exp = "";
             String dias = "";
             String fec_ipad = "";
-            String tbl_exp = "<table id='tbl_ipad' class='table table-striped'>" +
+            String tbl_exp = "<p>Inicio de PAD</p><table id='tbl_ipad' class='table table-striped'>" +
                              "<tr class='success'>" +
                              "  <td>ITEM</td>" +
                              "  <td>N° EXPEDIENTE</td>" +
@@ -3440,7 +3440,7 @@ public class PadController {
             String n_exp_p = "";
             String dias_p = "";
             String fec_pad = "";
-            String tbl_exp_p = "<table id='tbl_pad' class='table table-striped'>" +
+            String tbl_exp_p = "<p>PAD</p><table id='tbl_pad' class='table table-striped'>" +
                              "<tr class='success'>" +
                              "  <td>ITEM</td>" +
                              "  <td>N° EXPEDIENTE</td>" +

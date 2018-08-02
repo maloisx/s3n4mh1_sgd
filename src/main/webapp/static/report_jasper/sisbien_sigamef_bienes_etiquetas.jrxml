@@ -20,25 +20,27 @@
              (case when p.tipo_bien = 'B' and p.grupo_bien = '74' and p.clase_bien = '64' then p.medidas else p.nro_serie end ) as nro_serie,
              m.nombre AS MARCA,
              p.modelo,
-             s.nombre_sede,
-             cc.nombre_depend,
-             cc.abreviado_depend,
+             nvl(s.nombre_sede,' ') as nombre_sede,
+             nvl(cc.nombre_depend,' ') as nombre_depend,
+             nvl(cc.abreviado_depend,' ') as abreviado_depend,
              uf.ubicac_fisica,
              --sbn.nombre_item as nombre_sbn,
              pe.apellido_paterno,
              pe.apellido_materno,
              pe.nombres
         from sig_patrimonio p
+        left join sig_asignaciones aa
+        on aa.ano_eje =  p.ano_eje and aa.sec_ejec = p.sec_ejec and aa.tipo_modalidad = p.tipo_modalidad and aa.secuencia = p.secuencia
         left join sig_sedes s
-          on p.sede = s.sede
-         and p.pliego = s.pliego
+          on aa.sede = s.sede
+         and aa.pliego = s.pliego
         left join sig_ubicac_fisica uf
           on p.TIPO_UBICAC = uf.TIPO_UBICAC
          and p.COD_UBICAC = uf.COD_UBICAC
         left join sig_centro_costo cc
-          on cc.ano_eje = p.ano_eje
-         and cc.sec_ejec = p.sec_ejec
-         and cc.centro_costo = p.centro_costo
+          on cc.ano_eje = aa.ano_eje
+         and cc.sec_ejec = aa.sec_ejec
+         and cc.centro_costo = aa.centro_costo
         left join catalogo_bien_serv sbn
           on sbn.SEC_EJEC = p.SEC_EJEC
          and sbn.TIPO_BIEN = p.TIPO_BIEN
@@ -50,15 +52,19 @@
           on m.tipo_marca = p.tipo_marca
          and m.marca = p.marca
         left join sig_personal pe
-          on pe.sec_ejec = p.sec_ejec
-         and pe.empleado = p.empleado_final
+          on pe.sec_ejec = aa.sec_ejec
+         and pe.empleado = aa.empleado_final
        where ((p.codigo_activo like '%'||$P{P_COD_INI}) or ( p.codigo_activo between $P{P_COD_INI} and  $P{P_COD_FIN} ) )
          and P.SEC_EJEC = '474'
          and p.ano_eje = $P{P_ANIO}
-         and s.sede || '_' || S.PLIEGO like '%' || $P{P_COD_SEDE}
-         and cc.centro_costo like '%' || $P{P_COD_CENTRO_COSTO}
-         and uf.tipo_ubicac || '_' || uf.cod_ubicac like '%' || $P{P_COD_UBIC_FISICA}
-         and pe.empleado like '%' || $P{P_COD_EMP_FINAL}
+
+and nvl(aa.nro_asignac,'1') = nvl((select max(ax.nro_asignac) from sig_asignaciones ax where  ax.ano_eje =  p.ano_eje and ax.sec_ejec = p.sec_ejec and ax.tipo_modalidad = p.tipo_modalidad and ax.secuencia = p.secuencia),'1' )
+
+
+         and nvl(s.sede || '_' || S.PLIEGO,' ') like '%' || $P{P_COD_SEDE}
+         and nvl(cc.centro_costo,' ') like '%' || $P{P_COD_CENTRO_COSTO}
+         and nvl(uf.tipo_ubicac || '_' || uf.cod_ubicac,' ') like '%' || $P{P_COD_UBIC_FISICA}
+         and nvl(pe.empleado,' ') like '%' || $P{P_COD_EMP_FINAL}
 order by codigo_activo]]>
 	</queryString>
 	<field name="CODIGO_ACTIVO" class="java.lang.String"/>
@@ -89,7 +95,7 @@ order by codigo_activo]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRIPCION} + "\n" +
 "MARCA: "+ $F{MARCA} + "\n" +
-(($F{CODIGO_ACTIVO}.substring( 0, 4 ).equals("7464"))?"DIMEN.: ":"SERIE: ") + $F{NRO_SERIE}]]></textFieldExpression>
+(($F{CODIGO_ACTIVO}.substring( 0, 4 ).equals("7464") ||  $F{CODIGO_ACTIVO}.substring( 0, 4 ).equals("3264") )?"DIMEN.: ":"SERIE: ") + $F{NRO_SERIE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="9e7676a0-4a7e-4a06-b22f-22ad490d7584" x="11" y="300" width="90" height="38"/>

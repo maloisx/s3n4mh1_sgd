@@ -1674,7 +1674,7 @@ function pad_mant_alertaip_popup(){
     $.colorbox({
         "href" : url
        ,"width" : 600
-       ,"height" : 500
+       ,"height" : 600
     });
 }
 //FIN ALERTA POPUP
