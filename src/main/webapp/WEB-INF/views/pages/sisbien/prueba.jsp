@@ -1,4 +1,73 @@
-sisbien prueba xxx
+<!-- --------------   Modal --------------  -->
+  <div class="modal fade" id="modal_mantenimiento" role="dialog">
+    <div class="modal-dialog modal-sm">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="lb_title_modal_mantenimiento">Mantenimiento titulo</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>          
+        </div>
+        <div class="modal-body">
+            
+            <input type="hidden" id="hd_modal_manteniemiento_codesta" value="">  
+            <input type="hidden" id="hd_modal_manteniemiento_codvar" value="" >           
+                        <div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="input-field">												
+					    <input type="text" id="txt_modal_fecha">
+					    <label for="txt_modal_fecha" class="lbl_active">fecha</label>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>	
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="input-field">												
+					    <input type="text" id="txt_modal_valor">
+					    <label for="txt_modal_valor" class="lbl_active">VALOR</label>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>			
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<button type="button" class="btn btn-primary" onclick="fn_guardar_prueba()" >Guardar</button>
+				</div>						
+			</div>	
+        </div>
+<!--        <div class="modal-footer">-->
+<!--          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--        </div>-->
+      </div>
+      
+    </div> 
+  </div>
+ 
+
+<!-- --------------   Modal --------------  -->
+
+
+
+<div class="row">
+    <div class="input-field col-sm-1"></div> 
+    <div class="input-field col-sm-5">   
+        <input id="txt_nom_esta" type="text" value="" />
+        <label for="txt_nom_esta" class="">txt_nom_esta</label>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="input-field col-sm-1"></div> 
+    <div class="input-field col-sm-5" id="div_lista">   
+        
+    </div>
+</div>
+
 <br>
 
 <div class="row">
@@ -9,45 +78,7 @@ sisbien prueba xxx
     </div>
 </div>
 
-<div class="row">
-    <div class="input-field col-sm-1"></div> 
-    <div class="input-field col-sm-8">   
-        <select name="cb_prueba_1" id="cb_prueba_1" class="form-control selectpicker"></select>
-        <label for="cb_prueba_1" class="active">cb_prueba_1</label>
-    </div>
-</div>
-
-<div class="row">
-    <div class="input-field col-sm-1"></div> 
-    <div class="input-field col-sm-5">   
-        <input id="txt_prueba_db" type="text" value="" />
-        <label for="txt_prueba_db" class="">txt_prueba dato db</label>
-    </div>
-</div>
-
-<div class="row">
-    <div class="input-field col-sm-1"></div> 
-    <div class="input-field col-sm-3">   
-        <input id="txt_prueba_combo" type="text" value="" />
-        <label for="txt_prueba_combo" class="">txt_prueba dato combo 1</label>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="input-field col-sm-1"></div> 
-    <div class="input-field col-sm-4">   
-        <textarea  id="txa_prueba" class="materialize-textarea text-uppercase" type="text"  maxlength="500"></textarea>
-        <label for="txa_prueba" class="">txa_prueba</label>
-    </div>
-</div>
-
-<div class="row">
-    <div class="input-field col-sm-1"></div> 
-    <div class="input-field col-sm-4">   
-        <div id="div_prueba" class="">div_prueba</div>
-    </div>
-</div>
+<br>
 
 <div class="row">
     <div class="input-field col-sm-1"></div> 
@@ -59,5 +90,6 @@ sisbien prueba xxx
 </div>
 
 <script>
-    sisbien_prueba_js_component_ws();    
+   sisbien_prueba_js();
 </script>
+   

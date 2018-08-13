@@ -195,6 +195,7 @@ function ws_datatable(id_div_tbl, data, tbl_cab, opciones) {
         , bInfo: false
         , bPaginate: false
         , dom: "Blfrtip"
+        , aoColumnDefs : []
         , buttons: [{extend: 'excel', text: 'Exportar a Excel', className: 'btn btn-info btn-sm'}]
     };
 
@@ -238,6 +239,7 @@ function ws_datatable(id_div_tbl, data, tbl_cab, opciones) {
         "aoColumns": tbl_cab,
         "aaData": tbl_data,
         "fixedColumns": true,
+        "aoColumnDefs" : (opciones.aoColumnDefs != undefined)?opciones.aoColumnDefs : opciones_default.aoColumnDefs,
         "dom": (opciones.dom != undefined)?opciones.dom : opciones_default.dom,
         "buttons": (opciones.buttons != undefined)?opciones.buttons : opciones_default.buttons,
         "language": {'url': '/sis/static/datatables/Spanish.json'}

@@ -1,4 +1,94 @@
-function sisbien_prueba_js_component_ws() {
+
+function sisbien_prueba_js() {
+    var ws_temp_act = ws('SISDAD','PKG_KORI.SP_OBT_TEMP_ACT_ESTA', '["112181"]');
+    var status = ws_temp_act.request.STATUS;
+    
+    if(status == 'OK'){
+        var data = ws_temp_act.data;
+        console.log(data);
+        $('#txt_nom_esta').val(data[0].NOM_ESTA);
+        
+        for(var i = 0 ; i < data.length ; i++){
+            var valor = data[i].VALOR;
+            $('#div_lista').append(valor + "<br>");            
+        }
+        /*
+        var array_cb = [];
+        for(var i = 0 ; i < data.length ; i++){
+            
+            var array_item = [];
+            var fecha = data[i].FECHA;
+            var valor = data[i].VALOR;
+            array_item.push(fecha);
+            array_item.push(valor);            
+            array_cb.push(array_item);                     
+        }
+        console.log(array_cb);
+        ws_contenido_combo("cb_prueba", array_cb , "13/08/2018 16:00");
+        */
+        fn_listar_tabla();             
+    }
+}
+
+function fn_listar_tabla(){
+    var ws_lista_variables = ws('SISDAD','PKG_WS.SP_OBT_LISTA_VARIABLE', '');
+        ws_contenido_combo("cb_prueba", ws_lista_variables.data , "");
+        
+        
+        var tbl_cab = [
+                        {'sTitle': 'C1' , "sClass" : "text-center"}
+                       ,{'sTitle': 'C2' , "sClass" : "text-center"}
+                       ,{'sTitle': 'C3'}
+                       ,{'sTitle': 'C4'}
+                       ,{'sTitle': 'C5'}
+                       ,{'sTitle': 'C6'}
+                       ,{'sTitle': 'C7'}
+                       ,{'sTitle': 'btn'}
+                      ];
+                      
+        var tbl_opc = {
+                        responsive: false
+                        , bFilter: false
+                        , bLengthChange: false
+                        , bInfo: true
+                        , bPaginate: true
+                        , aoColumnDefs : [{ "visible": false, "targets": [0,3,4] }]
+                        , buttons: []
+                    };
+        for(var i= 0 ; i<data.length ; i++){
+            //data[i].NOM_ESTA = "estacion "+ data[i].NOM_ESTA;
+            data[i].btn1 = tbl_ext_btn('glyphicon-edit',"fn_edit_prueba('"+data[i].COD_ESTA+"','"+data[i].COD_VAR+"','"+data[i].FECHA+"','"+data[i].VALOR+"');") ;
+            //data[i].btn2 = tbl_ext_btn('glyphicon-save',"fn_guardar_prueba('"+data[i].COD_ESTA+"','"+data[i].COD_VAR+"','"+data[i].FECHA+"','"+data[i].VALOR+"')");
+            //data[i].btn3 = tbl_ext_btn('glyphicon-print');
+        }                               
+                    
+        ws_datatable("tabla_prueba", data, tbl_cab  , tbl_opc);  
+}
+
+function fn_edit_prueba(p_codesta , p_codvar , p_fecha , p_valor){
+    $('#hd_modal_manteniemiento_codesta').val(p_codesta);
+    $('#hd_modal_manteniemiento_codvar').val(p_codvar);
+    $('#txt_modal_fecha').val(p_fecha);
+    $('#txt_modal_valor').val(p_valor);
+    $('#modal_mantenimiento').modal();
+}
+
+function fn_guardar_prueba(){
+    
+   var p_codesta = $('#hd_modal_manteniemiento_codesta').val();
+   var p_codvar =  $('#hd_modal_manteniemiento_codvar').val();
+   var p_fecha =  $('#txt_modal_fecha').val();
+   var p_valor =  $('#txt_modal_valor').val();
+    
+   //$.alert(p_codesta+' - '+ p_codvar +' - '+ p_fecha +' - '+ p_valor) ; 
+   //p_codesta, p_codvar , p_fecha , p_valor
+   var ws_data = ws('SISDAD','PKG_KORI.SP_GUARDAR_PRUEBA', '["'+p_codesta+'","'+p_codvar+'","'+p_fecha+'","'+p_valor+'"]');
+   console.log('guardar');
+   fn_listar_tabla();
+   $('#modal_mantenimiento').modal('hide');
+}
+
+function sisbien_prueba_js_component_ws11() {
 //    console.log("token:" + localStorage.token);
     var obj_rpta = ws('sisbien.fn_colorbien_obtener', '[""]');
     console.log(obj_rpta);
