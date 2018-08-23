@@ -153,6 +153,10 @@ function ws_contenido_combo(cb_id_html, data, id_seleccionado) {
     /*llenado de combo dando por hecho q la data solo tiene dos columnas 1 = id , 2 = desc*/
     //cb_id_html = "cb_prueba";
     //id_seleccionado = "";
+    
+    if(data == "")
+         data = [["",""]];
+    
     cont_combo = "";
     cont_combo += "<option value='' "+((id_seleccionado == '')?" selected='selected' ":"")+"  >Seleccione una Opcion</option>";
     for (var i = 0; i < data.length; i++) {
