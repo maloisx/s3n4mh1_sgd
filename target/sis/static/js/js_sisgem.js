@@ -14,7 +14,7 @@ function sisgem_buscar_plantilla_js() {
      /*llenando un combo box*/    
     //ws_contenido_combo("cb_estacion", ws_lista_estacion.data, "");    
 }
-
+//cargar estaciones
 function sisgem_buscar_plantilla_cargar_cbestaciones(){
     var coddz = $('#cb_dz').val();
     if(coddz != ''){   
@@ -25,6 +25,7 @@ function sisgem_buscar_plantilla_cargar_cbestaciones(){
     }
 }
 
+//Registro de planilla
 function sisgem_registro_planilla(){
     
     var input = document.querySelector('input[type="file"]');    
@@ -33,18 +34,21 @@ function sisgem_registro_planilla(){
     var fdata = new FormData();
     var file;
     for (var i = 0 ; i < input.files.length ; i++) {
-        file = input.files[i];      
+        file = input.files[i];
         fdata.append(i, file);
-        var nom_archi = file.name;        
+        var nom_archi = file.name;
+        var cod_plaimg = nom_archi.substring(0,nom_archi.lastIndexOf("."));
         var dz = nom_archi.substring(0,2);
         var estacion = nom_archi.substring(8,2);
         var tplanilla = nom_archi.substring(10,8);
         var periodo = nom_archi.substring(11,10);
         var cara = nom_archi.substring(12,11);
         var fecha = nom_archi.substring(20,12);
-        alert(nom_archi + '-' + dz + '-' + estacion + '-' + tplanilla + '-' + periodo + '-' + cara + '-' + fecha);
+        
+        alert(nom_archi + '-' + cod_plaimg + '-' + dz + '-' + estacion + '-' + tplanilla + '-' + periodo + '-' + cara + '-' + fecha);
+        console.log(cod_plaimg); 
         //guardar información
-//        var ws_data = ws('sismethaweb','pkg_gem.sp_guardar_plaimg', '["'+p_codesta+'","'+p_codbp+'","'+p_fechaplaimg+'","'+p_codperiodo+'"]');
+        var ws_data = ws('sismethaweb','pkg_gem.sp_guardar_plaimg', '["'+cod_plaimg+'","'+dz+'","'+estacion+'","'+tplanilla+'","'+periodo+'","'+cara+'","'+fecha+'"]');
                 
         
     }    
@@ -59,10 +63,10 @@ function sisgem_registro_planilla(){
     }
     /*fin subir archivos */ 
    
-   var p_codesta = '111042';
-   var p_codbp = '52';
-   var p_fechaplaimg = '2018/08/20';
-   var p_codperiodo = '0';
+//   var p_codesta = '111042';
+//   var p_codbp = '52';
+//   var p_fechaplaimg = '2018/08/20';
+//   var p_codperiodo = '0';
    
    //$.alert(p_codesta+' - '+ p_codvar +' - '+ p_fecha +' - '+ p_valor) ; 
    //p_codesta, p_codvar , p_fecha , p_valor

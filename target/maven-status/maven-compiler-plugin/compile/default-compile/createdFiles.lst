@@ -3,6 +3,7 @@ com\senamhi\sis\controller\SisbienController.class
 com\senamhi\sis\controller\LoginController.class
 com\senamhi\sis\controller\SisperController.class
 com\senamhi\sis\connection\ConeccionDB.class
+com\senamhi\sis\controller\SisgemController.class
 com\senamhi\sis\controller\PadController.class
 com\senamhi\sis\test\test_function_Util.class
 com\senamhi\sis\controller\SisdadController.class
