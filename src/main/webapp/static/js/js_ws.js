@@ -122,6 +122,62 @@ function ws_o(p_1, p_2, p_3) {
     return respuesta;
 }
 
+function ws_sqlserver(p_1, p_2, p_3) {
+    /*
+     * 
+     * param_1 = p_schema
+     * param_2 = p_pkg
+     * param_3 = p_param
+     * 
+     */
+    var p_schema = "";
+    var p_pkg = "";
+    var p_param = "";
+    var url_path_db = "";
+    
+    p_schema = p_1;
+    p_pkg = p_2;
+    p_param = p_3;
+    url_path_db = "/open/sqlserver";
+    
+
+
+    var respuesta = {data: null, request: null};
+
+    var settings = {
+        'async': false,
+        'crossDomain': true,
+        'url': path_ws + url_path_db,
+        'method': 'POST',
+        'headers': {
+            'content-type': 'application/x-www-form-urlencoded',
+            'cache-control': 'no-cache',
+            'token': localStorage.token
+        },
+        'data': {
+            'p_schema': p_schema,
+            'p_pkg': p_pkg,
+            'p_param': p_param
+        }
+    }
+
+
+
+    $.ajax(settings).done(function (response) {
+        arrayobj = jQuery.parseJSON(response);
+        data = arrayobj.data;
+        request = arrayobj.request;
+        token = arrayobj.token;
+
+        respuesta.data = data;
+        respuesta.request = request;
+
+        localStorage.token = token;
+        //console.log(localStorage.token); 
+    });
+    return respuesta;
+}
+
 function ws_server(p_ip,p_cmd) {  
 
     var url_path_db =  "/servers/info";
