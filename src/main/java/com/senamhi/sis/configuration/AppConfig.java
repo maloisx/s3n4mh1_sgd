@@ -33,7 +33,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
              "/WEB-INF/views/**/tiles_sisbien.xml",
              "/WEB-INF/views/**/tiles_sisper.xml",
              "/WEB-INF/views/**/tiles_pad.xml",
-             "/WEB-INF/views/**/tiles_sisserver.xml"
+             "/WEB-INF/views/**/tiles_sisserver.xml",
+             "/WEB-INF/views/**/tiles_sisgem.xml"
         });
         tilesConfigurer.setCheckRefresh(true);
         return tilesConfigurer;

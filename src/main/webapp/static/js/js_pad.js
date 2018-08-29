@@ -62,7 +62,7 @@ function pad_mant_expedientes_pad_guardar(){
     var id = $('#txt_nroexp').val();
     var fecharecep = $('#txt_fecharecep').val();
     var tiempo = $('#cb_tiempo').val();
-    console.log('***************'+tiempo);
+    //console.log('***************'+tiempo);
     var fecpresc_iniPAD = $('#txt_fecpresc_iniPAD').val();
     var etapa = $('#cb_etapa').val();
     var denunciante = $('#cb_denunciante').val();
