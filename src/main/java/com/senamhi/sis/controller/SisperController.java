@@ -2,6 +2,8 @@ package com.senamhi.sis.controller;
 
 import com.senamhi.sis.connection.ConeccionDB;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -65,13 +67,20 @@ public class SisperController {
         //String esquema = request.getParameter("s");
         String arch_report = request.getParameter("r");
         String param = request.getParameter("p");
+        String codper = request.getParameter("codper");
         
         if(arch_report == null){
             arch_report = "asistenciaempleado";
-        }
+        }      
+            
         if(param == null){
-            HttpSession session = request.getSession();
-            String idPers = session.getAttribute("idPers").toString(); 
+            String idPers = "";
+            if(codper == null){
+                HttpSession session = request.getSession();
+                idPers = session.getAttribute("idPers").toString();
+            }else{
+                idPers = codper;
+            }
            
             SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
             Date fechai =  new Date();
@@ -105,7 +114,16 @@ public class SisperController {
         String cn_error = "";
                 
         String cad_url = "http://sgd.senamhi.gob.pe/sis/static/report_jasper/"+arch_report+".jasper";
-        URL url = new URL(cad_url);        
+        URL url = new URL(cad_url);     
+        
+//        HttpURLConnection httpUrlConn = (HttpURLConnection) url.openConnection();
+//        httpUrlConn.setRequestMethod("HEAD");
+//        httpUrlConn.setConnectTimeout(30000);
+//        httpUrlConn.setReadTimeout(30000);
+//        if(httpUrlConn.getResponseCode() == HttpURLConnection.HTTP_OK){
+//            cad_url = "http://localhost/sis/static/report_jasper/"+arch_report+".jasper";
+//            url = new URL(cad_url);
+//        }
         JasperReport reporte = (JasperReport) JRLoader.loadObject(url);
         
         Map parameters = new HashMap();// parametros
@@ -150,5 +168,21 @@ public class SisperController {
         
         return "sisper/reporteasistenciapdf";
     } 
+    
+    @RequestMapping(value = { "/sisper/dashboardasistencias"}, method = RequestMethod.GET)
+    public String SisperDashBoardAsistencias(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+          
+        return "sisper/dashboardasistencias";
+    }
+    
+    
+    @RequestMapping(value = { "/sisper/pruebaschay"}, method = RequestMethod.GET)
+    public String pruebaschay(HttpServletRequest request, HttpServletResponse response,ModelMap model) 
+    throws ServletException, IOException{
+          
+        return "sisper/pruebaschay";
+    }
+    
     
 }

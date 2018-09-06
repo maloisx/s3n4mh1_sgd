@@ -23,5 +23,14 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisper/reporteasistenciapdf.jsp" />  
    </definition> 
    
- 
+   <definition name="sisper/dashboardasistencias" extends="base-definition">  
+       <put-attribute name="title" value="sisper dashboardasistencias" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisper/dashboardasistencias.jsp" />  
+   </definition> 
+   
+      <definition name="sisper/pruebaschay" extends="base-definition">  
+       <put-attribute name="title" value="sisper pruebaschay" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisper/pruebaschay.jsp" />  
+   </definition> 
+    
 </tiles-definitions>

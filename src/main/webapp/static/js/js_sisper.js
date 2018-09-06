@@ -1,9 +1,7 @@
-
-
 function sisper_listadopersonal_js_component_ws() {
-    console.log("token:" + localStorage.token);
+    //console.log("token:" + localStorage.token);
     var obj_rpta = ws('SISPER', 'pkg_ws.sp_obt_listapersonal', '[""]');
-    console.log(obj_rpta);
+    //console.log(obj_rpta);
        var tbl_cab = [
                       {'sTitle': 'COD_EMP'}
                     , {'sTitle': 'APPAT'}
@@ -139,3 +137,29 @@ function sisbien_PreRegistro() {
     });
 
 }
+
+function sisper_dashboardasistencias(){
+    
+    var ws_lugartrabajo = ws_sqlserver('tempus','OGEIP.dbo.obt_lugartrabajo','');    
+    ws_contenido_combo("cb_lugar", ws_lugartrabajo.data,'');
+    
+    var ws_lugartrabajo = ws_sqlserver('tempus','OGEIP.dbo.obt_oficina','');    
+    ws_contenido_combo("cb_oficina", ws_lugartrabajo.data,'');
+} 
+
+function sisper_dashboardasistencias_fn_dashboard_show(){
+    var fecha = $('#txt_fecha').val();
+    var cod_lugar = $('#cb_lugar').val();
+    var cod_oficina = $('#cb_oficina').val();
+    
+    console.log(fecha+' - '+cod_lugar+' - '+cod_oficina);
+    
+}
+
+
+
+function sisper_pruebaschay(){
+    
+    var ws_data = ws('sisdad','pkg_kori.SP_OBT_DATA_PRUEBA','');    
+    console.log(ws_data);
+} 
