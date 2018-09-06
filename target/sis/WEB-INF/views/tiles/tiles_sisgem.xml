@@ -12,6 +12,10 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/uploadfile.jsp" />  
     </definition>    
     
+    <definition name="sisgem/uploadfiletmp"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/uploadfiletmp.jsp" />  
+    </definition>    
+    
     <definition name="sisgem/mant_buscar_planilla" extends="base-definition">  
        <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla.jsp" />  

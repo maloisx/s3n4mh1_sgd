@@ -4,13 +4,14 @@
     <div class="input-field col-sm-3">
         <form enctype="multipart/form-data">
             <!--<label>Seleccione los archivo(s)</label>-->
-            <input id="file-sisgem" name="file-sisgem[]" type="file" multiple class="form-control" data-show-preview="false" />
-            <!--<input id="file-sisgem" name="file-sisgem[]" type="file" multiple class="form-control" />-->
+            <input id="file-sisgem" name="file-sisgem[]" type="file" multiple  data-show-preview="false" />
+            <!--<label class="custom-file-label" for="file-sisgem" ></label>-->
+            <!--<input id="file-sisgem" name="file-sisgem[]" type="file" multiple class="form-control" data-show-preview="false" />-->
         </form>
     </div>
-    <div class="input-field col-sm-8"></div> 
-    
+    <div class="input-field col-sm-8"></div>    
 </div>
+
 <div class="row col-sm-12">
     <div class="input-field col-sm-1"></div> 
     <div class="col-md-3 text-right">
@@ -19,6 +20,11 @@
     <div class="input-field col-sm-8"></div>
 </div>
 
+<div class="row col-sm-12">
+    <div class="input-field col-sm-1"></div>
+    <div class="input-field col-sm-3" id="div_msg" name="div_msg"></div>
+    <div class="input-field col-sm-8"></div>
+</div>
 <br>
 
 <script>
@@ -33,3 +39,4 @@
 
 
 </script>
+

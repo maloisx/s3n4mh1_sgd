@@ -53,15 +53,13 @@ public class SisgemController {
         return "sisgem/mant_buscar_planilla";
     } 
     
-    //INICIO SUBIR DOCUMENTOS
+    //INICIO SUBIR PLANILLAS
     @RequestMapping(value = {"/sisgem/uploadfile"}, method = RequestMethod.POST)
     public String uploadfile(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-
-        ConeccionDB cdb = new ConeccionDB();
-
+                
         String UPLOAD_DIRECTORY = "/home/glassfish/glassfish4/glassfish/domains/domain1/applications/files/sisgem"; 
         String msj = "";
-
+                
             boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 //            String dz = "";
 //            String estacion = "";
@@ -75,18 +73,15 @@ public class SisgemController {
                 FileItemFactory factory = new DiskFileItemFactory();
 
                 // Create a new file upload handler
-                ServletFileUpload upload = new ServletFileUpload(factory);
-                
+                ServletFileUpload upload = new ServletFileUpload(factory);                
                 try {                       
                     List items = upload.parseRequest(request);
                     Iterator iterator = items.iterator();
                     
-                    
                     while (iterator.hasNext()) {
                         FileItem item = (FileItem) iterator.next();
                         if (!item.isFormField()) {
-                            String fileName = item.getName();
-                            
+                            String fileName = item.getName();                            
 //                            String dz = fileName.substring(0,2);
 //                            String estacion = fileName.substring(2,8);
 //                            String tplanilla = fileName.substring(8,10);
@@ -95,25 +90,13 @@ public class SisgemController {
 //                            String fecha = fileName.substring(12,20);
                             String anio = fileName.substring(12,16);
 
-//                            String anio = "cutervo";                                    
-//
-//                            fileName = DigestUtils.md5Hex(fileName);
                             File path = new File(UPLOAD_DIRECTORY+"/"+anio);
                             if (!path.exists()) {
                                 boolean status = path.mkdirs();
                             }
-
                             File uploadedFile = new File(path +"/"+ fileName); 
-                            msj += uploadedFile.getAbsolutePath()+"";
+                            msj += uploadedFile.getAbsolutePath()+" ";
                             item.write(uploadedFile);
-
-//                            String np = "pad.fn_docadjunto_mant";            
-//                            String array[] = new String[4];
-//                            array[0] = iddoc;
-//                            array[1] = fileName+".pdf";
-//                            array[2] = dir;
-//                            array[3] = fileName_1;
-//                            Vector datos = cdb.EjecutarProcedurePostgres(np, array); 
                         }
                     }
                     msj += "File Uploaded Successfully";
@@ -127,7 +110,55 @@ public class SisgemController {
             }
         return "sisgem/uploadfile";
     }  
-    //FIN SUBIR DOCUMENTOS   
+    //FIN SUBIR PLANILLAS
+    
+    //INICIO SUBIR PLANILLAS AL DIRECTORIO TEMPORAL
+    @RequestMapping(value = {"/sisgem/uploadfiletmp"}, method = RequestMethod.POST)
+    public String uploadfiletmp(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+
+        ConeccionDB cdb = new ConeccionDB();
+                
+        String UPLOAD_DIRECTORY = "/home/glassfish/glassfish4/glassfish/domains/domain1/applications/files/sisgem"; 
+        String msj = "";
+
+            boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+
+            if (isMultipart) {
+                // Create a factory for disk-based file items
+                FileItemFactory factory = new DiskFileItemFactory();
+
+                // Create a new file upload handler
+                ServletFileUpload upload = new ServletFileUpload(factory);                
+                try {                       
+                    List items = upload.parseRequest(request);
+                    Iterator iterator = items.iterator();
+                    
+                    while (iterator.hasNext()) {
+                        FileItem item = (FileItem) iterator.next();
+                        if (!item.isFormField()) {
+                            String fileName = item.getName();
+                            String tmp = "DirTem";
+                            File path = new File(UPLOAD_DIRECTORY+"/"+tmp);
+                            if (!path.exists()) {
+                                boolean status = path.mkdirs();
+                            }
+                            File uploadedFile = new File(path +"/"+ fileName); 
+                            msj += uploadedFile.getAbsolutePath()+"";
+                            item.write(uploadedFile);
+                        }
+                    }
+                    msj += "File Uploaded Successfully";
+                    request.setAttribute("request", msj);
+
+                } catch (FileUploadException e) {
+                    request.setAttribute("request", "x1 File Upload Failed due to " + e.getMessage());
+                } catch (Exception e) {
+                    request.setAttribute("request", "x2 File Upload Failed due to " + e.getMessage());
+                }
+            }
+        return "sisgem/uploadfiletmp";
+    }  
+    //FIN SUBIR PLANILLAS AL DIRECTORIO TEMPORAL   
     
     
 }
