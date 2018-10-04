@@ -3313,12 +3313,21 @@ button.btn-floating {
   color: #fff;
 }
 
-.btn-success {
+/*.btn-success {
   background: #33b5e5;
 }
 
 .btn-success:hover, .btn-success:focus {
   background-color: #33b5e5 !important;
+  color: #fff;
+}*/
+
+.btn-success {
+  background: #5cb85c;
+}
+
+.btn-success:hover, .btn-success:focus {
+  background-color: #449d44 !important;
   color: #fff;
 }
 
@@ -14103,3 +14112,16 @@ body {margin:0;}
 /*FIN RESPONSIVE*/
 /**********************************************************/
 
+
+/*INICIO BOTON BLANCO BUSQUEDA PLANILLAS*/
+/**********************************************************/
+.btn-white {
+  background: #FFFFFF;
+}
+
+.btn-white:hover, .btn-white:focus {
+  background-color: #FFFFFF !important;
+  color: #000000;
+}
+/**********************************************************/
+/*INICIO BOTON BLANCO BUSQUEDA PLANILLAS*/

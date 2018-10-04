@@ -184,6 +184,15 @@
             <script src="<c:url value='/static/bootstrap-fileinput/js/locales/es.js" type="text/javascript'/>"></script>
             <!--<script src="../themes/explorer/theme.js" type="text/javascript"></script>-->
             
+            
+            <!--***********LightGallery-->
+            <link href="<c:url value='/static/lightGallery-master/dist/css/lightgallery.min.css'/>" rel="stylesheet">
+            <link href="<c:url value='/static/lightGallery-master/dist/css/lightgallery.css'/>" rel="stylesheet">
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/dist/js/lightgallery.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/dist/js/lightgallery.js'/>"></script>
+            <!--***********LightGallery-->
+            
+            
             <link rel="stylesheet" type="text/css" href="<c:url value='/static/SlidePushMenus/css/menu_component.css'/>" />
             <script src="<c:url value='/static/SlidePushMenus/js/modernizr.custom.js'/>"></script>
             

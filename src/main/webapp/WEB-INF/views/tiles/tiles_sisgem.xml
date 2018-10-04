@@ -4,7 +4,7 @@
 <tiles-definitions>  
 
     <definition name="sisgem/mant_registro_planilla" extends="base-definition">  
-       <put-attribute name="title" value="REGISTRO DE PLANILLAS" />  
+       <put-attribute name="title" value="index" />   
        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_registro_planilla.jsp" />  
     </definition> 
    
@@ -26,6 +26,14 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla.jsp" />  
     </definition>
     
+    <definition name="sisgem/mant_lista_errada" extends="base-definition">  
+       <put-attribute name="title" value="PLANILLAS MAL NOMBRADAS" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_lista_errada.jsp" />  
+    </definition>
+    
+    <definition name="sisgem/mant_copyfile"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_copyfile.jsp" />  
+    </definition>    
     
     
     
