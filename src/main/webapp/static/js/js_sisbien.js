@@ -52,12 +52,12 @@ function fn_listar_tabla(){
                         , bLengthChange: false
                         , bInfo: true
                         , bPaginate: true
-                        , aoColumnDefs : [{ "visible": false, "targets": [0,3,4] }]
+                        , aoColumnDefs : [{ "visible": false, "targets": [4] }]
                         , buttons: []
                     };
         for(var i= 0 ; i<data.length ; i++){
             //data[i].NOM_ESTA = "estacion "+ data[i].NOM_ESTA;
-            data[i].btn1 = tbl_ext_btn('glyphicon-edit',"fn_edit_prueba('"+data[i].COD_ESTA+"','"+data[i].COD_VAR+"','"+data[i].FECHA+"','"+data[i].VALOR+"');") ;
+            data[i].btn1 = tbl_ext_btn('glyphicon-edit',"fn_edit_prueba('"+data[i].NOM_VAR+"','"+data[i].COD_VAR+"','"+data[i].FECHA+"','"+data[i].VALOR+"');") ;
             //data[i].btn2 = tbl_ext_btn('glyphicon-save',"fn_guardar_prueba('"+data[i].COD_ESTA+"','"+data[i].COD_VAR+"','"+data[i].FECHA+"','"+data[i].VALOR+"')");
             //data[i].btn3 = tbl_ext_btn('glyphicon-print');
         }                               
@@ -243,3 +243,4 @@ function sisbien_js_sigamef_bienes_rpt_etiquetas(){
      window.open(path+'/sisbien/sigamef_bienes_etiquetas?r=sisbien_sigamef_bienes_etiquetas&p=p_cod_ini$'+rango_ini+'|p_cod_fin$'+rango_fin+'|p_anio$'+anio+'|p_cod_sede$'+sede+'|p_cod_centro_costo$'+centro_costo+'|p_cod_ubic_fisica$'+ubic_fisica+'|p_cod_emp_final$'+usuario_final+'','_blank')
  
 }
+        
