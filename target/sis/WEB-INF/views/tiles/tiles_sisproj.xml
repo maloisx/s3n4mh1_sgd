@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+
+<tiles-definitions>
+
+    <definition name="sisproj/mant_expediente" extends="base-definition">  
+       <put-attribute name="title" value="EXPEDIENTES JUDICIALES" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisproj/mant_expediente.jsp" />  
+    </definition>
+    
+    <definition name="sisproj/mant_lista_usuarios" extends="base-definition">  
+       <put-attribute name="title" value="LISTA DE USUARIOS" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisproj/mant_lista_usuarios.jsp" />  
+    </definition>
+    
+
+    
+    
+    
+</tiles-definitions>

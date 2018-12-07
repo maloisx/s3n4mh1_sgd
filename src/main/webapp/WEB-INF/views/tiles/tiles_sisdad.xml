@@ -3,11 +3,16 @@
 
 <tiles-definitions>  
 
+    <definition name="sisdad/extremosPorEstacion" extends="base-definition">  
+       <put-attribute name="title" value="SISDAD, VALORES EXTREMOS POR ESTACION" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/extremosPorEstacion.jsp" />  
+   </definition> 
+
     <definition name="sisdad/resum_datos" extends="base-definition">  
        <put-attribute name="title" value="SISDAD RESUMEN DE DATOS" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/resum_datos.jsp" />  
    </definition> 
-   
+         
    <!--ajax-definition-->
    <definition name="sisdad/datos"  extends="ajax-definition">   
        <put-attribute name="body" value="/WEB-INF/views/pages/sisdad/datos.jsp" />  

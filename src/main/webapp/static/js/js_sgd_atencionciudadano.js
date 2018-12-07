@@ -237,7 +237,13 @@ function sgd_mant_ciudadano_dni_guardar(){
     var direccion = $('#txt_direccion').val();
     var email = $('#txt_email').val();
     var telefono = $('#txt_telefono').val();
-    
+    var dpto_nat = $('#cb_dpto_dir').val();
+    var prov_nat = $('#cb_prov_dir').val();
+    var distr_nat = $('#cb_dist_dir').val();
+    var dpto_nat_desc = $('select[name=cb_dpto_dir] option:selected').text();
+    var prov_nat_desc = $('select[name=cb_prov_dir] option:selected').text();
+    var distr_nat_desc = $('select[name=cb_dist_dir] option:selected').text();
+        
     var msj_error = "";
     if (nombres == ''){
         msj_error += " Nombres." + "<br>";
@@ -262,7 +268,16 @@ function sgd_mant_ciudadano_dni_guardar(){
                           +"&nombres="+nombres
                           +"&direccion="+direccion
                           +"&email="+email
-                          +"&telefono="+telefono,
+                          +"&telefono="+telefono
+                          +"&dpto_nat="+dpto_nat
+                          +"&prov_nat="+prov_nat
+                          +"&distr_nat="+distr_nat
+                          +"&dpto_nat_desc="+dpto_nat_desc
+                          +"&prov_nat_desc="+prov_nat_desc
+                          +"&distr_nat_desc="+distr_nat_desc
+                          +"&dpto_nat_desc="+dpto_nat_desc
+                          +"&prov_nat_desc="+prov_nat_desc
+                          +"&distr_nat_desc="+distr_nat_desc,
                 beforeSend: function(data){
                     $('#div_msg_registro').html("Cargando...");
                 },
@@ -310,14 +325,10 @@ function sgd_mant_mapa_mostrar(){
     if (cad.indexOf("_") == -1){
         cod_estacion = cad;
         cod_dpto = $('#cb_dpto').val();
-        console.log('***********'+cod_estacion);
-        console.log('***********'+cod_dpto);
     }else{
         var cadena = cad.split('_');
         cod_estacion = cadena[0];
         cod_dpto = cadena[1];
-        console.log('///////////'+cod_estacion);
-        console.log('///////////'+cod_dpto);
     }
         
     $.ajax({
@@ -352,6 +363,12 @@ function sgd_mant_ciudadano_ruc_guardar(){
     var dni_rep = $('#txt_dni_rep').val();    
     var telef_rep = $('#txt_telef_rep').val();    
     var email_rep = $('#txt_email_rep').val();    
+    var dpto_dir = $('#cb_dpto_dir_ruc').val();    
+    var prov_dir = $('#cb_prov_dir_ruc').val();    
+    var dist_dir = $('#cb_dist_dir_ruc').val();    
+    var dpto_dir_des = $('select[name=cb_dpto_dir_ruc] option:selected').text();
+    var prov_dir_des = $('select[name=cb_prov_dir_ruc] option:selected').text();
+    var dist_dir_des = $('select[name=cb_dist_dir_ruc] option:selected').text();
     
     var msj_error = "";
     if (rsocial == ''){
@@ -401,7 +418,13 @@ function sgd_mant_ciudadano_ruc_guardar(){
                       +"&representante="+representante
                       +"&dni_rep="+dni_rep
                       +"&telef_rep="+telef_rep
-                      +"&email_rep="+email_rep,
+                      +"&email_rep="+email_rep
+                      +"&dpto_dir="+dpto_dir
+                      +"&prov_dir="+prov_dir
+                      +"&dist_dir="+dist_dir
+                      +"&dpto_dir_des="+dpto_dir_des
+                      +"&prov_dir_des="+prov_dir_des
+                      +"&dist_dir_des="+dist_dir_des,
             beforeSend: function(data){
                 $('#div_msg_registro').html("Cargando...");
             },
@@ -550,10 +573,8 @@ function removermarkers(markersArray) {
 //INICIO CENTRAR MAPA
 function centrarmapa() {
     if (markersArray.length > 0) {
-        //console.log('m1');
         var limits = new google.maps.LatLngBounds();
         for (var marker = 0; marker < markersArray.length; marker++) {
-//             console.log(markersArray[marker]);
             limits.extend(markersArray[marker].getPosition());
         }
         map.fitBounds(limits);
@@ -623,7 +644,6 @@ function sgd_mant_add_solicitud(){
                 $('#div_solicitud_detalle').html("Cargando...");
             },
             success: function(requestData){
-//                console.log(requestData);
                 $('#div_solicitud_detalle').html(requestData);
                 $('#div_solicitud_titulo').show();
                 $('#div_solicitud_info').show();
@@ -1041,8 +1061,100 @@ function sgd_mant_enviar_solicitud_tupa(){
         });
     }    
 }
+//FIN GUARDAR SOLICITUD TUPA*******************************************************************
+//
+//INICIO BUSCAR PROVINCIA
+function sgd_mant_provincia_mostrar(tipo_doc){
+    var cod_dpto = "";
+    if (tipo_doc === 1){
+        cod_dpto = $('#cb_dpto_dir').val();
+    }else if (tipo_doc === 2){
+        cod_dpto = $('#cb_dpto_dir_ruc').val();
+    }        
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_provincia_mostrar/",
+            data:     "cod_dpto="+cod_dpto,
+            beforeSend: function(data){
+                if (tipo_doc === 1){
+                    $('#cb_prov_dir').html("Cargando...");
+                    $('#cb_prov_dir').selectpicker('refresh');
+                }else if (tipo_doc === 2){
+                    $('#cb_prov_dir_ruc').html("Cargando...");
+                    $('#cb_prov_dir_ruc').selectpicker('refresh');
+                }
+            },
+            success: function(requestData){
+                if (tipo_doc === 1){
+                    $('#cb_prov_dir').html(requestData);
+                    $('#cb_prov_dir').selectpicker('refresh');
+                }else if (tipo_doc === 2){
+                    $('#cb_prov_dir_ruc').html(requestData);
+                    $('#cb_prov_dir_ruc').selectpicker('refresh');
+                }
+            },
+            error: function(requestData, strError, strTipoError){
+                if (tipo_doc === 1){
+                    $('#cb_prov_dir').html("Error " + strTipoError +": " + strError);
+                    $('#cb_prov_dir').selectpicker('refresh');
+                }else if (tipo_doc === 2){
+                    $('#cb_prov_dir_ruc').html("Error " + strTipoError +": " + strError);
+                    $('#cb_prov_dir_ruc').selectpicker('refresh');
+                }
+            }
+        });
+}
+//FIN BUSCAR PROVINCIA
+//
+//INICIO BUSCAR DISTRITO
+function sgd_mant_distrito_mostrar(tipo_doc){
+    var cod_prov = "";
+    var cod_dpto = "";
+    if (tipo_doc === 1){
+        cod_prov = $('#cb_prov_dir').val();
+        cod_dpto = $('#cb_dpto_dir').val();
+    }else if (tipo_doc === 2){
+        cod_prov = $('#cb_prov_dir_ruc').val();
+        cod_dpto = $('#cb_dpto_dir_ruc').val();
+    }    
+    $.ajax({
+            dataType: "html",
+            type:     "GET",
+            url:      path + "sgd/mant_distrito_mostrar/",
+            data:     "cod_prov="+cod_prov
+                      +"&cod_dpto="+cod_dpto,
+            beforeSend: function(data){
+                if (tipo_doc === 1){
+                    $('#cb_dist_dir').html("Cargando...");
+                    $('#cb_dist_dir').selectpicker('refresh');
+                }else if (tipo_doc === 2){
+                    $('#cb_dist_dir_ruc').html("Cargando...");
+                    $('#cb_dist_dir_ruc').selectpicker('refresh');
+                }
+            },
+            success: function(requestData){
+                if (tipo_doc === 1){
+                    $('#cb_dist_dir').html(requestData);
+                    $('#cb_dist_dir').selectpicker('refresh');
+                }else if (tipo_doc === 2){
+                    $('#cb_dist_dir_ruc').html(requestData);
+                    $('#cb_dist_dir_ruc').selectpicker('refresh');
+                }
+            },
+            error: function(requestData, strError, strTipoError){
+                if (tipo_doc === 1){
+                    $('#cb_dist_dir').html("Error " + strTipoError +": " + strError);
+                    $('#cb_dist_dir').selectpicker('refresh');
+                }else if (tipo_doc === 2){
+                    $('#cb_dist_dir').html("Error " + strTipoError +": " + strError);
+                    $('#cb_dist_dir').selectpicker('refresh');
+                }
+            }
+        });
+}
+//FIN BUSCAR DISTRITO
 //
 //
 
-//
 

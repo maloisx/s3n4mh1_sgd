@@ -46,7 +46,7 @@
                 <div class="col-md-2 text-center">                       
                 </div>
                 <div class="col-md-5 text-center">
-                    <button type="button" class="btn btn-primary" onclick="sisgem_valida_nombre(hd_modal_manteniemiento_idpla.value,txt_modal_archivo.value, hd_modal_manteniemiento_nomarchi.value)" ><span class='glyphicon glyphicon-floppy-disk'></button>
+                    <button type="button" class="btn btn-primary" onclick="sisgem_valida_nombre(hd_modal_manteniemiento_idpla.value,txt_modal_archivo.value, hd_modal_manteniemiento_nomarchi.value, 'E')" ><span class='glyphicon glyphicon-floppy-disk'></button>
                 </div>						
             </div>	
         </div>        

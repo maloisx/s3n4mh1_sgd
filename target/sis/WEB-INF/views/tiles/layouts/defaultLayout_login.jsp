@@ -134,6 +134,7 @@
             <script src="<c:url value='/static/highcharts/heatmap.js'/>"></script>
             <script src="<c:url value='/static/highcharts/exporting.js'/>"></script>
             
+                        
             <script>
             Highcharts.setOptions({
                     lang: {

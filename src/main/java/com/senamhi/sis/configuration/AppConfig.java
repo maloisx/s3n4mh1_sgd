@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
-@EnableWebMvc
+@EnableWebMvc 
 @ComponentScan(basePackages = "com.senamhi.sis")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
@@ -35,6 +35,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
              "/WEB-INF/views/**/tiles_pad.xml",
              "/WEB-INF/views/**/tiles_sisserver.xml",
              "/WEB-INF/views/**/tiles_sisgem.xml",
+             "/WEB-INF/views/**/tiles_sisproj.xml",
              "/WEB-INF/views/**/tiles_demo.xml"
         });
         tilesConfigurer.setCheckRefresh(true);

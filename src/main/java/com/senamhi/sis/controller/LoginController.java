@@ -157,7 +157,7 @@ public class LoginController {
 //                        props.setProperty("mail.smtp.auth", "true");
 
                         props.setProperty("mail.smtp.host", "mail.senamhi.gob.pe");
-                        props.setProperty("mail.smtp.starttls.enable", "true");
+                        props.setProperty("mail.smtp.starttls.enable", "false");
                         props.setProperty("mail.smtp.port", "25");
                         props.setProperty("mail.smtp.user", "dba@senamhi.gob.pe");
                         props.setProperty("mail.smtp.auth", "true");

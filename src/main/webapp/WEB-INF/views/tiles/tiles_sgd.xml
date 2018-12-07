@@ -800,6 +800,14 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_dpto_mostrar.jsp" />
     </definition>
     
+    <definition name="sgd/mant_provincia_mostrar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_provincia_mostrar.jsp" />
+    </definition>
+    
+    <definition name="sgd/mant_distrito_mostrar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_distrito_mostrar.jsp" />
+    </definition>
+    
     <definition name="sgd/mant_busca_ciudadano_ruc"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sgd/mant_busca_ciudadano_ruc.jsp" />
     </definition>

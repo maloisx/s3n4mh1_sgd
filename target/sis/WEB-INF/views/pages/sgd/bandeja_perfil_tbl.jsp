@@ -12,7 +12,7 @@ ${requestScope['response']}
     <div class="row">
         <div class="col-xs-1"></div>
         <div class="col-xs-11" align="left">
-            <button onclick="sgd_mant_expediente_nuevo_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file"></span> Nuevo Expediente</button>
+            <!--<button onclick="sgd_mant_expediente_nuevo_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file"></span> Nuevo Expediente</button>-->
             <button onclick="sgd_mant_agrupa_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-folder-open" ></span> Agrupar Expediente</button>
             <button onclick="sgd_mant_desarchiva_flujo_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-paperclip" ></span> Desarchivar</button>
             <!--<button onclick="sgd_mant_buscar_exp_popup()" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" ></span> BUSCAR EXPEDIENTE</button>-->

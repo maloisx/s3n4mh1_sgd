@@ -30,7 +30,8 @@
             <link href="<c:url value='/static/css/jquery-confirm.css'/>" rel="stylesheet" type="text/css">
 
 		<link href="<c:url value='/static/theme/blue_explora/jquery-ui.css'/>" rel="stylesheet" type="text/css" id="jquery_theme_link">
-		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCi3uGbWaukJjhm6WjuStB19XoIslLtvbk" type="text/javascript"></script>
+		<!--<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCi3uGbWaukJjhm6WjuStB19XoIslLtvbk" type="text/javascript"></script>-->
+		<script src="http://maps.googleapis.com/maps/api/js?key=" type="text/javascript"></script>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 <script>
                     google.charts.load('current', {packages: ['corechart', 'line']});
@@ -179,17 +180,24 @@
             
             <link href="<c:url value='/static/bootstrap-fileinput/css/fileinput.css'/>" media="all" rel="stylesheet" type="text/css"/>
             <!--<link href="../themes/explorer/theme.css" media="all" rel="stylesheet" type="text/css"/>-->
-            <script src="<c:url value='/static/bootstrap-fileinput/js/plugins/sortable.js" type="text/javascript'/>"></script>
-            <script src="<c:url value='/static/bootstrap-fileinput/js/fileinput.js" type="text/javascript'/>"></script>
-            <script src="<c:url value='/static/bootstrap-fileinput/js/locales/es.js" type="text/javascript'/>"></script>
+            <script src="<c:url value='/static/bootstrap-fileinput/js/plugins/sortable.js'/>" type="text/javascript"></script>
+            <script src="<c:url value='/static/bootstrap-fileinput/js/fileinput.js'/>" type="text/javascript"></script>
+            <script src="<c:url value='/static/bootstrap-fileinput/js/locales/es.js'/>" type="text/javascript"></script>
             <!--<script src="../themes/explorer/theme.js" type="text/javascript"></script>-->
             
             
             <!--***********LightGallery-->
-            <link href="<c:url value='/static/lightGallery-master/dist/css/lightgallery.min.css'/>" rel="stylesheet">
-            <link href="<c:url value='/static/lightGallery-master/dist/css/lightgallery.css'/>" rel="stylesheet">
+            <link type="text/css" rel="stylesheet" href="<c:url value='/static/lightGallery-master/dist/css/lightgallery.min.css'/>">
+            <link type="text/css" rel="stylesheet" href="<c:url value='/static/lightGallery-master/dist/css/lightgallery.css'/>">
             <script type="text/javascript" src="<c:url value='/static/lightGallery-master/dist/js/lightgallery.min.js'/>"></script>
             <script type="text/javascript" src="<c:url value='/static/lightGallery-master/dist/js/lightgallery.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/lib/jquery.mousewheel.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/modules/lg-thumbnail.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/modules/lg-zoom.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/modules/lg-share.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/modules/lg-fullscreen.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/modules/lg-hash.min.js'/>"></script>
+            <script type="text/javascript" src="<c:url value='/static/lightGallery-master/modules/lg-pager.min.js'/>"></script>
             <!--***********LightGallery-->
             
             
@@ -207,6 +215,7 @@
             <script src="<c:url value='/static/js/js_sisserver.js'/>"></script>
             <script src="<c:url value='/static/js/js_sisper.js'/>"></script>
             <script src="<c:url value='/static/js/js_sisgem.js'/>"></script>
+            <script src="<c:url value='/static/js/js_sisproj.js'/>"></script>
 </head>
  
 <body>    

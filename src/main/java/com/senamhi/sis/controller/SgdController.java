@@ -3139,14 +3139,16 @@ public class SgdController {
                 }else{
                     btn += "<li><a onclick='sgd_mant_expediente_consulta_popup(\\\""+i_id+"\\\",\\\""+i_id_doc+"\\\",\\\""+i_id_flujo+"\\\",\\\""+codUser+"\\\")'>Consultar Expediente</a></li>";
                 }
-                    btn += "<li><a onclick='sgd_mant_expediente_añadirdoc_popup(\\\""+i_id+"\\\",\\\""+codUser+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+nombreUser.trim()+"\\\",\\\""+id_vt+"\\\")'>Añadir documento</a></li>"
-                            + "<li class=''><a onclick='sgd_mant_expediente_modificadoc_popup(\\\""+i_id+"\\\",\\\""+i_id_doc+"\\\",\\\""+i_id_flujo+"\\\",\\\""+codUser+"\\\",\\\""+user_agrupa+"\\\",\\\""+uoPers+"\\\")'>Modificar documento</a></li>"
-                            + "<li class='divider'></li>"
-                            + "<li  class=\\\""+"\\\"><a onclick='sgd_mant_expediente_deriva_cut_popup(\\\""+i_id+"\\\",\\\""+i_cut+"\\\",\\\""+i_per_exp+"\\\",\\\""+cod_perfil+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+i_id_flujo+"\\\",\\\""+nivel+"\\\")'>Derivar</a></li>";
+//                    btn += "<li><a onclick='sgd_mant_expediente_añadirdoc_popup(\\\""+i_id+"\\\",\\\""+codUser+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+nombreUser.trim()+"\\\",\\\""+id_vt+"\\\")'>Añadir documento</a></li>"
+//                            + "<li class=''><a onclick='sgd_mant_expediente_modificadoc_popup(\\\""+i_id+"\\\",\\\""+i_id_doc+"\\\",\\\""+i_id_flujo+"\\\",\\\""+codUser+"\\\",\\\""+user_agrupa+"\\\",\\\""+uoPers+"\\\")'>Modificar documento</a></li>"
+//                            + "<li class='divider'></li>"
+//                            + "<li  class=\\\""+"\\\"><a onclick='sgd_mant_expediente_deriva_cut_popup(\\\""+i_id+"\\\",\\\""+i_cut+"\\\",\\\""+i_per_exp+"\\\",\\\""+cod_perfil+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+i_id_flujo+"\\\",\\\""+nivel+"\\\")'>Derivar</a></li>";
+                    btn += "<li><li class='divider'></li>";
+//                            + "<li  class=\\\""+"\\\"><a onclick='sgd_mant_expediente_deriva_cut_popup(\\\""+i_id+"\\\",\\\""+i_cut+"\\\",\\\""+i_per_exp+"\\\",\\\""+cod_perfil+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+i_id_flujo+"\\\",\\\""+nivel+"\\\")'>Derivar</a></li>";
                 
-                        if (uoPers.equals("90000003") && cod_perfil.equals("3")){
-                            btn += "<li><a onclick='sgd_mant_expediente_deriva_popup(\\\""+i_id+"\\\",\\\""+i_cut+"\\\",\\\""+i_per_exp+"\\\",\\\""+cod_perfil+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+i_id_flujo+"\\\",\\\""+nivel+"\\\")'>Derivar Docs</a></li>";
-                        }                        
+//                        if (uoPers.equals("90000003") && cod_perfil.equals("3")){
+//                            btn += "<li><a onclick='sgd_mant_expediente_deriva_popup(\\\""+i_id+"\\\",\\\""+i_cut+"\\\",\\\""+i_per_exp+"\\\",\\\""+cod_perfil+"\\\",\\\""+idPers+"\\\",\\\""+uoPers+"\\\",\\\""+i_id_flujo+"\\\",\\\""+nivel+"\\\")'>Derivar Docs</a></li>";
+//                        }                        
                             btn += "<li class=\\\""+deshabilita_acc+"\\\"><a onclick='sgd_mant_archiva_flujo_popup(\\\""+i_id_flujo+"\\\",\\\""+i_cut+"\\\",\\\""+i_per_exp+"\\\",\\\""+c_des_persona+"\\\",\\\""+c_des_uo+"\\\")'>Archivar</a></li>" 
 //                            + "<li><a onclick='sgd_mant_rechaza_flujo_popup('"+i_cut+"','"+i_id_flujo+"','"+c_des_persona+"','"+c_des_uo+"')'>Rechazar</a></li>" 
                             + "<li class='divider'></li>" 
@@ -4489,7 +4491,7 @@ public class SgdController {
             String prof = "4";
             String vent = "5";          
             
-            if (perfil.equals(altdir) || perfil.equals(vent) || (id_uo.equals("90000003") && perfil.equals(dir)) || id_uo.equals("90000044") || (id_uo.equals("90000048")  && perfil.equals(dir)) || id_uo.equals("90000052") || id_uo.equals("90000053") || id_uo.equals("90000006") || id_uo.equals("90000055")){    
+            if (perfil.equals(altdir) || perfil.equals(vent) || id_uo.equals("90000003") || id_uo.equals("90000044") || id_uo.equals("90000048") || id_uo.equals("90000052") || id_uo.equals("90000053") || id_uo.equals("90000006")  || id_uo.equals("90000055")){    
 //                String np = "senamhi.fn_uo_flujo_consulta";
                 String np = "senamhi.fn_altdir_destino_consulta";
                 String array_acc[] = new String[1];
@@ -9714,20 +9716,36 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             String cb_sector = util.contenido_combo(datos_cbo_sector, "");
             request.setAttribute("cb_sector", cb_sector);
         
-//            String array_dpto[] = new String[1];
-//            array_dpto[0] = "";
-//            Vector datos_dpto = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.sp_obt_list_dep", array_dpto);
-//            String cb_dpto ="";
-//            cb_dpto += "<option value=''></option>";
-//            for(int i= 0; i<datos_dpto.size(); i++){
-//                Vector vss =  (Vector) datos_dpto.get(i);
-//                String cod_dpto = vss.get(0).toString();
-//                String des_dpto = vss.get(1).toString();
-//                
-//                cb_dpto += "<option value='"+cod_dpto+"'>"+des_dpto+"</option>";                
-//            }         
-//            request.setAttribute("cb_dpto", cb_dpto);
+            String array_dpto[] = new String[1];
+            array_dpto[0] = "";
+            Vector datos_dpto = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.sp_obt_list_dep", array_dpto);
+            String cb_dpto ="";
+            cb_dpto += "<option value=''></option>";
+            for(int i= 0; i<datos_dpto.size(); i++){
+                Vector vss =  (Vector) datos_dpto.get(i);
+                String cod_dpto = vss.get(0).toString();
+                String des_dpto = vss.get(1).toString();
+                
+                cb_dpto += "<option value='"+cod_dpto+"'>"+des_dpto+"</option>";                
+            }         
+            request.setAttribute("cb_dpto_dir", cb_dpto);
+            request.setAttribute("cb_dpto_dir_ruc", cb_dpto);
          
+//            String array_prov[] = new String[1];
+//            array_prov[0] = "";
+//            Vector datos_prov_dir = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.SP_OBT_LIST_PROV", array_prov);
+//            String cb_prov_dir ="";
+//            cb_prov_dir += "<option value=''></option>";
+//            for(int i= 0; i<datos_prov_dir.size(); i++){
+//                Vector vss =  (Vector) datos_prov_dir.get(i);
+//                String cod_prov_dir = vss.get(0).toString();
+//                String des_prov_dir = vss.get(1).toString();
+//                
+//                cb_prov_dir += "<option value='"+cod_prov_dir+"'>"+des_prov_dir+"</option>";                
+//            }         
+//            request.setAttribute("cb_prov_dir", cb_prov_dir);
+         
+            
 //            ConeccionDB cn_proc = new ConeccionDB();
 //            Util util =  new Util();
 //          información para el combo procedimiento
@@ -9816,13 +9834,19 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String direccion = request.getParameter("direccion");
         String email = request.getParameter("email");
         String telefono = request.getParameter("telefono");
+        String dpto_nat = request.getParameter("dpto_nat");        
+        String prov_nat = request.getParameter("prov_nat");
+        String distr_nat = request.getParameter("distr_nat");
+        String dpto_nat_desc = request.getParameter("dpto_nat_desc");
+        String prov_nat_desc = request.getParameter("prov_nat_desc");
+        String distr_nat_desc = request.getParameter("distr_nat_desc");
 
         String var_request = "";
 
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "senamhi.fn_administrado_mant";
-            String array[] = new String[8];
+            String array[] = new String[14];
             array[0] = id;
             array[1] = nombres;
             array[2] = "";
@@ -9831,6 +9855,12 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             array[5] = telefono;
             array[6] = "1";
             array[7] = dni;
+            array[8] = dpto_nat;
+            array[9] = prov_nat;
+            array[10] = distr_nat;
+            array[11] = dpto_nat_desc;
+            array[12] = prov_nat_desc;
+            array[13] = distr_nat_desc;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -9860,13 +9890,19 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
         String dni_rep = request.getParameter("dni_rep");
         String telef_rep = request.getParameter("telef_rep");
         String email_rep = request.getParameter("email_rep");
+        String dpto_dir = request.getParameter("dpto_dir");
+        String prov_dir = request.getParameter("prov_dir");
+        String dist_dir = request.getParameter("dist_dir");
+        String dpto_dir_des = request.getParameter("dpto_dir_des");
+        String prov_dir_des = request.getParameter("prov_dir_des");
+        String dist_dir_des = request.getParameter("dist_dir_des");
 
         String var_request = "";
 
         try {                    
             ConeccionDB cdb = new ConeccionDB(); 
             String np = "senamhi.fn_administrado_mant_1";
-            String array[] = new String[12];
+            String array[] = new String[18];
             array[0] = id;
             array[1] = rsocial;
             array[2] = representante;
@@ -9879,6 +9915,12 @@ public String MantUnidconsCargarCbo(HttpServletRequest request, HttpServletRespo
             array[9] = dni_rep;
             array[10] = telef_rep;
             array[11] = email_rep;
+            array[12] = dpto_dir;
+            array[13] = prov_dir;
+            array[14] = dist_dir;
+            array[15] = dpto_dir_des;
+            array[16] = prov_dir_des;
+            array[17] = dist_dir_des;
             
             Vector datos = cdb.EjecutarProcedurePostgres(np, array);
 
@@ -11209,8 +11251,57 @@ public String MantRptaEmailChkb(HttpServletRequest request, HttpServletResponse 
     }
 //FIN SOLICITUD BUSCAR EXPEDIENTES POPUP     
 //        
+//INICIO CARCAR COMBO PROVINCIA
+    @RequestMapping(value = {"/sgd/mant_provincia_mostrar"}, method = RequestMethod.GET)
+    public String MantProvinciaCargarCbo(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        
+            String cod_dpto = request.getParameter("cod_dpto"); 
+                        
+            String array_prov[] = new String[1];
+            array_prov[0] = cod_dpto;
+            Vector datos_prov = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.SP_OBT_LIST_PROV", array_prov);
+            String cb_prov_dir = "";
+            cb_prov_dir += "<option value=''></option>";
+            for (int i = 0; i < datos_prov.size(); i++) {
+                Vector vss = (Vector) datos_prov.get(i);
+                String cod_prov = vss.get(0).toString();
+                String des_prov = vss.get(1).toString();
 
-    
+                cb_prov_dir += "<option value='" + cod_prov + "'>" + des_prov + "</option>";
+            }
+            request.setAttribute("response", cb_prov_dir);        
+        
+        return "sgd/mant_provincia_mostrar";
+    } 
+//FIN CARCAR COMBO PROVINCIA 
+//      
+//INICIO CARCAR COMBO DISTRITO
+    @RequestMapping(value = {"/sgd/mant_distrito_mostrar"}, method = RequestMethod.GET)
+    public String MantDistritoCargarCbo(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+            throws ServletException, IOException {
+        
+            String cod_prov = request.getParameter("cod_prov"); 
+            String cod_dpto = request.getParameter("cod_dpto"); 
+                        
+            String array_dist[] = new String[2];
+            array_dist[0] = cod_prov;
+            array_dist[1] = cod_dpto;
+            Vector datos_dist = new ConeccionDB().EjecutarProcedureOracle("pkg_ateciu.SP_OBT_LIST_DIST", array_dist);
+            String cb_dist_dir = "";
+            cb_dist_dir += "<option value=''></option>";
+            for (int i = 0; i < datos_dist.size(); i++) {
+                Vector vss = (Vector) datos_dist.get(i);
+                String cod_dist = vss.get(0).toString();
+                String des_dist = vss.get(1).toString();
+
+                cb_dist_dir += "<option value='" + cod_dist + "'>" + des_dist + "</option>";
+            }
+            request.setAttribute("response", cb_dist_dir);        
+        
+        return "sgd/mant_distrito_mostrar";
+    } 
+//FIN CARCAR COMBO DISTRITO 
 
 
 }

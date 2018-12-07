@@ -7,7 +7,7 @@
 <div id="div_bandejas"> 
     <div class="col-xs-2"></div>
         <div class="col-xs-10" align="left">
-            <button onclick="${requestScope['btn_nuevo_reg']}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file"></span> Nuevo Expediente</button>
+            <!--<button onclick="${requestScope['btn_nuevo_reg']}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file"></span> Nuevo Expediente</button>-->
             <button onclick="${requestScope['btn_agrupa_reg']}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-file" ></span> Agrupar Expediente</button>
 
             <button onclick="${requestScope['btn_desarchiva_reg']}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-folder-close" ></span> Desarchivar</button>

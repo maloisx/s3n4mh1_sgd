@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
 
-<tiles-definitions>  
+<tiles-definitions>
 
     <definition name="sisgem/mant_registro_planilla" extends="base-definition">  
-       <put-attribute name="title" value="index" />   
+       <put-attribute name="title" value="REGISTRO DE PLANILLAS" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_registro_planilla.jsp" />  
-    </definition> 
+    </definition>
    
     <definition name="sisgem/uploadfile"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/uploadfile.jsp" />  
@@ -14,18 +14,18 @@
     
     <definition name="sisgem/uploadfiletmp"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/uploadfiletmp.jsp" />  
+    </definition>
+    
+    <definition name="sisgem/mant_buscar_planilla" extends="base-definition">  
+       <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla.jsp" />  
+    </definition>
+    
+    <definition name="sisgem/mant_buscar_planilla" extends="base-definition">  
+       <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla.jsp" />  
     </definition>    
-    
-    <definition name="sisgem/mant_buscar_planilla" extends="base-definition">  
-       <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
-       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla.jsp" />  
-    </definition>
-    
-    <definition name="sisgem/mant_buscar_planilla" extends="base-definition">  
-       <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
-       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla.jsp" />  
-    </definition>
-    
+
     <definition name="sisgem/mant_lista_errada" extends="base-definition">  
        <put-attribute name="title" value="PLANILLAS MAL NOMBRADAS" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_lista_errada.jsp" />  
@@ -33,7 +33,35 @@
     
     <definition name="sisgem/mant_copyfile"  extends="ajax-definition">
         <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_copyfile.jsp" />  
-    </definition>    
+    </definition>
+   
+    <definition name="sisgem/mant_convtiff"  extends="popup-definition">  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_convtiff.jsp" />  
+    </definition>
+    
+    <definition name="sisgem/mant_buscar_planilla_mapa" extends="base-definition">  
+        <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla_mapa.jsp" />  
+    </definition>
+        
+    <definition name="sisgem/mant_mapa_mostrar"  extends="ajax-definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_mapa_mostrar.jsp" />
+    </definition>
+    
+    <definition name="sisgem/mant_buscar_planilla_dz" extends="base-definition">  
+        <put-attribute name="title" value="CONSULTA DE PLANILLAS" />  
+        <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_buscar_planilla_dz.jsp" />  
+    </definition>
+    
+    <definition name="sisgem/mant_edita_planilla" extends="base-definition">  
+       <put-attribute name="title" value="index" />   
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_edita_planilla.jsp" />  
+    </definition>
+
+    <definition name="sisgem/mant_lista_usuarios" extends="base-definition">  
+       <put-attribute name="title" value="LISTA DE USUARIOS" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/sisgem/mant_lista_usuarios.jsp" />  
+    </definition>
     
     
     

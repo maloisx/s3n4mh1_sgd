@@ -1,10 +1,18 @@
 package com.senamhi.sis.controller;
 
 import com.senamhi.sis.connection.ConeccionDB;
+import com.senamhi.sis.dto.UmbralesPorEstacion;
 import com.senamhi.sis.functions.Util;
+import com.senamhi.sis.repository.EstacionSelectRepository;
+import com.senamhi.sis.repository.UmbralesPorEstacionRepository;
+import com.senamhi.sis.repository.VariableSelectRepository;
+import com.senamhi.sis.repository.impl.EstacionSelectRepositoryImpl;
+import com.senamhi.sis.repository.impl.UmbralesPorEstacionRepositoryImpl;
+import com.senamhi.sis.repository.impl.VariableSelectRepositoryImpl;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -515,7 +523,76 @@ public class SisdadController {
         return "sisdad/mant_ptoobs_reporte_resum";
     } 
     
-    
+    @RequestMapping(value = {"/sisdad/extremosPorEstacion"}, method = RequestMethod.GET)
+    public String SisdadExtremosPorEstacion(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        //Titulo de la pagina
+        request.setAttribute("title_pag", "VALORES EXTREMOS POR ESTACION");
+
+        //Input
+        String accion = request.getParameter("accion");
+        if (accion == null) {
+            //Combo Estaciones Automaticas
+            EstacionSelectRepository er = new EstacionSelectRepositoryImpl();
+            request.setAttribute("listEsta", er.query());
+
+            //Combo Variables para las estaciones Automaticas
+            VariableSelectRepository vr = new VariableSelectRepositoryImpl();
+            request.setAttribute("listVariable", vr.query());
+
+            request.setAttribute("accion", "NOTHING");
+        } else if (accion.equals("NO_REGISTRADO")) {
+            String cod_esta = request.getParameter("cod_esta");
+            String cod_var = request.getParameter("cod_var");
+
+            request.setAttribute("cod_esta", cod_esta);
+            request.setAttribute("cod_var", cod_var);
+            request.setAttribute("accion", accion);
+        } else if (accion.equals("SI_REGISTRADO")) {
+            String cod_esta = request.getParameter("cod_esta");
+            String cod_var = request.getParameter("cod_var");
+
+            UmbralesPorEstacion ue = new UmbralesPorEstacion();
+            ue.setCodEstacion(cod_esta);
+            ue.setCodVariable(Integer.valueOf(cod_var));
+
+            UmbralesPorEstacionRepository re = new UmbralesPorEstacionRepositoryImpl();
+            List<UmbralesPorEstacion> listUE = re.get(ue);
+
+            request.setAttribute("cod_esta", cod_esta);
+            request.setAttribute("cod_var", cod_var);
+            request.setAttribute("listUE", listUE);
+            request.setAttribute("accion", accion);
+        } else if (accion.equals("CONTINUAR_Y_REGISTRAR")) {
+            String cod_esta = request.getParameter("cod_esta");
+            String cod_var = request.getParameter("cod_var");
+
+            request.setAttribute("cod_esta", cod_esta);
+            request.setAttribute("cod_var", cod_var);
+            request.setAttribute("accion", accion);
+        } else if (accion.equals("ELIMINAR_Y_REGISTRAR")) {
+            String cod_esta = request.getParameter("cod_esta");
+            String cod_var = request.getParameter("cod_var");
+
+            UmbralesPorEstacion ue = new UmbralesPorEstacion();
+            ue.setCodEstacion(cod_esta);
+            ue.setCodVariable(Integer.valueOf(cod_var));
+
+            UmbralesPorEstacionRepository re = null;
+
+            re = new UmbralesPorEstacionRepositoryImpl();
+            re.delete(ue);
+
+            request.setAttribute("cod_esta", cod_esta);
+            request.setAttribute("cod_var", cod_var);
+            request.setAttribute("accion", accion);
+
+        } else if (accion.equals("ATENDIDO")) {
+            request.setAttribute("accion", accion);
+        } else {
+        }
+
+        return "sisdad/extremosPorEstacion";
+    }
         
         
 }
